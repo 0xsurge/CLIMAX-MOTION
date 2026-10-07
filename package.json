@@ -1,22 +1,19 @@
 {
-  "name": "climax-motion",
+  "name": "pdoomvideo",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/0xsurge/CLIMAX-MOTION.git"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/0xsurge/CLIMAX-MOTION/issues"
+  "description": "",
+  "dependencies": {
+    "p5": "^2.3.3",
+    "p5.brush": "^2.2.3",
+    "puppeteer-core": "^25.11.0"
   },
-  "homepage": "https://github.com/0xsurge/CLIMAX-MOTION#readme",
   "devDependencies": {
     "playwright": "^1.63.0"
   }
