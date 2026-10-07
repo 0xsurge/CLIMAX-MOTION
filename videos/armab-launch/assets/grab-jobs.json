@@ -1,0 +1,7 @@
+[
+ {"name":"service","selector":"li.services__item","all":true},
+ {"name":"btn-ivory","selector":"button.services__cta-btn","index":0},
+ {"name":"btn-ink","selector":"button.hero__cta","index":0},
+ {"name":"proof","selector":"li.proof__row","all":true},
+ {"name":"billet","selector":"article.work__item--offset img","index":0,"srcData":true}
+]

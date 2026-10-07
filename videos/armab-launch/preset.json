@@ -1,0 +1,26 @@
+{
+  "name": "armab",
+  "product": "Armab Agency",
+  "url": "https://armabagency.vercel.app",
+  "hook": "Roadblocks, removed.",
+  "promise": "Strategic brands and digital experiences.",
+  "proof": "No junior handoffs.",
+  "cta": "Work with us",
+  "bpm": 120,
+  "formats": [
+    "16x9"
+  ],
+  "colors": {
+    "canvas": "#F3F3EF",
+    "surface": "#FFFFFF",
+    "ink": "#14201F",
+    "accent": "#64816D",
+    "onAccent": "#EDF1EB"
+  },
+  "fonts": {
+    "display": "'PP Neue Montreal', system-ui, sans-serif",
+    "ui": "'Aileron', 'Helvetica Neue', Helvetica, Arial, sans-serif"
+  },
+  "voiceover": "none",
+  "notes": "Measured from the live site (capture.json). Dark sections use forest #0f2318; ivory #edf1eb is the text on dark; sage #b9cbb5 is the tint. Buttons are 5px radius, ink fill, uppercase Aileron 600. Mono labels use JetBrains Mono. PP Neue Montreal is a commercial typeface: confirm the studio's license before sharing the film's font files."
+}
