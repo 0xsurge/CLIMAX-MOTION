@@ -14,7 +14,8 @@ bpm = float(np.atleast_1d(tempo)[0])
 # Re-fit a perfect grid to the measured beats (least squares), then anchor beat 0 where audio starts.
 if len(beats) > 3:
     k = np.arange(len(beats)); period, t0 = np.polyfit(k, beats, 1); bpm = 60 / period
-    n = int((len(y) / sr - t0) / period) + 1; beats = t0 + period * np.arange(max(n, 0))
+    back = int((t0 + 0.03) / period)            # beat_track skips the first beat; extend the grid back to the start
+    n = int((len(y) / sr - t0) / period) + 1; beats = t0 + period * np.arange(-back, max(n, 0))
 onsets = librosa.onset.onset_detect(onset_envelope=env, sr=sr, units='time', backtrack=False)
 json.dump({'bpm': round(bpm, 3), 'duration': round(len(y) / sr, 3),
            'beats': [round(float(b), 4) for b in beats],
