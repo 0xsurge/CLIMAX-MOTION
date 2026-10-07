@@ -6,3 +6,8 @@ videos/*/review/r*/list.txt
 videos/*/review/r*/loop.mp4
 videos/*/audio/*.wav
 videos/*/delivery/loop_check.mp4
+# captured third-party assets (fonts, client video, photos) and bulky screenshots stay local
+videos/*/assets/net/
+videos/*/assets/shots/
+videos/*/assets/frames/
+videos/*/assets/img/

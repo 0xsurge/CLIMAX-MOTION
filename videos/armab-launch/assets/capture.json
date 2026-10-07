@@ -1,0 +1,1628 @@
+{
+  "title": "Armab Agency — Strategic Brand & Digital Studio",
+  "description": "Armab is a founder-led strategic digital agency building clear, high-performance brands and digital experiences for ambitious businesses.",
+  "favicon": "https://armabagency.vercel.app/assets/logo-icon-HgSNcM-8.png",
+  "themeColor": "#0f2318",
+  "body": {
+    "bg": "rgb(243, 243, 239)",
+    "color": "rgb(20, 32, 31)",
+    "font": "Aileron, \"Helvetica Neue\", Helvetica, Arial, sans-serif"
+  },
+  "rootVars": {
+    "--ink": "#14201f",
+    "--forest": "#0f2318",
+    "--ivory": "#edf1eb",
+    "--cream": "#f3f3ef",
+    "--green": "#64816d",
+    "--sage": "#b9cbb5",
+    "--card": "#fff",
+    "--line": "#14201f0f",
+    "--sans": "\"Aileron\", \"Helvetica Neue\", Helvetica, Arial, sans-serif",
+    "--mono": "\"JetBrains Mono\", \"SF Mono\", ui-monospace, Menlo, Consolas, monospace"
+  },
+  "fontFaces": [
+    {
+      "family": "Inter",
+      "weight": "400",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "400",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "400",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "400",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "400",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "400",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "400",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "500",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "500",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "500",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "500",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "500",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "500",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "500",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "600",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "600",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "600",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "600",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "600",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "600",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "600",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Aileron",
+      "weight": "200",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Aileron",
+      "weight": "300",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Aileron",
+      "weight": "400",
+      "style": "normal",
+      "status": "loaded"
+    },
+    {
+      "family": "Aileron",
+      "weight": "600",
+      "style": "normal",
+      "status": "loaded"
+    },
+    {
+      "family": "Aileron",
+      "weight": "700",
+      "style": "normal",
+      "status": "loaded"
+    },
+    {
+      "family": "Aileron",
+      "weight": "800",
+      "style": "normal",
+      "status": "loaded"
+    },
+    {
+      "family": "Aileron",
+      "weight": "900",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "ppNeueMontreal",
+      "weight": "400",
+      "style": "normal",
+      "status": "loaded"
+    },
+    {
+      "family": "ppNeueMontreal",
+      "weight": "500",
+      "style": "normal",
+      "status": "loaded"
+    },
+    {
+      "family": "ppNeueMontreal",
+      "weight": "700",
+      "style": "normal",
+      "status": "loaded"
+    },
+    {
+      "family": "ppNeueMontreal",
+      "weight": "400",
+      "style": "normal",
+      "status": "loaded"
+    },
+    {
+      "family": "ppNeueMontreal",
+      "weight": "500",
+      "style": "normal",
+      "status": "loaded"
+    },
+    {
+      "family": "ppNeueMontreal",
+      "weight": "700",
+      "style": "normal",
+      "status": "loaded"
+    }
+  ],
+  "fontFamilies": {
+    "Aileron, \"Helvetica Neue\", Helvetica, Arial, sans-serif": 166,
+    "ppNeueMontreal, system-ui, sans-serif": 287,
+    "sometypeMono, \"Sometype Mono\", ui-monospace, \"SF Mono\", Menlo, Consolas, monospace": 1,
+    "\"JetBrains Mono\", \"SF Mono\", ui-monospace, Menlo, Consolas, monospace": 15,
+    "Aileron, system-ui, sans-serif": 6
+  },
+  "colors": {
+    "rgb(243, 243, 239)": {
+      "bg": 10,
+      "text": 31,
+      "border": 0
+    },
+    "rgb(20, 32, 31)": {
+      "bg": 22,
+      "text": 146,
+      "border": 0
+    },
+    "rgb(255, 255, 255)": {
+      "bg": 3,
+      "text": 1,
+      "border": 0
+    },
+    "rgb(100, 129, 109)": {
+      "bg": 4,
+      "text": 6,
+      "border": 0
+    },
+    "rgb(237, 241, 235)": {
+      "bg": 2,
+      "text": 12,
+      "border": 0
+    },
+    "rgb(0, 0, 0)": {
+      "bg": 1,
+      "text": 9,
+      "border": 0
+    },
+    "rgb(195, 194, 191)": {
+      "bg": 0,
+      "text": 192,
+      "border": 0
+    },
+    "rgb(185, 203, 181)": {
+      "bg": 5,
+      "text": 0,
+      "border": 0
+    },
+    "rgb(80, 97, 90)": {
+      "bg": 0,
+      "text": 5,
+      "border": 0
+    },
+    "rgba(20, 32, 31, 0.5)": {
+      "bg": 0,
+      "text": 0,
+      "border": 15
+    },
+    "rgba(20, 32, 31, 0.6)": {
+      "bg": 0,
+      "text": 6,
+      "border": 0
+    },
+    "rgb(207, 228, 247)": {
+      "bg": 2,
+      "text": 0,
+      "border": 0
+    },
+    "rgb(18, 36, 46)": {
+      "bg": 0,
+      "text": 10,
+      "border": 0
+    },
+    "rgba(20, 32, 31, 0.14)": {
+      "bg": 0,
+      "text": 0,
+      "border": 12
+    },
+    "rgba(255, 255, 255, 0.6)": {
+      "bg": 12,
+      "text": 0,
+      "border": 0
+    },
+    "rgba(20, 32, 31, 0.2)": {
+      "bg": 0,
+      "text": 0,
+      "border": 12
+    },
+    "rgb(205, 238, 224)": {
+      "bg": 2,
+      "text": 0,
+      "border": 0
+    },
+    "rgb(16, 36, 29)": {
+      "bg": 0,
+      "text": 10,
+      "border": 0
+    },
+    "rgb(215, 220, 249)": {
+      "bg": 2,
+      "text": 0,
+      "border": 0
+    },
+    "rgb(22, 26, 53)": {
+      "bg": 0,
+      "text": 10,
+      "border": 0
+    },
+    "rgb(191, 233, 242)": {
+      "bg": 2,
+      "text": 0,
+      "border": 0
+    },
+    "rgb(13, 37, 48)": {
+      "bg": 0,
+      "text": 10,
+      "border": 0
+    },
+    "rgb(224, 214, 247)": {
+      "bg": 2,
+      "text": 0,
+      "border": 0
+    },
+    "rgb(29, 20, 48)": {
+      "bg": 0,
+      "text": 10,
+      "border": 0
+    },
+    "rgb(203, 233, 214)": {
+      "bg": 2,
+      "text": 0,
+      "border": 0
+    },
+    "rgb(16, 36, 25)": {
+      "bg": 0,
+      "text": 10,
+      "border": 0
+    },
+    "rgba(20, 32, 31, 0.7)": {
+      "bg": 0,
+      "text": 1,
+      "border": 0
+    },
+    "rgba(255, 255, 255, 0.25)": {
+      "bg": 0,
+      "text": 0,
+      "border": 1
+    },
+    "rgba(255, 255, 255, 0.9)": {
+      "bg": 0,
+      "text": 4,
+      "border": 0
+    },
+    "oklch(0.269 0 none)": {
+      "bg": 0,
+      "text": 1,
+      "border": 0
+    },
+    "oklch(0.205 0 none)": {
+      "bg": 0,
+      "text": 2,
+      "border": 0
+    },
+    "oklch(0.872 0.01 258.338)": {
+      "bg": 0,
+      "text": 0,
+      "border": 1
+    },
+    "rgba(237, 241, 235, 0.95)": {
+      "bg": 0,
+      "text": 0,
+      "border": 1
+    }
+  },
+  "heads": [
+    {
+      "tag": "H1",
+      "text": "Armab Agency",
+      "font": "Aileron, \"Helvetica Neue\", Helvetica, Arial, sans-serif",
+      "size": "16px",
+      "weight": "400",
+      "color": "rgb(20, 32, 31)"
+    },
+    {
+      "tag": "H2",
+      "text": "Our Work",
+      "font": "ppNeueMontreal, system-ui, sans-serif",
+      "size": "230.4px",
+      "weight": "500",
+      "color": "rgb(20, 32, 31)"
+    },
+    {
+      "tag": "H3",
+      "text": "Fuhsi Market",
+      "font": "ppNeueMontreal, system-ui, sans-serif",
+      "size": "32px",
+      "weight": "500",
+      "color": "rgb(20, 32, 31)"
+    },
+    {
+      "tag": "H3",
+      "text": "Billet Design",
+      "font": "ppNeueMontreal, system-ui, sans-serif",
+      "size": "32px",
+      "weight": "500",
+      "color": "rgb(20, 32, 31)"
+    },
+    {
+      "tag": "H3",
+      "text": "Kitty",
+      "font": "ppNeueMontreal, system-ui, sans-serif",
+      "size": "32px",
+      "weight": "500",
+      "color": "rgb(20, 32, 31)"
+    },
+    {
+      "tag": "H3",
+      "text": "Opus",
+      "font": "ppNeueMontreal, system-ui, sans-serif",
+      "size": "32px",
+      "weight": "500",
+      "color": "rgb(20, 32, 31)"
+    },
+    {
+      "tag": "H2",
+      "text": "Our Services",
+      "font": "ppNeueMontreal, system-ui, sans-serif",
+      "size": "129.6px",
+      "weight": "500",
+      "color": "rgb(243, 243, 239)"
+    },
+    {
+      "tag": "H2",
+      "text": "New Agency Not new to this",
+      "font": "Aileron, \"Helvetica Neue\", Helvetica, Arial, sans-serif",
+      "size": "129.6px",
+      "weight": "500",
+      "color": "rgb(20, 32, 31)"
+    },
+    {
+      "tag": "H3",
+      "text": "Engineered for Growth",
+      "font": "ppNeueMontreal, system-ui, sans-serif",
+      "size": "42px",
+      "weight": "500",
+      "color": "rgb(20, 32, 31)"
+    },
+    {
+      "tag": "H3",
+      "text": "Custom Technical Craft",
+      "font": "ppNeueMontreal, system-ui, sans-serif",
+      "size": "42px",
+      "weight": "500",
+      "color": "rgb(20, 32, 31)"
+    },
+    {
+      "tag": "H3",
+      "text": "Direct Founder Partnership",
+      "font": "ppNeueMontreal, system-ui, sans-serif",
+      "size": "42px",
+      "weight": "500",
+      "color": "rgb(20, 32, 31)"
+    },
+    {
+      "tag": "H3",
+      "text": "Full-Stack Execution",
+      "font": "ppNeueMontreal, system-ui, sans-serif",
+      "size": "42px",
+      "weight": "500",
+      "color": "rgb(20, 32, 31)"
+    },
+    {
+      "tag": "H3",
+      "text": "Built for Clarity",
+      "font": "ppNeueMontreal, system-ui, sans-serif",
+      "size": "42px",
+      "weight": "500",
+      "color": "rgb(20, 32, 31)"
+    },
+    {
+      "tag": "H3",
+      "text": "Deep Focus. Elite Attention.",
+      "font": "ppNeueMontreal, system-ui, sans-serif",
+      "size": "42px",
+      "weight": "500",
+      "color": "rgb(20, 32, 31)"
+    },
+    {
+      "tag": "H2",
+      "text": "Trusted by teams who needed it done right.",
+      "font": "Aileron, \"Helvetica Neue\", Helvetica, Arial, sans-serif",
+      "size": "129.6px",
+      "weight": "500",
+      "color": "rgb(20, 32, 31)"
+    },
+    {
+      "tag": "H2",
+      "text": "Questions worth asking before we work together.",
+      "font": "ppNeueMontreal, system-ui, sans-serif",
+      "size": "68px",
+      "weight": "500",
+      "color": "rgb(20, 32, 31)"
+    },
+    {
+      "tag": "H3",
+      "text": "Are you a brand strategist, a design studio, or a web developer?",
+      "font": "ppNeueMontreal, system-ui, sans-serif",
+      "size": "24px",
+      "weight": "500",
+      "color": "rgb(20, 32, 31)"
+    },
+    {
+      "tag": "H3",
+      "text": "Our business vision is still messy and unstructured. Is it too early to work together?",
+      "font": "ppNeueMontreal, system-ui, sans-serif",
+      "size": "24px",
+      "weight": "500",
+      "color": "rgb(20, 32, 31)"
+    },
+    {
+      "tag": "H3",
+      "text": "Why should we choose a independent partner over a large corporate agency?",
+      "font": "ppNeueMontreal, system-ui, sans-serif",
+      "size": "24px",
+      "weight": "500",
+      "color": "rgb(20, 32, 31)"
+    },
+    {
+      "tag": "H3",
+      "text": "Can you build a credible digital footprint without using generic templates?",
+      "font": "ppNeueMontreal, system-ui, sans-serif",
+      "size": "24px",
+      "weight": "500",
+      "color": "rgb(20, 32, 31)"
+    },
+    {
+      "tag": "H3",
+      "text": "How do you handle the technical web development phase?",
+      "font": "ppNeueMontreal, system-ui, sans-serif",
+      "size": "24px",
+      "weight": "500",
+      "color": "rgb(20, 32, 31)"
+    },
+    {
+      "tag": "H3",
+      "text": "What happens after our new website launches?",
+      "font": "ppNeueMontreal, system-ui, sans-serif",
+      "size": "24px",
+      "weight": "500",
+      "color": "rgb(20, 32, 31)"
+    },
+    {
+      "tag": "H2",
+      "text": "Have a roadblock holding you back? Let’s remove it properly.",
+      "font": "ppNeueMontreal, system-ui, sans-serif",
+      "size": "68px",
+      "weight": "500",
+      "color": "rgb(237, 241, 235)"
+    }
+  ],
+  "buttons": [
+    {
+      "text": "WORK WITH US",
+      "bg": "rgb(20, 32, 31)",
+      "color": "rgb(237, 241, 235)",
+      "radius": "5px",
+      "font": "Aileron, \"Helvetica Neue\", Helvetica, Arial, sans-serif",
+      "weight": "600"
+    },
+    {
+      "text": "VIEW ALL WORK",
+      "bg": "rgb(20, 32, 31)",
+      "color": "rgb(237, 241, 235)",
+      "radius": "5px",
+      "font": "ppNeueMontreal, system-ui, sans-serif",
+      "weight": "600"
+    },
+    {
+      "text": "01 Digital-First Branding STRATEGY Digital-First Branding DESIGN",
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(20, 32, 31)",
+      "radius": "0px",
+      "font": "Aileron, \"Helvetica Neue\", Helvetica, Arial, sans-serif",
+      "weight": "400"
+    },
+    {
+      "text": "02 Brand Strategy VOICE Brand Strategy LANGUAGE",
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(20, 32, 31)",
+      "radius": "0px",
+      "font": "Aileron, \"Helvetica Neue\", Helvetica, Arial, sans-serif",
+      "weight": "400"
+    },
+    {
+      "text": "03 UX/UI Design FLOW UX/UI Design AESTHETIC",
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(20, 32, 31)",
+      "radius": "0px",
+      "font": "Aileron, \"Helvetica Neue\", Helvetica, Arial, sans-serif",
+      "weight": "400"
+    },
+    {
+      "text": "04 Web Design & Development PERFORMANCE Web Design & Development ARCHITECTURE",
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(20, 32, 31)",
+      "radius": "0px",
+      "font": "Aileron, \"Helvetica Neue\", Helvetica, Arial, sans-serif",
+      "weight": "400"
+    },
+    {
+      "text": "05 3D / Motion DEPTH 3D / Motion TEXTURE",
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(20, 32, 31)",
+      "radius": "0px",
+      "font": "Aileron, \"Helvetica Neue\", Helvetica, Arial, sans-serif",
+      "weight": "400"
+    },
+    {
+      "text": "WORK WITH US",
+      "bg": "rgb(237, 241, 235)",
+      "color": "rgb(20, 32, 31)",
+      "radius": "5px",
+      "font": "Aileron, \"Helvetica Neue\", Helvetica, Arial, sans-serif",
+      "weight": "600"
+    },
+    {
+      "text": "Are you a brand strategist, a design studio, or a web developer?",
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(20, 32, 31)",
+      "radius": "0px",
+      "font": "Aileron, \"Helvetica Neue\", Helvetica, Arial, sans-serif",
+      "weight": "400"
+    },
+    {
+      "text": "Our business vision is still messy and unstructured. Is it too early to work together?",
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(20, 32, 31)",
+      "radius": "0px",
+      "font": "Aileron, \"Helvetica Neue\", Helvetica, Arial, sans-serif",
+      "weight": "400"
+    },
+    {
+      "text": "Why should we choose a independent partner over a large corporate agency?",
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(20, 32, 31)",
+      "radius": "0px",
+      "font": "Aileron, \"Helvetica Neue\", Helvetica, Arial, sans-serif",
+      "weight": "400"
+    },
+    {
+      "text": "Can you build a credible digital footprint without using generic templates?",
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(20, 32, 31)",
+      "radius": "0px",
+      "font": "Aileron, \"Helvetica Neue\", Helvetica, Arial, sans-serif",
+      "weight": "400"
+    },
+    {
+      "text": "How do you handle the technical web development phase?",
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(20, 32, 31)",
+      "radius": "0px",
+      "font": "Aileron, \"Helvetica Neue\", Helvetica, Arial, sans-serif",
+      "weight": "400"
+    },
+    {
+      "text": "What happens after our new website launches?",
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(20, 32, 31)",
+      "radius": "0px",
+      "font": "Aileron, \"Helvetica Neue\", Helvetica, Arial, sans-serif",
+      "weight": "400"
+    },
+    {
+      "text": "GET IN TOUCH",
+      "bg": "rgb(237, 241, 235)",
+      "color": "rgb(20, 32, 31)",
+      "radius": "5px",
+      "font": "ppNeueMontreal, system-ui, sans-serif",
+      "weight": "400"
+    },
+    {
+      "text": "DECLINE",
+      "bg": "rgb(255, 255, 255)",
+      "color": "oklch(0.205 0 none)",
+      "radius": "12px",
+      "font": "Aileron, system-ui, sans-serif",
+      "weight": "500"
+    },
+    {
+      "text": "ACCEPT",
+      "bg": "rgb(20, 32, 31)",
+      "color": "rgb(255, 255, 255)",
+      "radius": "12px",
+      "font": "Aileron, system-ui, sans-serif",
+      "weight": "700"
+    }
+  ],
+  "nav": [
+    {
+      "text": "ABOUT",
+      "href": "#about"
+    },
+    {
+      "text": "WORK",
+      "href": "#work"
+    },
+    {
+      "text": "",
+      "href": "#top"
+    },
+    {
+      "text": "SERVICES",
+      "href": "#services"
+    },
+    {
+      "text": "CONTACT",
+      "href": "#contact"
+    },
+    {
+      "text": "TERMS",
+      "href": "#/terms"
+    },
+    {
+      "text": "PRIVACY",
+      "href": "#/privacy"
+    },
+    {
+      "text": "COOKIES",
+      "href": "#/cookies"
+    },
+    {
+      "text": "",
+      "href": "https://www.linkedin.com/company/armab-agency/?viewAsMember=true"
+    },
+    {
+      "text": "",
+      "href": "https://www.instagram.com/armabagency/"
+    },
+    {
+      "text": "",
+      "href": "https://x.com/"
+    }
+  ],
+  "imgs": [
+    {
+      "src": "data:image/png;base64,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",
+      "alt": "Armab",
+      "w": 92,
+      "h": 27,
+      "box": {
+        "x": 659,
+        "y": -25.5,
+        "width": 92,
+        "height": 27,
+        "top": -25.5,
+        "right": 751,
+        "bottom": 1.5,
+        "left": 659
+      }
+    },
+    {
+      "src": "https://armabagency.vercel.app/assets/brand-logo-DRop20tn.png",
+      "alt": "",
+      "w": 1254,
+      "h": 1254,
+      "box": {
+        "x": 360,
+        "y": 289,
+        "width": 720,
+        "height": 720,
+        "top": 289,
+        "right": 1080,
+        "bottom": 1009,
+        "left": 360
+      }
+    },
+    {
+      "src": "https://armabagency.vercel.app/assets/fuhsimarket-DEOcFvPg.jpg",
+      "alt": "Fuhsi Market — project image",
+      "w": 687,
+      "h": 1024,
+      "box": {
+        "x": 100.796875,
+        "y": 4231.53125,
+        "width": 587.203125,
+        "height": 845,
+        "top": 4231.53125,
+        "right": 688,
+        "bottom": 5076.53125,
+        "left": 100.796875
+      }
+    },
+    {
+      "src": "data:image/webp;base64,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",
+      "alt": "Billet Design — project image",
+      "w": 1200,
+      "h": 960,
+      "box": {
+        "x": 752,
+        "y": 4311.53125,
+        "width": 587.203125,
+        "height": 845,
+        "top": 4311.53125,
+        "right": 1339.203125,
+        "bottom": 5156.53125,
+        "left": 752
+      }
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1000&auto=format&fit=crop",
+      "alt": "Minimal architectural building facade for Brand Strategy",
+      "w": 1000,
+      "h": 667,
+      "box": {
+        "x": 100.796875,
+        "y": 8306.28125,
+        "width": 560,
+        "height": 420,
+        "top": 8306.28125,
+        "right": 660.796875,
+        "bottom": 8726.28125,
+        "left": 100.796875
+      }
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?q=80&w=1000&auto=format&fit=crop",
+      "alt": "Interface sketches drawn on paper for UX/UI Design",
+      "w": 1000,
+      "h": 667,
+      "box": {
+        "x": 100.796875,
+        "y": 8452.875,
+        "width": 560,
+        "height": 420,
+        "top": 8452.875,
+        "right": 660.796875,
+        "bottom": 8872.875,
+        "left": 100.796875
+      }
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?q=80&w=1000&auto=format&fit=crop",
+      "alt": "Design tools and laptop for Web Design and Development",
+      "w": 1000,
+      "h": 668,
+      "box": {
+        "x": 100.796875,
+        "y": 8599.46875,
+        "width": 560,
+        "height": 420,
+        "top": 8599.46875,
+        "right": 660.796875,
+        "bottom": 9019.46875,
+        "left": 100.796875
+      }
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop",
+      "alt": "Abstract 3D render for motion design",
+      "w": 1000,
+      "h": 760,
+      "box": {
+        "x": 100.796875,
+        "y": 8746.0625,
+        "width": 560,
+        "height": 420,
+        "top": 8746.0625,
+        "right": 660.796875,
+        "bottom": 9166.0625,
+        "left": 100.796875
+      }
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1547658719-da2b51169166?q=80&w=1000&auto=format&fit=crop",
+      "alt": "Minimal brand grid mockups for Digital-First Branding",
+      "w": 1000,
+      "h": 1250,
+      "box": {
+        "x": 100.796875,
+        "y": 8892.65625,
+        "width": 560,
+        "height": 420,
+        "top": 8892.65625,
+        "right": 660.796875,
+        "bottom": 9312.65625,
+        "left": 100.796875
+      }
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1000&auto=format&fit=crop",
+      "alt": "",
+      "w": 1000,
+      "h": 667,
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 432,
+        "height": 243,
+        "top": 0,
+        "right": 432,
+        "bottom": 243,
+        "left": 0
+      }
+    },
+    {
+      "src": "https://armabagency.vercel.app/assets/real-cover-photo-DrDUU4we.png",
+      "alt": "",
+      "w": 1584,
+      "h": 396,
+      "box": {
+        "x": 806.390625,
+        "y": 9559.34375,
+        "width": 129.59375,
+        "height": 129.59375,
+        "top": 9559.34375,
+        "right": 935.984375,
+        "bottom": 9688.9375,
+        "left": 806.390625
+      }
+    },
+    {
+      "src": "https://armabagency.vercel.app/assets/cover%20photo-BiCdR_PB.png",
+      "alt": "",
+      "w": 1983,
+      "h": 793,
+      "box": {
+        "x": 806.390625,
+        "y": 9764.34375,
+        "width": 129.59375,
+        "height": 129.59375,
+        "top": 9764.34375,
+        "right": 935.984375,
+        "bottom": 9893.9375,
+        "left": 806.390625
+      }
+    },
+    {
+      "src": "https://armabagency.vercel.app/assets/brand-logo-DRop20tn.png",
+      "alt": "",
+      "w": 1254,
+      "h": 1254,
+      "box": {
+        "x": 806.390625,
+        "y": 9943.34375,
+        "width": 129.59375,
+        "height": 129.59375,
+        "top": 9943.34375,
+        "right": 935.984375,
+        "bottom": 10072.9375,
+        "left": 806.390625
+      }
+    },
+    {
+      "src": "https://armabagency.vercel.app/assets/big-logo-KfToN5M_.png",
+      "alt": "",
+      "w": 598,
+      "h": 164,
+      "box": {
+        "x": 806.390625,
+        "y": 10122.34375,
+        "width": 129.59375,
+        "height": 129.59375,
+        "top": 10122.34375,
+        "right": 935.984375,
+        "bottom": 10251.9375,
+        "left": 806.390625
+      }
+    },
+    {
+      "src": "https://armabagency.vercel.app/assets/cover%20photo-BiCdR_PB.png",
+      "alt": "",
+      "w": 1983,
+      "h": 793,
+      "box": {
+        "x": 806.390625,
+        "y": 10327.34375,
+        "width": 129.59375,
+        "height": 129.59375,
+        "top": 10327.34375,
+        "right": 935.984375,
+        "bottom": 10456.9375,
+        "left": 806.390625
+      }
+    },
+    {
+      "src": "https://armabagency.vercel.app/assets/real-cover-photo-DrDUU4we.png",
+      "alt": "",
+      "w": 1584,
+      "h": 396,
+      "box": {
+        "x": 806.390625,
+        "y": 10532.34375,
+        "width": 129.59375,
+        "height": 129.59375,
+        "top": 10532.34375,
+        "right": 935.984375,
+        "bottom": 10661.9375,
+        "left": 806.390625
+      }
+    },
+    {
+      "src": "https://randomuser.me/api/portraits/women/44.jpg",
+      "alt": "",
+      "w": 128,
+      "h": 128,
+      "box": {
+        "x": -444.16986083984375,
+        "y": 11413.9716796875,
+        "width": 57.85272216796875,
+        "height": 58.3583984375,
+        "top": 11413.9716796875,
+        "right": -386.317138671875,
+        "bottom": 11472.330078125,
+        "left": -444.16986083984375
+      }
+    },
+    {
+      "src": "https://randomuser.me/api/portraits/men/32.jpg",
+      "alt": "",
+      "w": 128,
+      "h": 128,
+      "box": {
+        "x": 38.67266845703125,
+        "y": 11432.0732421875,
+        "width": 57.30035400390625,
+        "height": 57.7001953125,
+        "top": 11432.0732421875,
+        "right": 95.9730224609375,
+        "bottom": 11489.7734375,
+        "left": 38.67266845703125
+      }
+    },
+    {
+      "src": "https://randomuser.me/api/portraits/women/68.jpg",
+      "alt": "",
+      "w": 128,
+      "h": 128,
+      "box": {
+        "x": 530.7124633789062,
+        "y": 11432.7685546875,
+        "width": 56.73974609375,
+        "height": 57.037109375,
+        "top": 11432.7685546875,
+        "right": 587.4522094726562,
+        "bottom": 11489.8056640625,
+        "left": 530.7124633789062
+      }
+    },
+    {
+      "src": "https://randomuser.me/api/portraits/men/45.jpg",
+      "alt": "",
+      "w": 128,
+      "h": 128,
+      "box": {
+        "x": 1013.4153442382812,
+        "y": 11404.7705078125,
+        "width": 58.03216552734375,
+        "height": 58.640625,
+        "top": 11404.7705078125,
+        "right": 1071.447509765625,
+        "bottom": 11463.4111328125,
+        "left": 1013.4153442382812
+      }
+    },
+    {
+      "src": "https://randomuser.me/api/portraits/women/65.jpg",
+      "alt": "",
+      "w": 128,
+      "h": 128,
+      "box": {
+        "x": 1507.464599609375,
+        "y": 11451.2919921875,
+        "width": 57.479736328125,
+        "height": 58.08203125,
+        "top": 11451.2919921875,
+        "right": 1564.9443359375,
+        "bottom": 11509.3740234375,
+        "left": 1507.464599609375
+      }
+    },
+    {
+      "src": "https://randomuser.me/api/portraits/men/52.jpg",
+      "alt": "",
+      "w": 128,
+      "h": 128,
+      "box": {
+        "x": 1991.322265625,
+        "y": 11413.7216796875,
+        "width": 56.92822265625,
+        "height": 57.2265625,
+        "top": 11413.7216796875,
+        "right": 2048.25048828125,
+        "bottom": 11470.9482421875,
+        "left": 1991.322265625
+      }
+    },
+    {
+      "src": "https://randomuser.me/api/portraits/women/44.jpg",
+      "alt": "",
+      "w": 128,
+      "h": 128,
+      "box": {
+        "x": 2483.830322265625,
+        "y": 11413.9716796875,
+        "width": 57.8525390625,
+        "height": 58.3583984375,
+        "top": 11413.9716796875,
+        "right": 2541.682861328125,
+        "bottom": 11472.330078125,
+        "left": 2483.830322265625
+      }
+    },
+    {
+      "src": "https://randomuser.me/api/portraits/men/32.jpg",
+      "alt": "",
+      "w": 128,
+      "h": 128,
+      "box": {
+        "x": 2966.672607421875,
+        "y": 11432.0732421875,
+        "width": 57.300537109375,
+        "height": 57.7001953125,
+        "top": 11432.0732421875,
+        "right": 3023.97314453125,
+        "bottom": 11489.7734375,
+        "left": 2966.672607421875
+      }
+    },
+    {
+      "src": "https://randomuser.me/api/portraits/women/68.jpg",
+      "alt": "",
+      "w": 128,
+      "h": 128,
+      "box": {
+        "x": 3458.712646484375,
+        "y": 11432.7685546875,
+        "width": 56.739501953125,
+        "height": 57.037109375,
+        "top": 11432.7685546875,
+        "right": 3515.4521484375,
+        "bottom": 11489.8056640625,
+        "left": 3458.712646484375
+      }
+    },
+    {
+      "src": "https://randomuser.me/api/portraits/men/45.jpg",
+      "alt": "",
+      "w": 128,
+      "h": 128,
+      "box": {
+        "x": 3941.415283203125,
+        "y": 11404.7705078125,
+        "width": 58.0322265625,
+        "height": 58.640625,
+        "top": 11404.7705078125,
+        "right": 3999.447509765625,
+        "bottom": 11463.4111328125,
+        "left": 3941.415283203125
+      }
+    },
+    {
+      "src": "https://randomuser.me/api/portraits/women/65.jpg",
+      "alt": "",
+      "w": 128,
+      "h": 128,
+      "box": {
+        "x": 4435.46435546875,
+        "y": 11451.2919921875,
+        "width": 57.47998046875,
+        "height": 58.08203125,
+        "top": 11451.2919921875,
+        "right": 4492.9443359375,
+        "bottom": 11509.3740234375,
+        "left": 4435.46435546875
+      }
+    },
+    {
+      "src": "https://randomuser.me/api/portraits/men/52.jpg",
+      "alt": "",
+      "w": 128,
+      "h": 128,
+      "box": {
+        "x": 4919.32177734375,
+        "y": 11413.7216796875,
+        "width": 56.9287109375,
+        "height": 57.2265625,
+        "top": 11413.7216796875,
+        "right": 4976.25048828125,
+        "bottom": 11470.9482421875,
+        "left": 4919.32177734375
+      }
+    },
+    {
+      "src": "https://armabagency.vercel.app/assets/logo-icon-HgSNcM-8.png",
+      "alt": "Armab",
+      "w": 1254,
+      "h": 1254,
+      "box": {
+        "x": 100.796875,
+        "y": 90,
+        "width": 86.390625,
+        "height": 86.390625,
+        "top": 90,
+        "right": 187.1875,
+        "bottom": 176.390625,
+        "left": 100.796875
+      }
+    }
+  ],
+  "svgs": [
+    {
+      "box": {
+        "x": 1219.203125,
+        "y": 951.9375,
+        "width": 24,
+        "height": 24,
+        "top": 951.9375,
+        "right": 1243.203125,
+        "bottom": 975.9375,
+        "left": 1219.203125
+      },
+      "html": "<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" aria-label=\"LinkedIn\"><rect width=\"24\" height=\"24\" rx=\"4\" fill=\"white\" fill-opacity=\"0.15\"></rect><path d=\"M7 9h2v8H7V9Zm1-1.5a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5ZM10.5 9H13v1.1c.4-.75 1.35-1.25 2.25-1.25C17.1 8.85 18 9.95 18 12v5h-2v-4.5c0-1-.4-1.85-1.5-1.85S13 11.6 13 12.5V17h-2.5V9Z\" fill=\"white\"></path></svg>"
+    },
+    {
+      "box": {
+        "x": 1267.203125,
+        "y": 951.9375,
+        "width": 24,
+        "height": 24,
+        "top": 951.9375,
+        "right": 1291.203125,
+        "bottom": 975.9375,
+        "left": 1267.203125
+      },
+      "html": "<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" aria-label=\"Instagram\"><rect width=\"24\" height=\"24\" rx=\"4\" fill=\"white\" fill-opacity=\"0.15\"></rect><path d=\"M12 7.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9Zm0 7.5a3 3 0 1 1 0-6 3 3 0 0 1 0 6Zm5.4-8.55a1.05 1.05 0 1 1-2.1 0 1.05 1.05 0 0 1 2.1 0Z\" fill=\"white\"></path><path d=\"M16.5 3h-9A4.5 4.5 0 0 0 3 7.5v9A4.5 4.5 0 0 0 7.5 21h9a4.5 4.5 0 0 0 4.5-4.5v-9A4.5 4.5 0 0 0 16.5 3Zm3 13.5a3 3 0 0 1-3 3h-9a3 3 0 0 1-3-3v-9a3 3 0 0 1 3-3h9a3 3 0 0 1 3 3v9Z\" fill=\"white\"></path></svg>"
+    },
+    {
+      "box": {
+        "x": 1315.203125,
+        "y": 951.9375,
+        "width": 24,
+        "height": 24,
+        "top": 951.9375,
+        "right": 1339.203125,
+        "bottom": 975.9375,
+        "left": 1315.203125
+      },
+      "html": "<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" aria-label=\"X (Twitter)\"><path d=\"M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z\" fill=\"white\"></path></svg>"
+    }
+  ],
+  "sections": [
+    {
+      "tag": "HEADER",
+      "id": "",
+      "cls": "nav-desktop ",
+      "y": -34,
+      "h": 50,
+      "text": "ABOUT WORK SERVICES CONTACT",
+      "bg": "rgb(255, 255, 255)"
+    },
+    {
+      "tag": "DIV",
+      "id": "",
+      "cls": "hero__stage",
+      "y": 0,
+      "h": 900,
+      "text": "Armab Agency We build strategic brands and digital experiences that help ambitious businesses grow, compete, and stand out. WORK WITH US",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "tag": "SECTION",
+      "id": "about",
+      "cls": "about",
+      "y": 3060,
+      "h": 765,
+      "text": "ABOUT US Armab is a founder-led strategic digital agency removing the roadblocks to your brand growth. We help ambitious teams turn complex ideas and platforms into clear digital experiences that bring calmness, structure, and trust. Led by two strategic partners No corporate layers, no junior handoff Removing the roadblocks to your brand growth No separation between craftmanship and design",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "tag": "SECTION",
+      "id": "work",
+      "cls": "work",
+      "y": 3825,
+      "h": 3998,
+      "text": "Our Work Fuhsi Market Fuhsi Market is a campus marketplace built to make student trading safer and simpler. It brings trusted listings, protected payments, seller payouts and campus handovers into one clear experience for buyers and sellers. VIEW PROJECT → Billet Design Billet Design makes machined mechanical keyboards built for people who do serious work at their desks. Every board is cut from a ",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "tag": "SECTION",
+      "id": "services",
+      "cls": "services",
+      "y": 7823,
+      "h": 1270,
+      "text": "Our Services 01 Digital-First Branding STRATEGY Digital-First Branding DESIGN We build brands born for the screen — positioning, identity and digital expression engineered to lead online from day one. 02 Brand Strategy VOICE Brand Strategy LANGUAGE We help teams align on direction, define their proposition and move from ambiguity to a clear point of view stakeholders can understand and act on. 03 ",
+      "bg": "rgb(20, 32, 31)"
+    },
+    {
+      "tag": "SECTION",
+      "id": "proof",
+      "cls": "proof",
+      "y": 9093,
+      "h": 1646,
+      "text": "New Agency Not new to this Engineered for Growth Removing the roadblocks holding your business back. We build digital products from the ground up, turning complex business hurdles into high-converting systems engineered for long-term scalability. Custom Technical Craft Zero generic templates. Zero bloated frameworks. Every single line of code is meticulously handwritten. We merge crisp web design ",
+      "bg": "rgb(243, 243, 239)"
+    },
+    {
+      "tag": "SECTION",
+      "id": "",
+      "cls": "testimonials",
+      "y": 10739,
+      "h": 1060,
+      "text": "Trusted by teams who needed it done right. “They untangled two years of scattered ideas into a brand and website we actually understood — and shipped it in weeks, not months.” FOUNDER & CEO Fintech Startup “No junior handoffs, no generic templates. The strategy, design, and code all came from one senior team aligned on the same goal.” MANAGING DIRECTOR Property Platform “Our new platform makes a c",
+      "bg": "rgb(243, 243, 239)"
+    },
+    {
+      "tag": "SECTION",
+      "id": "faq",
+      "cls": "faq",
+      "y": 11799,
+      "h": 1380,
+      "text": "Questions worth asking before we work together. Not the usual FAQs. Just the questions clients often have when they are choosing the right design partner for something important. Are you a brand strategist, a design studio, or a web developer? We are all three, under a single unified roof. The strongest digital growth happens when your business strategy matches your user experience and your code. ",
+      "bg": "rgb(243, 243, 239)"
+    },
+    {
+      "tag": "FOOTER",
+      "id": "",
+      "cls": "contact",
+      "y": 0,
+      "h": 900,
+      "text": "Have a roadblock holding you back? Let’s remove it properly. Whether you are shaping an initial brand strategy, designing a high-end interface, or ready to build custom web infrastructure from scratch, we would love to bring absolute clarity and structure to your next digital move. GET IN TOUCH Armab AgencyTM © Armab Agency | Company Number 000000 TERMS PRIVACY COOKIES",
+      "bg": "rgb(20, 32, 31)"
+    },
+    {
+      "tag": "SECTION",
+      "id": "",
+      "cls": "fixed bottom-5 left-4 right-4 z-[90] mx-auto w-auto max-w-[calc(100vw-32px)] rou",
+      "y": 721,
+      "h": 160,
+      "text": "We use cookies to improve your experience and analyse site usage. Cookie Policy DECLINE ACCEPT",
+      "bg": "rgb(255, 255, 255)"
+    }
+  ],
+  "bodyText": "ABOUT WORK SERVICES CONTACT Armab Agency We build strategic brands and digital experiences that help ambitious businesses grow, compete, and stand out. WORK WITH US ABOUT US Armab is a founder-led strategic digital agency removing the roadblocks to your brand growth. We help ambitious teams turn complex ideas and platforms into clear digital experiences that bring calmness, structure, and trust. Led by two strategic partners No corporate layers, no junior handoff Removing the roadblocks to your brand growth No separation between craftmanship and design Our Work Fuhsi Market Fuhsi Market is a campus marketplace built to make student trading safer and simpler. It brings trusted listings, protected payments, seller payouts and campus handovers into one clear experience for buyers and sellers. VIEW PROJECT → Billet Design Billet Design makes machined mechanical keyboards built for people who do serious work at their desks. Every board is cut from a single block of aluminium and finished by hand until the light sits flat across the case and the sound lands where it should. Three layouts, one mounting system, and every board ships as a kit you can keep re-tuning. VIEW PROJECT → Kitty We created the proposition, identity and product direction for a familiar idea reimagined for a cashless world. A digital pot for shared experiences. Kitty gives groups of friends a simple way to contribute to one shared pot, keeping money from getting in the way of the occasion. VIEW PROJECT → Opus Bringing everything that defines a brand into one intelligent platform. The system analyses and develops this knowledge over time, helping teams create bespoke assets with greater speed and consistency. We developed the identity and product experience, translating a complex brand system into an accessible creative tool. VIEW PROJECT → VIEW ALL WORK Our Services 01 Digital-First Branding STRATEGY Digital-First Branding DESIGN We build brands born for the screen — positioning, identity and digital expression engineered to lead online from day one. 02 Brand Strategy VOICE Brand Strategy LANGUAGE We help teams align on direction, define their proposition and move from ambiguity to a clear point of view stakeholders can understand and act on. 03 UX/UI Design FLOW UX/UI Design AESTHETIC We create identities, design systems and product experiences that make organisations feel credible, distinctive and ready for market. 04 Web Design & Development PERFORMANCE Web Design & Development ARCHITECTURE We design and build propositions, workflows and interfaces that make complex digital products feel clear, intuitive and genuinely useful. 05 3D / Motion DEPTH 3D / Motion TEXTURE We add dimension and movement to brands with 3D, motion and interaction design — work that feels considered, premium and alive. WORK WITH US New Agency Not new to this Engineered for Growth Removing the roadblocks holding your business back. We build digital products from the ground up, turning complex business hurdles into high-converting systems engineered for long-term scalability. Custom Technical Craft Zero generic templates. Zero bloated frameworks. Every single line of code is meticulously handwritten. We merge crisp web design with robust engineering to ensure your platform runs clean and fast. Direct Founder Partnership The partners you meet are the architects doing the work. From initial brand strategy to final code deployment, you work directly with our two senior strategic founders. No junior handoffs, ever. Full-Stack Execution Senior strategy, design, and web development under one roof. We eliminate the friction of managing separate agencies. We take your project fluidly from abstract positioning strategy straight into high-performance web development. Built for Clarity Bringing absolute calmness and structure to your digital presence. We strip away traditional corporate agency layers. We operate close to the details, making fast design and deployment decisions to keep your momentum steady. Deep Focus. Elite Attention. Small by design, massive in impact. We intentionally restrict our client roster to a select few engagements. This guarantees our founders give your business their complete, uncompromised focus. Trusted by teams who needed it done right. “They untangled two years of scattered ideas into a brand and website we actually understood — and shipped it in weeks, not months.” FOUNDER & CEO Fintech Startup “No junior handoffs, no generic templates. The strategy, design, and code all came from one senior team aligned on the same goal.” MANAGING DIRECTOR Property Platform “Our new platform makes a complex product feel calm and obvious. Clients keep commenting on it. That rarely happens.” PRODUCT LEAD B2B SaaS “Rare to find a web project delivered fast, clean, and beautifully engineered. Every line of code was written by them.” CTO Shared Payments App “From brand strategy to launch, we worked directly with the people building it. Fast decisions, precise work, zero drama.” CO-FOUNDER Consumer Brand “The calmest project we have ever run. Clear process, honest advice, and a digital experience that genuinely performs.” MARKETING DIRECTOR Growth Business “They untangled two years of scattered ideas into a brand and website we actually understood — and shipped it in weeks, not months.” FOUNDER & CEO Fintech Startup “No junior handoffs, no generic templates. The strategy, design, and code all came from one senior team aligned on the same goal.” MANAGING DIRECTOR Property Platform “Our new platform makes a complex product feel calm and obvious. Clients keep commenting on it. That rarely happens.” PRODUCT LEAD B2B SaaS “Rare to find a web project delivered fast, clean, and beautifully engineered. Every line of code was written by them.” CTO Shared Payments App “From brand strategy to launch, we worked directly with the people building it. Fast decisions, precise work, zero drama.” CO-FOUNDER Consumer Brand “The calmest project we have ever run. Clear p",
+  "url": "https://armabagency.vercel.app",
+  "viewport": {
+    "w": 1440,
+    "h": 900
+  },
+  "pageHeight": 14079,
+  "failedRequests": [
+    "https://armabagency.vercel.app/assets/brikken-co-2026-D7itAFMi.mp4",
+    "https://armabagency.vercel.app/assets/brikken-co-2026-D7itAFMi.mp4",
+    "https://armabagency.vercel.app/assets/brikken-co-2026-D7itAFMi.mp4"
+  ],
+  "videos": [
+    {
+      "src": "https://armabagency.vercel.app/assets/brikken-co-2026-D7itAFMi.mp4",
+      "poster": "",
+      "w": 0,
+      "h": 0,
+      "dur": null,
+      "box": {
+        "x": 0,
+        "y": -6992,
+        "width": 1440,
+        "height": 900,
+        "top": -6992,
+        "right": 1440,
+        "bottom": -6092,
+        "left": 0
+      },
+      "srcs": []
+    },
+    {
+      "src": "https://armabagency.vercel.app/assets/brikken-co-2026-D7itAFMi.mp4",
+      "poster": "",
+      "w": 0,
+      "h": 0,
+      "dur": null,
+      "box": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0,
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "srcs": []
+    },
+    {
+      "src": "https://armabagency.vercel.app/assets/brikken-co-2026-D7itAFMi.mp4",
+      "poster": "",
+      "w": 0,
+      "h": 0,
+      "dur": null,
+      "box": {
+        "x": 100.796875,
+        "y": -3648.78125,
+        "width": 587.203125,
+        "height": 845,
+        "top": -3648.78125,
+        "right": 688,
+        "bottom": -2803.78125,
+        "left": 100.796875
+      },
+      "srcs": []
+    },
+    {
+      "src": "https://armabagency.vercel.app/assets/brikken-co-2026-D7itAFMi.mp4",
+      "poster": "https://armabagency.vercel.app/assets/cover%20photo-BiCdR_PB.png",
+      "w": 0,
+      "h": 0,
+      "dur": null,
+      "box": {
+        "x": 100.796875,
+        "y": -2483.09375,
+        "width": 1238.40625,
+        "height": 680,
+        "top": -2483.09375,
+        "right": 1339.203125,
+        "bottom": -1803.09375,
+        "left": 100.796875
+      },
+      "srcs": []
+    }
+  ],
+  "network": [
+    {
+      "url": "https://armabagency.vercel.app/assets/cover%20photo-BiCdR_PB.png",
+      "type": "image/png",
+      "status": 200,
+      "name": "cover_photo-BiCdR_PB.png"
+    },
+    {
+      "url": "https://armabagency.vercel.app/assets/logo-icon-HgSNcM-8.png",
+      "type": "image/png",
+      "status": 200,
+      "name": "logo-icon-HgSNcM-8.png"
+    },
+    {
+      "url": "https://armabagency.vercel.app/assets/Aileron-Heavy-igGBXrE2.otf",
+      "type": "font/otf",
+      "status": 200,
+      "name": "Aileron-Heavy-igGBXrE2.otf"
+    },
+    {
+      "url": "https://armabagency.vercel.app/assets/Aileron-SemiBold-B8V94gDv.otf",
+      "type": "font/otf",
+      "status": 200,
+      "name": "Aileron-SemiBold-B8V94gDv.otf"
+    },
+    {
+      "url": "https://armabagency.vercel.app/assets/brikken-co-2026-D7itAFMi.mp4",
+      "type": "video/mp4",
+      "status": 206,
+      "name": "brikken-co-2026-D7itAFMi.mp4"
+    },
+    {
+      "url": "https://armabagency.vercel.app/assets/Aileron-Bold-CJSbywsJ.otf",
+      "type": "font/otf",
+      "status": 200,
+      "name": "Aileron-Bold-CJSbywsJ.otf"
+    },
+    {
+      "url": "https://armabagency.vercel.app/assets/ppneuemontreal-book-DWrvOlKa.otf",
+      "type": "font/otf",
+      "status": 200,
+      "name": "ppneuemontreal-book-DWrvOlKa.otf"
+    },
+    {
+      "url": "https://armabagency.vercel.app/assets/Aileron-Regular-SJAkIWJ7.otf",
+      "type": "font/otf",
+      "status": 200,
+      "name": "Aileron-Regular-SJAkIWJ7.otf"
+    },
+    {
+      "url": "https://armabagency.vercel.app/assets/ppneuemontreal-medium-Bc1YMBzw.otf",
+      "type": "font/otf",
+      "status": 200,
+      "name": "ppneuemontreal-medium-Bc1YMBzw.otf"
+    },
+    {
+      "url": "https://armabagency.vercel.app/assets/brand-logo-DRop20tn.png",
+      "type": "image/png",
+      "status": 200,
+      "name": "brand-logo-DRop20tn.png"
+    },
+    {
+      "url": "https://armabagency.vercel.app/assets/ppneuemontreal-bold-eYoqcLYb.otf",
+      "type": "font/otf",
+      "status": 200,
+      "name": "ppneuemontreal-bold-eYoqcLYb.otf"
+    },
+    {
+      "url": "https://armabagency.vercel.app/assets/brikken-co-2026-D7itAFMi.mp4",
+      "type": "video/mp4",
+      "status": 206,
+      "name": "brikken-co-2026-D7itAFMi.mp4"
+    },
+    {
+      "url": "https://armabagency.vercel.app/assets/logo-icon-HgSNcM-8.png",
+      "type": "image/png",
+      "status": 200,
+      "name": "logo-icon-HgSNcM-8.png"
+    },
+    {
+      "url": "https://armabagency.vercel.app/assets/brikken-co-2026-D7itAFMi.mp4",
+      "type": "video/mp4",
+      "status": 206,
+      "name": "brikken-co-2026-D7itAFMi.mp4"
+    },
+    {
+      "url": "https://randomuser.me/api/portraits/men/52.jpg",
+      "type": "image/jpeg",
+      "status": 200,
+      "name": "52.jpg"
+    },
+    {
+      "url": "https://randomuser.me/api/portraits/women/65.jpg",
+      "type": "image/jpeg",
+      "status": 200,
+      "name": "65.jpg"
+    },
+    {
+      "url": "https://randomuser.me/api/portraits/men/32.jpg",
+      "type": "image/jpeg",
+      "status": 200,
+      "name": "32.jpg"
+    },
+    {
+      "url": "https://randomuser.me/api/portraits/women/44.jpg",
+      "type": "image/jpeg",
+      "status": 200,
+      "name": "44.jpg"
+    },
+    {
+      "url": "https://randomuser.me/api/portraits/men/45.jpg",
+      "type": "image/jpeg",
+      "status": 200,
+      "name": "45.jpg"
+    },
+    {
+      "url": "https://randomuser.me/api/portraits/women/68.jpg",
+      "type": "image/jpeg",
+      "status": 200,
+      "name": "68.jpg"
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1000&auto=format&fit=crop",
+      "type": "image/avif",
+      "status": 200,
+      "name": "photo-1486406146926-c627a92ad1ab"
+    },
+    {
+      "url": "https://armabagency.vercel.app/assets/fuhsimarket-DEOcFvPg.jpg",
+      "type": "image/jpeg",
+      "status": 200,
+      "name": "fuhsimarket-DEOcFvPg.jpg"
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?q=80&w=1000&auto=format&fit=crop",
+      "type": "image/avif",
+      "status": 200,
+      "name": "photo-1581291518857-4e27b48ff24e"
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop",
+      "type": "image/avif",
+      "status": 200,
+      "name": "photo-1618005182384-a83a8bd57fbe"
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?q=80&w=1000&auto=format&fit=crop",
+      "type": "image/avif",
+      "status": 200,
+      "name": "photo-1467232004584-a241de8bcf5d"
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1547658719-da2b51169166?q=80&w=1000&auto=format&fit=crop",
+      "type": "image/avif",
+      "status": 200,
+      "name": "photo-1547658719-da2b51169166"
+    },
+    {
+      "url": "https://armabagency.vercel.app/assets/real-cover-photo-DrDUU4we.png",
+      "type": "image/png",
+      "status": 200,
+      "name": "real-cover-photo-DrDUU4we.png"
+    },
+    {
+      "url": "https://armabagency.vercel.app/assets/big-logo-KfToN5M_.png",
+      "type": "image/png",
+      "status": 200,
+      "name": "big-logo-KfToN5M_.png"
+    }
+  ]
+}
