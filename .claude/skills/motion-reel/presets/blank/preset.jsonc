@@ -1,0 +1,25 @@
+{
+  // Every field the skill reads. Copy this folder to presets/<your-brand> and fill it in.
+  "name": "blank",
+  "product": "Your Product",                 // used in docs and filenames
+  "url": "https://example.com",              // captured with scripts/capture.mjs
+  "hook": "One prompt.",                     // first 2 seconds, <= 5 words
+  "promise": "A whole team, built.",         // what the product does, <= 6 words
+  "proof": "5 at once",                      // one number that proves it
+  "cta": "Try it free",                      // last card
+  "bpm": 120,                                // measured again by beats.py
+  "formats": ["16x9", "9x16"],               // 16x9 1920x1080, 1x1 1080x1080, 4x5 1080x1350, 9x16 1080x1920
+  "colors": {
+    "canvas": "#F4F1EA",                     // background
+    "surface": "#FFFFFF",                    // cards and containers
+    "ink": "#15130F",                        // text
+    "accent": "#E8501C",                     // ONE accent. Measure it from the real logo.
+    "onAccent": "#FFFFFF"                    // text on the accent
+  },
+  "fonts": {
+    "display": "Inter, system-ui, sans-serif", // one display face
+    "ui": "Inter, system-ui, sans-serif"       // one UI face
+  },
+  "voiceover": "none",                       // none | fish-audio:<voice name>
+  "notes": ""                                // house rules for this brand
+}
