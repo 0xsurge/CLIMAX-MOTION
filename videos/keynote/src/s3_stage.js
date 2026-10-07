@@ -122,7 +122,7 @@ function buildS3() {
       if (heroOn) {
         const u = grow(t), x = lerp(HERO.x, PRINT.x, u), y = lerp(HERO.y, PRINT.y, u), w = lerp(HERO.w, PRINT.w, u), h = lerp(HERO.h, PRINT.h, u), r = lerp(HERO.r, PRINT.r, u);
         Object.assign(hero.style, { width: w + 'px', height: h + 'px', borderRadius: r + 'px', transform: `translate(${x}px,${y}px)`, backgroundSize: 'cover' });
-        heroTx.style.transform = `scale(${1 - 0.55 * u})`; heroTx.style.transformOrigin = '0 100%'; heroTx.style.opacity = 1 - clamp(u * 2);
+        heroTx.style.transform = `translateY(${(1 - sp(t, 19.62, 'heavy')) * 130}px) scale(${1 - 0.55 * u})`; heroTx.style.transformOrigin = '0 100%'; heroTx.style.opacity = 1 - clamp(u * 2);   // rises out of the hero's edge, never pops
         const fu = frameU(t), tm = 34 * fu, tf = 14 * fu, sizeBump = 1 + 0.04 * sp(t, T_SIZE, 'snappy') * 0 ;
         const rect = (e, d, c) => Object.assign(e.style, { width: w + 2 * d + 'px', height: h + 2 * d + 'px', transform: `translate(${x - d}px,${y - d}px)`, borderRadius: Math.max(0, r) + 'px' });
         rect(mat, tm); rect(molding, tm + tf); rect(molding2, tm + tf);

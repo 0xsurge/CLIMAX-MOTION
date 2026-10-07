@@ -44,3 +44,15 @@ Enlarged the pulled-back phone (78% -> 92%) and the photo grid tiles (280 -> 330
 - Liquid glass is an SVG displacement approximation with chromatic edges; it is not Apple's renderer.
 - The landing page in Safari uses the real nav pill and a typeset headline over the dropped photo; the real site's hero is not a photo.
 - Sound sync is placed by each effect's measured peak against the visual contact frame, with the song edited on measured beats; it has not been verified by listening.
+
+## Final render (round 9)
+- 1620 frames, 27.000 s, 1440x1440, 60 fps, H.264 yuv420p, CRF 16; chunks f0..f5 joined losslessly, seams invisible.
+- Pop scan on the final film: 0 isolated spikes. Blank frames: 0. Loop: first vs last frame 0.3/255 on the encoded mp4.
+- Audio: song edited on the measured 120.04 BPM grid, 57 downloaded Mixkit effects placed by measured peak/start (none synthesized). Mix = amix + alimiter 0.70, then two-pass loudnorm. Delivered file measures -14.2 LUFS integrated, -1.1 dBTP (the AAC encode adds about 0.4 dB over the pre-encode peak, so the limiter ceiling was lowered to hit -1 dBTP).
+- Scores (self-review, contact sheet + strip): hook 8, phone-size readability 8, motion quality 8, variety 8, brand accuracy 8 (brief's look, Armab content), sound sync 8 (placed by measurement, not verified by listening).
+
+## Known limits
+- Wall footage is a crop of the site's corridor photo (placeholder); the golden-hour print is the same photo graded warm.
+- Bento uses 5 site photos enlarged, so some tiles are soft.
+- Glass is an SVG displacement approximation, not true refraction; the glass-word "melt" is approximated.
+- Mixkit SFX and the song are not committed (licence); audio/sfx_manifest.json lists the ids to re-download.
