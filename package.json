@@ -1,17 +1,14 @@
 {
-  "name": "pdoomvideo",
+  "name": "climax-motion-studio",
+  "private": true,
   "version": "1.0.0",
-  "main": "index.js",
+  "type": "module",
+  "description": "Motion design studio — deterministic HTML/CSS scenes rendered frame-by-frame via Playwright, encoded with ffmpeg.",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "render": "node studio/render.mjs",
+    "frames": "node studio/render.mjs --frames-only"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "p5": "^2.3.3",
-    "p5.brush": "^2.2.3",
-    "puppeteer-core": "^25.11.0"
+  "devDependencies": {
+    "playwright": "^1.63.0"
   }
 }
