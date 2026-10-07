@@ -15,3 +15,9 @@ videos/*/assets/fonts/
 videos/*/audio/*.mp3
 videos/*/audio/sfx/
 videos/keynote/assets/fonts/*.woff2
+videos/keynote/review/*
+!videos/keynote/review/still_*.png
+!videos/keynote/review/stills_sheet.png
+!videos/keynote/review/beats_a.png
+!videos/keynote/review/r1/
+videos/keynote/review/r1/loop.mp4

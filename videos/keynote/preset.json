@@ -1,0 +1,26 @@
+{
+  "name": "apple-ui",
+  "product": "Motion Portfolio",
+  "url": "",
+  "hook": "Made in code.",
+  "promise": "Every frame is a function of time.",
+  "proof": "0 keyframes",
+  "cta": "Motion, in code.",
+  "bpm": 120,
+  "formats": [
+    "16x9"
+  ],
+  "colors": {
+    "canvas": "#F5F5F7",
+    "surface": "#FFFFFF",
+    "ink": "#1D1D1F",
+    "accent": "#0071E3",
+    "onAccent": "#FFFFFF"
+  },
+  "fonts": {
+    "display": "'Inter Tight', system-ui, sans-serif",
+    "ui": "'Inter', system-ui, sans-serif"
+  },
+  "voiceover": "none",
+  "notes": "Apple-style UI: light canvas, white cards with soft shadows, continuous corner radii, one blue accent, a black Dynamic Island that persists above every scene. Inter is the open stand-in for SF Pro (SF is not redistributable)."
+}
