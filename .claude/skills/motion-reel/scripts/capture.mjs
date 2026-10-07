@@ -29,6 +29,7 @@ page.on('response', async r => {
 });
 await page.goto(url, { waitUntil: 'networkidle', timeout: 45000 });
 await page.evaluate(() => document.fonts.ready); await page.waitForTimeout(1500);
+await page.getByRole('button', { name: /^(decline|reject|accept|got it|ok)/i }).first().waitFor({ timeout: 6000 }).catch(() => {});   // cookie banners often appear late
 for (const label of ['Decline', 'Reject', 'Accept', 'Got it', 'OK']) { const b = page.getByRole('button', { name: new RegExp('^' + label, 'i') }).first(); if (await b.count()) { try { await b.click({ timeout: 1500 }); break; } catch {} } }
 await page.waitForTimeout(600);
 // scroll once so lazy content and scroll-triggered reveals render

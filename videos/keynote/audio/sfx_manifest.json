@@ -1,0 +1,370 @@
+{
+ "license": "Mixkit Sound Effects Free License (https://mixkit.co/license/#sfxFree): free for commercial and non-commercial use, no attribution; do not redistribute the files on their own.",
+ "events": {
+  "squeeze": 3005,
+  "dot_to_pill": 2358,
+  "label_rise": 2533,
+  "click": 1109,
+  "iris_close": 1432,
+  "iris_open": 1430,
+  "circle_to_square": 2573,
+  "grid_unfold": 1530,
+  "grid_plus": 1104,
+  "bento_reflow": 3120,
+  "zoom_in": 2618,
+  "drop_hit": 2299,
+  "drop_impact": 2902,
+  "glass_letter_a": 2356,
+  "glass_letter_b": 2354,
+  "droplet": 1317,
+  "toolbar_stretch": 2621,
+  "slider_tick": 2568,
+  "relight_sweep": 2638,
+  "lens": 3083,
+  "orb_lift": 2350,
+  "orb_expand": 2578,
+  "clock_tick": 2575,
+  "player_stretch": 2577,
+  "bezel_grow": 3120,
+  "island_stretch": 3000,
+  "island_pinch": 2925,
+  "island_fly": 2637,
+  "blind_roll": 1524,
+  "long_press": 2585,
+  "drag": 2380,
+  "page_push": 2627,
+  "drop_item": 3088,
+  "scroll": 2632,
+  "paint": 2998,
+  "pick": 2573,
+  "button_fly": 2623,
+  "ordered": 2870,
+  "printing": 2542,
+  "route": 2732,
+  "delivered": 3109,
+  "flood": 2297,
+  "flood_hit": 2295,
+  "contract": 2916,
+  "hang": 2182,
+  "iris_close2": 1431,
+  "return_hit": 2299,
+  "return_sparkle": 3082
+ },
+ "files": {
+  "1104": {
+   "title": "Page turn single",
+   "url": "https://assets.mixkit.co/active_storage/sfx/1104/1104-preview.mp3",
+   "file": "audio/sfx/1104.mp3",
+   "ok": true,
+   "dur": 0.496327
+  },
+  "1109": {
+   "title": "Select click",
+   "url": "https://assets.mixkit.co/active_storage/sfx/1109/1109-preview.mp3",
+   "file": "audio/sfx/1109.mp3",
+   "ok": true,
+   "dur": 1.149388
+  },
+  "1317": {
+   "title": "Water bubble",
+   "url": "https://assets.mixkit.co/active_storage/sfx/1317/1317-preview.mp3",
+   "file": "audio/sfx/1317.mp3",
+   "ok": true,
+   "dur": 0.470204
+  },
+  "1430": {
+   "title": "Camera shutter hard click",
+   "url": "https://assets.mixkit.co/active_storage/sfx/1430/1430-preview.mp3",
+   "file": "audio/sfx/1430.mp3",
+   "ok": true,
+   "dur": 0.679184
+  },
+  "1431": {
+   "title": "Camera long shutter",
+   "url": "https://assets.mixkit.co/active_storage/sfx/1431/1431-preview.mp3",
+   "file": "audio/sfx/1431.mp3",
+   "ok": true,
+   "dur": 0.862041
+  },
+  "1432": {
+   "title": "Camera digital shutter",
+   "url": "https://assets.mixkit.co/active_storage/sfx/1432/1432-preview.mp3",
+   "file": "audio/sfx/1432.mp3",
+   "ok": true,
+   "dur": 1.541224
+  },
+  "1524": {
+   "title": "Cabinet door slide",
+   "url": "https://assets.mixkit.co/active_storage/sfx/1524/1524-preview.mp3",
+   "file": "audio/sfx/1524.mp3",
+   "ok": true,
+   "dur": 1.410612
+  },
+  "1530": {
+   "title": "Paper slide",
+   "url": "https://assets.mixkit.co/active_storage/sfx/1530/1530-preview.mp3",
+   "file": "audio/sfx/1530.mp3",
+   "ok": true,
+   "dur": 1.123265
+  },
+  "2182": {
+   "title": "Wood hard hit",
+   "url": "https://assets.mixkit.co/active_storage/sfx/2182/2182-preview.mp3",
+   "file": "audio/sfx/2182.mp3",
+   "ok": true,
+   "dur": 0.444082
+  },
+  "2295": {
+   "title": "Pulsating bass transition",
+   "url": "https://assets.mixkit.co/active_storage/sfx/2295/2295-preview.mp3",
+   "file": "audio/sfx/2295.mp3",
+   "ok": true,
+   "dur": 7.340408
+  },
+  "2297": {
+   "title": "Bass rumble hum",
+   "url": "https://assets.mixkit.co/active_storage/sfx/2297/2297-preview.mp3",
+   "file": "audio/sfx/2297.mp3",
+   "ok": true,
+   "dur": 7.026939
+  },
+  "2299": {
+   "title": "Short bass hit",
+   "url": "https://assets.mixkit.co/active_storage/sfx/2299/2299-preview.mp3",
+   "file": "audio/sfx/2299.mp3",
+   "ok": true,
+   "dur": 1.149388
+  },
+  "2350": {
+   "title": "Magic sparkle whoosh",
+   "url": "https://assets.mixkit.co/active_storage/sfx/2350/2350-preview.mp3",
+   "file": "audio/sfx/2350.mp3",
+   "ok": true,
+   "dur": 3.526531
+  },
+  "2354": {
+   "title": "Message pop alert",
+   "url": "https://assets.mixkit.co/active_storage/sfx/2354/2354-preview.mp3",
+   "file": "audio/sfx/2354.mp3",
+   "ok": true,
+   "dur": 1.097143
+  },
+  "2356": {
+   "title": "Dry pop up notification alert",
+   "url": "https://assets.mixkit.co/active_storage/sfx/2356/2356-preview.mp3",
+   "file": "audio/sfx/2356.mp3",
+   "ok": true,
+   "dur": 0.339592
+  },
+  "2358": {
+   "title": "Long pop",
+   "url": "https://assets.mixkit.co/active_storage/sfx/2358/2358-preview.mp3",
+   "file": "audio/sfx/2358.mp3",
+   "ok": true,
+   "dur": 0.522449
+  },
+  "2380": {
+   "title": "Paper quick movement",
+   "url": "https://assets.mixkit.co/active_storage/sfx/2380/2380-preview.mp3",
+   "file": "audio/sfx/2380.mp3",
+   "ok": true,
+   "dur": 0.940408
+  },
+  "2533": {
+   "title": "Single key type",
+   "url": "https://assets.mixkit.co/active_storage/sfx/2533/2533-preview.mp3",
+   "file": "audio/sfx/2533.mp3",
+   "ok": true,
+   "dur": 1.253878
+  },
+  "2542": {
+   "title": "Hard single key press in a laptop",
+   "url": "https://assets.mixkit.co/active_storage/sfx/2542/2542-preview.mp3",
+   "file": "audio/sfx/2542.mp3",
+   "ok": true,
+   "dur": 0.339592
+  },
+  "2568": {
+   "title": "Cool interface click tone",
+   "url": "https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3",
+   "file": "audio/sfx/2568.mp3",
+   "ok": true,
+   "dur": 0.235102
+  },
+  "2573": {
+   "title": "Interface option select",
+   "url": "https://assets.mixkit.co/active_storage/sfx/2573/2573-preview.mp3",
+   "file": "audio/sfx/2573.mp3",
+   "ok": true,
+   "dur": 1.593469
+  },
+  "2575": {
+   "title": "Software interface back",
+   "url": "https://assets.mixkit.co/active_storage/sfx/2575/2575-preview.mp3",
+   "file": "audio/sfx/2575.mp3",
+   "ok": true,
+   "dur": 1.358367
+  },
+  "2577": {
+   "title": "Interface device click",
+   "url": "https://assets.mixkit.co/active_storage/sfx/2577/2577-preview.mp3",
+   "file": "audio/sfx/2577.mp3",
+   "ok": true,
+   "dur": 1.097143
+  },
+  "2578": {
+   "title": "Opening software interface",
+   "url": "https://assets.mixkit.co/active_storage/sfx/2578/2578-preview.mp3",
+   "file": "audio/sfx/2578.mp3",
+   "ok": true,
+   "dur": 1.17551
+  },
+  "2585": {
+   "title": "On or off light switch tap",
+   "url": "https://assets.mixkit.co/active_storage/sfx/2585/2585-preview.mp3",
+   "file": "audio/sfx/2585.mp3",
+   "ok": true,
+   "dur": 1.149388
+  },
+  "2618": {
+   "title": "User interface zoom in",
+   "url": "https://assets.mixkit.co/active_storage/sfx/2618/2618-preview.mp3",
+   "file": "audio/sfx/2618.mp3",
+   "ok": true,
+   "dur": 0.705306
+  },
+  "2621": {
+   "title": "Ui zoom in, long sound",
+   "url": "https://assets.mixkit.co/active_storage/sfx/2621/2621-preview.mp3",
+   "file": "audio/sfx/2621.mp3",
+   "ok": true,
+   "dur": 1.17551
+  },
+  "2623": {
+   "title": "Ghostly whoosh passing",
+   "url": "https://assets.mixkit.co/active_storage/sfx/2623/2623-preview.mp3",
+   "file": "audio/sfx/2623.mp3",
+   "ok": true,
+   "dur": 3.787755
+  },
+  "2627": {
+   "title": "Fast swipe zoom",
+   "url": "https://assets.mixkit.co/active_storage/sfx/2627/2627-preview.mp3",
+   "file": "audio/sfx/2627.mp3",
+   "ok": true,
+   "dur": 1.097143
+  },
+  "2632": {
+   "title": "Whoosh wind sweep",
+   "url": "https://assets.mixkit.co/active_storage/sfx/2632/2632-preview.mp3",
+   "file": "audio/sfx/2632.mp3",
+   "ok": true,
+   "dur": 1.201633
+  },
+  "2637": {
+   "title": "Fast air transition sweep",
+   "url": "https://assets.mixkit.co/active_storage/sfx/2637/2637-preview.mp3",
+   "file": "audio/sfx/2637.mp3",
+   "ok": true,
+   "dur": 0.992653
+  },
+  "2638": {
+   "title": "Magic transition sweep presentation",
+   "url": "https://assets.mixkit.co/active_storage/sfx/2638/2638-preview.mp3",
+   "file": "audio/sfx/2638.mp3",
+   "ok": true,
+   "dur": 3.996735
+  },
+  "2732": {
+   "title": "Motorcycle hum passing by",
+   "url": "https://assets.mixkit.co/active_storage/sfx/2732/2732-preview.mp3",
+   "file": "audio/sfx/2732.mp3",
+   "ok": true,
+   "dur": 7.392653
+  },
+  "2870": {
+   "title": "Correct answer tone",
+   "url": "https://assets.mixkit.co/active_storage/sfx/2870/2870-preview.mp3",
+   "file": "audio/sfx/2870.mp3",
+   "ok": true,
+   "dur": 2.011429
+  },
+  "2902": {
+   "title": "Movie impact intro presentation",
+   "url": "https://assets.mixkit.co/active_storage/sfx/2902/2902-preview.mp3",
+   "file": "audio/sfx/2902.mp3",
+   "ok": true,
+   "dur": 6.034286
+  },
+  "2916": {
+   "title": "Movie impact transition",
+   "url": "https://assets.mixkit.co/active_storage/sfx/2916/2916-preview.mp3",
+   "file": "audio/sfx/2916.mp3",
+   "ok": true,
+   "dur": 8.986122
+  },
+  "2925": {
+   "title": "Soap bubble sound",
+   "url": "https://assets.mixkit.co/active_storage/sfx/2925/2925-preview.mp3",
+   "file": "audio/sfx/2925.mp3",
+   "ok": true,
+   "dur": 1.17551
+  },
+  "2998": {
+   "title": "Pen marker line",
+   "url": "https://assets.mixkit.co/active_storage/sfx/2998/2998-preview.mp3",
+   "file": "audio/sfx/2998.mp3",
+   "ok": true,
+   "dur": 1.28
+  },
+  "3000": {
+   "title": "Liquid bubble",
+   "url": "https://assets.mixkit.co/active_storage/sfx/3000/3000-preview.mp3",
+   "file": "audio/sfx/3000.mp3",
+   "ok": true,
+   "dur": 1.097143
+  },
+  "3005": {
+   "title": "Explainer video pops whoosh light pop",
+   "url": "https://assets.mixkit.co/active_storage/sfx/3005/3005-preview.mp3",
+   "file": "audio/sfx/3005.mp3",
+   "ok": true,
+   "dur": 0.20898
+  },
+  "3082": {
+   "title": "Magic sparkle poof hit",
+   "url": "https://assets.mixkit.co/active_storage/sfx/3082/3082-preview.mp3",
+   "file": "audio/sfx/3082.mp3",
+   "ok": true,
+   "dur": 3.239184
+  },
+  "3083": {
+   "title": "Magic sparkle touch",
+   "url": "https://assets.mixkit.co/active_storage/sfx/3083/3083-preview.mp3",
+   "file": "audio/sfx/3083.mp3",
+   "ok": true,
+   "dur": 2.377143
+  },
+  "3088": {
+   "title": "Tv remote control or plastic toy drop",
+   "url": "https://assets.mixkit.co/active_storage/sfx/3088/3088-preview.mp3",
+   "file": "audio/sfx/3088.mp3",
+   "ok": true,
+   "dur": 1.28
+  },
+  "3109": {
+   "title": "Relaxing bell chime",
+   "url": "https://assets.mixkit.co/active_storage/sfx/3109/3109-preview.mp3",
+   "file": "audio/sfx/3109.mp3",
+   "ok": true,
+   "dur": 1.724082
+  },
+  "3120": {
+   "title": "Technology transition slide",
+   "url": "https://assets.mixkit.co/active_storage/sfx/3120/3120-preview.mp3",
+   "file": "audio/sfx/3120.mp3",
+   "ok": true,
+   "dur": 1.697959
+  }
+ }
+}

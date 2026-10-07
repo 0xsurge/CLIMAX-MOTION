@@ -1,0 +1,158 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>keynote stills</title>
+<style>
+@font-face{font-family:'Archivo';src:url(assets/fonts/archivo-wdth.woff2) format('woff2');font-weight:100 900;font-stretch:62% 125%}
+@font-face{font-family:'Geist';src:url(assets/fonts/geist.woff2) format('woff2');font-weight:100 900}
+html,body{margin:0;background:#F4F0EA;overflow:hidden}
+#stage{position:relative;width:1440px;height:1440px;overflow:hidden;background:#F4F0EA}
+#stage *{position:absolute;box-sizing:border-box;margin:0;padding:0}
+.ui{font-family:'Geist',system-ui,sans-serif;white-space:nowrap}
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<script>
+window.__ready = false;
+const S = document.getElementById('stage'), W = 1440;
+const q = new URLSearchParams(location.search), scene = q.get('s') || 'open';
+const INK = '#0A0A0A', CANVAS = '#F4F0EA';
+const px = v => (typeof v === 'number' ? v + 'px' : v);
+function mk(parent, o = {}, html) { const e = document.createElement('div'); for (const k in o) e.style[k] = ['left','top','width','height','borderRadius','fontSize'].includes(k) ? px(o[k]) : o[k]; if (html != null) e.innerHTML = html; parent.appendChild(e); return e; }
+const load = src => new Promise(r => { const i = new Image(); i.onload = i.onerror = () => r(i); i.src = src; });
+
+// ---------- liquid glass: a clone of the scene behind, refracted through a rounded-rect distance-field map ----------
+let gid = 0;
+function glassMap(w, h, r, bevel) {
+  const c = document.createElement('canvas'); c.width = w; c.height = h; const g = c.getContext('2d'), im = g.createImageData(w, h);
+  const hx = w / 2, hy = h / 2, ox = hx - r, oy = hy - r;
+  const sdf = (x, y) => { const qx = Math.abs(x - hx) - ox, qy = Math.abs(y - hy) - oy; return Math.hypot(Math.max(qx, 0), Math.max(qy, 0)) + Math.min(Math.max(qx, qy), 0) - r; };
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+    const d = -sdf(x + 0.5, y + 0.5);                     // distance inside the shape
+    const gx = (sdf(x + 1.5, y + 0.5) - sdf(x - 0.5, y + 0.5)) / 2, gy = (sdf(x + 0.5, y + 1.5) - sdf(x + 0.5, y - 0.5)) / 2;
+    const t = Math.min(1, Math.max(0, d / bevel)), m = d < 0 ? 0 : Math.pow(1 - t, 2.2);   // strongest at the rim, none in the middle
+    const i = (y * w + x) * 4; im.data[i] = 128 - 127 * gx * m; im.data[i + 1] = 128 - 127 * gy * m; im.data[i + 2] = 128; im.data[i + 3] = 255;
+  }
+  g.putImageData(im, 0, 0); return c.toDataURL('image/png');
+}
+function glass(stage, bg, x, y, w, h, r, o = {}) {
+  const id = 'gf' + (gid++), bevel = o.bevel || Math.min(h / 2, 46), sc = o.scale || 70;
+  const svg = `<svg width="0" height="0" style="position:absolute"><filter id="${id}" x="0" y="0" width="${w}" height="${h}" filterUnits="userSpaceOnUse" primitiveUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+    <feImage href="${glassMap(w, h, r, bevel)}" x="0" y="0" width="${w}" height="${h}" result="map" preserveAspectRatio="none"/>
+    <feDisplacementMap in="SourceGraphic" in2="map" scale="${sc}" xChannelSelector="R" yChannelSelector="G" result="dr"/>
+    <feColorMatrix in="dr" type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="R"/>
+    <feDisplacementMap in="SourceGraphic" in2="map" scale="${sc * 1.07}" xChannelSelector="R" yChannelSelector="G" result="dg"/>
+    <feColorMatrix in="dg" type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="G"/>
+    <feDisplacementMap in="SourceGraphic" in2="map" scale="${sc * 1.14}" xChannelSelector="R" yChannelSelector="G" result="db"/>
+    <feColorMatrix in="db" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="B"/>
+    <feBlend in="R" in2="G" mode="screen" result="RG"/><feBlend in="RG" in2="B" mode="screen" result="RGB"/>
+    <feColorMatrix in="RGB" type="saturate" values="1.35"/>
+  </filter></svg>`;
+  const el = mk(stage, { left: x, top: y, width: w, height: h, borderRadius: r, overflow: 'hidden', boxShadow: '0 18px 44px rgba(0,0,0,.28), 0 2px 8px rgba(0,0,0,.18)' }, svg);
+  const inner = mk(el, { left: 0, top: 0, width: w, height: h, filter: `url(#${id})` });
+  const clone = bg.cloneNode(true); clone.style.left = -x + 'px'; clone.style.top = -y + 'px'; inner.appendChild(clone);
+  mk(el, { left: 0, top: 0, width: w, height: h, borderRadius: r, background: o.tint || 'rgba(255,255,255,.10)' });
+  mk(el, { left: 0, top: 0, width: w, height: h, borderRadius: r, boxShadow: 'inset 0 0 0 1.5px rgba(255,255,255,.42), inset 0 10px 16px -8px rgba(255,255,255,.75), inset 0 -12px 20px -12px rgba(0,0,0,.30), inset 10px 0 18px -14px rgba(255,255,255,.35)' });
+  mk(el, { left: r * 0.5, top: 3, width: w - r, height: Math.min(26, h * .22), borderRadius: 999, background: 'linear-gradient(180deg,rgba(255,255,255,.38),rgba(255,255,255,0))', filter: 'blur(1px)' });
+  return el;
+}
+const ICON = {
+  sun: '<circle cx="12" cy="12" r="4.4" fill="none" stroke="#fff" stroke-width="2"/>' + Array.from({ length: 8 }, (_, i) => { const a = i * Math.PI / 4; return `<path d="M${12 + Math.cos(a) * 7.6} ${12 + Math.sin(a) * 7.6}L${12 + Math.cos(a) * 10} ${12 + Math.sin(a) * 10}" stroke="#fff" stroke-width="2" stroke-linecap="round"/>`; }).join(''),
+  crop: '<path d="M7 2v15h15M2 7h15v15" fill="none" stroke="#fff" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>',
+  adjust: '<g fill="none" stroke="#fff" stroke-width="2.1" stroke-linecap="round"><path d="M4 7h9M18 7h2M4 17h2M11 17h9"/><circle cx="15.5" cy="7" r="2.4"/><circle cx="8.5" cy="17" r="2.4"/></g>',
+  filter: '<g fill="none" stroke="#fff" stroke-width="2"><circle cx="9" cy="9" r="5.6"/><circle cx="15.4" cy="9" r="5.6"/><circle cx="12.2" cy="14.8" r="5.6"/></g>',
+  markup: '<path d="M4 20l4-1 11-11-3-3L5 16z M14 6l3 3" fill="none" stroke="#fff" stroke-width="2.1" stroke-linejoin="round" stroke-linecap="round"/>',
+};
+const ico = (n, s = 64) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" style="position:absolute;left:0;top:0">${ICON[n]}</svg>`;
+const GOLD = 'sepia(.45) saturate(1.55) hue-rotate(-14deg) brightness(.97) contrast(1.06)';
+function photoBg(img, o = {}) {   // a full-square photo layer (cover), optional golden-hour reveal to the left of splitX
+  const bg = mk(S, { left: 0, top: 0, width: W, height: W, overflow: 'hidden', background: '#000' });
+  const sc = W / img.naturalHeight, w = img.naturalWidth * sc, off = o.offX ?? (W - w) / 2;
+  const layer = (f) => mk(bg, { left: off, top: 0, width: w, height: W, backgroundImage: `url(${img.src})`, backgroundSize: '100% 100%', filter: f || 'none' });
+  layer();
+  if (o.splitX != null) { const g = mk(bg, { left: 0, top: 0, width: o.splitX, height: W, overflow: 'hidden' }); const gl = mk(g, { left: off, top: 0, width: w, height: W, backgroundImage: `url(${img.src})`, backgroundSize: '100% 100%', filter: GOLD }); mk(g, { left: 0, top: 0, width: o.splitX, height: W, background: 'rgba(255,170,70,.26)', mixBlendMode: 'multiply' }); }
+  return bg;
+}
+
+(async () => {
+  await document.fonts.load("800 100px 'Archivo'"); await document.fonts.load("600 40px 'Geist'");
+  const corridor = await load('assets/img/corridor.png'), hero = await load('assets/img/site_hero.png'), nav = await load('assets/img/nav_pill.png');
+
+  if (scene === 'open') {
+    // beat 4: the wordmark has squeezed toward its period, the dot has grown into a black pill, the label is rising inside it
+    const f = 0.5, size = 360, base = 760;                  // squeeze factor (wdth 62), font size, baseline
+    const word = mk(S, { left: 0, top: base - size * 0.92, height: size, whiteSpace: 'nowrap', fontFamily: 'Archivo', fontWeight: 800, fontSize: size, lineHeight: 1, letterSpacing: (-0.04 * f) + 'em', color: INK,
+      fontVariationSettings: `"wdth" ${Math.max(62, 125 * f)}, "wght" 800` }, 'Armab');
+    const ww = word.getBoundingClientRect().width, gap = 26, pillW = 420, pillH = 205, total = ww + gap + pillW, x0 = (W - total) / 2;
+    word.style.left = x0 + 'px';
+    const pill = mk(S, { left: x0 + ww + gap, top: base - pillH - 4, width: pillW, height: pillH, borderRadius: pillH / 2, background: INK, overflow: 'hidden' });
+    mk(pill, { left: 0, top: 58, width: pillW, textAlign: 'center', color: '#fff', fontFamily: 'Geist', fontWeight: 600, fontSize: 72, letterSpacing: '-0.02em', transform: 'translateY(10px)' }, 'Our work');
+  }
+
+  if (scene === 'glass') {
+    // beat ~23: dragging the exposure slider relights the photo from day to golden hour; knob is a glass lens
+    const SWd = 880, KX = (W - SWd) / 2 + SWd * 0.52;
+    const bg = photoBg(corridor, { splitX: KX, offX: -980 });
+    glass(S, bg, 128, 1130, 1184, 190, 95, { scale: 62, bevel: 52 });
+    const tb = mk(S, { left: 128, top: 1130, width: 1184, height: 190 });
+    const slots = ['sun', 'crop', 'adjust', 'filter', 'markup'];
+    slots.forEach((n, i) => { const cx = 128 + 66 + i * 238; if (n === 'adjust') mk(tb, { left: cx - 40 - 128 + 0, top: 24, width: 196, height: 142, borderRadius: 71, background: 'rgba(255,255,255,.26)', boxShadow: 'inset 0 0 0 1.2px rgba(255,255,255,.4)' }); });
+    slots.forEach((n, i) => mk(tb, { left: 66 + i * 238 + (i === 2 ? 0 : 0), top: 63, width: 64, height: 64 }, ico(n, 64)));
+    // the slider the adjust icon turned the toolbar into, with a lens knob held at 52%
+    const sw = 880, sh = 84, sx = (W - sw) / 2, sy = 880;
+    glass(S, bg, sx, sy, sw, sh, sh / 2, { scale: 40, bevel: 38 });
+    const kx = sx + sw * 0.52;
+    mk(S, { left: sx + 20, top: sy + sh / 2 - 6, width: kx - sx - 20, height: 12, borderRadius: 6, background: 'rgba(255,255,255,.92)' });
+    mk(S, { left: kx, top: sy + sh / 2 - 6, width: sx + sw - 20 - kx, height: 12, borderRadius: 6, background: 'rgba(255,255,255,.28)' });
+    glass(S, bg, kx - 78, sy + sh / 2 - 78, 156, 156, 78, { scale: 90, bevel: 72, tint: 'rgba(255,255,255,.05)' });
+  }
+
+  if (scene === 'stage') {
+    // beat ~38: the island has pinched off the phone, flown over and grown into a Mac window; the real site is the page
+    mk(S, { left: 0, top: 0, width: W, height: W, background: CANVAS });
+    const px0 = -170, py0 = 300, pw = 500, ph = 1010;
+    const phone = mk(S, { left: px0, top: py0, width: pw, height: ph, borderRadius: 88, background: '#0b0b0c', boxShadow: '0 40px 80px rgba(0,0,0,.28), inset 0 0 0 3px #2a2a2c' });
+    const scr = mk(phone, { left: 16, top: 16, width: pw - 32, height: ph - 32, borderRadius: 74, overflow: 'hidden', backgroundImage: 'url(assets/img/corridor.png)', backgroundSize: 'auto 100%', backgroundPosition: '56% 0' });
+    mk(scr, { left: 0, top: 170, width: pw - 32, textAlign: 'center', color: '#fff', fontFamily: 'Geist', fontWeight: 300, fontSize: 190, letterSpacing: '-0.04em', textShadow: '0 4px 30px rgba(0,0,0,.25)' }, '9:41');
+    mk(phone, { left: pw / 2 - 74, top: 34, width: 148, height: 42, borderRadius: 21, background: '#000' });          // the island, still attached
+    // the island, pinched off and flying: circles run through a blur + alpha threshold (goo), then drawn sharp
+    mk(S, { left: 0, top: 0, width: 0, height: 0 }, `<svg width="0" height="0" style="position:absolute"><filter id="goo"><feGaussianBlur stdDeviation="9" result="b"/><feColorMatrix in="b" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 30 -12" result="g"/><feComposite in="SourceGraphic" in2="g" operator="atop"/></filter></svg>`);
+    const goo = mk(S, { left: 0, top: 0, width: W, height: W, filter: 'url(#goo)' });
+    [[352, 380, 40], [296, 388, 30], [248, 396, 21], [210, 402, 14], [184, 405, 9]].forEach(([cx, cy, r]) => mk(goo, { left: cx - r, top: cy - r, width: r * 2, height: r * 2, borderRadius: r, background: INK }));
+    // Mac window
+    const mx = 470, my = 330, mw = 960, mh = 108 + 600;
+    const win = mk(S, { left: mx, top: my, width: mw, height: mh, borderRadius: 32, background: '#fff', overflow: 'hidden', boxShadow: '0 50px 100px rgba(0,0,0,.30), 0 0 0 1px rgba(0,0,0,.10)' });
+    mk(win, { left: 0, top: 0, width: mw, height: 108, background: '#F2F1EF', borderBottom: '1px solid rgba(0,0,0,.08)' });
+    [['#FF5F57', 32], ['#FEBC2E', 62], ['#28C840', 92]].forEach(([c, x]) => mk(win, { left: x, top: 24, width: 15, height: 15, borderRadius: 8, background: c }));
+    [['Opus', 150, false], ['armabagency.vercel.app', 150 + 232, true], ['Photos', 150 + 464, false]].forEach(([t, x, on]) => { const tab = mk(win, { left: x, top: 13, width: 222, height: 36, borderRadius: 10, background: on ? '#fff' : 'rgba(0,0,0,.05)', boxShadow: on ? '0 1px 3px rgba(0,0,0,.12)' : 'none' }); mk(tab, { left: 14, top: 9, color: '#222', fontFamily: 'Geist', fontWeight: 500, fontSize: 16, whiteSpace: 'nowrap', overflow: 'hidden', width: 190 }, t); });
+    const bar = mk(win, { left: (mw - 600) / 2, top: 61, width: 600, height: 38, borderRadius: 19, background: 'rgba(0,0,0,.06)' });
+    mk(bar, { left: 0, top: 9, width: 600, textAlign: 'center', fontFamily: 'Geist', fontWeight: 500, fontSize: 17, color: '#333' }, 'armabagency.vercel.app');
+    const page = mk(win, { left: 0, top: 108, width: mw, height: mh - 108, overflow: 'hidden', background: '#F3F3EF' });
+    mk(page, { left: 0, top: 0, width: mw, height: mw * 900 / 1440, backgroundImage: `url(${hero.src})`, backgroundSize: '100% 100%' });
+    // the site's hero video does not decode in headless Chromium (renders black): paint it out with the page's own background
+    mk(page, { left: mw * 1060 / 1440, top: mw * 636 / 1440, width: mw * 380 / 1440, height: mw * 290 / 1440, background: '#F3F3EF' });
+    // the wallpaper being dragged out of the phone toward the tab, held under a finger
+    mk(S, { left: 250, top: 760, width: 210, height: 210, borderRadius: 42, backgroundImage: 'url(assets/img/corridor.png)', backgroundSize: 'auto 100%', backgroundPosition: '60% 0', boxShadow: '0 34px 64px rgba(0,0,0,.35), 0 0 0 4px rgba(255,255,255,.92)', transform: 'rotate(-6deg)' });
+  }
+
+  if (scene === 'wall') {
+    // beat ~52: the delivered print hangs on the wall (stand-in: the site's corridor wall, no moving shadows yet)
+    const wall = mk(S, { left: 0, top: 0, width: W, height: W, overflow: 'hidden', background: '#9aa28f' });
+    const sc = W / corridor.naturalHeight, ww = corridor.naturalWidth * sc;
+    mk(wall, { left: -(ww - W) * 0.88, top: 0, width: ww, height: W, backgroundImage: `url(${corridor.src})`, backgroundSize: '100% 100%', filter: 'saturate(.9) brightness(.98)' });
+    const fw = 520, fh = 680, fx = (W - fw) / 2 + 20, fy = 330;
+    mk(S, { left: fx + 26, top: fy + 44, width: fw, height: fh, background: 'rgba(25,30,20,.34)', filter: 'blur(26px)' });          // cast shadow
+    const frame = mk(S, { left: fx, top: fy, width: fw, height: fh, background: '#0b0b0b', boxShadow: '0 2px 6px rgba(0,0,0,.4), inset 0 0 0 2px #262626' });
+    const mat = mk(frame, { left: 30, top: 30, width: fw - 60, height: fh - 60, background: '#F6F3ED', boxShadow: 'inset 0 0 0 1px rgba(0,0,0,.08), inset 0 3px 8px rgba(0,0,0,.12)' });
+    const art = mk(mat, { left: 48, top: 48, width: fw - 60 - 96, height: fh - 60 - 96, overflow: 'hidden', boxShadow: '0 0 0 1px rgba(0,0,0,.18)' });
+    mk(art, { left: -90, top: 0, width: 1500, height: fh - 156, backgroundImage: `url(${corridor.src})`, backgroundSize: 'auto 100%', backgroundPosition: '20% 0', filter: GOLD });
+    mk(art, { left: 0, top: 0, width: fw - 156, height: fh - 156, background: 'rgba(255,170,70,.22)', mixBlendMode: 'multiply' });
+    mk(frame, { left: 0, top: 0, width: fw, height: 14, background: 'linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,0))' });
+  }
+  window.__ready = true;
+})();
+</script>
+</body>
+</html>

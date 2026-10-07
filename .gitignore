@@ -12,3 +12,6 @@ videos/*/assets/shots/
 videos/*/assets/frames/
 videos/*/assets/img/
 videos/*/assets/fonts/
+videos/*/audio/*.mp3
+videos/*/audio/sfx/
+videos/keynote/assets/fonts/*.woff2
