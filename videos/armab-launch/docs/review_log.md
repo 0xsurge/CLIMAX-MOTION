@@ -22,6 +22,12 @@ Fixes: corner labels removed; hero line becomes three beats of the site's own co
 - Strip: no pops; the underline stretches from SERVICES to WORK during the push.
 - Defect found in the strip: the keyword "SCALABILITY" touched the "Web Design & Development" title. Moved the keywords outward.
 
+## Round 3 (final render, 60 fps, 8 subframes, four parallel chunks joined losslessly)
+- Output: 1800 frames, 30.000 s, H.264 yuv420p, -14.1 LUFS, true peak -2.2 dBTP, no blank frames, first-vs-last frame difference 0.2/255.
+- Chunk joins (frames 450, 900, 1350): frame-to-frame change across each join 0.06, 0.11 and 2.79 (out of 255) against neighbours of 0.00, 0.00 and 2.79: no visible seam.
+- Strip around the 14 s push: continuous motion blur, no pops; the nav underline stretches from SERVICES to WORK.
+- Final scores (builder's judgement from the sheets): hook 8, readability at 360 px 8 (headlines and row titles; the proof rows' body copy stays small), motion 8, variety 8, brand accuracy 9, composition 8, polish 8. Sound sync not scored: cues are placed from measured spring timings and were not measured against the finished audio.
+
 ## Not done / limits
 - 16:9 only.
 - Services rows, proof rows, nav pill and buttons are real crops of the live site; the hero wordmark and the headlines are typeset in the site's own fonts (PP Neue Montreal, Aileron) because they are plain type. Project images are the site's own images; Kitty and Opus use the site's cover photograph, because the cards on the live site are driven by a video that headless Chromium cannot decode, and the video itself is client footage (Brikken+Co) that was not used.
