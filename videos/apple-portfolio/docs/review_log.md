@@ -35,6 +35,9 @@ Fixes: every cue recomputed from the measured 50% point of its spring (snappy +5
 ## Round 3 (draft 3, key frames at the pushes)
 Pushes now show outgoing and incoming content overlapping in motion; no empty frame. Frame accuracy confirmed: frame 450 of the MP4 vs `seek(15.0)` differs by 0.33/255; a wrong-time control differs by 49.9/255.
 
+## Round 4 (final render)
+The 60 fps / 3-subframe render showed stepped ghost copies of fast motion on the camera pushes (peak about 12,000 px/s, steps about 36 px). Re-rendered with 8 subframes in four parallel chunks (concatenated losslessly): the blur is now continuous. Final checks: 1800 frames, 30.000 s, H.264 yuv420p, -14.1 LUFS, true peak -2.2 dBTP, no blank frames, first-vs-last frame difference 0.1/255.
+
 ## Not done / limits
 - 16:9 only. 9:16, 1:1 and 4:5 are not built; `film.js` uses fixed 1920x1080 coordinates and would need re-blocking per format.
 - Sound sync is placed by construction from spring timings and verified against the cue list, not by listening or by an audio-vs-picture measurement.
