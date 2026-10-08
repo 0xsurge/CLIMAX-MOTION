@@ -1,73 +1,73 @@
-<!doctype html><meta charset="utf-8"><title>DRIP VERSE stills</title>
+<!doctype html><meta charset="utf-8"><title>DRIP VERSE stills 16:9</title>
 <style>
 @font-face{font-family:Bodoni;src:url(assets/fonts/bodoni-normal.woff2);font-weight:400 600;font-style:normal}
 @font-face{font-family:Bodoni;src:url(assets/fonts/bodoni-italic.woff2);font-weight:400 600;font-style:italic}
 @font-face{font-family:Geist;src:url(assets/fonts/geist.woff2);font-weight:100 900}
-:root{--ink:#0B0B0C;--stone:#E6E2DA;--bone:#F3EFE8;--brass:#B8935A}
-html,body{margin:0;background:var(--ink)}
-#f{position:relative;width:1080px;height:1920px;overflow:hidden;background:var(--ink)}
+:root{--ink:#121214;--stone:#E3DED5;--bone:#F3EFE8;--brass:#B08A4E}
+html,body{margin:0;background:#888}
+#f{position:relative;width:1920px;height:1080px;overflow:hidden;background:var(--bone)}
 #f *{position:absolute;box-sizing:border-box}
-#f span{position:static}
-.card{border-radius:30px;overflow:hidden;background-size:cover;background-position:center;filter:saturate(.82) contrast(1.03) sepia(.07)}
+#f span,#f i,#f br{position:static}
 </style>
 <div id="f"></div>
 <script>
 const $=document.getElementById('f'), S=new URLSearchParams(location.search).get('s')||'hook';
-const P=n=>`assets/photos/${n}`;
 const h=(s)=>{$.insertAdjacentHTML('beforeend',s)};
-const rings=(cx,cy,rx0,n,gap,ratio,col,a0)=>{let s='';for(let i=0;i<n;i++){const rx=rx0+i*gap,ry=rx*ratio;s+=`<div style="left:${cx-rx}px;top:${cy-ry}px;width:${rx*2}px;height:${ry*2}px;border-radius:50%;border:${2.2-i*.18}px solid ${col};opacity:${a0*(1-i/n)};"></div>`}return s};
-const shadow=(cx,cy,w,h2,a)=>`<div style="left:${cx-w/2}px;top:${cy-h2/2}px;width:${w}px;height:${h2}px;border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,${a}),rgba(0,0,0,0));filter:blur(10px)"></div>`;
+const DIM={'adidas-niteball':[579,365],'axel-arigato':[688,394],'nb-550':[390,304],'nb-480':[577,470],'nike-af1':[707,607],'nike-zoom':[405,307]};
+const rings=(cx,cy,rx0,n,gap,ratio,col,a0)=>{let s='';for(let i=0;i<n;i++){const rx=rx0+i*gap,ry=rx*ratio;s+=`<div style="left:${cx-rx}px;top:${cy-ry}px;width:${rx*2}px;height:${ry*2}px;border-radius:50%;border:${2.4-i*.2}px solid ${col};opacity:${a0*(1-i/n)};"></div>`}return s};
+const shadow=(cx,cy,w,h2,a)=>`<div style="left:${cx-w/2}px;top:${cy-h2/2}px;width:${w}px;height:${h2}px;border-radius:50%;background:radial-gradient(closest-side,rgba(30,24,16,${a}),rgba(30,24,16,0));filter:blur(10px)"></div>`;
+// a floating shoe: cx, cy = centre, w = width, rot = degrees, blur/op = depth cues, refl = reflection strength
+const shoe=(n,cx,cy,w,rot=0,blur=0,op=1,refl=.15)=>{const [iw,ih]=DIM[n],hh=w*ih/iw,f=blur?`filter:blur(${blur}px);`:'';
+  return `<div style="left:${cx-w/2}px;top:${cy-hh/2}px;width:${w}px;height:${hh}px;opacity:${op};${f}transform:rotate(${rot}deg)">
+   <img src="assets/cut/${n}_c.png" style="left:0;top:0;width:${w}px;height:${hh}px;filter:drop-shadow(0 26px 30px rgba(40,32,20,.22))">
+   <img src="assets/cut/${n}_c.png" style="left:0;top:${hh+14}px;width:${w}px;height:${hh}px;transform:scaleY(-1);opacity:${refl};filter:blur(2.5px);-webkit-mask-image:linear-gradient(rgba(0,0,0,0),#000);mask-image:linear-gradient(to top,rgba(0,0,0,.9),rgba(0,0,0,0) 62%)"></div>`};
+const drop=(x,y,s=1)=>`<svg width="${60*s}" height="${90*s}" viewBox="0 0 60 90" style="left:${x-30*s}px;top:${y}px"><defs><radialGradient id="dg" cx=".35" cy=".62" r=".7"><stop offset="0" stop-color="#6b6a68"/><stop offset=".55" stop-color="#1a1a1c"/><stop offset="1" stop-color="#0b0b0c"/></radialGradient></defs><path d="M30 2 C 24 26 6 44 6 62 a24 24 0 0 0 48 0 C 54 44 36 26 30 2z" fill="url(#dg)"/><ellipse cx="21" cy="60" rx="5" ry="9" fill="#fff" opacity=".55" transform="rotate(14 21 60)"/></svg>`;
 
-if(S==='hook'){           // t = 3.0 s : black, "Drip" with a drop hanging off the p, a surface waiting below
-  $.style.background='radial-gradient(900px 700px at 50% 1500px,#17181a,#0B0B0C 70%)';
-  h(`<div id="w" style="left:90px;top:520px;font:400 330px/1 Bodoni;color:var(--bone);letter-spacing:-8px;white-space:nowrap"><span>D</span><span>r</span><span>i</span><span id="p">p</span></div>`);
-  const p=document.getElementById('p').getBoundingClientRect();
-  const px=p.left+p.width*.27, top=p.top+p.height*.88;
-  h(`<svg width="1080" height="1920" style="left:0;top:0"><defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#cfc9bd"/><stop offset=".5" stop-color="#fff"/><stop offset="1" stop-color="#bdb6a8"/></linearGradient></defs>
-   <path d="M${px-9} ${top} C ${px-9} ${top+120}, ${px-3} ${top+170}, ${px-2} ${top+250} C ${px-40} ${top+300}, ${px-40} ${top+390}, ${px} ${top+400} C ${px+40} ${top+390}, ${px+40} ${top+300}, ${px+2} ${top+250} C ${px+3} ${top+170}, ${px+9} ${top+120}, ${px+9} ${top} Z" fill="url(#g)"/>
-   <path d="M${px} ${top+560} c -16 28 -26 44 -26 62 a26 26 0 0 0 52 0 c 0 -18 -10 -34 -26 -62z" fill="url(#g)" opacity=".92"/></svg>`);
-  h(`<div style="left:90px;top:1080px;font:italic 400 160px/1 Bodoni;color:var(--brass);letter-spacing:-3px">Time</div>`);
-  h(`<div style="left:0;top:1480px;width:1080px;height:440px;background:linear-gradient(#0B0B0C,#101113 40%,#0B0B0C)"></div>`);
-  h(rings(px,1560,70,7,70,.2,'rgba(243,239,232,.7)',.9));
-  h(`<div style="left:${px-60}px;top:1546px;width:120px;height:26px;border-radius:50%;background:radial-gradient(closest-side,rgba(255,255,255,.55),rgba(255,255,255,0))"></div>`);
-  h(`<div style="left:90px;top:1740px;font:500 26px/1 Geist;letter-spacing:.34em;color:rgba(243,239,232,.6)">DRIP VERSE</div>`);
+if(S==='hook'){           // t = 3.0 s : light stone world, "Drip" with a dark liquid drop hanging off the p, rings on the floor
+  $.style.background='linear-gradient(#F6F3EC 0%,#EFEBE3 62%,#E1DCD2 62%,#E9E5DD 100%)';
+  h(`<div style="left:130px;top:110px;font:400 430px/1 Bodoni;color:var(--ink);letter-spacing:-12px;white-space:nowrap"><span>D</span><span>r</span><span>i</span><span id="p">p</span></div>`);
+  const p=document.getElementById('p').getBoundingClientRect(); const px=p.left+p.width*.25, top=p.top+p.height*.9;
+  h(`<svg width="1920" height="1080" style="left:0;top:0"><defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#2b2b2e"/><stop offset=".45" stop-color="#78787a"/><stop offset="1" stop-color="#151517"/></linearGradient></defs>
+   <path d="M${px-8} ${top} C ${px-8} ${top+60}, ${px-3} ${top+80}, ${px-2} ${top+110} C ${px-30} ${top+140}, ${px-30} ${top+190}, ${px} ${top+196} C ${px+30} ${top+190}, ${px+30} ${top+140}, ${px+2} ${top+110} C ${px+3} ${top+80}, ${px+8} ${top+60}, ${px+8} ${top} Z" fill="url(#g)"/></svg>`);
+  h(drop(px,top+330,.6));
+  h(`<div style="left:1010px;top:300px;font:italic 400 300px/1 Bodoni;color:var(--brass);letter-spacing:-6px">Time</div>`);
+  h(rings(px,860,70,8,70,.2,'rgba(18,18,20,.55)',.9));
+  h(`<div style="left:${px-70}px;top:846px;width:140px;height:26px;border-radius:50%;background:radial-gradient(closest-side,rgba(18,18,20,.35),rgba(18,18,20,0))"></div>`);
+  h(`<div style="left:130px;top:960px;font:500 24px/1 Geist;letter-spacing:.34em;color:rgba(18,18,20,.6)">DRIP VERSE</div>`);
 }
-if(S==='hero'){           // t = 9.0 s : stone world, the shoe is the only thing in frame, rings on the floor
-  $.style.background='linear-gradient(#EAE6DF,#DAD5CC)';
-  h(rings(540,1100,230,8,64,.22,'rgba(11,11,12,.55)',.55));
-  h(shadow(560,1105,820,90,.42));
-  h(`<img src="${P('axel-arigato_cut.png')}" style="left:-70px;top:240px;width:1220px;transform:rotate(-5deg)">`);
-  h(`<div style="left:90px;top:170px;font:400 150px/.92 Bodoni;color:var(--ink);letter-spacing:-4px">New<br><i style="color:var(--brass)">arrivals</i></div>`);
-  h(`<div style="left:90px;top:1470px;width:560px;font:400 34px/1.35 Geist;color:rgba(11,11,12,.7)">Luxury footwear, ordered in a tap and brought to your door.</div>`);
-  h(`<div style="left:90px;top:1640px;height:84px;padding:0 44px;border-radius:42px;background:var(--ink);color:var(--bone);font:600 28px/84px Geist;letter-spacing:.02em">Shop the drop</div>`);
+if(S==='hero'){           // t = 9.0 s : the shoe floats between the two words; "New" behind it, "arrivals" half behind it, copy in front
+  $.style.background='linear-gradient(100deg,#F5F2EB 0%,#E4DFD6 100%)';
+  h(`<div style="left:110px;top:40px;font:400 420px/1 Bodoni;color:var(--ink);letter-spacing:-12px">New</div>`);
+  h(`<div style="left:620px;top:540px;font:italic 400 340px/1 Bodoni;color:var(--brass);letter-spacing:-10px;white-space:nowrap">arrivals</div>`);
+  h(rings(1060,770,330,7,90,.2,'rgba(18,18,20,.38)',.5));
+  h(shoe('axel-arigato',1050,420,1060,-5));
+  h(`<div style="left:130px;top:730px;width:520px;font:400 32px/1.4 Geist;color:rgba(18,18,20,.78)">Luxury footwear, ordered in a tap and brought to your door.</div>`);
+  h(`<div style="left:130px;top:880px;height:84px;padding:0 44px;border-radius:42px;background:var(--ink);color:var(--bone);font:600 28px/84px Geist;letter-spacing:.02em">Shop the drop</div>`);
 }
-if(S==='montage'){        // t = 16.0 s : after the drop, three columns of cards drift at different speeds
-  $.style.background='#0B0B0C';
-  const cols=[['nb-550.jpg','jordan-4.jpg','nike-af1.jpg'],['balenciaga-runner.jpg','asics-kayano.jpg','nb-480.jpg'],['nike-zoom.jpg','adidas-niteball.jpg','axel-arigato.jpg']];
-  const ar=[[1.25,1,2.15],[1.25,2.1,1.25],[1.25,1.44,1.44]];
-  const off=[-120,-420,-40];
-  cols.forEach((c,ci)=>{let y=off[ci];c.forEach((n,ri)=>{const w=316,hh=Math.round(w*ar[ci][ri]);h(`<div class="card" style="left:${44+ci*340}px;top:${y}px;width:${w}px;height:${hh}px;background-image:url(${P(n)})"></div>`);y+=hh+24})});
-  // water lens: a refracted circle over the middle of the grid
-  h(`<svg width="0" height="0"><filter id="wl" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".006 .009" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="12" xChannelSelector="R" yChannelSelector="G"/></filter></svg>`);
-  h(`<div style="left:140px;top:610px;width:800px;height:800px;border-radius:50%;overflow:hidden;box-shadow:0 0 0 2px rgba(243,239,232,.55), 0 40px 120px rgba(0,0,0,.6)"><div id="lens" style="left:-140px;top:-610px;width:1080px;height:1920px;filter:url(#wl)"></div></div>`);
-  const lens=document.getElementById('lens');
-  cols.forEach((c,ci)=>{let y=off[ci];c.forEach((n,ri)=>{const w=316,hh=Math.round(w*ar[ci][ri]);lens.insertAdjacentHTML('beforeend',`<div class="card" style="left:${44+ci*340-8}px;top:${y}px;width:${w+16}px;height:${hh}px;background-image:url(${P(n)})"></div>`);y+=hh+24})});
-  h(rings(540,1010,430,3,52,1,'rgba(243,239,232,.3)',.8));
-  h(`<div style="left:90px;top:1500px;font:400 170px/.9 Bodoni;color:var(--bone);letter-spacing:-6px;mix-blend-mode:difference">Drip<br><i>Time</i></div>`);
+if(S==='montage'){        // t = 16.0 s : a parade of floating shoes at different depths in front of one huge word
+  $.style.background='linear-gradient(#F5F2EB,#E6E1D8)';
+  h(`<div style="left:90px;top:40px;font:400 480px/1 Bodoni;color:rgba(18,18,20,.075);letter-spacing:-14px;white-space:nowrap">Drip <i>Time</i></div>`);
+  h(`<div style="left:0;top:800px;width:1920px;height:280px;background:linear-gradient(rgba(214,208,196,0),rgba(214,208,196,.65))"></div>`);
+  h(rings(960,800,420,5,110,.16,'rgba(18,18,20,.28)',.5));
+  h(shoe('nb-480',270,470,470,-4,2.5,.8,.2));            // far left, soft: depth
+  h(shoe('nike-zoom',1660,470,520,5,2.5,.85,.2));         // far right, soft
+  h(shoe('nb-550',640,560,740,-3,0,1,.15));
+  h(shoe('nike-af1',1250,540,820,6,0,1,.15));
+  h(shoe('adidas-niteball',960,420,900,-2,0,1,.16));      // nearest, centre
+  h(`<div style="left:130px;top:910px;font:500 24px/1 Geist;letter-spacing:.34em;color:rgba(18,18,20,.7)">DRIP VERSE &nbsp;&nbsp;·&nbsp;&nbsp; NEW ARRIVALS</div>`);
 }
-if(S==='delivery'){       // t = 24.0 s : the order, stand-in UI, a drop lands on the card surface
-  $.style.background='radial-gradient(1000px 900px at 540px 700px,#1b1c1e,#0B0B0C 70%)';
-  h(`<div style="left:90px;top:210px;font:400 120px/.95 Bodoni;color:var(--bone);letter-spacing:-3px">Ordered.<br><i style="color:var(--brass)">On its way.</i></div>`);
-  h(shadow(540,860,640,60,.7));
-  h(`<img src="${P('adidas-niteball_cut.png')}" style="left:-60px;top:-90px;width:1200px">`);
-  h(rings(540,1130,180,6,64,.24,'rgba(243,239,232,.5)',.8));
-  h(`<div style="left:70px;top:1060px;width:940px;height:690px;border-radius:44px;background:linear-gradient(rgba(255,255,255,.075),rgba(255,255,255,.035));box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.14),0 50px 120px rgba(0,0,0,.6)"></div>`);
-  h(rings(540,1275,150,6,70,.26,'rgba(243,239,232,.45)',.75));
-  h(`<div style="left:120px;top:1130px;font:600 34px/1 Geist;color:var(--bone)">Order confirmed</div><div style="left:120px;top:1184px;font:400 26px/1 Geist;color:rgba(243,239,232,.55)">Estimated: today</div>`);
-  const nodes=[['Confirmed',150],['On its way',540],['At your door',930]];
-  h(`<div style="left:150px;top:1588px;width:780px;height:3px;background:rgba(243,239,232,.2)"></div><div style="left:150px;top:1588px;width:420px;height:3px;background:var(--brass)"></div>`);
-  nodes.forEach(([t,x],i)=>{h(`<div style="left:${x-17}px;top:1572px;width:34px;height:34px;border-radius:50%;background:${i<2?'var(--brass)':'#0B0B0C'};box-shadow:inset 0 0 0 3px ${i<2?'var(--brass)':'rgba(243,239,232,.3)'}"></div><div style="left:${x-130}px;top:1636px;width:260px;text-align:center;font:500 25px/1 Geist;color:${i<2?'var(--bone)':'rgba(243,239,232,.45)'}">${t}</div>`)});
-  h(`<div style="left:${150+420-9}px;top:1579px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 0 0 8px rgba(184,147,90,.35)"></div>`);
+if(S==='delivery'){       // t = 24.0 s : the shoe sits in the empty space between "Ordered." and "On its way."
+  $.style.background='linear-gradient(100deg,#F5F2EB 0%,#E4DFD6 100%)';
+  h(`<div style="left:120px;top:50px;font:400 230px/1 Bodoni;color:var(--ink);letter-spacing:-6px">Ordered.</div>`);
+  h(rings(600,700,240,6,84,.2,'rgba(18,18,20,.38)',.5));
+  h(shoe('adidas-niteball',620,430,880,-3,0,1,.12));
+  h(`<div style="left:120px;top:690px;font:italic 400 230px/1 Bodoni;color:var(--brass);letter-spacing:-6px;white-space:nowrap">On its way.</div>`);
+  h(`<div style="left:1230px;top:150px;width:600px;height:780px;border-radius:44px;background:rgba(255,255,255,.74);box-shadow:0 40px 100px rgba(60,50,34,.22),inset 0 0 0 1.5px rgba(255,255,255,.9)"></div>`);
+  h(`<div style="left:1290px;top:215px;font:600 34px/1 Geist;color:var(--ink)">Order confirmed</div><div style="left:1290px;top:267px;font:400 26px/1 Geist;color:rgba(18,18,20,.5)">Arriving today</div>`);
+  h(`<svg width="600" height="300" viewBox="0 0 600 300" style="left:1230px;top:330px"><path d="M70 230 C 180 90, 290 270, 390 140 S 500 90, 540 70" fill="none" stroke="rgba(18,18,20,.25)" stroke-width="4" stroke-dasharray="3 14" stroke-linecap="round"/><circle cx="70" cy="230" r="10" fill="#121214"/><path d="M540 50a20 20 0 1 1 .01 0z" fill="#121214"/><circle cx="330" cy="178" r="15" fill="#B08A4E"/><circle cx="330" cy="178" r="30" fill="none" stroke="#B08A4E" stroke-opacity=".4" stroke-width="3"/></svg>`);
+  const nodes=[['Confirmed',1340],['On its way',1530],['At your door',1720]];
+  h(`<div style="left:1340px;top:760px;width:380px;height:3px;background:rgba(18,18,20,.18)"></div><div style="left:1340px;top:760px;width:190px;height:3px;background:var(--brass)"></div>`);
+  nodes.forEach(([t,x],i)=>h(`<div style="left:${x-15}px;top:746px;width:30px;height:30px;border-radius:50%;background:${i<2?'var(--brass)':'#F3EFE8'};box-shadow:inset 0 0 0 3px ${i<2?'var(--brass)':'rgba(18,18,20,.28)'}"></div><div style="left:${x-100}px;top:796px;width:200px;text-align:center;font:500 24px/1 Geist;color:${i<2?'var(--ink)':'rgba(18,18,20,.45)'}">${t}</div>`));
 }
 document.fonts.ready.then(()=>{window.__ready=true});
 </script>
