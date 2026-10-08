@@ -27,3 +27,8 @@ videos/*/assets/cut/
 videos/dripverse/review/*_tiles/
 videos/dripverse-sync/assets
 videos/dripverse-sync/review/still_*.png
+videos/vivox/assets/net/
+videos/vivox/assets/shots/
+videos/vivox/assets/*.webp
+videos/vivox/assets/fonts/
+videos/vivox/review/still_*.png

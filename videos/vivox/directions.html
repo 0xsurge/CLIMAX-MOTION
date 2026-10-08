@@ -1,0 +1,53 @@
+<!doctype html><meta charset="utf-8"><title>Vivox directions</title>
+<style>
+@font-face{font-family:Inter;src:url(assets/fonts/inter.woff2);font-weight:300 800}
+:root{--blue:#0051FF;--navy:#04152A;--light:#F1F1F1;--g600:#535862}
+html,body{margin:0;background:#777}
+#f{position:relative;width:1920px;height:1080px;overflow:hidden;background:#fff;font-family:Inter}
+#f *{position:absolute;box-sizing:border-box}
+#f span,#f b,#f i{position:static}
+</style>
+<div id="f"></div>
+<script>
+const $=document.getElementById('f'), D=new URLSearchParams(location.search).get('d')||'A';
+const h=s=>$.insertAdjacentHTML('beforeend',s);
+const orb=(cx,cy,r,glow=1)=>`<div style="left:${cx-r}px;top:${cy-r}px;width:${2*r}px;height:${2*r}px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#BFD3FF 0%,#4D86FF 28%,#0051FF 62%,#0035B8 100%);box-shadow:0 0 ${60*glow}px ${12*glow}px rgba(0,81,255,.35),0 0 ${160*glow}px rgba(0,81,255,.25)"></div>`;
+const handles=(x,y,w,hh,col='#0051FF')=>`<div style="left:${x}px;top:${y}px;width:${w}px;height:${hh}px;border:2px solid ${col}"></div>`+[[x,y],[x+w,y],[x,y+hh],[x+w,y+hh]].map(([a,b])=>`<div style="left:${a-7}px;top:${b-7}px;width:14px;height:14px;background:#fff;border:2px solid ${col}"></div>`).join('');
+const chip=(x,y,txt,fs=88,pad=34)=>`<div style="left:${x}px;top:${y}px;height:${fs*1.32}px;padding:0 ${pad}px;border-radius:${fs}px;background:var(--blue);color:#fff;font:600 ${fs}px/${fs*1.32}px Inter;letter-spacing:-.02em;white-space:nowrap;box-shadow:0 18px 40px rgba(0,81,255,.28)">${txt}</div>`;
+
+if(D==='A'){   // Clear Signal: white ground, navy type, blue chips, selection handles, lit list (Pulse + ServiceUp grammar)
+  $.style.background='#FFFFFF';
+  h(`<div style="left:150px;top:150px;font:600 120px/1.05 Inter;color:var(--navy);letter-spacing:-.035em">Meet</div>`);
+  h(chip(500,128,'Rachel*',112,40));
+  h(`<div style="left:150px;top:300px;font:500 54px/1.2 Inter;color:var(--g600);letter-spacing:-.02em">Your AI compliance analyst.</div>`);
+  h(`<img src="assets/rachel_blue.webp" style="left:1060px;top:230px;width:800px">`);
+  h(handles(1440,210,400,540));
+  h(`<div style="left:1442px;top:170px;height:30px;padding:0 10px;background:var(--blue);color:#fff;font:600 18px/30px Inter">Rachel · 24/7</div>`);
+  const L=['Adverse media monitoring','Sanctions and PEP alert reviews','Corporate registry analysis','UBO documents analysis'];
+  L.forEach((t,i)=>h(`<div style="left:${i===1?196:150}px;top:${560+i*86}px;font:${i===1?600:500} 46px/1 Inter;color:${i===1?'#0051FF':'rgba(4,21,42,.22)'};letter-spacing:-.02em;white-space:nowrap">${t}</div>`));
+  h(`<svg width="34" height="30" viewBox="0 0 34 30" style="left:150px;top:648px"><path d="M2 15 H30 M18 3 L31 15 L18 27" fill="none" stroke="#0051FF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>`);
+  h(orb(940,666,20,.6));
+}
+if(D==='B'){   // Field: light ground, a blue dot-matrix field, sentence in space with objects between words (Reception grammar)
+  $.style.background='#F4F6FA';
+  h(`<div style="left:-200px;top:520px;width:2400px;height:700px;border-radius:50%;background:radial-gradient(60% 55% at 40% 45%,#7FA8FF,#0051FF 45%,#04152A 100%);transform:rotate(-6deg)"></div>`);
+  h(`<div style="left:0;top:0;width:1920px;height:1080px;background:radial-gradient(circle,transparent 3.2px,#F4F6FA 3.9px);background-size:13px 13px"></div>`);
+  h(`<div style="left:0;top:0;width:1920px;height:1080px;background:linear-gradient(#F4F6FA 0%,rgba(244,246,250,0) 55%)"></div>`);
+  const W=[['Every',150,170],['alert',820,120],['reviewed,',260,420],['explained',1150,330],['and',560,600]];
+  W.forEach(([w,x,y])=>h(`<div style="left:${x}px;top:${y}px;font:600 96px/1 Inter;color:var(--navy);letter-spacing:-.035em">${w}</div>`));
+  h(chip(840,575,'audited.',84,32));
+  h(`<div style="left:470px;top:150px;width:300px;height:190px;border-radius:22px;overflow:hidden;box-shadow:0 24px 60px rgba(4,21,42,.18);transform:rotate(-4deg)"><img src="assets/product_ui.webp" style="left:-150px;top:-10px;width:620px"></div>`);
+  h(orb(1620,520,120,1.2));
+}
+if(D==='C'){   // Soft gradient + ring: white to pale blue light field, glass product window, motion-blurred word, rotating text ring (Kinso + showreel grammar)
+  $.style.background='radial-gradient(70% 80% at 85% 20%,#DCE7FF 0%,rgba(220,231,255,0) 60%),radial-gradient(60% 70% at 10% 90%,#E9F0FF 0%,rgba(233,240,255,0) 60%),#FBFCFF';
+  h(`<div style="left:150px;top:140px;font:600 128px/1 Inter;color:var(--navy);letter-spacing:-.04em">Super<span style="color:#0051FF;filter:blur(5px)">power</span></div>`);
+  h(`<div style="left:156px;top:290px;font:500 50px/1.2 Inter;color:var(--g600);letter-spacing:-.02em">for compliance teams.</div>`);
+  h(`<div style="left:150px;top:470px;width:1060px;height:481px;border-radius:28px;overflow:hidden;background:rgba(255,255,255,.7);box-shadow:0 50px 120px rgba(0,40,140,.18),inset 0 0 0 1.5px rgba(255,255,255,.9)"><img src="assets/product_ui.webp" style="left:0;top:0;width:1060px"></div>`);
+  h(handles(330,680,560,110));
+  const R=250;
+  h(`<svg width="700" height="700" viewBox="0 0 700 700" style="left:1250px;top:250px"><defs><path id="ring" d="M350 350 m-${R} 0 a${R} ${R} 0 1 1 ${2*R} 0 a${R} ${R} 0 1 1 -${2*R} 0"/></defs><g transform="rotate(-28 350 350)"><text font-family="Inter" font-weight="600" font-size="34" letter-spacing="4" fill="#04152A"><textPath href="#ring">AML · KYB · KYC · SANCTIONS · ADVERSE MEDIA · UBO · REGISTRY ·</textPath></text></g><circle cx="350" cy="350" r="${R+40}" fill="none" stroke="rgba(0,81,255,.18)" stroke-width="2"/></svg>`);
+  h(orb(1600,600,120,1.1));
+}
+document.fonts.ready.then(()=>{window.__ready=true});
+</script>

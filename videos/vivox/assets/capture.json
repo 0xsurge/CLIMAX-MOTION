@@ -1,0 +1,2406 @@
+{
+  "title": "Vivox.ai | Superpower for Compliance Teams",
+  "description": "Our pre-trained AI agents automate manual, repetitive tasks traditionally handled by Level 1 analysts, including AML, adverse media monitoring, sanctions screening reviews, KYC/KYB onboarding, and periodic reviews",
+  "favicon": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a06d362e490ed4439ae3e60_69727480c35cfcc1bc1fb58f_Favicon.png",
+  "body": {
+    "bg": "rgb(255, 255, 255)",
+    "color": "rgb(4, 21, 42)",
+    "font": "Inter, sans-serif"
+  },
+  "rootVars": {
+    "--_fonts---body-font": "Inter,sans-serif",
+    "--dark": "#04152a",
+    "--_fonts---heading-font": "Inter,sans-serif",
+    "--blue": "#0051ff",
+    "--light": "#f1f1f1",
+    "--white": "white",
+    "--_bottom-mg---large": "4rem",
+    "--_container-size---default": "80rem",
+    "--_corner-radius---medium": "1.125rem",
+    "--gray-900": "#181d27",
+    "--_container-size---heading-wrapper": "48rem",
+    "--_container-size---medium": "60rem",
+    "--_bottom-mg---default": "1rem",
+    "--_corner-radius---small": ".5rem",
+    "--_button-style---arrow-moved": "0%",
+    "--_bottom-mg---short": ".75rem",
+    "--_bottom-mg---medium": "1.25rem",
+    "--gray-600": "#535862",
+    "--_bottom-mg---shortest": ".25rem",
+    "--medium-light": "#d4d7db",
+    "--gray-200": "#e9eaeb",
+    "--_corner-radius---default": "1rem",
+    "--_bottom-mg---medium-big": "2rem",
+    "--_bottom-mg---medium-add": "1.5rem",
+    "--_corner-radius---medium-add": "1.5rem",
+    "--gray-50": "#fafafa",
+    "--gray-300": "#d5d7da",
+    "--gray-400": "#a4a7ae",
+    "--medium-dark": "#43505f"
+  },
+  "fontFaces": [
+    {
+      "family": "webflow-icons",
+      "weight": "400",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "300",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "300",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "300",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "300",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "300",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "300",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "300",
+      "style": "normal",
+      "status": "loaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "400",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "400",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "400",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "400",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "400",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "400",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "400",
+      "style": "normal",
+      "status": "loaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "500",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "500",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "500",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "500",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "500",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "500",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "500",
+      "style": "normal",
+      "status": "loaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "600",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "600",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "600",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "600",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "600",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "600",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "600",
+      "style": "normal",
+      "status": "loaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "700",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "700",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "700",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "700",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "700",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "700",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "700",
+      "style": "normal",
+      "status": "loaded"
+    }
+  ],
+  "fontFamilies": {
+    "Inter, sans-serif": 274
+  },
+  "colors": {
+    "rgb(255, 255, 255)": {
+      "bg": 12,
+      "text": 47,
+      "border": 2
+    },
+    "rgb(4, 21, 42)": {
+      "bg": 4,
+      "text": 153,
+      "border": 1
+    },
+    "rgb(0, 81, 255)": {
+      "bg": 7,
+      "text": 1,
+      "border": 3
+    },
+    "rgba(221, 221, 221, 0)": {
+      "bg": 1,
+      "text": 0,
+      "border": 0
+    },
+    "rgb(24, 29, 39)": {
+      "bg": 0,
+      "text": 50,
+      "border": 0
+    },
+    "rgb(241, 241, 241)": {
+      "bg": 3,
+      "text": 6,
+      "border": 0
+    },
+    "rgb(83, 88, 98)": {
+      "bg": 0,
+      "text": 14,
+      "border": 0
+    },
+    "rgba(237, 237, 237, 0)": {
+      "bg": 3,
+      "text": 0,
+      "border": 0
+    },
+    "rgba(245, 245, 245, 0)": {
+      "bg": 3,
+      "text": 0,
+      "border": 0
+    },
+    "rgb(212, 215, 219)": {
+      "bg": 3,
+      "text": 0,
+      "border": 0
+    },
+    "rgb(233, 234, 235)": {
+      "bg": 0,
+      "text": 0,
+      "border": 8
+    },
+    "rgb(67, 80, 95)": {
+      "bg": 0,
+      "text": 4,
+      "border": 0
+    },
+    "rgba(255, 255, 255, 0)": {
+      "bg": 1,
+      "text": 0,
+      "border": 0
+    }
+  },
+  "heads": [
+    {
+      "tag": "H1",
+      "text": "Superpower for Compliance Teams",
+      "font": "Inter, sans-serif",
+      "size": "60px",
+      "weight": "700",
+      "color": "rgb(24, 29, 39)"
+    },
+    {
+      "tag": "H2",
+      "text": "Regulator-first AI Agents for Financial Crime",
+      "font": "Inter, sans-serif",
+      "size": "48px",
+      "weight": "700",
+      "color": "rgb(255, 255, 255)"
+    },
+    {
+      "tag": "H2",
+      "text": "Our pre-trained AI agents automate manual, repetitive tasks traditionally handled by Level 1 analysts, including AML, adverse media monitoring, sanctions screening reviews, KYC/KYB onboarding, and periodic reviews.",
+      "font": "Inter, sans-serif",
+      "size": "42px",
+      "weight": "700",
+      "color": "rgb(4, 21, 42)"
+    },
+    {
+      "tag": "H2",
+      "text": "Meet Rachel* Your AI Compliance Analyst",
+      "font": "Inter, sans-serif",
+      "size": "48px",
+      "weight": "700",
+      "color": "rgb(4, 21, 42)"
+    },
+    {
+      "tag": "H3",
+      "text": "Customized skills",
+      "font": "Inter, sans-serif",
+      "size": "30px",
+      "weight": "700",
+      "color": "rgb(4, 21, 42)"
+    },
+    {
+      "tag": "H2",
+      "text": "Intelligent Business Due Diligence",
+      "font": "Inter, sans-serif",
+      "size": "48px",
+      "weight": "700",
+      "color": "rgb(4, 21, 42)"
+    },
+    {
+      "tag": "H3",
+      "text": "Backed by",
+      "font": "Inter, sans-serif",
+      "size": "30px",
+      "weight": "700",
+      "color": "rgb(255, 255, 255)"
+    },
+    {
+      "tag": "H2",
+      "text": "Trusted by Industry Leaders and Top-Tier Experts",
+      "font": "Inter, sans-serif",
+      "size": "48px",
+      "weight": "700",
+      "color": "rgb(24, 29, 39)"
+    },
+    {
+      "tag": "H3",
+      "text": "Featured in",
+      "font": "Inter, sans-serif",
+      "size": "30px",
+      "weight": "700",
+      "color": "rgb(24, 29, 39)"
+    },
+    {
+      "tag": "H2",
+      "text": "Get a Superpower for your Team",
+      "font": "Inter, sans-serif",
+      "size": "60px",
+      "weight": "700",
+      "color": "rgb(4, 21, 42)"
+    },
+    {
+      "tag": "H2",
+      "text": "Subscribe now for updates, insights, and perks!",
+      "font": "Inter, sans-serif",
+      "size": "36px",
+      "weight": "700",
+      "color": "rgb(255, 255, 255)"
+    }
+  ],
+  "buttons": [
+    {
+      "text": "Case study How Altery uses explainable AI to investigate complex ownership structures → Read the case study",
+      "bg": "rgb(0, 81, 255)",
+      "color": "rgb(255, 255, 255)",
+      "radius": "0px",
+      "font": "Inter, sans-serif",
+      "weight": "400"
+    },
+    {
+      "text": "Book a Demo",
+      "bg": "rgb(4, 21, 42)",
+      "color": "rgb(255, 255, 255)",
+      "radius": "8px",
+      "font": "Inter, sans-serif",
+      "weight": "600"
+    },
+    {
+      "text": "Try a Demo",
+      "bg": "rgb(0, 81, 255)",
+      "color": "rgb(255, 255, 255)",
+      "radius": "8px",
+      "font": "Inter, sans-serif",
+      "weight": "600"
+    },
+    {
+      "text": "Try a Demo",
+      "bg": "rgb(0, 81, 255)",
+      "color": "rgb(255, 255, 255)",
+      "radius": "8px",
+      "font": "Inter, sans-serif",
+      "weight": "600"
+    },
+    {
+      "text": "Watch now The level of detail in Vivox's Al Governance Framework gives me confidence that we can demonstrate robust controls during our audits, and in any regulatory inspection we may face regarding the use of Al. Alex Clements Global Head of AML, CFT and Sanctions at TransferMate Global Payments",
+      "bg": "rgb(255, 255, 255)",
+      "color": "rgb(24, 29, 39)",
+      "radius": "16px",
+      "font": "Inter, sans-serif",
+      "weight": "400"
+    },
+    {
+      "text": "Watch now We’ve transitioned from hours to minutes and spend far less time digging for answers. Vivox AI helps us make sense of complex ownership structures. Human judgement remains essential: we review the outputs and make the decisions. Without the audit trail, you have nothing really. If you’re not able to evidence what you’ve done, then you haven’t done it. Bisi Giwa Group Fraud and Financial Crime Officer at Altery",
+      "bg": "rgb(255, 255, 255)",
+      "color": "rgb(24, 29, 39)",
+      "radius": "16px",
+      "font": "Inter, sans-serif",
+      "weight": "400"
+    },
+    {
+      "text": "Book a Demo",
+      "bg": "rgb(0, 81, 255)",
+      "color": "rgb(255, 255, 255)",
+      "radius": "8px",
+      "font": "Inter, sans-serif",
+      "weight": "600"
+    }
+  ],
+  "nav": [
+    {
+      "text": "Case study How Altery uses explainable AI to investigate complex ownership structures → Read the case study",
+      "href": "/resources/how-altery-uses-explainable-ai-to-investigate-complex-ownership-structures"
+    },
+    {
+      "text": "",
+      "href": "/"
+    },
+    {
+      "text": "Customers",
+      "href": "https://vivox.ai/resources?category=Case+Studies"
+    },
+    {
+      "text": "About",
+      "href": "/about-us"
+    },
+    {
+      "text": "News",
+      "href": "https://vivox.ai/resources?category=Company+News"
+    },
+    {
+      "text": "Resources",
+      "href": "/resources"
+    },
+    {
+      "text": "Contact",
+      "href": "https://calendly.com/tim-c1ct/30min"
+    },
+    {
+      "text": "Book a Demo",
+      "href": "https://calendly.com/tim-c1ct/30min"
+    }
+  ],
+  "imgs": [
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a02e4a0064153e4e6943f60_Logotype%20(1).svg",
+      "alt": "Vivox.ai logotype - AI agents for financial crime compliance",
+      "w": 170,
+      "h": 24,
+      "box": {
+        "x": 80,
+        "y": 74.8125,
+        "width": 145.375,
+        "height": 24,
+        "top": 74.8125,
+        "right": 225.375,
+        "bottom": 98.8125,
+        "left": 80
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a0191c7fd52120c39d50105_Frame%20124.webp",
+      "alt": "Compliance professional empowered by Vivox.ai agents for automated AML and KYB analysis.",
+      "w": 1440,
+      "h": 851,
+      "box": {
+        "x": 495.546875,
+        "y": 70,
+        "width": 1213.640625,
+        "height": 718,
+        "top": 70,
+        "right": 1709.1875,
+        "bottom": 788,
+        "left": 495.546875
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a019a8a809f88b6cd5f7f48_Frame%20118.svg",
+      "alt": "Company logo TransferMate",
+      "w": 200,
+      "h": 41,
+      "box": {
+        "x": -158.39031982421875,
+        "y": 808,
+        "width": 204.875,
+        "height": 42,
+        "top": 808,
+        "right": 46.48468017578125,
+        "bottom": 850,
+        "left": -158.39031982421875
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a019a8951f8ce76925d18cb_Frame%20115.svg",
+      "alt": "Company logo altery",
+      "w": 100,
+      "h": 42,
+      "box": {
+        "x": 106.48468017578125,
+        "y": 808,
+        "width": 100,
+        "height": 42,
+        "top": 808,
+        "right": 206.48468017578125,
+        "bottom": 850,
+        "left": 106.48468017578125
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a019aa2755b8238c05ca6d8_Frame%20117.svg",
+      "alt": "Company logo TELF AG",
+      "w": 153,
+      "h": 42,
+      "box": {
+        "x": 266.48468017578125,
+        "y": 808,
+        "width": 153,
+        "height": 42,
+        "top": 808,
+        "right": 419.48468017578125,
+        "bottom": 850,
+        "left": 266.48468017578125
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a019494196ac281bc4ef3fa_ecompay.svg",
+      "alt": "Company logo ecompay",
+      "w": 178,
+      "h": 42,
+      "box": {
+        "x": 479.48468017578125,
+        "y": 808,
+        "width": 178,
+        "height": 42,
+        "top": 808,
+        "right": 657.4846801757812,
+        "bottom": 850,
+        "left": 479.48468017578125
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a019a89489bbe0d0b884048_Frame%20116.svg",
+      "alt": "Company logo osome",
+      "w": 134,
+      "h": 42,
+      "box": {
+        "x": 717.4846801757812,
+        "y": 808,
+        "width": 134,
+        "height": 42,
+        "top": 808,
+        "right": 851.4846801757812,
+        "bottom": 850,
+        "left": 717.4846801757812
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a019a8a4bb0663e3e7d058b_Frame%20119.svg",
+      "alt": "Company logo nebeus",
+      "w": 139,
+      "h": 42,
+      "box": {
+        "x": 911.4846801757812,
+        "y": 808,
+        "width": 138.99993896484375,
+        "height": 42,
+        "top": 808,
+        "right": 1050.484619140625,
+        "bottom": 850,
+        "left": 911.4846801757812
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a019a8a809f88b6cd5f7f48_Frame%20118.svg",
+      "alt": "Company logo TransferMate",
+      "w": 200,
+      "h": 41,
+      "box": {
+        "x": 1121.609619140625,
+        "y": 808,
+        "width": 204.875,
+        "height": 42,
+        "top": 808,
+        "right": 1326.484619140625,
+        "bottom": 850,
+        "left": 1121.609619140625
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a019a8951f8ce76925d18cb_Frame%20115.svg",
+      "alt": "Company logo altery",
+      "w": 100,
+      "h": 42,
+      "box": {
+        "x": 1386.484619140625,
+        "y": 808,
+        "width": 100,
+        "height": 42,
+        "top": 808,
+        "right": 1486.484619140625,
+        "bottom": 850,
+        "left": 1386.484619140625
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a019aa2755b8238c05ca6d8_Frame%20117.svg",
+      "alt": "Company logo TELF AG",
+      "w": 153,
+      "h": 42,
+      "box": {
+        "x": 1546.484619140625,
+        "y": 808,
+        "width": 153,
+        "height": 42,
+        "top": 808,
+        "right": 1699.484619140625,
+        "bottom": 850,
+        "left": 1546.484619140625
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a019494196ac281bc4ef3fa_ecompay.svg",
+      "alt": "Company logo ecompay",
+      "w": 178,
+      "h": 42,
+      "box": {
+        "x": 1759.484619140625,
+        "y": 808,
+        "width": 178,
+        "height": 42,
+        "top": 808,
+        "right": 1937.484619140625,
+        "bottom": 850,
+        "left": 1759.484619140625
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a019a89489bbe0d0b884048_Frame%20116.svg",
+      "alt": "Company logo osome",
+      "w": 134,
+      "h": 42,
+      "box": {
+        "x": 1997.484619140625,
+        "y": 808,
+        "width": 134,
+        "height": 42,
+        "top": 808,
+        "right": 2131.484619140625,
+        "bottom": 850,
+        "left": 1997.484619140625
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a019a8a4bb0663e3e7d058b_Frame%20119.svg",
+      "alt": "Company logo nebeus",
+      "w": 139,
+      "h": 42,
+      "box": {
+        "x": 2191.484619140625,
+        "y": 808,
+        "width": 139,
+        "height": 42,
+        "top": 808,
+        "right": 2330.484619140625,
+        "bottom": 850,
+        "left": 2191.484619140625
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a0197bf4bb0663e3e7c7348_FCA.svg",
+      "alt": "Company logo FCA",
+      "w": 68,
+      "h": 38,
+      "box": {
+        "x": 123.5,
+        "y": 1275,
+        "width": 68,
+        "height": 38,
+        "top": 1275,
+        "right": 191.5,
+        "bottom": 1313,
+        "left": 123.5
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a0197bf96b3a6b550394ecf_MFSA.svg",
+      "alt": "Company logo MFSA",
+      "w": 208,
+      "h": 38,
+      "box": {
+        "x": 239.5,
+        "y": 1275,
+        "width": 208,
+        "height": 38,
+        "top": 1275,
+        "right": 447.5,
+        "bottom": 1313,
+        "left": 239.5
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a0197bfdabf6778f7587195_image%202171%20%5BVectorized%5D.svg",
+      "alt": "Company logo U.S. Treasury",
+      "w": 68,
+      "h": 68,
+      "box": {
+        "x": 495.5,
+        "y": 1260,
+        "width": 68,
+        "height": 68,
+        "top": 1260,
+        "right": 563.5,
+        "bottom": 1328,
+        "left": 495.5
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a0197bfdcb7f9bdc1d77066_VASP.svg",
+      "alt": "Company logo VASP",
+      "w": 160,
+      "h": 38,
+      "box": {
+        "x": 611.5,
+        "y": 1275,
+        "width": 160,
+        "height": 38,
+        "top": 1275,
+        "right": 771.5,
+        "bottom": 1313,
+        "left": 611.5
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a0197bfd5624521f4cf08c3_sec--1%20logo.svg",
+      "alt": "Company logo SAEC",
+      "w": 68,
+      "h": 68,
+      "box": {
+        "x": 819.5,
+        "y": 1260,
+        "width": 68,
+        "height": 68,
+        "top": 1260,
+        "right": 887.5,
+        "bottom": 1328,
+        "left": 819.5
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a0197bf2fe0ae1bafe25d2c_US-FDIC-Logo%20logo.svg",
+      "alt": "Company logo US-FDIC",
+      "w": 96,
+      "h": 38,
+      "box": {
+        "x": 935.5,
+        "y": 1275,
+        "width": 96,
+        "height": 38,
+        "top": 1275,
+        "right": 1031.5,
+        "bottom": 1313,
+        "left": 935.5
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a0197bfceba6fd8c11200ac_FINMA_logo%20logo.svg",
+      "alt": "Company logo FINMA",
+      "w": 151,
+      "h": 38,
+      "box": {
+        "x": 1079.5,
+        "y": 1275,
+        "width": 151,
+        "height": 38,
+        "top": 1275,
+        "right": 1230.5,
+        "bottom": 1313,
+        "left": 1079.5
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a0197bf89c6c827a970e64b_image%202173%20%5BVectorized%5D.svg",
+      "alt": "Company logo OCC",
+      "w": 38,
+      "h": 38,
+      "box": {
+        "x": 1278.5,
+        "y": 1275,
+        "width": 38,
+        "height": 38,
+        "top": 1275,
+        "right": 1316.5,
+        "bottom": 1313,
+        "left": 1278.5
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a06d496a5c17d72d2d09d53_%E2%86%97.svg",
+      "alt": "",
+      "w": 42,
+      "h": 42,
+      "box": {
+        "x": 1090,
+        "y": 1532,
+        "width": 42,
+        "height": 42,
+        "top": 1532,
+        "right": 1132,
+        "bottom": 1574,
+        "left": 1090
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a06d496a5c17d72d2d09d53_%E2%86%97.svg",
+      "alt": "",
+      "w": 42,
+      "h": 42,
+      "box": {
+        "x": 1090,
+        "y": 1689,
+        "width": 42,
+        "height": 42,
+        "top": 1689,
+        "right": 1132,
+        "bottom": 1731,
+        "left": 1090
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a019ee8895e75e15558155a_Featured%20icon.svg",
+      "alt": "",
+      "w": 56,
+      "h": 56,
+      "box": {
+        "x": 800,
+        "y": 2362,
+        "width": 48,
+        "height": 48,
+        "top": 2362,
+        "right": 848,
+        "bottom": 2410,
+        "left": 800
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a019f4bad68e0ee26258d5c_plus.svg",
+      "alt": "",
+      "w": 28,
+      "h": 28,
+      "box": {
+        "x": 812,
+        "y": 2442,
+        "width": 28,
+        "height": 28,
+        "top": 2442,
+        "right": 840,
+        "bottom": 2470,
+        "left": 812
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a019f4bad68e0ee26258d5c_plus.svg",
+      "alt": "",
+      "w": 28,
+      "h": 28,
+      "box": {
+        "x": 812,
+        "y": 2490,
+        "width": 28,
+        "height": 28,
+        "top": 2490,
+        "right": 840,
+        "bottom": 2518,
+        "left": 812
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a019f4bad68e0ee26258d5c_plus.svg",
+      "alt": "",
+      "w": 28,
+      "h": 28,
+      "box": {
+        "x": 812,
+        "y": 2538,
+        "width": 28,
+        "height": 28,
+        "top": 2538,
+        "right": 840,
+        "bottom": 2566,
+        "left": 812
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a019f4bad68e0ee26258d5c_plus.svg",
+      "alt": "",
+      "w": 28,
+      "h": 28,
+      "box": {
+        "x": 812,
+        "y": 2586,
+        "width": 28,
+        "height": 28,
+        "top": 2586,
+        "right": 840,
+        "bottom": 2614,
+        "left": 812
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a019f4bad68e0ee26258d5c_plus.svg",
+      "alt": "",
+      "w": 28,
+      "h": 28,
+      "box": {
+        "x": 812,
+        "y": 2634,
+        "width": 28,
+        "height": 28,
+        "top": 2634,
+        "right": 840,
+        "bottom": 2662,
+        "left": 812
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a019f4bad68e0ee26258d5c_plus.svg",
+      "alt": "",
+      "w": 28,
+      "h": 28,
+      "box": {
+        "x": 812,
+        "y": 2682,
+        "width": 28,
+        "height": 28,
+        "top": 2682,
+        "right": 840,
+        "bottom": 2710,
+        "left": 812
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a019f4bad68e0ee26258d5c_plus.svg",
+      "alt": "",
+      "w": 28,
+      "h": 28,
+      "box": {
+        "x": 812,
+        "y": 2730,
+        "width": 28,
+        "height": 28,
+        "top": 2730,
+        "right": 840,
+        "bottom": 2758,
+        "left": 812
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a019f4bad68e0ee26258d5c_plus.svg",
+      "alt": "",
+      "w": 28,
+      "h": 28,
+      "box": {
+        "x": 812,
+        "y": 2778,
+        "width": 28,
+        "height": 28,
+        "top": 2778,
+        "right": 840,
+        "bottom": 2806,
+        "left": 812
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a019e20a6dc982a210e7c34_Content.webp",
+      "alt": "Vivox.ai brand visual representing the synergy between compliance analysts and AI agents for AML automation.",
+      "w": 1439,
+      "h": 911,
+      "box": {
+        "x": -190,
+        "y": 2287,
+        "width": 808.515625,
+        "height": 512,
+        "top": 2287,
+        "right": 618.515625,
+        "bottom": 2799,
+        "left": -190
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01aa054a2263cf6acdbbad_Frame%20122.webp",
+      "alt": "Vivox.ai dashboard interface showing automated AI agents for AML compliance and financial crime analysis.",
+      "w": 1440,
+      "h": 653,
+      "box": {
+        "x": 235.03125,
+        "y": 3344,
+        "width": 969.9375,
+        "height": 440,
+        "top": 3344,
+        "right": 1204.96875,
+        "bottom": 3784,
+        "left": 235.03125
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01aa054a2263cf6acdbbad_Frame%20122.webp",
+      "alt": "Vivox.ai dashboard interface showing automated AI agents for AML compliance and financial crime analysis.",
+      "w": 1440,
+      "h": 653,
+      "box": {
+        "x": 235.03125,
+        "y": 3344,
+        "width": 969.9375,
+        "height": 440,
+        "top": 3344,
+        "right": 1204.96875,
+        "bottom": 3784,
+        "left": 235.03125
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01aa054a2263cf6acdbbad_Frame%20122.webp",
+      "alt": "Vivox.ai dashboard interface showing automated AI agents for AML compliance and financial crime analysis.",
+      "w": 1440,
+      "h": 653,
+      "box": {
+        "x": 235.03125,
+        "y": 3344,
+        "width": 969.9375,
+        "height": 440,
+        "top": 3344,
+        "right": 1204.96875,
+        "bottom": 3784,
+        "left": 235.03125
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01ab1c9ae2f5e09b3d8a1b_Featured%20icon%20(1).svg",
+      "alt": "",
+      "w": 32,
+      "h": 32,
+      "box": {
+        "x": 112,
+        "y": 3820,
+        "width": 32,
+        "height": 32,
+        "top": 3820,
+        "right": 144,
+        "bottom": 3852,
+        "left": 112
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01ab1b5b7b262e1424f7a4_Featured%20icon%20(2).svg",
+      "alt": "",
+      "w": 32,
+      "h": 32,
+      "box": {
+        "x": 517.328125,
+        "y": 3820,
+        "width": 32,
+        "height": 32,
+        "top": 3820,
+        "right": 549.328125,
+        "bottom": 3852,
+        "left": 517.328125
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01ab1b74dd3952fc4ead6e_Featured%20icon%20(3).svg",
+      "alt": "",
+      "w": 32,
+      "h": 32,
+      "box": {
+        "x": 922.65625,
+        "y": 3820,
+        "width": 32,
+        "height": 32,
+        "top": 3820,
+        "right": 954.65625,
+        "bottom": 3852,
+        "left": 922.65625
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01aef7bfdd61a1dd2cf424_Barclays_logo%20logo.svg",
+      "alt": "Company logo BARCLAYS",
+      "w": 169,
+      "h": 48,
+      "box": {
+        "x": -160.99769592285156,
+        "y": 4398,
+        "width": 169,
+        "height": 48,
+        "top": 4398,
+        "right": 8.002304077148438,
+        "bottom": 4446,
+        "left": -160.99769592285156
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01aef7f3cfc9aeff56d31f_onfido-logo%201%20%5BVectorized%5D.svg",
+      "alt": "Company logo onfido",
+      "w": 168,
+      "h": 48,
+      "box": {
+        "x": 88.00230407714844,
+        "y": 4398,
+        "width": 168.00001525878906,
+        "height": 48,
+        "top": 4398,
+        "right": 256.0023193359375,
+        "bottom": 4446,
+        "left": 88.00230407714844
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01aef7f2138feb4d1eabf1_Frame%204404.svg",
+      "alt": "Company logo TikTok",
+      "w": 136,
+      "h": 48,
+      "box": {
+        "x": 336.0023193359375,
+        "y": 4398,
+        "width": 136,
+        "height": 48,
+        "top": 4398,
+        "right": 472.0023193359375,
+        "bottom": 4446,
+        "left": 336.0023193359375
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01aef74fd8191ec25bba00_UBS_Logo%20white%201%20%5BVectorized%5D.svg",
+      "alt": "Company logo UBS",
+      "w": 108,
+      "h": 48,
+      "box": {
+        "x": 552.0023193359375,
+        "y": 4398,
+        "width": 108,
+        "height": 48,
+        "top": 4398,
+        "right": 660.0023193359375,
+        "bottom": 4446,
+        "left": 552.0023193359375
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01aef715143b8523d204b1_Google_2015_logo%20white%201%20%5BVectorized%5D.svg",
+      "alt": "Company logo Google",
+      "w": 117,
+      "h": 48,
+      "box": {
+        "x": 740.0023193359375,
+        "y": 4398,
+        "width": 117,
+        "height": 48,
+        "top": 4398,
+        "right": 857.0023193359375,
+        "bottom": 4446,
+        "left": 740.0023193359375
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01f60bab7b4ee68d24b8a2_Frame%204403%20(1).svg",
+      "alt": "Company logo STARTUP WISE GUYS",
+      "w": 116,
+      "h": 48,
+      "box": {
+        "x": 937.0023193359375,
+        "y": 4398,
+        "width": 116,
+        "height": 48,
+        "top": 4398,
+        "right": 1053.0023193359375,
+        "bottom": 4446,
+        "left": 937.0023193359375
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01aef7bfdd61a1dd2cf424_Barclays_logo%20logo.svg",
+      "alt": "Company logo BARCLAYS",
+      "w": 169,
+      "h": 48,
+      "box": {
+        "x": 1133.0023193359375,
+        "y": 4398,
+        "width": 169,
+        "height": 48,
+        "top": 4398,
+        "right": 1302.0023193359375,
+        "bottom": 4446,
+        "left": 1133.0023193359375
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01aef7f3cfc9aeff56d31f_onfido-logo%201%20%5BVectorized%5D.svg",
+      "alt": "Company logo onfido",
+      "w": 168,
+      "h": 48,
+      "box": {
+        "x": 1382.0023193359375,
+        "y": 4398,
+        "width": 168,
+        "height": 48,
+        "top": 4398,
+        "right": 1550.0023193359375,
+        "bottom": 4446,
+        "left": 1382.0023193359375
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01aef7f2138feb4d1eabf1_Frame%204404.svg",
+      "alt": "Company logo TikTok",
+      "w": 136,
+      "h": 48,
+      "box": {
+        "x": 1630.0023193359375,
+        "y": 4398,
+        "width": 136,
+        "height": 48,
+        "top": 4398,
+        "right": 1766.0023193359375,
+        "bottom": 4446,
+        "left": 1630.0023193359375
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01aef74fd8191ec25bba00_UBS_Logo%20white%201%20%5BVectorized%5D.svg",
+      "alt": "Company logo UBS",
+      "w": 108,
+      "h": 48,
+      "box": {
+        "x": 1846.0023193359375,
+        "y": 4398,
+        "width": 108,
+        "height": 48,
+        "top": 4398,
+        "right": 1954.0023193359375,
+        "bottom": 4446,
+        "left": 1846.0023193359375
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01aef715143b8523d204b1_Google_2015_logo%20white%201%20%5BVectorized%5D.svg",
+      "alt": "Company logo Google",
+      "w": 117,
+      "h": 48,
+      "box": {
+        "x": 2034.0023193359375,
+        "y": 4398,
+        "width": 117.0001220703125,
+        "height": 48,
+        "top": 4398,
+        "right": 2151.00244140625,
+        "bottom": 4446,
+        "left": 2034.0023193359375
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01f60bab7b4ee68d24b8a2_Frame%204403%20(1).svg",
+      "alt": "Company logo STARTUP WISE GUYS",
+      "w": 116,
+      "h": 48,
+      "box": {
+        "x": 2231.00244140625,
+        "y": 4398,
+        "width": 116,
+        "height": 48,
+        "top": 4398,
+        "right": 2347.00244140625,
+        "bottom": 4446,
+        "left": 2231.00244140625
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a1597bb4478513ee3f02b95_YouTube%20Thumbnail-1%20(1).webp",
+      "alt": "",
+      "w": 1440,
+      "h": 810,
+      "box": {
+        "x": 81,
+        "y": 4903,
+        "width": 622,
+        "height": 320,
+        "top": 4903,
+        "right": 703,
+        "bottom": 5223,
+        "left": 81
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a103eaaf7cba2dfebed2770_play-circle%20(1).svg",
+      "alt": "",
+      "w": 44,
+      "h": 44,
+      "box": {
+        "x": 370,
+        "y": 5041,
+        "width": 44,
+        "height": 44,
+        "top": 5041,
+        "right": 414,
+        "bottom": 5085,
+        "left": 370
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01fcf79ca36509cc998744_Company%20logo%20(1).webp",
+      "alt": "Company logo TransferMate",
+      "w": 400,
+      "h": 80,
+      "box": {
+        "x": 113,
+        "y": 5255,
+        "width": 200,
+        "height": 40,
+        "top": 5255,
+        "right": 313,
+        "bottom": 5295,
+        "left": 113
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a103cc98c6f76bf0edada4c_play-circle.svg",
+      "alt": "",
+      "w": 24,
+      "h": 24,
+      "box": {
+        "x": 221.734375,
+        "y": 5573.125,
+        "width": 24,
+        "height": 24,
+        "top": 5573.125,
+        "right": 245.734375,
+        "bottom": 5597.125,
+        "left": 221.734375
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01fad8e8c88a118767e94d_Avatar%20(1).webp",
+      "alt": "Compliance industry leader providing a testimonial for Vivox.ai financial crime compliance solutions.",
+      "w": 128,
+      "h": 128,
+      "box": {
+        "x": 377,
+        "y": 5445.125,
+        "width": 64,
+        "height": 64,
+        "top": 5445.125,
+        "right": 441,
+        "bottom": 5509.125,
+        "left": 377
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6abe690fcd5acdca30e51de9_Bisi%20%26%20Tim%20Altery%20Vivox%20case%20study.webp",
+      "alt": "Portrait of two people: a woman with short blonde hair, large glasses, orange top, and chunky geometric necklace on the left, and a man with short dark hair, wearing a dark blazer and light blue shirt on the right, set against a blue background with logos for Vivox and Altery and the text 'Explainable AI for Due Diligence' in white.",
+      "w": 1440,
+      "h": 810,
+      "box": {
+        "x": 737,
+        "y": 4903,
+        "width": 622,
+        "height": 320,
+        "top": 4903,
+        "right": 1359,
+        "bottom": 5223,
+        "left": 737
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a103eaaf7cba2dfebed2770_play-circle%20(1).svg",
+      "alt": "",
+      "w": 44,
+      "h": 44,
+      "box": {
+        "x": 1026,
+        "y": 5041,
+        "width": 44,
+        "height": 44,
+        "top": 5041,
+        "right": 1070,
+        "bottom": 5085,
+        "left": 1026
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a103aada2ee5d772b4a8d22_Frame%20115.svg",
+      "alt": "altery logo",
+      "w": 116,
+      "h": 40,
+      "box": {
+        "x": 769,
+        "y": 5255,
+        "width": 116,
+        "height": 40,
+        "top": 5255,
+        "right": 885,
+        "bottom": 5295,
+        "left": 769
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a103cc98c6f76bf0edada4c_play-circle.svg",
+      "alt": "",
+      "w": 24,
+      "h": 24,
+      "box": {
+        "x": 877.734375,
+        "y": 5573.125,
+        "width": 24,
+        "height": 24,
+        "top": 5573.125,
+        "right": 901.734375,
+        "bottom": 5597.125,
+        "left": 877.734375
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a103aca1c64900a0c207bf6_Avatar.webp",
+      "alt": "Compliance industry leader providing a testimonial for Vivox.ai financial crime compliance solutions.",
+      "w": 128,
+      "h": 128,
+      "box": {
+        "x": 965.734375,
+        "y": 5466.125,
+        "width": 64,
+        "height": 64,
+        "top": 5466.125,
+        "right": 1029.734375,
+        "bottom": 5530.125,
+        "left": 965.734375
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01f8c689aeac5025f0710b_Company%20logo.svg",
+      "alt": "Company logo UBS",
+      "w": 113,
+      "h": 40,
+      "box": {
+        "x": 113,
+        "y": 5697.125,
+        "width": 113,
+        "height": 40,
+        "top": 5697.125,
+        "right": 226,
+        "bottom": 5737.125,
+        "left": 113
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01f9557273a94f397fc58d_Avatar.webp",
+      "alt": "Compliance industry leader providing a testimonial for Vivox.ai financial crime compliance solutions.",
+      "w": 128,
+      "h": 128,
+      "box": {
+        "x": 113,
+        "y": 5915.46875,
+        "width": 64,
+        "height": 64,
+        "top": 5915.46875,
+        "right": 177,
+        "bottom": 5979.46875,
+        "left": 113
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01fcdb06c0a21994910cd5_Frame%20130.webp",
+      "alt": "Company logo TELF AG",
+      "w": 314,
+      "h": 80,
+      "box": {
+        "x": 550.328125,
+        "y": 5697.125,
+        "width": 157,
+        "height": 40,
+        "top": 5697.125,
+        "right": 707.328125,
+        "bottom": 5737.125,
+        "left": 550.328125
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01fb9238f3b4738bbc071e_Avatar%20(4).webp",
+      "alt": "Compliance industry leader providing a testimonial for Vivox.ai financial crime compliance solutions.",
+      "w": 128,
+      "h": 128,
+      "box": {
+        "x": 550.328125,
+        "y": 5939.46875,
+        "width": 64,
+        "height": 64,
+        "top": 5939.46875,
+        "right": 614.328125,
+        "bottom": 6003.46875,
+        "left": 550.328125
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01fad82b0f854604acd0d9_nvidia%20logo.svg",
+      "alt": "Company logo NVIDIA",
+      "w": 138,
+      "h": 40,
+      "box": {
+        "x": 987.65625,
+        "y": 5697.125,
+        "width": 138,
+        "height": 40,
+        "top": 5697.125,
+        "right": 1125.65625,
+        "bottom": 5737.125,
+        "left": 987.65625
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01fad86676998175e1e711_Avatar%20(2).webp",
+      "alt": "Compliance industry leader providing a testimonial for Vivox.ai financial crime compliance solutions.",
+      "w": 128,
+      "h": 128,
+      "box": {
+        "x": 987.65625,
+        "y": 5939.46875,
+        "width": 64,
+        "height": 64,
+        "top": 5939.46875,
+        "right": 1051.65625,
+        "bottom": 6003.46875,
+        "left": 987.65625
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01fcdbf78a342ae272d4ea_image.webp",
+      "alt": "Company logo Revolut",
+      "w": 204,
+      "h": 80,
+      "box": {
+        "x": 113,
+        "y": 6173.46875,
+        "width": 102,
+        "height": 40,
+        "top": 6173.46875,
+        "right": 215,
+        "bottom": 6213.46875,
+        "left": 113
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01fb5156034993ac746b12_Avatar%20(3).webp",
+      "alt": "Compliance industry leader providing a testimonial for Vivox.ai financial crime compliance solutions.",
+      "w": 128,
+      "h": 128,
+      "box": {
+        "x": 113,
+        "y": 6415.8125,
+        "width": 64,
+        "height": 64,
+        "top": 6415.8125,
+        "right": 177,
+        "bottom": 6479.8125,
+        "left": 113
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a103aada2ee5d772b4a8d22_Frame%20115.svg",
+      "alt": "altery logo",
+      "w": 116,
+      "h": 40,
+      "box": {
+        "x": 550.328125,
+        "y": 6173.46875,
+        "width": 116,
+        "height": 40,
+        "top": 6173.46875,
+        "right": 666.328125,
+        "bottom": 6213.46875,
+        "left": 550.328125
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a103aca1c64900a0c207bf6_Avatar.webp",
+      "alt": "Compliance industry leader providing a testimonial for Vivox.ai financial crime compliance solutions.",
+      "w": 128,
+      "h": 128,
+      "box": {
+        "x": 550.328125,
+        "y": 6391.8125,
+        "width": 64,
+        "height": 64,
+        "top": 6391.8125,
+        "right": 614.328125,
+        "bottom": 6455.8125,
+        "left": 550.328125
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a103c0becb1c8656dd86f4a_Company%20logo.svg",
+      "alt": "OSOME logo",
+      "w": 149,
+      "h": 40,
+      "box": {
+        "x": 987.65625,
+        "y": 6173.46875,
+        "width": 149,
+        "height": 40,
+        "top": 6173.46875,
+        "right": 1136.65625,
+        "bottom": 6213.46875,
+        "left": 987.65625
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01fbb6b21079d76ec886f1_Avatar%20(5).webp",
+      "alt": "Compliance industry leader providing a testimonial for Vivox.ai financial crime compliance solutions.",
+      "w": 128,
+      "h": 128,
+      "box": {
+        "x": 987.65625,
+        "y": 6415.8125,
+        "width": 64,
+        "height": 64,
+        "top": 6415.8125,
+        "right": 1051.65625,
+        "bottom": 6479.8125,
+        "left": 987.65625
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a02d5c4c1e36e796bd450fc_skynews.default%20logo.svg",
+      "alt": "Company logo skynews",
+      "w": 133,
+      "h": 42,
+      "box": {
+        "x": 127.5,
+        "y": 6782.8125,
+        "width": 133,
+        "height": 42,
+        "top": 6782.8125,
+        "right": 260.5,
+        "bottom": 6824.8125,
+        "left": 127.5
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a02d5c41fc6eedc794ad0cc_Yahoo!_Finance_logo%20logo.svg",
+      "alt": "Company logo yahoo/finance",
+      "w": 186,
+      "h": 42,
+      "box": {
+        "x": 324.5,
+        "y": 6782.8125,
+        "width": 186,
+        "height": 42,
+        "top": 6782.8125,
+        "right": 510.5,
+        "bottom": 6824.8125,
+        "left": 324.5
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a02d5c412d6db6fe125b9eb_image%202167%20%5BVectorized%5D.svg",
+      "alt": "Company logo Money 20/20",
+      "w": 83,
+      "h": 42,
+      "box": {
+        "x": 574.5,
+        "y": 6782.8125,
+        "width": 83,
+        "height": 42,
+        "top": 6782.8125,
+        "right": 657.5,
+        "bottom": 6824.8125,
+        "left": 574.5
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a02d5c4fe9d6c948b970977_Frame%20141.svg",
+      "alt": "Company logo the paypers",
+      "w": 189,
+      "h": 42,
+      "box": {
+        "x": 721.5,
+        "y": 6782.81396484375,
+        "width": 189,
+        "height": 42,
+        "top": 6782.81396484375,
+        "right": 910.5,
+        "bottom": 6824.81396484375,
+        "left": 721.5
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a02d5c4dad31a7d40fdafb4_image%202168%20%5BVectorized%5D.svg",
+      "alt": "Company logo A-Team Insight",
+      "w": 114,
+      "h": 42,
+      "box": {
+        "x": 974.5,
+        "y": 6782.85107421875,
+        "width": 114,
+        "height": 42,
+        "top": 6782.85107421875,
+        "right": 1088.5,
+        "bottom": 6824.85107421875,
+        "left": 974.5
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a02d5c49c752996be16fb87_image%202163%20%5BVectorized%5D.svg",
+      "alt": "Company logo Financial IT",
+      "w": 160,
+      "h": 42,
+      "box": {
+        "x": 1152.5,
+        "y": 6783.05078125,
+        "width": 160,
+        "height": 42,
+        "top": 6783.05078125,
+        "right": 1312.5,
+        "bottom": 6825.05078125,
+        "left": 1152.5
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a02d5c4d0091a27e58593e8_image%202175%20%5BVectorized%5D.svg",
+      "alt": "Company logo RECTECH100",
+      "w": 164,
+      "h": 39,
+      "box": {
+        "x": 496.6875,
+        "y": 6857.7294921875,
+        "width": 176.609375,
+        "height": 42,
+        "top": 6857.7294921875,
+        "right": 673.296875,
+        "bottom": 6899.7294921875,
+        "left": 496.6875
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a02d5c4c1e36e796bd450f8_image%202174%20%5BVectorized%5D.svg",
+      "alt": "Company logo FINCRIMETECH50",
+      "w": 206,
+      "h": 42,
+      "box": {
+        "x": 737.296875,
+        "y": 6859.45751953125,
+        "width": 206,
+        "height": 42,
+        "top": 6859.45751953125,
+        "right": 943.296875,
+        "bottom": 6901.45751953125,
+        "left": 737.296875
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a02d8fcf966c206aee94580_Frame%20123.webp",
+      "alt": "Vivox.ai brand visual: a compliance analyst within the infinity logo, symbolizing AI-powered AML and KYB automation.",
+      "w": 1440,
+      "h": 832,
+      "box": {
+        "x": 737.734375,
+        "y": 6997.8125,
+        "width": 898.265625,
+        "height": 519,
+        "top": 6997.8125,
+        "right": 1636,
+        "bottom": 7516.8125,
+        "left": 737.734375
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a02dd9ff3b08612aa03754f_Logotype.svg",
+      "alt": "Vivox.ai logotype - AI agents for financial crime compliance",
+      "w": 170,
+      "h": 24,
+      "box": {
+        "x": 80,
+        "y": 7747.40625,
+        "width": 170,
+        "height": 24,
+        "top": 7747.40625,
+        "right": 250,
+        "bottom": 7771.40625,
+        "left": 80
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a097d00fca36a22e1391577_linkedin.svg",
+      "alt": "Linkedin logo",
+      "w": 40,
+      "h": 40,
+      "box": {
+        "x": 1264,
+        "y": 7745.78125,
+        "width": 32,
+        "height": 32,
+        "top": 7745.78125,
+        "right": 1296,
+        "bottom": 7777.78125,
+        "left": 1264
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a097d00b84cb43de0bd227a_Frame%20(37).svg",
+      "alt": "Youtube logo",
+      "w": 40,
+      "h": 40,
+      "box": {
+        "x": 1328,
+        "y": 7745.78125,
+        "width": 32,
+        "height": 32,
+        "top": 7745.78125,
+        "right": 1360,
+        "bottom": 7777.78125,
+        "left": 1328
+      }
+    }
+  ],
+  "svgs": [
+    {
+      "box": {
+        "x": 220.109375,
+        "y": 573,
+        "width": 24,
+        "height": 24,
+        "top": 573,
+        "right": 244.109375,
+        "bottom": 597,
+        "left": 220.109375
+      },
+      "html": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" style=\"display: block; width: 100%; height: 100%;\">\n  <path d=\"M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10\"></path>\n  <path d=\"m10 8 6 4-6 4z\"></path>\n</svg>"
+    },
+    {
+      "box": {
+        "x": 763.546875,
+        "y": 3235,
+        "width": 24,
+        "height": 24,
+        "top": 3235,
+        "right": 787.546875,
+        "bottom": 3259,
+        "left": 763.546875
+      },
+      "html": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" style=\"display: block; width: 100%; height: 100%;\">\n  <path d=\"M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10\"></path>\n  <path d=\"m10 8 6 4-6 4z\"></path>\n</svg>"
+    }
+  ],
+  "sections": [
+    {
+      "tag": "HEADER",
+      "id": "",
+      "cls": "header",
+      "y": 0,
+      "h": 127,
+      "text": "Case study How Altery uses explainable AI to investigate complex ownership structures → Read the case study Customers About News Resources Contact Book a Demo",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "tag": "SECTION",
+      "id": "",
+      "cls": "section_hero",
+      "y": 0,
+      "h": 788,
+      "text": "Superpower for Compliance Teams Trusted AI agents for AML, KYB and Financial Crime Compliance. Try a Demo",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "tag": "DIV",
+      "id": "",
+      "cls": "marque-content",
+      "y": 788,
+      "h": 82,
+      "text": "",
+      "bg": "rgb(241, 241, 241)"
+    },
+    {
+      "tag": "SECTION",
+      "id": "",
+      "cls": "section_benefits",
+      "y": 870,
+      "h": 554,
+      "text": "Regulator-first AI Agents for Financial Crime Purpose-built to meet regulatory expectations, with explainable AI, full audit trails, and governance aligned with FCA requirements, the EU AI Act, and global standards.",
+      "bg": "rgb(4, 21, 42)"
+    },
+    {
+      "tag": "SECTION",
+      "id": "",
+      "cls": "section_describe",
+      "y": 1424,
+      "h": 482,
+      "text": "Our pre-trained AI agents automate manual, repetitive tasks traditionally handled by Level 1 analysts, including AML, adverse media monitoring, sanctions screening reviews, KYC/KYB onboarding, and periodic reviews. 90 % manual work automation 80 % compliance efficiency enhancement",
+      "bg": "rgb(241, 241, 241)"
+    },
+    {
+      "tag": "SECTION",
+      "id": "",
+      "cls": "section_meet",
+      "y": 1906,
+      "h": 1030,
+      "text": "Meet Rachel* Your AI Compliance Analyst Digital compliance workforce: intelligent AI agents designed to integrate into your operations, running 24/7 to ensure your compliance stays ahead of risks and regulations. Customized skills Adverse Media Monitoring Sanctions and PEP Alert Reviews AI Website Analysis Corporate Registry Data Analysis Ongoing Monitoring Incorporation and UBO Docs Analysis Narr",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "tag": "SECTION",
+      "id": "",
+      "cls": "section_functional",
+      "y": 2936,
+      "h": 1606,
+      "text": "Intelligent Business Due Diligence Multi-language, real-time scanning of 100+ global sources. Try a Demo AI-powered KYB and KYC for seamless verification From onboarding workflows to risk assessment, Vivox AI automates KYB and KYC reviews across multiple data sources, reducing manual effort and accelerating decision-making. Screening AI and false positives reduction Resolve the majority of screeni",
+      "bg": "rgb(4, 21, 42)"
+    },
+    {
+      "tag": "SECTION",
+      "id": "",
+      "cls": "section_testimonials",
+      "y": 4542,
+      "h": 2453,
+      "text": "Trusted by Industry Leaders and Top-Tier Experts Powerful, explainable AI agents helping compliance teams reduce onboarding times, lower false positives and scale financial crime operations globally. Watch now The level of detail in Vivox's Al Governance Framework gives me confidence that we can demonstrate robust controls during our audits, and in any regulatory inspection we may face regarding t",
+      "bg": "rgb(241, 241, 241)"
+    },
+    {
+      "tag": "SECTION",
+      "id": "",
+      "cls": "section_cta",
+      "y": 6995,
+      "h": 426,
+      "text": "Get a Superpower for your Team Book a Demo",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "tag": "FOOTER",
+      "id": "",
+      "cls": "footer",
+      "y": 7421,
+      "h": 517,
+      "text": "Subscribe now for updates, insights, and perks! We’ll send you a nice letter once per month. No spam. Case Studies About News Resources 2026 ⋅ London ⋅ Vivox.ai ⋅ Digital Intelligent Solutions Ltd Registered in England and Wales, company number 15567874 Terms Privacy Cookie Policy Cookie Settings",
+      "bg": "rgb(4, 21, 42)"
+    }
+  ],
+  "bodyText": "Case study How Altery uses explainable AI to investigate complex ownership structures → Read the case study Customers About News Resources Contact Book a Demo Superpower for Compliance Teams Trusted AI agents for AML, KYB and Financial Crime Compliance. Try a Demo Regulator-first AI Agents for Financial Crime Purpose-built to meet regulatory expectations, with explainable AI, full audit trails, and governance aligned with FCA requirements, the EU AI Act, and global standards. Our pre-trained AI agents automate manual, repetitive tasks traditionally handled by Level 1 analysts, including AML, adverse media monitoring, sanctions screening reviews, KYC/KYB onboarding, and periodic reviews. 90 % manual work automation 80 % compliance efficiency enhancement Meet Rachel* Your AI Compliance Analyst Digital compliance workforce: intelligent AI agents designed to integrate into your operations, running 24/7 to ensure your compliance stays ahead of risks and regulations. Customized skills Adverse Media Monitoring Sanctions and PEP Alert Reviews AI Website Analysis Corporate Registry Data Analysis Ongoing Monitoring Incorporation and UBO Docs Analysis Narrative Report Writing Request for Information Intelligent Business Due Diligence Multi-language, real-time scanning of 100+ global sources. Try a Demo AI-powered KYB and KYC for seamless verification From onboarding workflows to risk assessment, Vivox AI automates KYB and KYC reviews across multiple data sources, reducing manual effort and accelerating decision-making. Screening AI and false positives reduction Resolve the majority of screening alerts automatically. Vivox AI integrates with leading data providers to reduce false positives, deliver explainable decisions, operating within strict governance and audit frameworks. Corporate registry data Access and analyze corporate registry data across 150+ jurisdictions globally. Vivox AI validates ownership structures, identifies UBOs across complex entity layers, delivering explainable registry insights within minutes. Backed by Supported by globally recognized fintech and technology leaders, leading investors and industry operators Trusted by Industry Leaders and Top-Tier Experts Powerful, explainable AI agents helping compliance teams reduce onboarding times, lower false positives and scale financial crime operations globally. Watch now The level of detail in Vivox's Al Governance Framework gives me confidence that we can demonstrate robust controls during our audits, and in any regulatory inspection we may face regarding the use of Al. Alex Clements Global Head of AML, CFT and Sanctions at TransferMate Global Payments Watch now We’ve transitioned from hours to minutes and spend far less time digging for answers. Vivox AI helps us make sense of complex ownership structures. Human judgement remains essential: we review the outputs and make the decisions. Without the audit trail, you have nothing really. If you’re not able to evidence what you’ve done, then you haven’t done it. Bisi Giwa Group Fraud and Financial Crime Officer at Altery In today’s environment, transparency, auditability, and regulatory alignment are not optional – they are a must. Vivox AI is building the blueprint for how regulated financial institutions should integrate AI safely and responsibly. Axel A. Weber Former Chairman, UBS Former President, Deutsche Bundesbank We’ve been working with Vivox for about 12 mths. It saves my team hours by preparing easy-to-read reports with clear summaries of hundreds of articles. Dinu Popa Head of Compliance, Telf AG Vivox AI sets a high standard in the AI agentic category by developing precision-driven atomic AI models fine-tuned by expert humans in the loop. Nik Spirin Head of GenAI & MLOps, NVIDIA Vivox's outputs were validated during the client’s external audits, making their solutions fully compliant in regulated environments. Leonid Komov ex-Group MLRO, Revolut Vivox AI’s approach stood out because of its explainability, auditability and ability to support complex UBO investigations in a highly practical way. Early results have shown meaningful reductions in manual workload and false-positive noise. Bisi Giwa Group Chief Financial Crime and Fraud Prevention Officer Growing our partnership. It’s like a superpower: VivoxAI accelerates complex checks, speeds up onboarding, and improves compliance efficiency while reducing costs. Deepti Laddha Managing Director Singapore, Osome Featured in Get a Superpower for your Team Book a Demo Subscribe now for updates, insights, and perks! We’ll send you a nice letter once per month. No spam. Case Studies About News Resources 2026 ⋅ London ⋅ Vivox.ai ⋅ Digital Intelligent Solutions Ltd Registered in England and Wales, company number 15567874 Terms Privacy Cookie Policy Cookie Settings",
+  "url": "https://vivox.ai/",
+  "viewport": {
+    "w": 1440,
+    "h": 900
+  },
+  "pageHeight": 7938,
+  "failedRequests": [
+    "https://vivox.ai/v2645sy3qzdjNmEwMTg3MDcyNjg0MTZkMWFlNWRhM2Zm/ga/g/c?v=2&tid=G-3CCE9KNXFL&gtm=45g92e6a72v9252724056za20czd9252724056xf4&_p=1791503418520&gcd=13l3l3l3l1l1&npa=0&dma=0&gdid=dZGVlNj.dYWYxNW.dNzQzZD&_uip=%3A%3A&are=1&cid=1928548553.1791503420&fp=1&frm=0&ngs=1&pscdl=noapi&rcb=12&sr=1440x900&uaa=x86&uab=64&uafvl=Chromium%3B141.0.7390.37%7CNot%253FA_Brand%3B8.0.0.0&uam=&uamb=0&uap=Linux&uapv=6.18.44&uaw=0&ul=en-us&ur=US-OH&_gsid=Y0AObgI4VWMlKBQD6uNWEv9zW68p7v8_7Q&_s=1&tag_exp=115616985~115938465~115938469~118897920~118897930~120213116~120385422~120469145~120469153~121046263~121046271~121246026~121246034&sid=1791503419&sct=1&seg=0&dl=https%3A%2F%2Fvivox.ai%2F&dt=Vivox.ai%20%7C%20Superpower%20for%20Compliance%20Teams&gtb=1&en=page_view&_fv=1&_nsi=1&_ss=1&_ee=1&gap.gtb=1&tfd=2103"
+  ],
+  "videos": [],
+  "network": [
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01aef7bfdd61a1dd2cf424_Barclays_logo%20logo.svg",
+      "type": "image/svg+xml",
+      "status": 200,
+      "name": "6a01aef7bfdd61a1dd2cf424_Barclays_logo_logo.svg"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01aef7f3cfc9aeff56d31f_onfido-logo%201%20%5BVectorized%5D.svg",
+      "type": "image/svg+xml",
+      "status": 200,
+      "name": "6a01aef7f3cfc9aeff56d31f_onfido-logo_1__Vectorized_.svg"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a0191c7fd52120c39d50105_Frame%20124.webp",
+      "type": "image/webp",
+      "status": 200,
+      "name": "6a0191c7fd52120c39d50105_Frame_124.webp"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01aef7f2138feb4d1eabf1_Frame%204404.svg",
+      "type": "image/svg+xml",
+      "status": 200,
+      "name": "6a01aef7f2138feb4d1eabf1_Frame_4404.svg"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01aef74fd8191ec25bba00_UBS_Logo%20white%201%20%5BVectorized%5D.svg",
+      "type": "image/svg+xml",
+      "status": 200,
+      "name": "6a01aef74fd8191ec25bba00_UBS_Logo_white_1__Vectorized_.svg"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+      "type": "font/woff2",
+      "status": 200,
+      "name": "UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01aef715143b8523d204b1_Google_2015_logo%20white%201%20%5BVectorized%5D.svg",
+      "type": "image/svg+xml",
+      "status": 200,
+      "name": "6a01aef715143b8523d204b1_Google_2015_logo_white_1__Vectorized_.svg"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01f60bab7b4ee68d24b8a2_Frame%204403%20(1).svg",
+      "type": "image/svg+xml",
+      "status": 200,
+      "name": "6a01f60bab7b4ee68d24b8a2_Frame_4403__1_.svg"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a019a8a4bb0663e3e7d058b_Frame%20119.svg",
+      "type": "image/svg+xml",
+      "status": 200,
+      "name": "6a019a8a4bb0663e3e7d058b_Frame_119.svg"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a0197bf96b3a6b550394ecf_MFSA.svg",
+      "type": "image/svg+xml",
+      "status": 200,
+      "name": "6a0197bf96b3a6b550394ecf_MFSA.svg"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a019a89489bbe0d0b884048_Frame%20116.svg",
+      "type": "image/svg+xml",
+      "status": 200,
+      "name": "6a019a89489bbe0d0b884048_Frame_116.svg"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a019494196ac281bc4ef3fa_ecompay.svg",
+      "type": "image/svg+xml",
+      "status": 200,
+      "name": "6a019494196ac281bc4ef3fa_ecompay.svg"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a02e4a0064153e4e6943f60_Logotype%20(1).svg",
+      "type": "image/svg+xml",
+      "status": 200,
+      "name": "6a02e4a0064153e4e6943f60_Logotype__1_.svg"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a019aa2755b8238c05ca6d8_Frame%20117.svg",
+      "type": "image/svg+xml",
+      "status": 200,
+      "name": "6a019aa2755b8238c05ca6d8_Frame_117.svg"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a019a8a809f88b6cd5f7f48_Frame%20118.svg",
+      "type": "image/svg+xml",
+      "status": 200,
+      "name": "6a019a8a809f88b6cd5f7f48_Frame_118.svg"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a0197bf89c6c827a970e64b_image%202173%20%5BVectorized%5D.svg",
+      "type": "image/svg+xml",
+      "status": 200,
+      "name": "6a0197bf89c6c827a970e64b_image_2173__Vectorized_.svg"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a0197bfdcb7f9bdc1d77066_VASP.svg",
+      "type": "image/svg+xml",
+      "status": 200,
+      "name": "6a0197bfdcb7f9bdc1d77066_VASP.svg"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a019a8951f8ce76925d18cb_Frame%20115.svg",
+      "type": "image/svg+xml",
+      "status": 200,
+      "name": "6a019a8951f8ce76925d18cb_Frame_115.svg"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a0197bfdabf6778f7587195_image%202171%20%5BVectorized%5D.svg",
+      "type": "image/svg+xml",
+      "status": 200,
+      "name": "6a0197bfdabf6778f7587195_image_2171__Vectorized_.svg"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a0197bfceba6fd8c11200ac_FINMA_logo%20logo.svg",
+      "type": "image/svg+xml",
+      "status": 200,
+      "name": "6a0197bfceba6fd8c11200ac_FINMA_logo_logo.svg"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a0197bf2fe0ae1bafe25d2c_US-FDIC-Logo%20logo.svg",
+      "type": "image/svg+xml",
+      "status": 200,
+      "name": "6a0197bf2fe0ae1bafe25d2c_US-FDIC-Logo_logo.svg"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a0197bf4bb0663e3e7c7348_FCA.svg",
+      "type": "image/svg+xml",
+      "status": 200,
+      "name": "6a0197bf4bb0663e3e7c7348_FCA.svg"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a06d496a5c17d72d2d09d53_%E2%86%97.svg",
+      "type": "image/svg+xml",
+      "status": 200,
+      "name": "6a06d496a5c17d72d2d09d53__.svg"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a0197bfd5624521f4cf08c3_sec--1%20logo.svg",
+      "type": "image/svg+xml",
+      "status": 200,
+      "name": "6a0197bfd5624521f4cf08c3_sec--1_logo.svg"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a06d362e490ed4439ae3e60_69727480c35cfcc1bc1fb58f_Favicon.png",
+      "type": "image/png",
+      "status": 200,
+      "name": "6a06d362e490ed4439ae3e60_69727480c35cfcc1bc1fb58f_Favicon.png"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a019f4bad68e0ee26258d5c_plus.svg",
+      "type": "image/svg+xml",
+      "status": 200,
+      "name": "6a019f4bad68e0ee26258d5c_plus.svg"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a019ee8895e75e15558155a_Featured%20icon.svg",
+      "type": "image/svg+xml",
+      "status": 200,
+      "name": "6a019ee8895e75e15558155a_Featured_icon.svg"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a019e20a6dc982a210e7c34_Content.webp",
+      "type": "image/webp",
+      "status": 200,
+      "name": "6a019e20a6dc982a210e7c34_Content.webp"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01aa054a2263cf6acdbbad_Frame%20122.webp",
+      "type": "image/webp",
+      "status": 200,
+      "name": "6a01aa054a2263cf6acdbbad_Frame_122.webp"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01ab1b5b7b262e1424f7a4_Featured%20icon%20(2).svg",
+      "type": "image/svg+xml",
+      "status": 200,
+      "name": "6a01ab1b5b7b262e1424f7a4_Featured_icon__2_.svg"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01ab1c9ae2f5e09b3d8a1b_Featured%20icon%20(1).svg",
+      "type": "image/svg+xml",
+      "status": 200,
+      "name": "6a01ab1c9ae2f5e09b3d8a1b_Featured_icon__1_.svg"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01ab1b74dd3952fc4ead6e_Featured%20icon%20(3).svg",
+      "type": "image/svg+xml",
+      "status": 200,
+      "name": "6a01ab1b74dd3952fc4ead6e_Featured_icon__3_.svg"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a1597bb4478513ee3f02b95_YouTube%20Thumbnail-1%20(1).webp",
+      "type": "image/webp",
+      "status": 200,
+      "name": "6a1597bb4478513ee3f02b95_YouTube_Thumbnail-1__1_.webp"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6abe690fcd5acdca30e51de9_Bisi%20%26%20Tim%20Altery%20Vivox%20case%20study.webp",
+      "type": "image/webp",
+      "status": 200,
+      "name": "6abe690fcd5acdca30e51de9_Bisi___Tim_Altery_Vivox_case_study.webp"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a103eaaf7cba2dfebed2770_play-circle%20(1).svg",
+      "type": "image/svg+xml",
+      "status": 200,
+      "name": "6a103eaaf7cba2dfebed2770_play-circle__1_.svg"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01fcf79ca36509cc998744_Company%20logo%20(1).webp",
+      "type": "image/webp",
+      "status": 200,
+      "name": "6a01fcf79ca36509cc998744_Company_logo__1_.webp"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a103aada2ee5d772b4a8d22_Frame%20115.svg",
+      "type": "image/svg+xml",
+      "status": 200,
+      "name": "6a103aada2ee5d772b4a8d22_Frame_115.svg"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a103cc98c6f76bf0edada4c_play-circle.svg",
+      "type": "image/svg+xml",
+      "status": 200,
+      "name": "6a103cc98c6f76bf0edada4c_play-circle.svg"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01fad8e8c88a118767e94d_Avatar%20(1).webp",
+      "type": "image/webp",
+      "status": 200,
+      "name": "6a01fad8e8c88a118767e94d_Avatar__1_.webp"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a103aca1c64900a0c207bf6_Avatar.webp",
+      "type": "image/webp",
+      "status": 200,
+      "name": "6a103aca1c64900a0c207bf6_Avatar.webp"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01fad82b0f854604acd0d9_nvidia%20logo.svg",
+      "type": "image/svg+xml",
+      "status": 200,
+      "name": "6a01fad82b0f854604acd0d9_nvidia_logo.svg"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01f8c689aeac5025f0710b_Company%20logo.svg",
+      "type": "image/svg+xml",
+      "status": 200,
+      "name": "6a01f8c689aeac5025f0710b_Company_logo.svg"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01f9557273a94f397fc58d_Avatar.webp",
+      "type": "image/webp",
+      "status": 200,
+      "name": "6a01f9557273a94f397fc58d_Avatar.webp"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01fad86676998175e1e711_Avatar%20(2).webp",
+      "type": "image/webp",
+      "status": 200,
+      "name": "6a01fad86676998175e1e711_Avatar__2_.webp"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01fcdb06c0a21994910cd5_Frame%20130.webp",
+      "type": "image/webp",
+      "status": 200,
+      "name": "6a01fcdb06c0a21994910cd5_Frame_130.webp"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01fb9238f3b4738bbc071e_Avatar%20(4).webp",
+      "type": "image/webp",
+      "status": 200,
+      "name": "6a01fb9238f3b4738bbc071e_Avatar__4_.webp"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01fb5156034993ac746b12_Avatar%20(3).webp",
+      "type": "image/webp",
+      "status": 200,
+      "name": "6a01fb5156034993ac746b12_Avatar__3_.webp"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a103c0becb1c8656dd86f4a_Company%20logo.svg",
+      "type": "image/svg+xml",
+      "status": 200,
+      "name": "6a103c0becb1c8656dd86f4a_Company_logo.svg"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01fbb6b21079d76ec886f1_Avatar%20(5).webp",
+      "type": "image/webp",
+      "status": 200,
+      "name": "6a01fbb6b21079d76ec886f1_Avatar__5_.webp"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a01fcdbf78a342ae272d4ea_image.webp",
+      "type": "image/webp",
+      "status": 200,
+      "name": "6a01fcdbf78a342ae272d4ea_image.webp"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a02d5c4c1e36e796bd450fc_skynews.default%20logo.svg",
+      "type": "image/svg+xml",
+      "status": 200,
+      "name": "6a02d5c4c1e36e796bd450fc_skynews.default_logo.svg"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a02d5c4d0091a27e58593e8_image%202175%20%5BVectorized%5D.svg",
+      "type": "image/svg+xml",
+      "status": 200,
+      "name": "6a02d5c4d0091a27e58593e8_image_2175__Vectorized_.svg"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a02d5c4c1e36e796bd450f8_image%202174%20%5BVectorized%5D.svg",
+      "type": "image/svg+xml",
+      "status": 200,
+      "name": "6a02d5c4c1e36e796bd450f8_image_2174__Vectorized_.svg"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a02d5c4dad31a7d40fdafb4_image%202168%20%5BVectorized%5D.svg",
+      "type": "image/svg+xml",
+      "status": 200,
+      "name": "6a02d5c4dad31a7d40fdafb4_image_2168__Vectorized_.svg"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a02d5c41fc6eedc794ad0cc_Yahoo!_Finance_logo%20logo.svg",
+      "type": "image/svg+xml",
+      "status": 200,
+      "name": "6a02d5c41fc6eedc794ad0cc_Yahoo__Finance_logo_logo.svg"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a02d5c49c752996be16fb87_image%202163%20%5BVectorized%5D.svg",
+      "type": "image/svg+xml",
+      "status": 200,
+      "name": "6a02d5c49c752996be16fb87_image_2163__Vectorized_.svg"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a02d5c4fe9d6c948b970977_Frame%20141.svg",
+      "type": "image/svg+xml",
+      "status": 200,
+      "name": "6a02d5c4fe9d6c948b970977_Frame_141.svg"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a02d5c412d6db6fe125b9eb_image%202167%20%5BVectorized%5D.svg",
+      "type": "image/svg+xml",
+      "status": 200,
+      "name": "6a02d5c412d6db6fe125b9eb_image_2167__Vectorized_.svg"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a02d8fcf966c206aee94580_Frame%20123.webp",
+      "type": "image/webp",
+      "status": 200,
+      "name": "6a02d8fcf966c206aee94580_Frame_123.webp"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a097d00b84cb43de0bd227a_Frame%20(37).svg",
+      "type": "image/svg+xml",
+      "status": 200,
+      "name": "6a097d00b84cb43de0bd227a_Frame__37_.svg"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a02dd9ff3b08612aa03754f_Logotype.svg",
+      "type": "image/svg+xml",
+      "status": 200,
+      "name": "6a02dd9ff3b08612aa03754f_Logotype.svg"
+    },
+    {
+      "url": "https://cdn.prod.website-files.com/6a018707268416d1ae5da3ff/6a097d00fca36a22e1391577_linkedin.svg",
+      "type": "image/svg+xml",
+      "status": 200,
+      "name": "6a097d00fca36a22e1391577_linkedin.svg"
+    },
+    {
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/g/ci/a4790c3d9d7f1715/1791503426597/8OKZ3Gibzt5kf0fwpLkv9xfwBBUvEVEYBAGbC56XnoY-1791503426-1.3.1.1-I2it4IjezkxZVKQrloeZRmg73rgCBAOjZWzHCj2kGzAT5D7ELO2CdBclM.llYffn0OMKvrhOxgP6uilVjNnxA2EvneYAekHsnaPB8BjKYPj.088MJDsCe7IUUmtCxHXD1WCq91McdZUS_eb9WVNNO.kzT6.ugJ.eqY_vsh.2TVhUWCMJddjVrpGh_v4GVFru2HvN2TLPx_0HE5Z5BILzARLuZHT7rhuJMrmF7mJ5L5mg1LhIwb7ObQuT6VsHmvMMNeTV5RKWd9H7_mqmDcswQ8KNTj1LHZuf_pn_NxVcxaiicheTyDdHTg1zJ3WaXQhTG0AwaNBgnn1C7bCBXAoct7rvpD9EwkV15i_lidO7aZOIEf3qm1whhMrpEPFEEsGJhCalr8OS1ZbvaBwQCbgQOEB9HOmT9N4fTF4jK6FaE0W27I1wMkCnknvMbOL6Si0fFIClwY.72DW9qujUIZHcl0jWiY4sCY9isWn2BcWnAmBOpnmE4HfW.8.QpaRSPC4w_df9uzwSbNVgecjwpc_x_CBmnNadh4PzU0vy2LsYc2yhr0381OTwo5kWmNleeADdI_vR_M58JBL30aYsSodT1.ZentXUfmu7V3BiKNJTWGcKBc3lw1R9Imaoxshg_KwHW90SdfTcYhtkO8LmWkx3A1sV7I_EQJFhi7j6UTxo2qDvZniyzQi7ugC0C.PAOe2oKsGqa4nJplazu5eIdg18YCqzCM0n64oQa1lJXROmg9w",
+      "type": "image/png",
+      "status": 200,
+      "name": "8OKZ3Gibzt5kf0fwpLkv9xfwBBUvEVEYBAGbC56XnoY-1791503426-1.3.1.1-I2it4IjezkxZVKQrloeZRmg73rgCBAOjZWzHCj2kGzAT5D7ELO2CdBclM.llYffn0OMKvrhOxgP6uilVjNnxA2EvneYAekHsnaPB8BjKYPj.088MJDsCe7IUUmtCxHXD1WCq91McdZUS_eb9WVNNO.kzT6.ugJ.eqY_vsh.2TVhUWCMJddjVrpGh_v4GVFru2HvN2TLPx_0HE5Z5BILzARLuZHT7rhuJMrmF7mJ5L5mg1LhIwb7ObQuT6VsHmvMMNeTV5RKWd9H7_mqmDcswQ8KNTj1LHZuf_pn_NxVcxaiicheTyDdHTg1zJ3WaXQhTG0AwaNBgnn1C7bCBXAoct7rvpD9EwkV15i_lidO7aZOIEf3qm1whhMrpEPFEEsGJhCalr8OS1ZbvaBwQCbgQOEB9HOmT9N4fTF4jK6FaE0W27I1wMkCnknvMbOL6Si0fFIClwY.72DW9qujUIZHcl0jWiY4sCY9isWn2BcWnAmBOpnmE4HfW.8.QpaRSPC4w_df9uzwSbNVgecjwpc_x_CBmnNadh4PzU0vy2LsYc2yhr0381OTwo5kWmNleeADdI_vR_M58JBL30aYsSodT1.ZentXUfmu7V3BiKNJTWGcKBc3lw1R9Imaoxshg_KwHW90SdfTcYhtkO8LmWkx3A1sV7I_EQJFhi7j6UTxo2qDvZniyzQi7ugC0C.PAOe2oKsGqa4nJplazu5eIdg18YCqzCM0n64oQa1lJXROmg9w"
+    },
+    {
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/g/ci/a4790c91ef3e1715/1791503440034/H5nfyE5bcCJH4MJw4UJ.QjPtspR7h5NZoTWe1GAvrCg-1791503440-1.3.1.1-OtN9spVg8I47sKwRYUfUjqEQKfapu7ZrYLAmTR.TYU2peX9e8nGt69ogZJNNkR0ZY4dWdmVaIrcE.rTcCY_xhVxTo88CNnSOMHhTkxyCvHxSUQg1tKmQ6bNUdvQ.xOe.hxkov3hC9LjdzKx33_xk_alzXR7WZP_BLm2jMa4aVg.f7kdS_HbofINi_WlffAc0W9YBm_4AenalIvqUfGWZ_QvSKAKKeGhTOzv_BzWICpcUii1Doxx8zZQ2bYx6C7NqfLkC0x5zo8llSegVP9CtMvlDc8o6vXDDd7KuulLKIyf6lIUIKk_dZj730tnlIrNB._1XSI90GFxmkr0O2YQ1dxinH.CqHgYTmd.4N2LjPoXrXQvjUaEvtji0rN_rkk7JB7P217qCNVw1EUiQ_04YPERFke5ak48nq4yDin9ZH1gQDWQRkcflgjldEmnOY78YvBx.3FsJoBoNL_GLWCY55HsHBTY_S3DPIKcl6Xh_dtIluHvzZef7NPr.cxg8uJvNqz1TZfALs.296N0UUKjsugsT5i6028GL2Kd0Bst64I.cyGytrFTyz0HeiuE26rBc5YlpmTx64kmer4lNWbC59Uwp02twL.0MKkflewG5.wFZs45U30Z1aWE5082qaqhPAFCMEIgacMvYzOeMWJYi_o4FUv2SrGcJVg0YYRnb9hiPZH6wdG7KAWhcCZfmGOfwjLB1JR3e8DvqPqvhQo3spEXO.kTRcctFZFue2gWIeiY",
+      "type": "image/png",
+      "status": 200,
+      "name": "H5nfyE5bcCJH4MJw4UJ.QjPtspR7h5NZoTWe1GAvrCg-1791503440-1.3.1.1-OtN9spVg8I47sKwRYUfUjqEQKfapu7ZrYLAmTR.TYU2peX9e8nGt69ogZJNNkR0ZY4dWdmVaIrcE.rTcCY_xhVxTo88CNnSOMHhTkxyCvHxSUQg1tKmQ6bNUdvQ.xOe.hxkov3hC9LjdzKx33_xk_alzXR7WZP_BLm2jMa4aVg.f7kdS_HbofINi_WlffAc0W9YBm_4AenalIvqUfGWZ_QvSKAKKeGhTOzv_BzWICpcUii1Doxx8zZQ2bYx6C7NqfLkC0x5zo8llSegVP9CtMvlDc8o6vXDDd7KuulLKIyf6lIUIKk_dZj730tnlIrNB._1XSI90GFxmkr0O2YQ1dxinH.CqHgYTmd.4N2LjPoXrXQvjUaEvtji0rN_rkk7JB7P217qCNVw1EUiQ_04YPERFke5ak48nq4yDin9ZH1gQDWQRkcflgjldEmnOY78YvBx.3FsJoBoNL_GLWCY55HsHBTY_S3DPIKcl6Xh_dtIluHvzZef7NPr.cxg8uJvNqz1TZfALs.296N0UUKjsugsT5i6028GL2Kd0Bst64I.cyGytrFTyz0HeiuE26rBc5YlpmTx64kmer4lNWbC59Uwp02twL.0MKkflewG5.wFZs45U30Z1aWE5082qaqhPAFCMEIgacMvYzOeMWJYi_o4FUv2SrGcJVg0YYRnb9hiPZH6wdG7KAWhcCZfmGOfwjLB1JR3e8DvqPqvhQo3spEXO.kTRcctFZFue2gWIeiY"
+    }
+  ]
+}
