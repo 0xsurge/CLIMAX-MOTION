@@ -1,0 +1,68 @@
+<!doctype html><meta charset="utf-8"><title>DRIP VERSE sync stills</title>
+<style>
+@font-face{font-family:Bodoni;src:url(assets/fonts/bodoni-normal.woff2);font-weight:400 600;font-style:normal}
+@font-face{font-family:Bodoni;src:url(assets/fonts/bodoni-italic.woff2);font-weight:400 600;font-style:italic}
+@font-face{font-family:Geist;src:url(assets/fonts/geist.woff2);font-weight:100 900}
+:root{--ink:#121214;--bone:#F4F1EB;--stone:#E6E1D8;--brass:#B08A4E;--grad:linear-gradient(90deg,#9A733A,#C8A766)}
+html,body{margin:0;background:#888}
+#f{position:relative;width:1920px;height:1080px;overflow:hidden;background:var(--bone)}
+#f *{position:absolute;box-sizing:border-box}
+#f span,#f i,#f br{position:static}
+</style>
+<div id="f"></div>
+<script>
+const $=document.getElementById('f'), S=new URLSearchParams(location.search).get('s')||'ticker';
+const h=s=>$.insertAdjacentHTML('beforeend',s);
+const DIM={'adidas-niteball':[579,365],'axel-arigato':[688,394],'nb-550':[390,304],'nb-480':[577,470],'nike-af1':[707,607],'nike-zoom':[405,307]};
+const shoe=(n,x,y,w,rot=0,sh=.22)=>{const [iw,ih]=DIM[n];return `<img src="assets/cut/${n}_c.png" style="left:${x}px;top:${y}px;width:${w}px;height:${w*ih/iw}px;transform:rotate(${rot}deg);filter:drop-shadow(0 22px 26px rgba(40,32,20,${sh}))">`};
+const dropMark=(x,y,s=1,col='#121214')=>`<svg width="${28*s}" height="${40*s}" viewBox="0 0 28 40" style="left:${x}px;top:${y}px"><path d="M14 1 C 11 12 2 20 2 28 a12 12 0 0 0 24 0 C 26 20 17 12 14 1z" fill="${col}"/></svg>`;
+const cursor=(x,y,s=1.5)=>`<svg width="${28*s}" height="${40*s}" viewBox="0 0 28 40" style="left:${x}px;top:${y}px;overflow:visible;filter:drop-shadow(0 4px 6px rgba(0,0,0,.25))"><path d="M3 2 L3 30 L10 24 L15 36 L20 34 L15 22 L24 22 Z" fill="#121214" stroke="#F4F1EB" stroke-width="2.4" stroke-linejoin="round"/></svg>`;
+const chip=(x,y,t)=>`<div style="left:${x}px;top:${y}px;height:40px;padding:0 18px;border-radius:20px;background:#fff;box-shadow:0 6px 18px rgba(40,32,20,.14);font:600 20px/40px Geist;color:var(--ink);white-space:nowrap"><span style="display:inline-block;width:10px;height:10px;border-radius:5px;background:var(--brass);margin-right:10px;vertical-align:1px"></span>${t}</div>`;
+const pill=(cx,cy,w,hh,txt,fs=34)=>`<div style="left:${cx-w/2}px;top:${cy-hh/2}px;width:${w}px;height:${hh}px;border-radius:${hh/2}px;background:var(--grad);box-shadow:0 24px 50px rgba(120,90,40,.28),inset 0 1px 0 rgba(255,255,255,.35)">
+  <div style="left:${hh*0.12}px;top:${hh*0.12}px;width:${hh*0.76}px;height:${hh*0.76}px;border-radius:50%;background:var(--bone)"></div>${dropMark(cx-w/2+hh*0.5-14-cx+w/2,hh*0.5-20,1)}
+  <div style="left:${hh}px;top:0;width:${w-hh*1.2}px;height:${hh}px;font:600 ${fs}px/${hh}px Geist;color:#FFF9EE;text-align:center;letter-spacing:.01em">${txt}</div></div>`;
+
+if(S==='ticker'){      // t = 3.0 : "Find your" + word ticker pointing at shoe cards
+  h(`<div style="left:150px;top:380px;font:400 170px/1 Bodoni;color:var(--ink);letter-spacing:-5px">Find your</div>`);
+  h(`<div style="left:930px;top:150px;width:520px;height:700px;-webkit-mask-image:linear-gradient(transparent,#000 30%,#000 70%,transparent)">
+     <div style="left:0;top:40px;font:italic 400 130px/1 Bodoni;color:rgba(18,18,20,.18)">Runners</div>
+     <div style="left:0;top:240px;font:italic 400 130px/1 Bodoni;color:var(--brass)">Courts</div>
+     <div style="left:0;top:440px;font:italic 400 130px/1 Bodoni;color:rgba(18,18,20,.18)">Classics</div></div>`);
+  h(`<svg width="120" height="60" viewBox="0 0 120 60" style="left:1330px;top:420px"><path d="M6 30 H104 M80 8 L106 30 L80 52" fill="none" stroke="#B08A4E" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/></svg>`);
+  h(`<div style="left:1480px;top:230px;width:380px;height:300px;border-radius:34px;background:var(--stone);box-shadow:0 26px 60px rgba(40,32,20,.16)"></div>`);
+  h(shoe('axel-arigato',1475,290,400,-6));
+  h(chip(1500,250,'New'));
+  h(`<div style="left:1540px;top:580px;width:320px;height:260px;border-radius:30px;background:#EDE8DF;box-shadow:0 26px 60px rgba(40,32,20,.16)"></div>`);
+  h(shoe('nb-550',1555,600,290,4));
+}
+if(S==='button'){      // t = 7.3 : "All in one place", the Shop the drop pill, a shoe peeking over it, cursor about to click
+  h(`<div style="left:700px;top:200px;font:400 104px/1 Bodoni;color:var(--ink);letter-spacing:-3px">All in one <i style="color:var(--brass)">place</i></div>`);
+  h(shoe('axel-arigato',700,352,330,-12,.25));
+  h(pill(960,560,560,116,'Shop the drop'));
+  h(cursor(1105,585));
+}
+if(S==='burst'){       // t = 8.4 : the drop. the pill bursts into concentric brass rings
+  $.style.background='#F4F1EB';
+  const R=[[1880,1020,'#EFE6D6'],[1460,780,'#E2CFAE'],[1080,560,'#CDAE7B'],[740,330,'#B78F52']];
+  R.forEach(([w,hh,c])=>h(`<div style="left:${960-w/2}px;top:${540-hh/2}px;width:${w}px;height:${hh}px;border-radius:${hh/2}px;background:${c};box-shadow:0 30px 80px rgba(120,90,40,.18)"></div>`));
+  h(pill(960,540,500,110,'Dripping',32));
+}
+if(S==='phone'){       // t = 12.0 : product page in a tilted phone, size chips, cursor on 42
+  h(`<div style="left:150px;top:300px;font:400 150px/1 Bodoni;color:var(--ink);letter-spacing:-4px">Pick your<br><i style="color:var(--brass)">size.</i></div>`);
+  h(`<div style="left:156px;top:660px;width:560px;font:400 30px/1.4 Geist;color:rgba(18,18,20,.66)">Every pair on one page. Tap a size, add to bag.</div>`);
+  h(`<div id="ph" style="left:1060px;top:120px;width:420px;height:850px;border-radius:66px;background:#121214;box-shadow:0 50px 100px rgba(40,32,20,.3);transform:rotate(-7deg)">
+    <div style="left:14px;top:14px;width:392px;height:822px;border-radius:54px;background:#FBF9F5;overflow:hidden">
+      <div style="left:146px;top:16px;width:100px;height:30px;border-radius:15px;background:#121214"></div>
+      <div style="left:26px;top:76px;font:600 22px/30px Geist;color:#121214;letter-spacing:.24em">DRIP VERSE</div>
+      <div style="left:22px;top:130px;width:348px;height:300px;border-radius:30px;background:var(--stone)"></div>
+      ${shoe('adidas-niteball',22,170,350,-4,.2)}
+      <div style="left:26px;top:460px;font:600 30px/36px Geist;color:#121214">Niteball</div>
+      <div style="left:26px;top:500px;font:400 22px/30px Geist;color:rgba(18,18,20,.5)">adidas Originals</div>
+      <div style="left:26px;top:556px;font:500 20px/26px Geist;color:rgba(18,18,20,.6)">Size (EU)</div>
+      ${[40,41,42,43,44].map((n,i)=>`<div style="left:${26+i*68}px;top:592px;width:58px;height:58px;border-radius:29px;${n===42?'background:var(--grad);color:#FFF9EE':'background:#fff;color:#121214;box-shadow:inset 0 0 0 2px rgba(18,18,20,.12)'};font:600 22px/58px Geist;text-align:center">${n}</div>`).join('')}
+      <div style="left:26px;top:690px;width:340px;height:76px;border-radius:38px;background:#121214;font:600 26px/76px Geist;color:#FFF9EE;text-align:center">Add to bag</div>
+    </div></div>`);
+  h(cursor(1281,746));
+}
+document.fonts.ready.then(()=>{window.__ready=true});
+</script>
