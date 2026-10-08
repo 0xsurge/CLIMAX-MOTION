@@ -45,7 +45,8 @@ const GEIST = "'Geist', system-ui, sans-serif", BODONI = "'Bodoni', 'Times New R
 function Rise(parent, o) {
   const box = mk(parent, { left: o.x, top: o.y, width: o.w, height: o.h, overflow: 'hidden' });
   const inner = mk(box, { width: o.w, height: o.h, font: o.font, color: o.color, letterSpacing: o.ls || '0', whiteSpace: 'nowrap', textAlign: o.al || 'left' }, o.html);
-  return (t, t0, p = o.sp || 'heavy') => { inner.style.transform = `translateY(${(1 - sp(t, t0, p)) * o.h * 1.15}px)`; };
+  const fn = (t, t0, p = o.sp || 'heavy') => { inner.style.transform = `translateY(${(1 - sp(t, t0, p)) * o.h * 1.15}px)`; };
+  fn.box = box; return fn;
 }
 // elliptical (floor) or circular ring that widens and thins out
 function Ring(parent, col = INK) { return mk(parent, { borderRadius: 9999, border: `2px solid ${col}`, display: 'none' }); }
@@ -154,6 +155,7 @@ function buildHero() {
   const btxt = Rise(btn, { x: 0, y: 0, w: 300, h: 84, html: 'Shop the drop', font: `600 28px/84px ${GEIST}`, color: BONE, al: 'center', ls: '.02em', sp: 'snappy' });
   return t => {
     nu(t, 4.1); arr(t, 4.45); copy(t, 5.6); btxt(t, 6.1);
+    nu.box.style.transform = `translateX(${12 * Math.max(0, t - 4.1)}px)`; arr.box.style.transform = `translateX(${-26 * Math.max(0, t - 4.45)}px)`;
     put(btn, { x: 0, y: (1 - sp(t, 6.0, 'snappy')) * 320, op: 1 });
     const e = sp(t, 4.35, 'default');
     put(shoe, { x: 1050, y: 420 + (1 - e) * 460 + bob(t, 0.4), rot: -5 + (1 - e) * 6 + bob(t, 1.0, 0.8, 3.1) });
@@ -204,8 +206,8 @@ function buildMontage() {
     c.innerHTML = `<img src="assets/photos/${n}.jpg" style="left:0;top:0;width:${w}px;height:${h}px;object-fit:cover">`; return c;
   });
   const cards = mkCards(LM);
-  const LD = 520, lens = mk(LM, { width: LD, height: LD, borderRadius: LD / 2, overflow: 'hidden', boxShadow: '0 0 0 2px rgba(18,18,20,.5),0 40px 100px rgba(40,34,24,.3)', display: 'none' });
-  const lensIn = mk(lens, { left: 0, top: 0, width: W, height: H, filter: 'url(#wl)', background: '#EDE8DF' });
+  const LD = 520, lens = mk(LM, { width: LD, height: LD, borderRadius: LD / 2, overflow: 'hidden', boxShadow: '0 0 0 4px rgba(255,255,255,.85),0 0 0 6px rgba(18,18,20,.4),0 40px 100px rgba(40,34,24,.35)', display: 'none' });
+  const lensIn = mk(lens, { left: 0, top: 0, width: W, height: H, filter: 'url(#wl) brightness(1.07) saturate(1.12)', background: '#EDE8DF' });
   const lcards = mkCards(lensIn), lring = Ring(LM);
   const pill = mk(LM, { left: -260, top: -50, width: 520, height: 100, borderRadius: 50, background: INK, overflow: 'hidden', display: 'none' });
   const ptxt = mk(pill, { left: 0, top: 0, width: 520, height: 100, font: `600 32px/100px ${GEIST}`, color: BONE, textAlign: 'center', letterSpacing: '.02em' }, 'Shop the drop');
@@ -226,13 +228,13 @@ function buildMontage() {
     FOCUS.forEach((f, i) => ringAt(focusRings[i], t, f[1], PARADE.find(p => p.n === f[0]).c[0], 800, 60, 460, 0.2, 0.55));
     cap(t, 12.5);
     const cardY = i => (1 - sp(t, 16.15 + 0.12 * i, 'default')) * 780 + sp(t, 19.85 + 0.06 * i, 'default') * 780;
-    [cards, lcards].forEach(row => row.forEach((c, i) => { c.style.transform = `translateY(${cardY(i)}px)`; c.style.visibility = cardY(i) > 760 ? 'hidden' : 'visible'; }));
+    [cards, lcards].forEach(row => row.forEach((c, i) => { c.style.transform = `translate(${(i - 1) * -22 * Math.max(0, t - 16.15)}px,${cardY(i)}px)`; c.style.visibility = cardY(i) > 760 ? 'hidden' : 'visible'; }));
     const ls = sp(t, 16.8, 'snappy') * (1 - 0.82 * sp(t, 19.55, 'default')), lx = lensX(t), ly = lensY(t);
     if (show(lens, ls > 0.005 && t < 19.9)) {
       put(lens, { x: lx - LD / 2, y: ly - LD / 2, s: ls });
-      const z = 1.1; put(lensIn, { x: -(lx - LD / 2) + lx - z * lx, y: -(ly - LD / 2) + ly - z * ly, s: z });
+      const z = 1.2; put(lensIn, { x: -(lx - LD / 2) + lx - z * lx, y: -(ly - LD / 2) + ly - z * ly, s: z });
       lensIn.style.transformOrigin = '0 0'; lensIn.style.transform = `translate(${-(lx - LD / 2) + lx - z * lx}px,${-(ly - LD / 2) + ly - z * ly}px) scale(${z})`;
-      WLMAP.setAttribute('scale', '12');
+      WLMAP.setAttribute('scale', '26');
     }
     ringAt(lring, t, 16.85, lx, ly, 20, 340, 1, 0.5); [17.0, 18.0, 19.0].forEach(() => {});
     const pr = sp(t, 19.85, 'default');
