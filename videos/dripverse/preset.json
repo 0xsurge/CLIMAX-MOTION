@@ -1,0 +1,27 @@
+{
+  "name": "blank",
+  "product": "Your Product",
+  "url": "https://example.com",
+  "hook": "One prompt.",
+  "promise": "A whole team, built.",
+  "proof": "5 at once",
+  "cta": "Try it free",
+  "bpm": 120,
+  "formats": [
+    "16x9",
+    "9x16"
+  ],
+  "colors": {
+    "canvas": "#F4F1EA",
+    "surface": "#FFFFFF",
+    "ink": "#15130F",
+    "accent": "#E8501C",
+    "onAccent": "#FFFFFF"
+  },
+  "fonts": {
+    "display": "Inter, system-ui, sans-serif",
+    "ui": "Inter, system-ui, sans-serif"
+  },
+  "voiceover": "none",
+  "notes": ""
+}

@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>film</title>
+<style>
+  html, body { margin: 0; background: #000; overflow: hidden; }
+  /* #stage is the film frame. render.mjs sets its size (--w/--h) before the first frame. */
+  #stage { position: relative; overflow: hidden; transform-origin: 0 0; }
+</style>
+<script src="tokens.js"></script>
+<script src="engine/lib/motion.js"></script>
+</head>
+<body>
+<div id="stage"></div>
+<script>
+  // Contract with render.mjs: define window.seek(t) in film.js. It must paint frame t from t alone.
+  // No transitions, timers or rAF in film code. window.__ready flips true once fonts are loaded.
+  window.__ready = false;
+  (() => {
+    const q = new URLSearchParams(location.search), el = document.getElementById('stage');
+    el.style.width = (q.get('w') || 1920) + 'px';
+    el.style.height = (q.get('h') || 1080) + 'px';
+    window.FORMAT = { w: +(q.get('w') || 1920), h: +(q.get('h') || 1080) };
+  })();
+</script>
+<script src="film.js"></script>
+<script>
+  // film.js may push font loads into window.__preload so frame 0 never paints in a fallback face.
+  Promise.all(window.__preload || []).then(() => document.fonts.ready).then(() => window.seek(0)).then(() => { window.__ready = true; });   // seek may be async (e.g. waits for images or video frames)
+</script>
+</body>
+</html>
