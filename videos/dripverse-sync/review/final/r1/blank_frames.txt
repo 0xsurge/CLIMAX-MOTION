@@ -1,0 +1,14 @@
+0.0s luma_std=0.27
+0.1s luma_std=0.27
+0.2s luma_std=2.66
+17.5s luma_std=3.38
+17.6s luma_std=1.36
+17.7s luma_std=2.03
+17.8s luma_std=2.91
+17.9s luma_std=3.46
+18.2s luma_std=3.35
+18.3s luma_std=1.98
+18.4s luma_std=1.28
+18.5s luma_std=1.65
+24.7s luma_std=3.02
+24.8s luma_std=3.18

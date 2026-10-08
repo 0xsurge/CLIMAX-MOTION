@@ -9,7 +9,7 @@ Logo file: none, minimal typeset wordmark "DRIP VERSE" + a drop mark (placeholde
 Product UI to show: none exists, so a stand-in shop UI built in code (product page, size chips, Add to bag, order tracking), labelled as stand-in
 Footage / photos: the 9 shoes you sent; cutouts of Adidas, Axel Arigato, NB 550, NB 480, Air Force 1, Nike Zoom; Jordan 4, Asics and Balenciaga as photo cards
 Song: Mixkit #132 "Hazy After Hours" (120 BPM), edited so the drop lands at 8.0 s
-Copy: "Find your → Runners / Courts / Classics", "All in one place", "Shop the drop", "Pick your size", "Ordered.", "On its way.", "Drip Time", "Shop now", "Powered by Climax Store"
+Copy: "Find your → Runners / Courts / Classics", "All in one place", "Shop the drop", "Pick your size", "Ordered.", "On its way.", "Drip Time", "At your door.", "Ready to wear.", "Send us a DM" (call to action), "Powered by Climax Store"
 Reference video: Musixquare launch (grammar only, not its brand)
 </inputs>
 
@@ -37,9 +37,9 @@ Beats:
 8. 21-25 s  Zoom through the drop into a ring of floating shoes: "Drip Time".
 9. 25-28 s  Tracker: Confirmed → On its way → At your door, with a route dot.
 10. 28-30 s The only hard cuts: on-foot photos (Jordan 4, Asics) in their own world.
-11. 30-32 s The drop mark pulls back into the wordmark; "Shop now" pill; "Powered by Climax Store".
+11. 30-32 s The drop mark pulls back into the wordmark; "Send us a DM" pill (the cursor taps it); "Powered by Climax Store".
 Drop / quiet moment: drop at 8.0 s on the cursor click; quieter outro bar under 28-32 s.
-Ending: DRIP VERSE wordmark, "Shop now" pill, Powered by Climax Store.
+Ending: DRIP VERSE wordmark, "Send us a DM" pill, Powered by Climax Store.
 </structure>
 
 <build>
