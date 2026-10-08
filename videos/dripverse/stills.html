@@ -51,7 +51,7 @@ if(S==='montage'){        // t = 16.0 s : after the drop, three columns of cards
   h(`<svg width="0" height="0"><filter id="wl" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".006 .009" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="12" xChannelSelector="R" yChannelSelector="G"/></filter></svg>`);
   h(`<div style="left:140px;top:610px;width:800px;height:800px;border-radius:50%;overflow:hidden;box-shadow:0 0 0 2px rgba(243,239,232,.55), 0 40px 120px rgba(0,0,0,.6)"><div id="lens" style="left:-140px;top:-610px;width:1080px;height:1920px;filter:url(#wl)"></div></div>`);
   const lens=document.getElementById('lens');
-  cols.forEach((c,ci)=>{let y=off[ci]-70;c.forEach((n,ri)=>{const w=316,hh=Math.round(w*ar[ci][ri]);lens.insertAdjacentHTML('beforeend',`<div class="card" style="left:${44+ci*340-8}px;top:${y}px;width:${w+16}px;height:${hh}px;background-image:url(${P(n)})"></div>`);y+=hh+24})});
+  cols.forEach((c,ci)=>{let y=off[ci];c.forEach((n,ri)=>{const w=316,hh=Math.round(w*ar[ci][ri]);lens.insertAdjacentHTML('beforeend',`<div class="card" style="left:${44+ci*340-8}px;top:${y}px;width:${w+16}px;height:${hh}px;background-image:url(${P(n)})"></div>`);y+=hh+24})});
   h(rings(540,1010,430,3,52,1,'rgba(243,239,232,.3)',.8));
   h(`<div style="left:90px;top:1500px;font:400 170px/.9 Bodoni;color:var(--bone);letter-spacing:-6px;mix-blend-mode:difference">Drip<br><i>Time</i></div>`);
 }
