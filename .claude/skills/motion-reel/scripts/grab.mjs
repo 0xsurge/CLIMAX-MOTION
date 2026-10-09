@@ -15,7 +15,7 @@ const jobs = JSON.parse(readFileSync(jobsPath, 'utf8'));
 const { chromium } = await import('playwright');
 let browser; try { browser = await chromium.launch(); } catch { browser = await chromium.launch({ executablePath: process.env.CHROME || '/opt/pw-browsers/chromium' }); }
 const page = await browser.newPage({ viewport: { width: +(a.w || 1440), height: +(a.h || 900) }, deviceScaleFactor: +(a.scale || 3) });
-await page.goto(url, { waitUntil: 'networkidle', timeout: 45000 });
+try { await page.goto(url, { waitUntil: 'networkidle', timeout: 25000 }); } catch { await page.waitForTimeout(2500); }   // sites with endless analytics never go idle
 await page.evaluate(() => document.fonts.ready); await page.waitForTimeout(1200);
 for (const label of ['Decline', 'Reject', 'Accept']) { const b = page.getByRole('button', { name: new RegExp('^' + label, 'i') }).first(); if (await b.count()) { try { await b.click({ timeout: 1500 }); break; } catch {} } }
 await page.evaluate(async () => { const h = document.documentElement.scrollHeight; for (let y = 0; y < h; y += 400) { scrollTo(0, y); await new Promise(r => setTimeout(r, 90)); } scrollTo(0, 0); });

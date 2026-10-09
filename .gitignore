@@ -32,3 +32,13 @@ videos/vivox/assets/shots/
 videos/vivox/assets/*.webp
 videos/vivox/assets/fonts/
 videos/vivox/review/still_*.png
+videos/nyangu/assets/net/
+videos/nyangu/assets/shots/
+videos/nyangu/assets/img/
+videos/nyangu/assets/*.jpg
+videos/nyangu/assets/*.woff2
+videos/nyangu/assets/ui/
+videos/nyangu/assets/mark.png
+videos/nyangu/assets/n_glyph.png
+videos/nyangu/review/*_tiles/
+videos/nyangu/review/s15.png

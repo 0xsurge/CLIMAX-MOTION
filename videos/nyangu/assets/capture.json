@@ -1,0 +1,893 @@
+{
+  "title": "Find Trusted Properties & Verified Agents in Lagos, Nigeria | Nyangu",
+  "description": "Find trusted properties in Lagos, Nigeria and connect with verified agents and landlords on Nyangu. List your property and connect with serious clients.",
+  "ogImage": "https://nyangu.com/icons/og-image.png",
+  "favicon": "https://www.nyangu.com/icons/nyangu-logo.png",
+  "themeColor": "#1a3a32",
+  "body": {
+    "bg": "oklch(1 0 0)",
+    "color": "oklch(0.145 0 0)",
+    "font": "\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif"
+  },
+  "rootVars": {
+    "--nyangu-green": "#003e30",
+    "--nyangu-gray": "#364153",
+    "--off-white": "#f7f7f7",
+    "--radius": ".625rem",
+    "--background": "oklch(100% 0 0)",
+    "--foreground": "oklch(14.5% 0 0)",
+    "--card": "oklch(100% 0 0)",
+    "--card-foreground": "oklch(14.5% 0 0)",
+    "--popover": "oklch(100% 0 0)",
+    "--popover-foreground": "oklch(14.5% 0 0)",
+    "--primary": "oklch(20.5% 0 0)",
+    "--primary-foreground": "oklch(98.5% 0 0)",
+    "--secondary": "oklch(97% 0 0)",
+    "--secondary-foreground": "oklch(20.5% 0 0)",
+    "--muted": "oklch(97% 0 0)",
+    "--muted-foreground": "oklch(55.6% 0 0)",
+    "--accent": "oklch(97% 0 0)",
+    "--accent-foreground": "oklch(20.5% 0 0)",
+    "--destructive": "oklch(57.7% .245 27.325)",
+    "--border": "oklch(92.2% 0 0)",
+    "--input": "oklch(92.2% 0 0)",
+    "--ring": "oklch(70.8% 0 0)",
+    "--chart-1": "oklch(64.6% .222 41.116)",
+    "--chart-2": "oklch(60% .118 184.704)",
+    "--chart-3": "oklch(39.8% .07 227.392)",
+    "--chart-4": "oklch(82.8% .189 84.429)",
+    "--chart-5": "oklch(76.9% .188 70.08)",
+    "--sidebar": "oklch(98.5% 0 0)",
+    "--sidebar-foreground": "oklch(14.5% 0 0)",
+    "--sidebar-primary": "oklch(20.5% 0 0)",
+    "--sidebar-primary-foreground": "oklch(98.5% 0 0)",
+    "--sidebar-accent": "oklch(97% 0 0)",
+    "--sidebar-accent-foreground": "oklch(20.5% 0 0)",
+    "--sidebar-border": "oklch(92.2% 0 0)",
+    "--sidebar-ring": "oklch(70.8% 0 0)",
+    "--e-consent": "#e5e7eb",
+    "--font-jakarta": "\"Plus Jakarta Sans\",system-ui,sans-serif"
+  },
+  "fontFaces": [
+    {
+      "family": "Plus Jakarta Sans",
+      "weight": "200 800",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Plus Jakarta Sans",
+      "weight": "200 800",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Plus Jakarta Sans",
+      "weight": "200 800",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Plus Jakarta Sans",
+      "weight": "200 800",
+      "style": "normal",
+      "status": "loaded"
+    },
+    {
+      "family": "Plus Jakarta Sans Fallback",
+      "weight": "normal",
+      "style": "normal",
+      "status": "unloaded"
+    }
+  ],
+  "fontFamilies": {
+    "\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif": 196
+  },
+  "colors": {
+    "oklch(1 0 0)": {
+      "bg": 7,
+      "text": 0,
+      "border": 0
+    },
+    "oklch(0.145 0 0)": {
+      "bg": 0,
+      "text": 104,
+      "border": 0
+    },
+    "rgb(0, 62, 48)": {
+      "bg": 9,
+      "text": 1,
+      "border": 1
+    },
+    "oklch(0.985 0 0)": {
+      "bg": 0,
+      "text": 2,
+      "border": 0
+    },
+    "rgb(255, 255, 255)": {
+      "bg": 19,
+      "text": 4,
+      "border": 0
+    },
+    "oklab(0.909399 -0.000488937 0.00547326 / 0.6)": {
+      "bg": 2,
+      "text": 0,
+      "border": 0
+    },
+    "rgb(0, 0, 0)": {
+      "bg": 0,
+      "text": 11,
+      "border": 0
+    },
+    "oklch(0.922 0 0)": {
+      "bg": 0,
+      "text": 0,
+      "border": 2
+    },
+    "oklab(0.999994 0.0000455678 0.0000200868 / 0.9)": {
+      "bg": 0,
+      "text": 1,
+      "border": 0
+    },
+    "oklch(0.967 0.003 264.542)": {
+      "bg": 0,
+      "text": 0,
+      "border": 11
+    },
+    "rgb(243, 244, 246)": {
+      "bg": 1,
+      "text": 0,
+      "border": 0
+    },
+    "rgb(75, 85, 99)": {
+      "bg": 0,
+      "text": 7,
+      "border": 0
+    },
+    "oklch(0.556 0 0)": {
+      "bg": 0,
+      "text": 4,
+      "border": 0
+    },
+    "oklch(0.928 0.006 264.531)": {
+      "bg": 4,
+      "text": 0,
+      "border": 7
+    },
+    "oklch(0.707 0.022 261.325)": {
+      "bg": 0,
+      "text": 4,
+      "border": 0
+    },
+    "rgb(26, 54, 45)": {
+      "bg": 1,
+      "text": 0,
+      "border": 0
+    },
+    "rgb(4, 120, 87)": {
+      "bg": 0,
+      "text": 1,
+      "border": 0
+    },
+    "rgb(4, 19, 14)": {
+      "bg": 0,
+      "text": 11,
+      "border": 0
+    },
+    "rgb(74, 85, 80)": {
+      "bg": 0,
+      "text": 11,
+      "border": 0
+    },
+    "rgb(122, 122, 122)": {
+      "bg": 0,
+      "text": 6,
+      "border": 0
+    },
+    "rgb(236, 253, 245)": {
+      "bg": 1,
+      "text": 0,
+      "border": 0
+    },
+    "rgb(254, 252, 232)": {
+      "bg": 2,
+      "text": 0,
+      "border": 0
+    },
+    "rgb(133, 77, 14)": {
+      "bg": 0,
+      "text": 1,
+      "border": 0
+    },
+    "rgb(253, 224, 71)": {
+      "bg": 0,
+      "text": 0,
+      "border": 1
+    },
+    "rgb(240, 249, 255)": {
+      "bg": 1,
+      "text": 0,
+      "border": 0
+    },
+    "rgb(250, 245, 255)": {
+      "bg": 1,
+      "text": 0,
+      "border": 0
+    },
+    "rgb(239, 68, 68)": {
+      "bg": 1,
+      "text": 0,
+      "border": 1
+    },
+    "rgb(254, 242, 242)": {
+      "bg": 1,
+      "text": 0,
+      "border": 0
+    },
+    "rgb(240, 253, 244)": {
+      "bg": 1,
+      "text": 0,
+      "border": 0
+    },
+    "rgb(248, 248, 248)": {
+      "bg": 3,
+      "text": 0,
+      "border": 0
+    },
+    "oklab(0 0 0 / 0.102)": {
+      "bg": 0,
+      "text": 0,
+      "border": 4
+    },
+    "oklab(0 0 0 / 0.8)": {
+      "bg": 0,
+      "text": 3,
+      "border": 0
+    },
+    "oklab(0 0 0 / 0.051)": {
+      "bg": 1,
+      "text": 0,
+      "border": 0
+    },
+    "rgb(241, 241, 241)": {
+      "bg": 1,
+      "text": 0,
+      "border": 0
+    },
+    "oklab(0.928 -0.000571842 -0.00597269 / 0.6)": {
+      "bg": 0,
+      "text": 0,
+      "border": 1
+    },
+    "oklch(0.446 0.03 256.802)": {
+      "bg": 0,
+      "text": 1,
+      "border": 0
+    },
+    "oklch(0.21 0.034 264.665)": {
+      "bg": 0,
+      "text": 3,
+      "border": 0
+    },
+    "oklch(0.551 0.027 264.364)": {
+      "bg": 0,
+      "text": 17,
+      "border": 0
+    },
+    "oklch(0.278 0.033 256.848)": {
+      "bg": 0,
+      "text": 5,
+      "border": 0
+    }
+  },
+  "heads": [
+    {
+      "tag": "H1",
+      "text": "Find your perfect space",
+      "font": "\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif",
+      "size": "48px",
+      "weight": "600",
+      "color": "rgb(255, 255, 255)"
+    },
+    {
+      "tag": "H2",
+      "text": "Just 6 steps. But who’s counting?",
+      "font": "\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif",
+      "size": "48px",
+      "weight": "700",
+      "color": "rgb(4, 19, 14)"
+    },
+    {
+      "tag": "H3",
+      "text": "Discover",
+      "font": "\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif",
+      "size": "20px",
+      "weight": "700",
+      "color": "rgb(4, 19, 14)"
+    },
+    {
+      "tag": "H3",
+      "text": "Tour",
+      "font": "\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif",
+      "size": "20px",
+      "weight": "700",
+      "color": "rgb(4, 19, 14)"
+    },
+    {
+      "tag": "H3",
+      "text": "Apply",
+      "font": "\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif",
+      "size": "20px",
+      "weight": "700",
+      "color": "rgb(4, 19, 14)"
+    },
+    {
+      "tag": "H3",
+      "text": "Sign",
+      "font": "\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif",
+      "size": "20px",
+      "weight": "700",
+      "color": "rgb(4, 19, 14)"
+    },
+    {
+      "tag": "H3",
+      "text": "Pay",
+      "font": "\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif",
+      "size": "20px",
+      "weight": "700",
+      "color": "rgb(4, 19, 14)"
+    },
+    {
+      "tag": "H3",
+      "text": "Move In and Stay on Top",
+      "font": "\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif",
+      "size": "20px",
+      "weight": "700",
+      "color": "rgb(4, 19, 14)"
+    },
+    {
+      "tag": "H2",
+      "text": "Rent with Confidence",
+      "font": "\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif",
+      "size": "48px",
+      "weight": "700",
+      "color": "rgb(4, 19, 14)"
+    },
+    {
+      "tag": "H3",
+      "text": "Verified from the Start",
+      "font": "\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif",
+      "size": "18px",
+      "weight": "700",
+      "color": "rgb(4, 19, 14)"
+    },
+    {
+      "tag": "H3",
+      "text": "Protected Payments",
+      "font": "\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif",
+      "size": "18px",
+      "weight": "700",
+      "color": "rgb(4, 19, 14)"
+    },
+    {
+      "tag": "H3",
+      "text": "24 Hour Safeguard",
+      "font": "\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif",
+      "size": "18px",
+      "weight": "700",
+      "color": "rgb(4, 19, 14)"
+    },
+    {
+      "tag": "H2",
+      "text": "Built for a market that needs proof.",
+      "font": "\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif",
+      "size": "48px",
+      "weight": "700",
+      "color": "rgb(0, 0, 0)"
+    },
+    {
+      "tag": "H3",
+      "text": "Verified People",
+      "font": "\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif",
+      "size": "16px",
+      "weight": "600",
+      "color": "rgb(0, 0, 0)"
+    },
+    {
+      "tag": "H3",
+      "text": "Verified Properties",
+      "font": "\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif",
+      "size": "16px",
+      "weight": "600",
+      "color": "rgb(0, 0, 0)"
+    },
+    {
+      "tag": "H3",
+      "text": "Protected Transactions",
+      "font": "\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif",
+      "size": "16px",
+      "weight": "600",
+      "color": "rgb(0, 0, 0)"
+    },
+    {
+      "tag": "H3",
+      "text": "LEGAL",
+      "font": "\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif",
+      "size": "12px",
+      "weight": "700",
+      "color": "oklch(0.21 0.034 264.665)"
+    },
+    {
+      "tag": "H3",
+      "text": "COMPANY",
+      "font": "\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif",
+      "size": "12px",
+      "weight": "700",
+      "color": "oklch(0.21 0.034 264.665)"
+    },
+    {
+      "tag": "H3",
+      "text": "OFFICES",
+      "font": "\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif",
+      "size": "12px",
+      "weight": "700",
+      "color": "oklch(0.21 0.034 264.665)"
+    },
+    {
+      "tag": "H4",
+      "text": "LAGOS",
+      "font": "\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif",
+      "size": "13px",
+      "weight": "700",
+      "color": "oklch(0.278 0.033 256.848)"
+    },
+    {
+      "tag": "H4",
+      "text": "DELAWARE",
+      "font": "\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif",
+      "size": "13px",
+      "weight": "700",
+      "color": "oklch(0.278 0.033 256.848)"
+    }
+  ],
+  "buttons": [
+    {
+      "text": "About",
+      "bg": "oklch(1 0 0)",
+      "color": "oklch(0.145 0 0)",
+      "radius": "8px",
+      "font": "\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif",
+      "weight": "500"
+    },
+    {
+      "text": "Rentals",
+      "bg": "oklch(1 0 0)",
+      "color": "oklch(0.145 0 0)",
+      "radius": "8px",
+      "font": "\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif",
+      "weight": "500"
+    },
+    {
+      "text": "Manage Listings",
+      "bg": "oklch(1 0 0)",
+      "color": "oklch(0.145 0 0)",
+      "radius": "8px",
+      "font": "\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif",
+      "weight": "500"
+    },
+    {
+      "text": "Build A Portfolio",
+      "bg": "oklch(1 0 0)",
+      "color": "oklch(0.145 0 0)",
+      "radius": "8px",
+      "font": "\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif",
+      "weight": "500"
+    },
+    {
+      "text": "",
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "oklch(0.145 0 0)",
+      "radius": "4px",
+      "font": "\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif",
+      "weight": "500"
+    },
+    {
+      "text": "Log In",
+      "bg": "rgb(0, 62, 48)",
+      "color": "oklch(0.985 0 0)",
+      "radius": "8px",
+      "font": "\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif",
+      "weight": "500"
+    },
+    {
+      "text": "Renter",
+      "bg": "rgb(0, 62, 48)",
+      "color": "rgb(255, 255, 255)",
+      "radius": "3.35544e+07px",
+      "font": "\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif",
+      "weight": "600"
+    },
+    {
+      "text": "Landlord",
+      "bg": "oklab(0.909399 -0.000488937 0.00547326 / 0.6)",
+      "color": "rgb(0, 0, 0)",
+      "radius": "3.35544e+07px",
+      "font": "\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif",
+      "weight": "600"
+    },
+    {
+      "text": "Agent",
+      "bg": "oklab(0.909399 -0.000488937 0.00547326 / 0.6)",
+      "color": "rgb(0, 0, 0)",
+      "radius": "3.35544e+07px",
+      "font": "\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif",
+      "weight": "600"
+    },
+    {
+      "text": "Find Your Next Home",
+      "bg": "rgb(255, 255, 255)",
+      "color": "rgb(0, 0, 0)",
+      "radius": "3.35544e+07px",
+      "font": "\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif",
+      "weight": "600"
+    },
+    {
+      "text": "Select State",
+      "bg": "rgb(255, 255, 255)",
+      "color": "oklch(0.556 0 0)",
+      "radius": "14px",
+      "font": "\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif",
+      "weight": "400"
+    },
+    {
+      "text": "Select LGA",
+      "bg": "rgb(255, 255, 255)",
+      "color": "oklch(0.556 0 0)",
+      "radius": "14px",
+      "font": "\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif",
+      "weight": "400"
+    },
+    {
+      "text": "Property type",
+      "bg": "rgb(255, 255, 255)",
+      "color": "oklch(0.707 0.022 261.325)",
+      "radius": "14px",
+      "font": "\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif",
+      "weight": "400"
+    },
+    {
+      "text": "Select rent range",
+      "bg": "rgb(255, 255, 255)",
+      "color": "oklch(0.707 0.022 261.325)",
+      "radius": "14px",
+      "font": "\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif",
+      "weight": "400"
+    },
+    {
+      "text": "",
+      "bg": "oklch(0.928 0.006 264.531)",
+      "color": "rgb(0, 0, 0)",
+      "radius": "8px",
+      "font": "\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif",
+      "weight": "400"
+    },
+    {
+      "text": "",
+      "bg": "oklch(0.928 0.006 264.531)",
+      "color": "rgb(0, 0, 0)",
+      "radius": "8px",
+      "font": "\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif",
+      "weight": "400"
+    },
+    {
+      "text": "",
+      "bg": "oklch(0.928 0.006 264.531)",
+      "color": "rgb(0, 0, 0)",
+      "radius": "8px",
+      "font": "\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif",
+      "weight": "400"
+    },
+    {
+      "text": "",
+      "bg": "oklch(0.928 0.006 264.531)",
+      "color": "rgb(0, 0, 0)",
+      "radius": "8px",
+      "font": "\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif",
+      "weight": "400"
+    },
+    {
+      "text": "Clear filters",
+      "bg": "oklch(1 0 0)",
+      "color": "rgb(75, 85, 99)",
+      "radius": "14px",
+      "font": "\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif",
+      "weight": "500"
+    },
+    {
+      "text": "Apply Filters",
+      "bg": "rgb(26, 54, 45)",
+      "color": "rgb(255, 255, 255)",
+      "radius": "14px",
+      "font": "\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif",
+      "weight": "500"
+    }
+  ],
+  "nav": [
+    {
+      "text": "",
+      "href": "/"
+    },
+    {
+      "text": "About",
+      "href": "/about"
+    },
+    {
+      "text": "Rentals",
+      "href": "/rentals"
+    },
+    {
+      "text": "Manage Listings",
+      "href": "/manage-listings"
+    },
+    {
+      "text": "Build A Portfolio",
+      "href": "/build-a-portfolio"
+    },
+    {
+      "text": "Knowledge Town",
+      "href": "/knowledge-base"
+    }
+  ],
+  "imgs": [
+    {
+      "src": "https://www.nyangu.com/_next/static/media/nyangu-logo-full.77f540dd.svg",
+      "alt": "Nyangu Logo",
+      "w": 159,
+      "h": 42,
+      "box": {
+        "x": 80,
+        "y": 22.15625,
+        "width": 120,
+        "height": 31.6875,
+        "top": 22.15625,
+        "right": 200,
+        "bottom": 53.84375,
+        "left": 80
+      }
+    },
+    {
+      "src": "https://www.nyangu.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fmain_hero.8a84d41a.png&w=3840&q=75&dpl=dpl_FoLnLijvEpdroiQrdmeHQvV3aMDv",
+      "alt": "Nyangu hero",
+      "w": 1440,
+      "h": 681,
+      "box": {
+        "x": 0,
+        "y": 80,
+        "width": 1440,
+        "height": 580,
+        "top": 80,
+        "right": 1440,
+        "bottom": 660,
+        "left": 0
+      }
+    },
+    {
+      "src": "https://www.nyangu.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FnextHome.12a312dc.png&w=2048&q=75&dpl=dpl_FoLnLijvEpdroiQrdmeHQvV3aMDv",
+      "alt": "Ready to find your next home",
+      "w": 1024,
+      "h": 951,
+      "box": {
+        "x": 752,
+        "y": 2496.296875,
+        "width": 608,
+        "height": 564.65625,
+        "top": 2496.296875,
+        "right": 1360,
+        "bottom": 3060.953125,
+        "left": 752
+      }
+    },
+    {
+      "src": "https://www.nyangu.com/_next/static/media/nyangu-logo-full.77f540dd.svg",
+      "alt": "Nyangu Logo",
+      "w": 159,
+      "h": 42,
+      "box": {
+        "x": 116,
+        "y": 3149.953125,
+        "width": 136.28125,
+        "height": 36,
+        "top": 3149.953125,
+        "right": 252.28125,
+        "bottom": 3185.953125,
+        "left": 116
+      }
+    }
+  ],
+  "svgs": [
+    {
+      "box": {
+        "x": 1027.875,
+        "y": 30,
+        "width": 16,
+        "height": 16,
+        "top": 30,
+        "right": 1043.875,
+        "bottom": 46,
+        "left": 1027.875
+      },
+      "html": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-chevron-down h-4 w-4 transition-transform duration-200 group-data-[state=open]:rotate-180\" aria-hidden=\"true\"><path d=\"m6 9 6 6 6-6\"></path></svg>"
+    },
+    {
+      "box": {
+        "x": 124,
+        "y": 3318.203125,
+        "width": 20,
+        "height": 20,
+        "top": 3318.203125,
+        "right": 144,
+        "bottom": 3338.203125,
+        "left": 124
+      },
+      "html": "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" aria-hidden=\"true\" role=\"img\" class=\"iconify iconify--mdi text-white size-5\" width=\"1em\" height=\"1em\" viewBox=\"0 0 24 24\"><path fill=\"currentColor\" d=\"M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4zm9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8A1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5a5 5 0 0 1-5 5a5 5 0 0 1-5-5a5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3\"></path></svg>"
+    },
+    {
+      "box": {
+        "x": 172,
+        "y": 3318.203125,
+        "width": 20,
+        "height": 20,
+        "top": 3318.203125,
+        "right": 192,
+        "bottom": 3338.203125,
+        "left": 172
+      },
+      "html": "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" aria-hidden=\"true\" role=\"img\" class=\"iconify iconify--mdi text-white size-5\" width=\"1em\" height=\"1em\" viewBox=\"0 0 24 24\"><path fill=\"currentColor\" d=\"M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93zM6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37z\"></path></svg>"
+    },
+    {
+      "box": {
+        "x": 220,
+        "y": 3318.203125,
+        "width": 20,
+        "height": 20,
+        "top": 3318.203125,
+        "right": 240,
+        "bottom": 3338.203125,
+        "left": 220
+      },
+      "html": "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" aria-hidden=\"true\" role=\"img\" class=\"iconify iconify--mdi text-white size-5\" width=\"1em\" height=\"1em\" viewBox=\"0 0 24 24\"><path fill=\"currentColor\" d=\"M12 2.04c-5.5 0-10 4.49-10 10.02c0 5 3.66 9.15 8.44 9.9v-7H7.9v-2.9h2.54V9.85c0-2.51 1.49-3.89 3.78-3.89c1.09 0 2.23.19 2.23.19v2.47h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.45 2.9h-2.33v7a10 10 0 0 0 8.44-9.9c0-5.53-4.5-10.02-10-10.02\"></path></svg>"
+    },
+    {
+      "box": {
+        "x": 270,
+        "y": 3320.203125,
+        "width": 16,
+        "height": 16,
+        "top": 3320.203125,
+        "right": 286,
+        "bottom": 3336.203125,
+        "left": 270
+      },
+      "html": "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" aria-hidden=\"true\" role=\"img\" class=\"iconify iconify--ri text-white size-4\" width=\"1em\" height=\"1em\" viewBox=\"0 0 24 24\"><path fill=\"currentColor\" d=\"m17.687 3.063l-4.996 5.711l-4.32-5.711H2.112l7.477 9.776l-7.086 8.099h3.034l5.469-6.25l4.78 6.25h6.102l-7.794-10.304l6.625-7.571zm-1.064 16.06L5.654 4.782h1.803l10.846 14.34z\"></path></svg>"
+    }
+  ],
+  "sections": [
+    {
+      "tag": "DIV",
+      "id": "",
+      "cls": "relative w-full",
+      "y": 80,
+      "h": 644,
+      "text": "About Rentals Manage Listings Build A Portfolio Knowledge Town Log In Renter Landlord Agent Find your perfect space Discover properties, schedule tours, submit applications and move with confidence. Find Your Next Home",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "tag": "DIV",
+      "id": "",
+      "cls": "py-6 lg:py-4 px-6 lg:px-20 relative",
+      "y": 724,
+      "h": 411,
+      "text": "Rent State Select State LGA Select LGA Property Type Property type Amount Select rent range Bedrooms 0 Bathrooms 0 Clear filters Apply Filters",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "tag": "SECTION",
+      "id": "how-it-works",
+      "cls": "bg-white overflow-hidden py-6 px-4 md:px-8 lg:px-20",
+      "y": 1135,
+      "h": 766,
+      "text": "HOW IT WORKS Just 6 steps. But who’s counting? We’ve simplified the rental process, from verified search to move-in, so you can focus on finding a home you can trust. 01 Discover Find verified properties that match your location, budget, and needs. 02 OPTIONAL Tour Request a viewing with the verified landlord or assigned agent, or apply directly if you are ready. 03 Apply Apply with your verified ",
+      "bg": "rgb(255, 255, 255)"
+    },
+    {
+      "tag": "SECTION",
+      "id": "",
+      "cls": "py-20 lg:py-15 px-6 lg:px-20",
+      "y": 1901,
+      "h": 531,
+      "text": "Rent with Confidence Verified listings, protected payments, and added safeguards from search to move-in. Trust is built into the process. Verified from the Start We verify renters, landlords, agents, and property listings, so you know who and what you are dealing with. Protected Payments Your initial rent and fees are securely held and are not released to the landlord until 2 business days after y",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "tag": "SECTION",
+      "id": "",
+      "cls": "py-6 md:py-10 lg:py-16 px-6 md:px-10 lg:px-20",
+      "y": 2432,
+      "h": 693,
+      "text": "Built for a market that needs proof. Verified People Know who you are dealing with. Verified Properties Know the property is real. Protected Transactions Know where your money is going. Every interaction, verified.",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "tag": "FOOTER",
+      "id": "",
+      "cls": "bg-[#F1F1F1] border-t border-gray-200/60 pt-6 pb-6",
+      "y": 3125,
+      "h": 328,
+      "text": "Finding your next stay should be stress-free and certain, which is the core belief at Nyangu. Our platform is designed with your peace of mind as the top priority. LEGAL Privacy & cookies Terms & conditions Help center Contact us COMPANY About Nyangu OFFICES LAGOS 4 Adetoba street, Abiodun Bero Estate, Isheri Magodo, Lagos, Nigeria DELAWARE 8 The Green, Suite B, Dover, DE 19901, USA © 2025 Nyangu ",
+      "bg": "rgb(241, 241, 241)"
+    }
+  ],
+  "bodyText": "About Rentals Manage Listings Build A Portfolio Knowledge Town Log In Renter Landlord Agent Find your perfect space Discover properties, schedule tours, submit applications and move with confidence. Find Your Next Home Rent State Select State LGA Select LGA Property Type Property type Amount Select rent range Bedrooms 0 Bathrooms 0 Clear filters Apply Filters HOW IT WORKS Just 6 steps. But who’s counting? We’ve simplified the rental process, from verified search to move-in, so you can focus on finding a home you can trust. 01 Discover Find verified properties that match your location, budget, and needs. 02 OPTIONAL Tour Request a viewing with the verified landlord or assigned agent, or apply directly if you are ready. 03 Apply Apply with your verified profile and required documents, all in one place. 04 Sign Once approved, review and sign your lease digitally with the landlord. MOST IMPORTANT 05 Pay Make your payment through Nyangu, with your transaction documented and protected. 06 Move In and Stay on Top Get your keys, settle in, and manage your lease, payments, maintenance requests, and landlord communication from your dashboard. Find Your Next Home Rent with Confidence Verified listings, protected payments, and added safeguards from search to move-in. Trust is built into the process. Verified from the Start We verify renters, landlords, agents, and property listings, so you know who and what you are dealing with. Protected Payments Your initial rent and fees are securely held and are not released to the landlord until 2 business days after your documented payment date. 24 Hour Safeguard If something is seriously wrong after payment, such as being denied access or the property materially differing from the listing, report it within 24 hours. If confirmed, your payment is refunded. Built for a market that needs proof. Verified People Know who you are dealing with. Verified Properties Know the property is real. Protected Transactions Know where your money is going. Every interaction, verified. Finding your next stay should be stress-free and certain, which is the core belief at Nyangu. Our platform is designed with your peace of mind as the top priority. LEGAL Privacy & cookies Terms & conditions Help center Contact us COMPANY About Nyangu OFFICES LAGOS 4 Adetoba street, Abiodun Bero Estate, Isheri Magodo, Lagos, Nigeria DELAWARE 8 The Green, Suite B, Dover, DE 19901, USA © 2025 Nyangu Technologies Ltd. All rights reserved. | RC 8864646 ™ 2026 Nyangu. All trademarks protected.",
+  "url": "https://nyangu.com/",
+  "viewport": {
+    "w": 1440,
+    "h": 900
+  },
+  "pageHeight": 3453,
+  "failedRequests": [
+    "https://analytics.google.com/g/collect?v=2&tid=G-09WB277K03&gtm=45je6a72h1v9249962706za208zd9249962706xf1&_p=1791539976299&_gaz=1&gcd=13l3l3l3l1l1&npa=0&dma=0&_eu=AAAAACAC&are=1&cid=520905193.1791539977&frm=0&ibt=1&ngs=1&pscdl=noapi&rcb=6&sr=1440x900&uaa=x86&uab=64&uafvl=Chromium%3B141.0.7390.37%7CNot%253FA_Brand%3B8.0.0.0&uam=&uamb=0&uap=Linux&uapv=6.18.44&uaw=0&ul=en-us&_s=1&tag_exp=115938466~115938468~118897920~118897930~120213116~120385422~120469145~120469153~121046263~121046271~121246026~121246034&sid=1791539976&sct=1&seg=0&dl=https%3A%2F%2Fwww.nyangu.com%2F&dt=Find%20Trusted%20Properties%20%26%20Verified%20Agents%20in%20Lagos%2C%20Nigeria%20%7C%20Nyangu&en=page_view&_fv=1&_nsi=1&_ss=1&_ee=1&tfd=2690",
+    "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap",
+    "https://rum.haystack.es/freshworks-rts/_logs"
+  ],
+  "videos": [],
+  "network": [
+    {
+      "url": "https://www.nyangu.com/_next/static/media/636a5ac981f94f8b-s.p.woff2",
+      "type": "font/woff2",
+      "status": 200,
+      "name": "636a5ac981f94f8b-s.p.woff2"
+    },
+    {
+      "url": "https://www.nyangu.com/_next/static/media/nyangu-logo-full.77f540dd.svg",
+      "type": "image/svg+xml",
+      "status": 200,
+      "name": "nyangu-logo-full.77f540dd.svg"
+    },
+    {
+      "url": "https://www.nyangu.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fmain_hero.8a84d41a.png&w=3840&q=75&dpl=dpl_FoLnLijvEpdroiQrdmeHQvV3aMDv",
+      "type": "image/webp",
+      "status": 200,
+      "name": "image"
+    },
+    {
+      "url": "https://www.nyangu.com/icons/nyangu-logo.png",
+      "type": "image/png",
+      "status": 200,
+      "name": "nyangu-logo.png"
+    },
+    {
+      "url": "https://www.nyangu.com/icons/nyangu-logo.png",
+      "type": "image/png",
+      "status": 200,
+      "name": "nyangu-logo.png"
+    },
+    {
+      "url": "https://connect.facebook.net//log/error?p=pixel&sl=2&v=2.9.415&e=%5BMeta%20pixel%5D%20Bot%20traffic%20detected%20and%20blocked%20-%20pixel_id%3A%201635889460986836&ue=0&rs=stable&rqm=FGET",
+      "type": "image/png",
+      "status": 200,
+      "name": "error"
+    },
+    {
+      "url": "https://s3.amazonaws.com/cdn.freshdesk.com/data/helpdesk/attachments/production/68005373012/logo/04V6tO4wSb2LNv5oIMatOnaJe_m5-jZXCw.png",
+      "type": "image/png",
+      "status": 200,
+      "name": "04V6tO4wSb2LNv5oIMatOnaJe_m5-jZXCw.png"
+    },
+    {
+      "url": "https://www.nyangu.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FnextHome.12a312dc.png&w=2048&q=75&dpl=dpl_FoLnLijvEpdroiQrdmeHQvV3aMDv",
+      "type": "image/webp",
+      "status": 200,
+      "name": "image"
+    }
+  ]
+}
