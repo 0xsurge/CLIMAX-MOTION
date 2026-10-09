@@ -17,6 +17,7 @@ This expands `CLAUDE.md`. If they ever disagree, `CLAUDE.md` wins.
 - Tab/pill indicators use `indicator()`: the leading edge rides a stiffer spring so the pill stretches.
 - Text inside a morphing box: `swapAlpha(t, tIn, tOut)`. It enters after the morph starts and is gone before the next morph begins.
 - Snap, then hold: change in 1-2 frames, then a hold, reads intentional. Slow eases read as a slideshow. Overlap parts (body first, accents 2-3 frames later). One thing moves at a time unless it's a group; stagger groups 0.05-0.14 s. Holds need life (a cursor drift, a caret blink).
+- Never hold still. Wrap the canvas in a camera that is always moving: a slow push (about 0.4-0.8% zoom per second) plus a drift (about 3-8 px/s) whose direction alternates scene to scene. Blend each scene's camera motion into the next with a heavy spring at the scene change so velocity never reaches zero and nothing jumps. Anything pinned to the scene in screen space (orb, cursor, click rings) goes through the same camera transform. Landed elements keep a small float (5-8 px). Check with a frame-difference pass: no frozen stretch of 0.25 s or more.
 
 ## Look
 - Banned clichés: centered title on a gradient; everything fading in; corner labels and frame borders; glow on UI chrome; generic particle bursts; crossfades between shots; spins, glitches, light leaks; bouncy easing on UI; dead time.

@@ -44,7 +44,7 @@ function Chip(parent, x, y, txt, fs) {   // blue pill that pops from its left ed
 }
 function Crop(parent, x, y, cx, cy, cw, ch, k, rot) {   // a real crop of the dashboard as a floating card
   const e = mk(parent, { left: x, top: y, width: cw * k, height: ch * k, borderRadius: 18, overflow: 'hidden', background: '#fff', boxShadow: '0 24px 60px rgba(4,21,42,.16),0 0 0 1px rgba(4,21,42,.06)', transformOrigin: '50% 50%' }, `<img src="assets/product_ui.webp" style="left:${-cx * k}px;top:${-cy * k}px;width:${1898 * k}px">`);
-  return t0 => t => { const s = sp(t, t0, 'snappy'); put(e, { y: (1 - sp(t, t0, 'default')) * 60, rot, s: 0.6 + 0.4 * s }); e.style.visibility = s < 0.01 ? 'hidden' : 'visible'; };
+  return t0 => t => { const s = sp(t, t0, 'snappy'); put(e, { x: 5 * Math.sin(t * 0.9 + rot), y: (1 - sp(t, t0, 'default')) * 60 + 7 * Math.sin(t * 1.15 + x * 0.01), rot: rot + 0.6 * Math.sin(t * 0.7 + y), s: 0.6 + 0.4 * s }); e.style.visibility = s < 0.01 ? 'hidden' : 'visible'; };
 }
 function Handles(parent) {               // design-tool selection frame with four corner squares
   const f = mk(parent, { border: `2px solid ${BLUE}`, display: 'none' });
@@ -62,9 +62,22 @@ const placeOrb = (e, x, y, r) => Object.assign(e.style, { left: x - r + 'px', to
 
 // ---------- the canvas: scenes stacked vertically, the camera glides down ----------
 STAGE.style.background = '#fff';
-const CAM = mk(STAGE, { width: W, height: H * 5 });
+const VIEW = mk(STAGE, { width: W, height: H, transformOrigin: '960px 540px' });   // the always-moving camera: slow push + drift
+const CAM = mk(VIEW, { width: W, height: H * 5 });
 const Y = [0, H, 2 * H, 3 * H, 4 * H];                  // problem, rachel+product, ring+field, promise, end
 const camY = t => track(t, [{ t: 0, v: 0 }, { t: T.cam1, v: Y[1], spring: 'heavy' }, { t: T.cam2, v: Y[2], spring: 'heavy' }, { t: T.cam3, v: Y[3], spring: 'heavy' }, { t: T.cam4, v: Y[4], spring: 'heavy' }]);
+// Never hold still: every scene has a slow push-in and a drift whose direction alternates scene to scene. At each camera glide the
+// next scene's motion takes over through a heavy spring, so velocity never drops to zero and nothing jumps.
+const SC = () => [0, T.cam1, T.cam2, T.cam3, T.cam4];
+const DRIFT = [[1, -1, .0075], [-1, 1, .0065], [1, -1, .0075], [-1, 1, .007], [1, 0, .004]];   // x dir, y dir, zoom per second
+const sceneMove = (t, i) => { const dt = Math.max(0, t - SC()[i]), [dx, dy, dz] = DRIFT[i]; return [dx * 7 * dt, dy * 3.5 * dt, 1 + dz * dt]; };
+function view(t) {
+  let v = sceneMove(t, 0);
+  for (let i = 1; i < 5; i++) { const w = sp(t, SC()[i], 'heavy'); if (w <= 0) break; const n = sceneMove(t, i); v = v.map((a, k) => lerp(a, n[k], w)); }
+  return { dx: v[0], dy: v[1], z: v[2] };
+}
+let V = { dx: 0, dy: 0, z: 1 };
+const toScreen = (x, y) => [(x - 960) * V.z + 960 + V.dx, (y - 540) * V.z + 540 + V.dy];
 const camX = t => -60 * (sp(t, T.pile, 'heavy') - sp(t, T.cam1, 'default'));      // the slow drift while the cards pile up
 
 // S1 problem (y = 0) ------------------------------------------------------------------------------------------------------------
@@ -129,7 +142,7 @@ const clickRing = mk(TOP, { borderRadius: '50%', border: `2.5px solid ${BLUE}`, 
 const ACT = T.act, actIdx = t => track(t, [{ t: 0, v: 0 }, ...ACT.map((a, i) => ({ t: a, v: i }))]);
 const listShift = t => -Math.max(0, actIdx(t) - 1) * 86;            // the camera rides down the list
 const ORBK = [
-  { t: 0, v: [1010, 420, 22] }, { t: T.orbLand, v: [1010, 742, 22] }, { t: T.lift, v: [960, 540, 22] },
+  { t: 0, v: [1010, 330, 22] }, { t: 0.001, v: [1010, 430, 22] }, { t: T.orbLand, v: [1010, 742, 22] }, { t: T.lift, v: [960, 540, 22] },
   { t: T.drop + b(2), v: [940, 0, 22] },                       // y filled per frame from the active line
   { t: T.grow + b(1), v: [1422, 470, 18] }, { t: T.f2, v: [1180, 640, 18] },
   { t: T.cam2 + b(0.5), v: [1100, 540, 120] }, { t: T.ringOut, v: [1620, 560, 120] },
@@ -143,6 +156,7 @@ function orbAt(t) {
 
 // =====================================================================================================================
 window.seek = function (t) {
+  V = view(t); put(VIEW, { x: V.dx, y: V.dy, s: V.z });
   const cy = camY(t); put(CAM, { x: camX(t), y: -cy });
   show(S1, cy < H); show(S2, cy > 1 && cy < 2 * H - 1); show(S3, cy > H + 1 && cy < 3 * H - 1); show(S4, cy > 2 * H + 1 && cy < 4 * H - 1); show(S5, cy > 3 * H + 1);
 
@@ -152,7 +166,7 @@ window.seek = function (t) {
   // S2: Meet Rachel, frame, list
   meet(t, T.drop, T.grow); chipR(t, T.chipR, T.grow); sub(t, T.sub, T.grow);
   const ru = sp(t, T.rachel, 'heavy'), rout = sp(t, T.grow, 'default');
-  put(rachel, { y: (1 - ru) * 600 + 0 * rout, x: rout * 900, s: 1 - 0.2 * rout }); rachel.style.visibility = ru < 0.005 || rout > 0.995 ? 'hidden' : 'visible';
+  put(rachel, { y: (1 - ru) * 600 + 8 * Math.sin(t * 1.1), x: rout * 900, s: 1 - 0.2 * rout }); rachel.style.visibility = ru < 0.005 || rout > 0.995 ? 'hidden' : 'visible';
   const g = sp(t, T.grow, 'default'), FR = [1440, 210, 400, 540], DB = [110, 120, 1700, 771];
   const fr = FR.map((v, i) => lerp(v, DB[i], g)), hs = sp(t, T.frame, 'snappy');
   hR(t >= T.frame && t < T.grow + b(1.5) && hs > 0.01, fr[0], fr[1], fr[2], fr[3], 0.85 + 0.15 * hs);
@@ -177,7 +191,7 @@ window.seek = function (t) {
 
   // S4
   supA(t, T.sup); supB(t, T.sup + b(0.5));
-  const r2 = sp(t, T.rachel2, 'default'); put(rach2, { x: (1 - r2) * 700 });
+  const r2 = sp(t, T.rachel2, 'default'); put(rach2, { x: (1 - r2) * 700, y: 8 * Math.sin(t * 1.1) });
 
   // S5: logo from the two orbs, CTA, cursor
   const lg = sp(t, T.logo, 'snappy'); put(logoMark, { s: lg }); logoMark.style.visibility = lg < 0.01 ? 'hidden' : 'visible';
@@ -191,11 +205,11 @@ window.seek = function (t) {
   const L0 = [LOOPS[0][0], LOOPS[0][1]], L1 = [LOOPS[1][0], LOOPS[1][1]];
   if (t >= T.split) {
     const a = [lerp(ox, L0[0], sp2), lerp(oy, L0[1], sp2)], c = [lerp(ox, L1[0], sp2), lerp(oy, L1[1], sp2)], r = lerp(orr, 22, sp2) * (1 - into);
-    show(orb, r > 0.5); show(orb2, r > 0.5); placeOrb(orb, a[0], a[1], r); placeOrb(orb2, c[0], c[1], r);
-  } else { show(orb2, false); show(orb, true); placeOrb(orb, ox, oy, orr); }
+    show(orb, r > 0.5); show(orb2, r > 0.5); placeOrb(orb, ...toScreen(a[0], a[1]), r * V.z); placeOrb(orb2, ...toScreen(c[0], c[1]), r * V.z);
+  } else { show(orb2, false); show(orb, true); placeOrb(orb, ...toScreen(ox, oy), orr * V.z); }
 
   const curOn = t >= T.curIn && t < DUR + 1;
-  if (show(cursor, curOn)) { const cx = track(t, [{ t: 0, v: 1400 }, { t: T.curIn, v: 980 }]), cyy = track(t, [{ t: 0, v: 960 }, { t: T.curIn, v: 660 }]); put(cursor, { x: cx, y: cyy, s: sp(t, T.curIn, 'snappy') * (1 - 0.15 * (sp(t, T.click, 'snappy') - sp(t, T.click + 0.12, 'snappy'))) }); }
+  if (show(cursor, curOn)) { const cx = track(t, [{ t: 0, v: 1400 }, { t: T.curIn, v: 980 }]), cyy = track(t, [{ t: 0, v: 960 }, { t: T.curIn, v: 660 }]); const [scx, scy] = toScreen(cx, cyy); put(cursor, { x: scx, y: scy, s: sp(t, T.curIn, 'snappy') * (1 - 0.15 * (sp(t, T.click, 'snappy') - sp(t, T.click + 0.12, 'snappy'))) }); }
   const cr = sp(t, T.click, { k: 14, c: 8.5 });
-  if (show(clickRing, t >= T.click && cr < 0.98)) { const r = 20 + 240 * cr; Object.assign(clickRing.style, { left: 960 - r + 'px', top: 648 - r * 0.4 + 'px', width: 2 * r + 'px', height: 0.8 * r + 'px', opacity: 0.6 * (1 - cr) }); }
+  if (show(clickRing, t >= T.click && cr < 0.98)) { const r = 20 + 240 * cr, [rx0, ry0] = toScreen(960, 648); Object.assign(clickRing.style, { left: rx0 - r + 'px', top: ry0 - r * 0.4 + 'px', width: 2 * r + 'px', height: 0.8 * r + 'px', opacity: 0.6 * (1 - cr) }); }
 };

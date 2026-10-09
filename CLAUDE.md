@@ -12,6 +12,7 @@
 - Presets: snappy (buttons, toggles, leading edges), default (cards, containers, camera), heavy (big type, logo lockups), playful (visible overshoot, mascots only). Tiny overshoot on UI, none on type.
 - Text inside a morphing box enters after the morph starts and leaves before the next one (swapAlpha).
 - A pure opacity fade is never an enter or an exit.
+- Never hold still: the camera is always moving. Every scene has a slow push-in or pull-out plus a gentle drift (left/right, up/down) that alternates scene to scene and hands over to the next scene through a spring, so motion never stops. Landed elements keep a small float. Measure it: no frozen stretch of 0.25 s or more.
 
 ## Look
 - Banned defaults (clichés):

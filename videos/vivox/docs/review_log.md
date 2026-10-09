@@ -22,3 +22,12 @@ hook 8 | readability 8 (dashboard detail is small by nature) | motion quality 8 
   (explainable AI, audit trails, alerts, entities); check them before publishing.
 - Left out on purpose: the site's statistics, customer and regulator logos, customer photos.
 - The song and effects are not committed (licence); ids in ../dripverse/audio/sfx_manifest.json and audio/song_grid.json.
+
+## Round 3: constant motion (user feedback: "it just feels still")
+Measured with a frame-difference pass (frames whose mean change is under 0.05/255 count as frozen):
+- Before: 46.5% of frames frozen, 16 frozen stretches of 0.25 s or more, the longest 1.62 s.
+- After: 2.5% near-still frames (isolated), 0 frozen stretches.
+What changed: the canvas sits inside an always-moving camera (slow push about 0.4-0.75% zoom per second plus a 3.5-7 px/s drift,
+direction alternating scene to scene, each scene's motion handed to the next through a heavy spring); the orb, cursor and click ring
+go through the same camera transform; landed cards and portraits keep a small float; the orb moves from frame 0.
+The rule is now in CLAUDE.md and reference/RULES.md for every future film.
