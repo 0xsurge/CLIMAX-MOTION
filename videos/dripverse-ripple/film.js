@@ -1,29 +1,32 @@
-// DRIP VERSE, "One order": a beat-for-beat rebuild of the structure, cut points and grammar of the revest reference film
-// (71 s, 16:9), in DRIP VERSE's own brand: bone, ink and brass, Bodoni Moda + Geist, the brass drop as the floating shape.
-// No revest logo, UI, footage or claims. Shop UI here is a stand-in (no prices, no stock numbers). Every frame is a pure function of t.
+// DRIP VERSE, "One order" v2: the revest reference's 71 s story rebuilt as ONE continuous take.
+// One camera for the whole film (spring keys + a centred sway, never linear, never reset), one carrier card that morphs through
+// every scene (shoe -> photo -> catalogue -> map -> light pool -> product page -> ... -> the drop mark), centred flex type on a
+// strict 3-level scale, and moving gold light: rim passes, light sweeps, light pools, glowing lines, an orbiting ring.
+// Shop UI is a stand-in (no prices, no stock numbers). Every frame is a pure function of t.
 const { spring, track, swapAlpha, clamp, lerp, mulberry32 } = Motion;
 const W = 1920, H = 1080, END = 71.2667;
-const INK = '#121214', BONE = '#F3EFE8', STONE = '#E6E1D8', BRASS = '#B08A4E', GRAD = 'linear-gradient(90deg,#9A733A,#C8A766)';
+const INK = '#121214', BONE = '#F3EFE8', STONE = '#ECE6DC', PAPER = '#FFFDF9';
+const GRAD = 'linear-gradient(135deg,#E2C48A 0%,#B8904F 55%,#8E6A31 100%)';
 const GEIST = "'Geist', system-ui, sans-serif", BOD = "'Bodoni', 'Times New Roman', serif";
 const STAGE = document.getElementById('stage');
-const sp = (t, t0, p = 'default') => spring(t - t0, p);
+const S = (t, t0, p = 'default') => spring(t - t0, p);
+const SLOW = { k: 4, c: 4 }, SOFT = { k: 120, c: 20 };
 
 const css = document.createElement('style');
-css.textContent = `@font-face{font-family:'Bodoni';src:url(assets/fonts/bodoni-normal.woff2) format('woff2');font-weight:400 600;font-style:normal}
-@font-face{font-family:'Bodoni';src:url(assets/fonts/bodoni-italic.woff2) format('woff2');font-weight:400 600;font-style:italic}
+css.textContent = `@font-face{font-family:'Bodoni';src:url(assets/fonts/bodoni-normal.woff2) format('woff2');font-weight:400 900;font-style:normal}
 @font-face{font-family:'Geist';src:url(assets/fonts/geist.woff2) format('woff2');font-weight:100 900}
 #stage *{position:absolute;box-sizing:border-box;margin:0;padding:0}
-#stage .t,#stage i,#stage b{position:static;display:inline-block}`;
+#stage .fx{display:flex;justify-content:center;align-items:center}
+#stage .fx *{position:relative;display:block}`;
 document.head.appendChild(css);
 const SHOES = { 'adidas-niteball': [579, 365], 'axel-arigato': [688, 394], 'nb-550': [390, 304], 'nb-480': [577, 470], 'nike-af1': [707, 607], 'nike-zoom': [405, 307] };
-const PH = { 'nb-550': [512, 640], 'jordan-4': [640, 635], 'asics-kayano': [736, 1308] };
+const PH = ['nb-550', 'jordan-4', 'asics-kayano'];
 const ld = s => new Promise(r => { const i = new Image(); i.onload = i.onerror = () => r(); i.src = s; });
-window.__preload = [document.fonts.load("400 100px 'Bodoni'"), document.fonts.load("italic 400 100px 'Bodoni'"), document.fonts.load("600 30px 'Geist'"), document.fonts.load("400 30px 'Geist'"),
-  ...Object.keys(SHOES).map(n => ld(`assets/cut/${n}_c.png`)), ...Object.keys(PH).map(n => ld(`assets/photos/${n}.jpg`))];
+window.__preload = [document.fonts.load("600 100px 'Bodoni'"), document.fonts.load("600 30px 'Geist'"), document.fonts.load("400 30px 'Geist'"), document.fonts.load("500 30px 'Geist'"),
+  ...Object.keys(SHOES).map(n => ld(`assets/cut/${n}_c.png`)), ...PH.map(n => ld(`assets/photos/${n}.jpg`))];
 
-// ---------- cut points: the reference's 19 cuts, each snapped to the nearest beat of the 120 BPM song ----------
-const CUTS = [0, 2.5, 3.5, 5.0, 7.0, 8.0, 10.0, 12.0, 13.0, 25.0, 28.0, 30.0, 34.0, 35.5, 44.5, 49.0, 56.0, 58.5, 62.5, END];
-window.TIMELINE = { CUTS };
+// ---------- type scale: three levels only ----------
+const DISPLAY = `600 150px/1 ${BOD}`, SUPPORT = `400 42px/1 ${GEIST}`, LABEL = `600 24px/1 ${GEIST}`;
 
 // ---------- helpers ----------
 const PXK = new Set(['left', 'top', 'width', 'height', 'borderRadius']);
@@ -33,243 +36,261 @@ function mk(parent, o = {}, html) {
   if (html != null) e.innerHTML = html; parent.appendChild(e); return e;
 }
 const put = (e, o) => { e.style.transform = `translate(${o.x || 0}px,${o.y || 0}px) rotate(${o.rot || 0}deg) skewX(${o.skx || 0}deg) scale(${o.sx ?? o.s ?? 1},${o.sy ?? o.s ?? 1})`; };
-const show = (e, on) => { e.style.display = on ? 'block' : 'none'; return on; };
-function Rise(parent, o) {   // masked rise, upward exit
-  const bx = mk(parent, { left: o.x, top: o.y, width: o.w, height: o.h, overflow: 'hidden' });
-  const inner = mk(bx, { width: o.w, height: o.h, font: o.font, color: o.color || INK, letterSpacing: o.ls || '0', whiteSpace: 'nowrap', textAlign: o.al || 'left' }, o.html);
-  return (t, tin, tout = 999, p = o.sp || 'heavy') => { const u = sp(t, tin, p), v = sp(t, tout, 'snappy'); inner.style.transform = `translateY(${(1 - u - v) * o.h * 1.15}px)`; bx.style.visibility = (t < tin - .02 || v > .995) ? 'hidden' : 'visible'; };
+const vis = (e, on) => { e.style.visibility = on ? 'visible' : 'hidden'; return on; };
+const bump = (t, t0, hold = .5) => clamp(S(t, t0, 'snappy') - S(t, t0 + hold, SOFT));        // light rises, then dies away
+// a value keyed over time: keys = [{t, prop: v, sp}], one spring per change, never restarted (track)
+function keyed(keys, prop, def = 'default') {
+  const K = keys.filter(k => k[prop] !== undefined).map(k => ({ t: k.t, v: k[prop], spring: k.sp || def }));
+  return t => track(t, K);
 }
-const pop = (e, t, t0, origin = '50% 50%', extra = {}) => { const s = sp(t, t0, 'snappy'); e.style.transformOrigin = origin; put(e, { ...extra, s: s * (extra.s ?? 1) }); e.style.visibility = s < .01 ? 'hidden' : 'visible'; };
-const shoe = (parent, n, w, o = {}) => { const [iw, ih] = SHOES[n], h = w * ih / iw; return mk(parent, { left: -w / 2, top: -h / 2, width: w, height: h, ...o }, `<img src="assets/cut/${n}_c.png" style="left:0;top:0;width:${w}px;height:${h}px;filter:drop-shadow(0 24px 28px rgba(40,32,20,.24))">`); };
-const photo = (parent, n, w, h, o = {}) => mk(parent, { width: w, height: h, borderRadius: 30, overflow: 'hidden', boxShadow: '0 30px 70px rgba(40,32,20,.22)', ...o }, `<img src="assets/photos/${n}.jpg" style="left:0;top:0;width:${w}px;height:${h}px;object-fit:cover;filter:saturate(.9) sepia(.05)">`);
-const glass = (parent, w, h, html = '', o = {}) => mk(parent, { width: w, height: h, borderRadius: 26, background: 'rgba(255,255,255,.72)', boxShadow: '0 24px 60px rgba(60,48,30,.16), inset 0 0 0 1.5px rgba(255,255,255,.95)', overflow: 'hidden', ...o }, html);
-const DROP = (s, id) => `<svg width="${60 * s}" height="${86 * s}" viewBox="0 0 60 86" style="left:0;top:0;overflow:visible"><defs><linearGradient id="dg${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E9D3A4"/><stop offset=".45" stop-color="#C39A57"/><stop offset="1" stop-color="#7E5A26"/></linearGradient></defs><path d="M30 2 C 24 26 6 42 6 60 a24 24 0 0 0 48 0 C 54 42 36 26 30 2z" fill="url(#dg${id})"/><ellipse cx="21" cy="58" rx="6" ry="11" fill="#fff" opacity=".55" transform="rotate(16 21 58)"/></svg>`;
+const shoeImg = (n, w) => { const [iw, ih] = SHOES[n], h = w * ih / iw; return `<img src="assets/cut/${n}_c.png" style="left:${-w / 2}px;top:${-h / 2}px;width:${w}px;height:${h}px;filter:drop-shadow(0 26px 26px rgba(60,44,20,.26))">`; };
+const DROPW = (s = 1) => `<svg width="${60 * s}" height="${86 * s}" viewBox="0 0 60 86" style="left:${-30 * s}px;top:${-46 * s}px"><path d="M30 2 C 24 26 6 42 6 60 a24 24 0 0 0 48 0 C 54 42 36 26 30 2z" fill="#FFF9EE"/></svg>`;
+const DROPB = (s, id) => `<svg width="${60 * s}" height="${86 * s}" viewBox="0 0 60 86" style="left:0;top:0;overflow:visible"><defs><linearGradient id="dg${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#EAD5A8"/><stop offset=".45" stop-color="#C39A57"/><stop offset="1" stop-color="#7E5A26"/></linearGradient></defs><path d="M30 2 C 24 26 6 42 6 60 a24 24 0 0 0 48 0 C 54 42 36 26 30 2z" fill="url(#dg${id})"/><ellipse cx="21" cy="58" rx="6" ry="11" fill="#fff" opacity=".5" transform="rotate(16 21 58)"/></svg>`;
 const ICON = { box: '<path d="M8 20 L32 8 L56 20 L56 46 L32 58 L8 46Z M8 20 L32 32 L56 20 M32 32 L32 58" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round"/>',
   check: '<path d="M14 33 l12 12 l24 -26" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>',
   bag: '<path d="M14 22 h36 l-3 34 h-30z M24 22 a8 8 0 0 1 16 0" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round"/>',
   card: '<rect x="8" y="16" width="48" height="32" rx="6" fill="none" stroke="#fff" stroke-width="4"/><path d="M8 26 h48" stroke="#fff" stroke-width="4"/>',
   receipt: '<path d="M16 8 h32 v48 l-6 -4 -5 4 -5 -4 -5 4 -5 -4 -6 4z M22 20 h20 M22 30 h20 M22 40 h12" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round"/>' };
-const iconBox = (k, s = 88) => `<div style="left:0;top:0;width:${s}px;height:${s}px;border-radius:${s * .28}px;background:${GRAD};box-shadow:0 10px 24px rgba(150,110,50,.3)"><svg width="${s}" height="${s}" viewBox="0 0 64 64" style="left:0;top:0">${ICON[k]}</svg></div>`;
-const chip = (txt, icon = 'check') => `<div style="left:0;top:0;height:80px;padding:0 30px 0 88px;border-radius:40px;background:rgba(255,255,255,.86);box-shadow:0 14px 30px rgba(60,48,30,.16),inset 0 0 0 1.5px #fff;font:600 31px/80px ${GEIST};color:${INK};white-space:nowrap"><div style="left:12px;top:12px;width:56px;height:56px;border-radius:28px;background:${GRAD}"><svg width="56" height="56" viewBox="0 0 64 64" style="left:0;top:0">${ICON[icon]}</svg></div>${txt}</div>`;
-const rnd = mulberry32(11);
+const svgIcon = (k, s) => `<svg width="${s}" height="${s}" viewBox="0 0 64 64" style="left:${-s / 2}px;top:${-s / 2}px">${ICON[k]}</svg>`;
+const chipHTML = (txt, icon = 'check', dim = false) => `<div style="left:0;top:0;transform:translate(-50%,-50%);height:76px;padding:0 30px 0 84px;border-radius:38px;background:${PAPER};box-shadow:0 14px 30px rgba(60,48,30,.14);font:600 28px/76px ${GEIST};color:${INK};white-space:nowrap;opacity:${dim ? .72 : 1}"><div style="left:12px;top:12px;width:52px;height:52px;border-radius:26px;background:${GRAD}"><svg width="52" height="52" viewBox="0 0 64 64" style="left:0;top:0">${ICON[icon]}</svg></div>${txt}</div>`;
 
-// ---------- scenes: each is a container with its own always-moving camera ----------
-const SC = [];
-function scene(t0, t1, bg, build) {
-  const el = mk(STAGE, { width: W, height: H, overflow: 'hidden', background: bg, display: 'none' });
-  const cam = mk(el, { width: W, height: H, transformOrigin: '960px 540px' });
-  const upd = build(cam, el);
-  SC.push({ t0, t1, el, cam, upd });
+// ---------- layers: background, bokeh, world (camera), type (screen space), hud, light sweep ----------
+const BG = mk(STAGE, { width: W, height: H, background: 'radial-gradient(120% 100% at 50% 45%,#FAF7F1 0%,#EFE8DC 70%,#E6DCCB 100%)' });
+const BGW = mk(STAGE, { width: W, height: H, background: 'radial-gradient(110% 90% at 50% 42%,#FCF7EE 0%,#F1E4CB 62%,#E2CDA6 100%)' });
+const BOKEH = mk(STAGE, { width: W, height: H });
+const WORLD = mk(STAGE, { width: W, height: H, transformOrigin: '0 0' });
+const TYPE = mk(STAGE, { width: W, height: H });
+const HUD = mk(STAGE, { width: W, height: H });
+const SWEEP = mk(STAGE, { left: -450, top: -700, width: 900, height: 2480, transformOrigin: '50% 50%',
+  background: 'linear-gradient(90deg,rgba(230,190,110,0) 0%,rgba(230,190,110,.22) 30%,rgba(255,236,196,.55) 50%,rgba(230,190,110,.22) 70%,rgba(230,190,110,0) 100%)' });
+
+// ---------- the camera: spring keys (zoom, framing) + a sway that always returns to centre ----------
+const CAMK = [
+  { t: 0, z: 1, y: 0 }, { t: .05, z: 1.05, sp: SLOW }, { t: 2.3, z: 1 }, { t: 2.6, z: 1.06, sp: SLOW }, { t: 3.5, z: .98 }, { t: 3.8, z: 1.04, sp: SLOW },
+  { t: 5.0, z: 1 }, { t: 5.3, z: 1.07, sp: SLOW }, { t: 7.0, z: 1.02 }, { t: 7.3, z: 1.08, sp: SLOW }, { t: 8.0, z: 1 }, { t: 8.3, z: 1.05, sp: SLOW },
+  { t: 10, z: 1.02 }, { t: 10.3, z: 1.08, sp: SLOW }, { t: 12, z: 1 }, { t: 12.3, z: 1.06, sp: SLOW },
+  { t: 13.0, z: 1.12, sp: 'snappy' }, { t: 13.12, z: 1 }, { t: 13.4, z: 1.05, sp: SLOW }, { t: 16.3, z: 1 }, { t: 16.6, z: 1.07, sp: SLOW },
+  { t: 20.5, z: 1 }, { t: 20.8, z: 1.06, sp: SLOW }, { t: 25, z: 1 }, { t: 25.3, z: 1.05, sp: SLOW }, { t: 28, z: 1 }, { t: 28.3, z: 1.07, sp: SLOW },
+  { t: 30, z: 1 }, { t: 30.3, z: 1.05, sp: SLOW }, { t: 32, z: 1 }, { t: 32.3, z: 1.05, sp: SLOW }, { t: 35.5, z: 1 }, { t: 35.8, z: 1.06, sp: SLOW },
+  { t: 39.2, z: 1 }, { t: 39.5, z: 1.05, sp: SLOW }, { t: 42, z: 1, y: 110 }, { t: 42.3, z: 1.05, sp: SLOW },
+  { t: 44.5, z: .42, sp: { k: 9, c: 6 } }, { t: 49, z: 1, y: 0 }, { t: 49.3, z: 1.07, sp: SLOW },
+  { t: 56, z: 1 }, { t: 56.3, z: 1.05, sp: SLOW }, { t: 58.5, z: 1 }, { t: 58.8, z: 1.05, sp: SLOW }, { t: 62.5, z: 1 }, { t: 62.8, z: 1.04, sp: SLOW }];
+const camZ = keyed(CAMK, 'z'), camY = keyed(CAMK, 'y');
+const swayA = t => 1 - .82 * S(t, 64.6, 'heavy');                      // the lockup settles almost exactly on centre
+function camera(t) {
+  const a = swayA(t), sx = a * 16 * Math.sin(t * 2 * Math.PI / 6.4), sy = a * 9 * Math.sin(t * 2 * Math.PI / 4.7 + 1), r = a * .3 * Math.sin(t * 2 * Math.PI / 8.3);
+  const z = camZ(t) * (1 + .012 * Math.sin(t * 2 * Math.PI / 9));
+  WORLD.style.transform = `translate(${960 + sx}px,${540 + sy}px) rotate(${r}deg) scale(${z}) translate(-960px,${-540 - camY(t)}px)`;
+  TYPE.style.transform = `translate(${sx * .5}px,${sy * .5}px)`; HUD.style.transform = TYPE.style.transform;
+  BOKEH.style.transform = `translate(${sx * .3}px,${sy * .3}px)`;
 }
-const BGW = 'linear-gradient(160deg,#F7F3EC 0%,#ECE5D9 100%)';
-const BGD = 'radial-gradient(120% 90% at 50% 40%,#FBF7F0 0%,#EADFCB 70%,#DCCBAE 100%)';   // the drop world (revest's blue world)
-// ambient floating drops (revest's 3D triangles): seeded positions, depth by size and blur, each drifting and turning slowly
-function drops(parent, n, seed) {
-  const r = mulberry32(seed);
-  return Array.from({ length: n }, (_, i) => { const s = .4 + r() * 1.4; let x = r() * W, y = r() * H; if (x > 300 && x < 1620 && y > 80 && y < 760) x = x < 960 ? 40 + r() * 260 : 1620 + r() * 260; const d = { x, y, s, rot: r() * 360, vx: Math.sign(x - 960) * (10 + r() * 25), vy: (r() - .5) * 30, vr: (r() - .5) * 30, blur: s < .7 ? 3 : 0 };
-    d.el = mk(parent, { width: 60 * s, height: 86 * s, filter: d.blur ? `blur(${d.blur}px)` : 'none', transformOrigin: '50% 60%' }, DROP(s, seed * 100 + i)); return d; });
+
+// ---------- gold light pool (under the hero object), breathing ----------
+const POOL = mk(WORLD, { width: 100, height: 100, borderRadius: '50%', background: 'radial-gradient(closest-side,rgba(226,178,92,.78),rgba(226,178,92,.32) 48%,rgba(226,178,92,0) 100%)' });
+const PK = [{ t: 0, x: 960, y: 720, w: 560, i: 0 }, { t: .2, i: 1 }, { t: 2.3, i: 0 }, { t: 6.95, x: 960, y: 830, w: 900, i: 1 }, { t: 8.0, i: 0 },
+  { t: 35.5, x: 960, y: 420, w: 420, i: .8 }, { t: 39.2, i: 0 }, { t: 42.0, x: 960, y: 880, w: 760, i: .9 }, { t: 44.5, y: 1010, w: 1500, sp: { k: 9, c: 6 } }, { t: 49.0, x: 960, y: 540, w: 640, i: .7 }, { t: 56.0, i: 0 },
+  { t: 62.5, x: 960, y: 400, w: 520, i: 1 }];
+const poolX = keyed(PK, 'x'), poolY = keyed(PK, 'y'), poolW = keyed(PK, 'w'), poolI = keyed(PK, 'i');
+function pool(t) { const px = t < 2.6 ? gapX('open') : poolX(t), w = poolW(t) * (1 + .05 * Math.sin(t * 2.2)), h = w * .32, i = clamp(poolI(t)) * (.85 + .15 * Math.sin(t * 3.1));
+  POOL.style.width = w + 'px'; POOL.style.height = h + 'px'; put(POOL, { x: px - w / 2, y: poolY(t) - h / 2 }); POOL.style.opacity = i; vis(POOL, i > .01); }
+
+// ---------- background bokeh drops (depth) ----------
+const BK = (() => { const r = mulberry32(9), P = [[120, 160], [1780, 220], [240, 900], [1700, 860], [70, 560], [1860, 560], [520, 60], [1420, 1010]];
+  return P.map(([x, y], i) => { const s = 1.2 + r() * 1.6; return { x, y, s, ph: r() * 6, el: mk(BOKEH, { width: 60 * s, height: 86 * s, filter: `blur(${4 + r() * 5}px)`, opacity: .55 }, DROPB(s, 50 + i)) }; }); })();
+function bokeh(t) { const on = S(t, 13.1, 'heavy'); BK.forEach((d, i) => { put(d.el, { x: d.x + 30 * Math.sin(t * .35 + d.ph), y: d.y + (1 - on) * (i % 2 ? 300 : -300) + 20 * Math.sin(t * .5 + d.ph), rot: 10 * Math.sin(t * .3 + d.ph) }); vis(d.el, on > .01); }); }
+function bgWipe(t) { const r = 2300 * S(t, 12.85, { k: 30, c: 11 }); BGW.style.clipPath = `circle(${r}px at 960px 860px)`; vis(BGW, r > 1); }
+
+// ---------- the light sweep that carries every scene change ----------
+const SWEEPS = [2.4, 4.9, 7.9, 12.9, 20.4, 24.9, 29.9, 35.4, 44.4, 48.9, 55.9, 62.4];
+function sweep(t) { let ts = -9; for (const s of SWEEPS) if (s <= t) ts = s; const u = t - ts;
+  if (!vis(SWEEP, u >= 0 && u < 2.2)) return; const p = S(t, ts, { k: 16, c: 8 });
+  put(SWEEP, { x: lerp(-700, 2600, p), rot: 18 }); SWEEP.style.opacity = 1 - S(t, ts + .5, SOFT); }
+
+// ---------- the carrier card ----------
+const CK = [
+  { t: 0, x: 960, y: 540, w: 300, h: 180, r: 40, g: 0, rot: 0, skx: 0, sy: 1, s: 0, bl: 0 }, { t: 2.2, s: 1, sp: 'snappy' }, { t: 2.3, w: 560, h: 700, r: 34 },
+  { t: 3.5, w: 1560, h: 880, r: 30 }, { t: 5.0, w: 1700, h: 940 }, { t: 6.95, w: 760, h: 70, r: 35, y: 830, g: 1, bl: 16 }, { t: 8.0, w: 1520, h: 860, r: 30, y: 540, g: 0, bl: 0 },
+  { t: 10.0, w: 820, h: 440, r: 34 }, { t: 12.0, w: 700, h: 800, r: 40 },
+  { t: 13.15, w: 1300, h: 720, r: 30, y: 720, rot: -5, skx: 14, sy: .78, s: .72 }, { t: 16.3, y: 580, rot: -2, skx: 6, sy: .92, s: 1 },
+  { t: 20.5, w: 170, h: 170, r: 48, x: 700, y: 440, rot: 0, skx: 0, sy: 1, g: 1 }, { t: 25.0, w: 1440, h: 760, r: 30, x: 960, y: 540, g: 0 },
+  { t: 28.0, w: 560, h: 700, r: 34, y: 500 }, { t: 30.0, w: 680, h: 440, y: 540 }, { t: 32.0, w: 420, h: 300, r: 28 }, { t: 34.0, s: .62, bl: 12 },
+  { t: 35.5, w: 130, h: 130, r: 65, g: 1, s: 1, bl: 0, y: 420 }, { t: 39.2, w: 1320, h: 760, r: 30, g: 0, y: 540 }, { t: 42.0, w: 560, h: 400, y: 650 }, { t: 44.5, s: 1.6, sp: { k: 9, c: 6 } },
+  { t: 49.0, w: 340, h: 340, r: 170, y: 540, s: 1 }, { t: 56.0, w: 2080, h: 1180, r: 0 }, { t: 58.5, w: 520, h: 680, r: 34, y: 650 },
+  { t: 62.5, w: 130, h: 130, r: 65, g: 1, y: 400 }];
+const C = {}; ['x', 'y', 'w', 'h', 'r', 'g', 'rot', 'skx', 'sy', 's', 'bl'].forEach(p => C[p] = keyed(CK, p));
+const RIMG = mk(WORLD, { filter: 'blur(16px)' }), RIM = mk(WORLD, {});
+const CARD = mk(WORLD, { background: PAPER, overflow: 'hidden', boxShadow: '0 30px 80px rgba(60,48,30,.2)' });
+const GOLD = mk(CARD, { width: '100%', height: '100%', background: GRAD });
+const CONTENT = [];
+function content(w, h, tIn, tOut, html, upd) { const el = mk(CARD, { width: w, height: h }, html); CONTENT.push({ el, w, h, tIn, tOut, upd }); return el; }
+const PASSES = [2.6, 3.8, 5.3, 8.3, 10.3, 12.3, 16.6, 25.3, 28.3, 30.3, 39.5, 42.3, 43.7, 49.3, 58.8];
+const rimConic = a => `conic-gradient(from ${a}deg,rgba(226,182,98,0) 0deg,rgba(226,182,98,0) 200deg,#D9B26A 280deg,#FFF1D2 305deg,#D9B26A 330deg,rgba(226,182,98,0) 360deg)`;
+function card(t) {
+  const w = C.w(t), h = C.h(t), x = C.x(t), y = C.y(t), r = Math.max(0, C.r(t)), s = C.s(t), on = s > .005;
+  const tf = el => { el.style.transformOrigin = '50% 50%'; put(el, { rot: C.rot(t), skx: C.skx(t), sx: s, sy: s * C.sy(t) }); };
+  const geo = (el, d) => { el.style.left = (x - w / 2 - d) + 'px'; el.style.top = (y - h / 2 - d) + 'px'; el.style.width = (w + 2 * d) + 'px'; el.style.height = (h + 2 * d) + 'px'; el.style.borderRadius = (r + d) + 'px'; tf(el); };
+  vis(CARD, on); geo(CARD, 0); CARD.style.filter = C.bl(t) > .2 ? `blur(${C.bl(t)}px)` : 'none'; GOLD.style.opacity = clamp(C.g(t));
+  let ri = 0; for (const p of PASSES) ri = Math.max(ri, bump(t, p, .6)); ri *= 1 - clamp(C.g(t));
+  const ang = 150 * t; [RIM, RIMG].forEach((e, k) => { vis(e, on && ri > .01); if (ri > .01) { geo(e, k ? 8 : 3); e.style.background = rimConic(ang); e.style.opacity = k ? ri * .9 : ri; } });
+  for (const c of CONTENT) { const a = swapAlpha(t, c.tIn, c.tOut); c.el.style.display = on && a > 0 ? 'block' : 'none'; if (!(on && a > 0)) continue;
+    c.el.style.left = ((w - c.w) / 2) + 'px'; c.el.style.top = ((h - c.h) / 2 + (1 - a) * 14) + 'px'; c.el.style.opacity = a; if (c.upd) c.upd(t); }
 }
-const driftDrops = (D, u, k = 1) => D.forEach(d => put(d.el, { x: d.x + d.vx * u * k, y: d.y + d.vy * u * k, rot: d.rot + d.vr * u }));
-const camMove = (cam, u, z0, z1, dur, dx = 0, dy = 0) => { const p = clamp(u / dur); cam.style.transform = `translate(${dx * u}px,${dy * u}px) scale(${lerp(z0, z1, p)})`; };
 
-// A 0-2.5: "One [shoe] order."
-scene(0, 2.5, BGW, cam => {
-  const s = shoe(cam, 'axel-arigato', 360), one = Rise(cam, { x: 430, y: 470, w: 360, h: 140, html: 'One', font: `400 120px/140px ${BOD}`, ls: '-3px' }), ord = Rise(cam, { x: 1180, y: 470, w: 420, h: 140, html: '<i>order.</i>', font: `400 120px/140px ${BOD}`, color: BRASS, ls: '-3px' });
-  return (u, t) => { camMove(cam, u, 1, 1.06, 2.5, 0, -6); const e = sp(u, .15); put(s, { x: 960, y: 540 + (1 - e) * -420 + 6 * Math.sin(u * 3), rot: -8 + 6 * Math.sin(u * 2), s: .95 + .05 * e }); one(u, .55); ord(u, .8); };
-});
-// B 2.5-3.5: the first pair (photo card with a push)
-scene(2.5, 3.5, BGW, cam => {
-  const p = photo(cam, 'nb-550', 600, 750, { left: 260, top: 165 }), tx = Rise(cam, { x: 990, y: 420, w: 860, h: 230, html: 'It starts with<br><i style="color:#B08A4E">one pair.</i>', font: `400 96px/112px ${BOD}`, ls: '-2px' });
-  return u => { camMove(cam, u, 1.04, 1.1, 1, -20, 0); p.firstChild.style.transform = `scale(${1.05 + .05 * u})`; tx(u, .1); };
-});
-// C 3.5-5.0: the catalogue (stand-in shop UI, tilted plane, camera pans)
-scene(3.5, 5.0, BGW, cam => {
-  const plane = mk(cam, { left: 200, top: 120, width: 1700, height: 900, borderRadius: 30, background: '#fff', boxShadow: '0 40px 100px rgba(60,48,30,.2)', transformOrigin: '50% 50%' });
-  mk(plane, { left: 50, top: 40, width: 800, height: 50, font: `600 30px/50px ${GEIST}`, color: INK, letterSpacing: '.18em' }, 'DRIP VERSE &nbsp;<span class="t" style="color:#B08A4E;letter-spacing:0">· New in</span>');
-  Object.keys(SHOES).concat(['adidas-niteball', 'axel-arigato']).forEach((n, i) => { const c = mk(plane, { left: 50 + (i % 4) * 405, top: 120 + Math.floor(i / 4) * 380, width: 380, height: 350, borderRadius: 22, background: STONE, overflow: 'hidden' }); const s = shoe(c, n, 300); put(s, { x: 190, y: 160, rot: -4 }); mk(c, { left: 22, top: 296, width: 300, height: 36, font: `600 22px/36px ${GEIST}`, color: INK }, n.replace(/-/g, ' ').replace(/\b\w/g, m => m.toUpperCase())); });
-  return u => { camMove(cam, u, 1, 1.05, 1.5); put(plane, { x: 160 - 220 * u, y: 40 - 20 * u, rot: -6, skx: 14, sy: .86 }); };
-});
-// D 5.0-7.0: on its way (stand-in delivery map, route draws, the van dot travels)
-scene(5.0, 7.0, '#EDE7DC', cam => {
-  const R = 'M120 860 C 420 700, 520 760, 760 600 S 1140 420, 1360 470 S 1700 300, 1820 220';
-  const map = mk(cam, { width: W, height: H }, `<svg width="1920" height="1080" viewBox="0 0 1920 1080" style="left:0;top:0">${Array.from({ length: 14 }, (_, i) => `<path d="M${-100 + i * 160} -50 L ${200 + i * 140} 1150" stroke="#DCD3C4" stroke-width="${i % 3 ? 3 : 9}"/>`).join('')}${Array.from({ length: 9 }, (_, i) => `<path d="M-50 ${60 + i * 130} L 1980 ${-40 + i * 150}" stroke="#DCD3C4" stroke-width="${i % 2 ? 3 : 8}"/>`).join('')}<path id="rt" d="${R}" fill="none" stroke="${BRASS}" stroke-width="10" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/><circle cx="120" cy="860" r="14" fill="${INK}"/></svg>`);
-  const rt = map.querySelector('#rt'), L = rt.getTotalLength(), van = mk(cam, { width: 0, height: 0 }, `<div style="left:-26px;top:-26px;width:52px;height:52px;border-radius:26px;background:${GRAD};box-shadow:0 0 0 12px rgba(176,138,78,.25),0 10px 20px rgba(0,0,0,.2)"></div>`);
-  const c = mk(cam, { left: 160, top: 160 }, chip('On its way', 'box'));
-  return u => { camMove(cam, u, 1.08, 1, 2, 0, 0); const p = clamp(sp(u, .1, 'heavy')); rt.style.strokeDashoffset = 1 - p; const pt = rt.getPointAtLength(L * p * .985); put(van, { x: pt.x, y: pt.y }); pop(c, u, .45, '0 50%'); };
-});
-// E 7.0-8.0: the pair in stock (hero shoe on a pedestal, glass chip)
-scene(7.0, 8.0, 'linear-gradient(#EEE8DE,#DCD2C2)', cam => {
-  mk(cam, { left: 560, top: 720, width: 800, height: 120, borderRadius: '50%', background: 'radial-gradient(closest-side,rgba(60,45,25,.28),transparent)' });
-  const s = shoe(cam, 'adidas-niteball', 820), c = mk(cam, { left: 1260, top: 300 }, chip('In stock · ready to ship'));
-  return u => { camMove(cam, u, 1, 1.07, 1, -10, 0); put(s, { x: 960, y: 520 + 5 * Math.sin(u * 4), rot: -4 }); pop(c, u, .25, '0 50%'); };
-});
-// F 8.0-10.0: the product page (stand-in) with a chip
-scene(8.0, 10.0, BGW, cam => {
-  const pg = mk(cam, { left: 210, top: 120, width: 1500, height: 840, borderRadius: 30, background: '#fff', boxShadow: '0 40px 100px rgba(60,48,30,.18)' });
-  const im = mk(pg, { left: 40, top: 40, width: 780, height: 760, borderRadius: 24, background: STONE });
-  const s = shoe(im, 'adidas-niteball', 640); put(s, { x: 390, y: 380, rot: -5 });
-  mk(pg, { left: 880, top: 70, width: 560, height: 60, font: `600 46px/60px ${GEIST}`, color: INK }, 'Niteball');
-  mk(pg, { left: 880, top: 136, width: 560, height: 40, font: `400 28px/40px ${GEIST}`, color: 'rgba(18,18,20,.55)' }, 'adidas Originals');
-  mk(pg, { left: 880, top: 230, width: 560, height: 34, font: `500 24px/34px ${GEIST}`, color: 'rgba(18,18,20,.6)' }, 'Size (EU)');
-  [40, 41, 42, 43, 44].forEach((n, i) => mk(pg, { left: 880 + i * 104, top: 280, width: 88, height: 88, borderRadius: 44, background: n === 42 ? GRAD : '#fff', boxShadow: n === 42 ? 'none' : 'inset 0 0 0 2px rgba(18,18,20,.12)', font: `600 30px/88px ${GEIST}`, color: n === 42 ? '#FFF9EE' : INK, textAlign: 'center' }, String(n)));
-  mk(pg, { left: 880, top: 420, width: 520, height: 100, borderRadius: 50, background: INK, font: `600 32px/100px ${GEIST}`, color: '#FFF9EE', textAlign: 'center' }, 'Add to bag');
-  const c1 = mk(cam, { left: 720, top: 180 }, chip('Only a few left', 'bag')), c2 = mk(cam, { left: 1400, top: 760 }, chip('Size 42 · ready', 'check'));
-  return u => { camMove(cam, u, 1.1, 1, 2, 10, -6); pop(c1, u, .3, '0 50%'); pop(c2, u, .7, '0 50%'); };
-});
-// G 10.0-12.0: the big glass stat card over the blurred page (revest "Online stock" card)
-scene(10.0, 12.0, BGW, cam => {
-  const back = mk(cam, { left: 0, top: 0, width: W, height: H, filter: 'blur(14px)', opacity: .7 }); const s = shoe(back, 'adidas-niteball', 900); put(s, { x: 1300, y: 540, rot: -5 });
-  const g = glass(cam, 760, 400, `<div style="left:50px;top:50px">${iconBox('box', 100)}</div><div style="left:50px;top:170px;width:660px;height:130px;font:400 120px/130px ${BOD};color:${BRASS}">Size 42</div><div style="left:54px;top:304px;width:660px;height:50px;font:500 36px/50px ${GEIST};color:${INK}">packed and ready to ship</div>`, { left: 120, top: 320 });
-  return u => { camMove(cam, u, 1, 1.05, 2, -8, 0); const e = sp(u, .05); put(g, { y: (1 - e) * 80, s: .92 + .08 * e }); };
-});
-// H 12.0-13.0: the order at the counter (stand-in order card with floating status cards)
-scene(12.0, 13.0, 'linear-gradient(#E9E2D6,#D7CCB9)', cam => {
-  const o = mk(cam, { left: 620, top: 160, width: 680, height: 760, borderRadius: 40, background: '#fff', boxShadow: '0 40px 100px rgba(60,48,30,.25)' });
-  mk(o, { left: 50, top: 50, width: 580, height: 50, font: `600 36px/50px ${GEIST}`, color: INK }, 'Order DV-0428');
-  ['nb-550', 'adidas-niteball'].forEach((n, i) => { const r = mk(o, { left: 50, top: 140 + i * 200, width: 580, height: 170, borderRadius: 22, background: STONE }); const s = shoe(r, n, 200); put(s, { x: 120, y: 85 }); mk(r, { left: 240, top: 55, width: 320, height: 60, font: `600 28px/60px ${GEIST}`, color: INK }, n === 'nb-550' ? 'New Balance 550' : 'adidas Niteball'); });
-  mk(o, { left: 50, top: 600, width: 580, height: 100, borderRadius: 50, background: GRAD, font: `600 32px/100px ${GEIST}`, color: '#FFF9EE', textAlign: 'center' }, 'Pay');
-  const a = mk(cam, { left: 300, top: 300 }, chip('Paid', 'card')), b2 = mk(cam, { left: 1370, top: 640 }, chip('Packing', 'box'));
-  return u => { camMove(cam, u, 1.05, 1.1, 1, 0, -10); pop(a, u, .15, '100% 50%'); pop(b2, u, .4, '0 50%'); };
-});
-// I-K 13.0-25.0: the drop world (one continuous stretch, like the reference's 15-25 s)
-scene(13.0, 25.0, BGD, cam => {
-  const D = drops(cam, 16, 3);
-  const t1 = Rise(cam, { x: 360, y: 150, w: 1200, h: 110, html: 'Order <i style="color:#B08A4E">confirmed</i>', font: `400 92px/110px ${BOD}`, al: 'center' });
-  const plane = mk(cam, { left: 360, top: 330, width: 1200, height: 700, borderRadius: 30, background: '#fff', boxShadow: '0 40px 100px rgba(60,48,30,.22)', transformOrigin: '50% 0%' });
-  mk(plane, { left: 50, top: 40, width: 1100, height: 50, font: `600 30px/50px ${GEIST}`, color: INK }, 'Order DV-0428 &nbsp;<span class="t" style="color:#B08A4E">· confirmed</span>');
-  ['Confirmed', 'Paid', 'Packed', 'Shipped'].forEach((s, i) => { const r = mk(plane, { left: 50 + i * 278, top: 130, width: 258, height: 120, borderRadius: 20, background: STONE }); mk(r, { left: 20, top: 20 }, iconBox(['check', 'card', 'box', 'bag'][i], 52)); mk(r, { left: 20, top: 80, width: 220, height: 30, font: `600 22px/30px ${GEIST}`, color: INK }, s); });
-  ['nb-550', 'adidas-niteball'].forEach((n, i) => { const r = mk(plane, { left: 50 + i * 556, top: 280, width: 536, height: 130, borderRadius: 20, background: '#FAF8F4' }); const s = shoe(r, n, 140); put(s, { x: 90, y: 65, rot: -4 }); mk(r, { left: 180, top: 40, width: 340, height: 50, font: `600 26px/50px ${GEIST}`, color: INK }, n === 'nb-550' ? 'New Balance 550' : 'adidas Niteball'); });
-  const bars = [.35, .5, .42, .62, .55, .74, .68, .86, .8, .95].map((h, i) => mk(plane, { left: 60 + i * 108, top: 650 - h * 200, width: 70, height: h * 200, borderRadius: 12, background: i === 9 ? GRAD : '#E4DBCB' }));
-  const t2 = Rise(cam, { x: 360, y: 150, w: 1200, h: 110, html: 'Every sale, <i style="color:#B08A4E">tracked</i>', font: `400 92px/110px ${BOD}`, al: 'center' });
-  // payments reconciled: two icons and a dashed line drawing between them
-  const recon = mk(cam, { width: W, height: H, display: 'none' });
-  const ia = mk(recon, { left: 520, top: 480 }, iconBox('receipt', 150)), ib = mk(recon, { left: 1250, top: 480 }, iconBox('card', 150));
-  const line = mk(recon, { width: W, height: H }, `<svg width="1920" height="1080" style="left:0;top:0"><path id="dl" d="M690 555 L1240 555" stroke="${BRASS}" stroke-width="6" stroke-dasharray="14 14" fill="none"/></svg>`);
-  const dl = line.querySelector('#dl');
-  const t3 = Rise(recon, { x: 690, y: 470, w: 550, h: 70, html: 'Payments, reconciled', font: `500 40px/70px ${GEIST}`, color: BRASS, al: 'center' });
-  // sweep: two big drops cross the frame at the scene changes inside this stretch
-  const sweep = [0, 1, 2].map(i => mk(cam, { width: 600, height: 860, transformOrigin: '50% 60%' }, DROP(10, 900 + i)));
-  return (u, t) => {
-    camMove(cam, u, 1, 1.12, 12, 0, -4); driftDrops(D, u, .8);
-    t1(u, .2, 4.0); t2(u, 4.3, 8.1);
-    const rise = sp(u, 1.0, 'default'), tilt = sp(u, 2.6, 'heavy'), more = sp(u, 4.3, 'heavy');
-    const pOn = u < 8.6; show(plane, pOn);
-    if (pOn) put(plane, { x: 0, y: (1 - rise) * 800 + more * -40 - sp(u, 8.0, 'default') * 900, rot: -6 * tilt - 4 * more, skx: 18 * tilt + 6 * more, sy: 1 - .16 * tilt - .06 * more, s: 1 + .12 * more });
-    bars.forEach((b, i) => { const g = sp(u, 4.5 + i * .06, 'snappy'); b.style.transformOrigin = '50% 100%'; put(b, { sy: g }); });
-    const sw = sp(u, 7.7, { k: 60, c: 14 });                       // the sweep that changes the scene to "reconciled"
-    sweep.forEach((s, i) => { show(s, u > 7.6 && u < 9.4); put(s, { x: lerp(2100 + i * 300, -1200 + i * 200, sw), y: lerp(600 - i * 200, -200 - i * 150, sw), rot: -30 + i * 20, s: .8 + .3 * i }); });
-    if (show(recon, u >= 8.3)) { pop(ia, u, 8.4); pop(ib, u, 8.6); dl.style.strokeDashoffset = 560 - 560 * clamp((u - 8.9) / 1.2); dl.setAttribute('d', `M690 555 L${690 + 550 * clamp((u - 8.9) / 1.2)} 555`); t3(u, 9.6); }
-  };
-});
-// L 25.0-28.0: the stock chart, cursor clicks Restock (stand-in, no numbers)
-scene(25.0, 28.0, BGW, cam => {
-  const c = mk(cam, { left: 260, top: 180, width: 1400, height: 720, borderRadius: 30, background: '#fff', boxShadow: '0 40px 100px rgba(60,48,30,.18)' });
-  mk(c, { left: 60, top: 50, width: 700, height: 50, font: `600 34px/50px ${GEIST}`, color: INK }, 'Niteball · size 42');
-  mk(c, { left: 60, top: 106, width: 700, height: 36, font: `400 24px/36px ${GEIST}`, color: 'rgba(18,18,20,.5)' }, 'Stock &nbsp;—&nbsp; forecast - - -');
-  const g = mk(c, { left: 60, top: 170, width: 1280, height: 480 }, `<svg width="1280" height="480" viewBox="0 0 1280 480" style="left:0;top:0">${[0, 1, 2, 3].map(i => `<path d="M0 ${60 + i * 120} H1280" stroke="#EEE8DE" stroke-width="2"/>`).join('')}<path id="sl" d="M0 60 C 200 90, 320 140, 520 200 S 820 330, 980 380" fill="none" stroke="${BRASS}" stroke-width="7" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/><path id="fl" d="M980 380 C 1080 405, 1180 425, 1270 440" fill="none" stroke="${BRASS}" stroke-width="5" stroke-dasharray="10 12" opacity=".6"/></svg>`);
-  const sl = g.querySelector('#sl'), fl = g.querySelector('#fl');
-  const btn = mk(c, { left: 1100, top: 46, width: 240, height: 80, borderRadius: 40, background: GRAD, font: `600 28px/80px ${GEIST}`, color: '#FFF9EE', textAlign: 'center', transformOrigin: '50% 50%' }, 'Restock');
-  const cur = mk(cam, { width: 42, height: 60 }, `<svg width="42" height="60" viewBox="0 0 28 40" style="left:0;top:0;overflow:visible"><path d="M3 2 L3 30 L10 24 L15 36 L20 34 L15 22 L24 22 Z" fill="${INK}" stroke="#fff" stroke-width="2.4" stroke-linejoin="round"/></svg>`);
-  const lo = mk(cam, { left: 1180, top: 560 }, chip('Low stock', 'bag'));
-  return u => { camMove(cam, u, 1, 1.06, 3, -6, 0); sl.style.strokeDashoffset = 1 - clamp(sp(u, .1, 'heavy')); fl.style.opacity = .6 * clamp((u - .9) * 2); pop(lo, u, 1.0, '0 50%');
-    const k = sp(u, 1.4, 'default'); put(cur, { x: lerp(1700, 1460, k), y: lerp(950, 300, k), s: 1 - .15 * (sp(u, 2.2, 'snappy') - sp(u, 2.32, 'snappy')) });
-    put(btn, { s: 1 - .06 * (sp(u, 2.2, 'snappy') - sp(u, 2.32, 'snappy')) }); };
-});
-// M 28.0-30.0: restock order (the boxed pair)
-scene(28.0, 30.0, 'linear-gradient(#E6DED0,#D3C6B0)', cam => {
-  const p = photo(cam, 'nb-550', 560, 700, { left: 680, top: 260 }), t = Rise(cam, { x: 360, y: 90, w: 1200, h: 130, html: 'Restock <i style="color:#B08A4E">order</i>', font: `400 110px/130px ${BOD}`, al: 'center' });
-  const c = mk(cam, { left: 1280, top: 640 }, chip('Order placed', 'check'));
-  return u => { camMove(cam, u, 1.06, 1, 2, 0, -8); p.firstChild.style.transform = `scale(${1.08 - .04 * u})`; t(u, .05); pop(c, u, .7, '0 50%'); };
-});
-// N 30.0-34.0: payment completed, then the glass collage of everything so far
-scene(30.0, 34.0, BGD, cam => {
-  const D = drops(cam, 10, 7);
-  const pc = glass(cam, 620, 420, `<div style="left:40px;top:40px">${iconBox('check', 90)}</div><div style="left:40px;top:150px;width:540px;height:56px;font:600 40px/56px ${GEIST};color:${INK}">Payment completed</div><div style="left:40px;top:212px;width:540px;height:40px;font:400 26px/40px ${GEIST};color:rgba(18,18,20,.55)">Order DV-0428 · confirmed</div><div style="left:40px;top:300px;width:250px;height:76px;border-radius:38px;background:${INK};font:600 26px/76px ${GEIST};color:#FFF9EE;text-align:center">Receipt</div>`, { left: 650, top: 330 });
-  const tiles = [['nb-550', 0], ['adidas-niteball', 1], ['axel-arigato', 2], ['nike-zoom', 3]].map(([n, i]) => { const g = glass(cam, 300, 240, '', { left: 0, top: 0 }); const s = shoe(g, n, 230); put(s, { x: 150, y: 120, rot: -5 }); return g; });
-  return u => { camMove(cam, u, 1, 1.1, 4, 0, -5); driftDrops(D, u);
-    const out = sp(u, 2.0, 'default'); pc.style.transformOrigin = '50% 50%'; put(pc, { y: (1 - sp(u, .1)) * 300 - out * 40, s: 1 - .35 * out, x: -out * 420 });
-    tiles.forEach((g, i) => { const e = sp(u, 2.1 + i * .1); const P = [[1060, 160], [1420, 220], [1060, 520], [1420, 600]][i]; g.style.transformOrigin = '50% 50%'; put(g, { x: lerp(1900, P[0], e), y: lerp(1200, P[1], e), rot: (1 - e) * 20 + (i - 1.5) * 2, s: .7 + .3 * e }); g.style.visibility = u < 2.1 + i * .1 ? 'hidden' : 'visible'; }); };
-});
-// O 34.0-35.5: "in one tap" over the board of everything
-scene(34.0, 35.5, BGW, cam => {
-  const names = ['nb-550', 'adidas-niteball', 'axel-arigato', 'nike-zoom', 'nb-480', 'nike-af1'];
-  const g = names.map((n, i) => { const c = glass(cam, 420, 300, '', { left: 120 + (i % 3) * 580, top: i < 3 ? 80 : 640 }); const s = shoe(c, n, 320); put(s, { x: 210, y: 150, rot: -4 }); return c; });
-  const t = Rise(cam, { x: 460, y: 440, w: 1000, h: 140, html: 'in one <i style="color:#B08A4E">tap.</i>', font: `400 120px/140px ${BOD}`, al: 'center' });
-  return u => { camMove(cam, u, 1.08, 1.02, 1.5, 0, 0); g.forEach((c, i) => put(c, { y: 6 * Math.sin(u * 3 + i) })); t(u, .1); };
-});
-// P-S 35.5-44.5: the drops become the wordmark; not just a shop; the order list; one store
-scene(35.5, 44.5, BGD, cam => {
-  const D = drops(cam, 14, 21);
-  const mark = mk(cam, { left: 960 - 46, top: 380, width: 92, height: 130 }, DROP(1.5, 777));
-  const word = Rise(cam, { x: 460, y: 520, w: 1000, h: 150, html: 'DRIP VERSE', font: `500 84px/150px ${GEIST}`, ls: '.32em', al: 'center' });
-  const nj = Rise(cam, { x: 360, y: 480, w: 1200, h: 110, html: 'Not just a <i style="color:#B08A4E">shop.</i>', font: `400 92px/110px ${BOD}`, al: 'center' });
-  const list = mk(cam, { left: 300, top: 160, width: 1320, height: 760, borderRadius: 30, background: '#fff', boxShadow: '0 40px 100px rgba(60,48,30,.2)', transformOrigin: '50% 50%' });
-  mk(list, { left: 50, top: 40, width: 800, height: 50, font: `600 32px/50px ${GEIST}`, color: INK }, 'Orders');
-  ['nb-550', 'adidas-niteball', 'axel-arigato', 'nike-zoom'].forEach((n, i) => { const r = mk(list, { left: 50, top: 120 + i * 150, width: 1220, height: 130, borderRadius: 20, background: i === 1 ? '#F5EEDF' : '#FAF8F4' }); const s = shoe(r, n, 150); put(s, { x: 100, y: 65 }); mk(r, { left: 200, top: 40, width: 600, height: 50, font: `600 28px/50px ${GEIST}`, color: INK }, ['New Balance 550', 'adidas Niteball', 'Axel Arigato Area', 'Nike Zoom Vomero'][i]); mk(r, { left: 960, top: 34, width: 220, height: 62, borderRadius: 31, background: i === 1 ? GRAD : STONE, font: `600 22px/62px ${GEIST}`, color: i === 1 ? '#FFF9EE' : INK, textAlign: 'center' }, ['Delivered', 'On its way', 'Packed', 'Confirmed'][i]); });
-  // one store: a glowing shop card on a brass grid floor
-  const floor = mk(cam, { left: -400, top: 560, width: 2720, height: 900, display: 'none', transformOrigin: '50% 0%', background: 'repeating-linear-gradient(90deg,rgba(176,138,78,.35) 0 2px,transparent 2px 160px),repeating-linear-gradient(0deg,rgba(176,138,78,.35) 0 2px,transparent 2px 120px)' });
-  const store = glass(cam, 520, 360, `<div style="left:30px;top:26px;width:460px;height:40px;font:600 24px/40px ${GEIST};color:${INK};letter-spacing:.16em">DRIP VERSE</div>`, { left: 700, top: 360, boxShadow: '0 0 0 3px rgba(200,167,102,.9),0 0 60px rgba(200,167,102,.55),0 40px 80px rgba(60,48,30,.25)', display: 'none' });
-  const ss = shoe(store, 'axel-arigato', 360); put(ss, { x: 260, y: 200, rot: -5 });
-  const one = Rise(cam, { x: 430, y: 250, w: 400, h: 120, html: 'One', font: `400 104px/120px ${BOD}` }), sto = Rise(cam, { x: 1260, y: 250, w: 400, h: 120, html: '<i style="color:#B08A4E">store.</i>', font: `400 104px/120px ${BOD}` });
-  return u => { camMove(cam, u, 1, 1.08, 9, 0, -3); cam.style.transform += ` translate(${-9 * Math.max(0, u - .2)}px,0)`; driftDrops(D, u, 1.6);
-    const conv = sp(u, 0, 'heavy'); D.forEach((d, i) => { if (i < 6) put(d.el, { x: lerp(d.x, 960, conv * (1 - sp(u, .9))), y: lerp(d.y, 440, conv * (1 - sp(u, .9))), rot: d.rot * (1 - conv) }); });
-    const mo = sp(u, .5, 'snappy') * (1 - sp(u, 1.6, 'snappy')); mark.style.transformOrigin = '50% 60%'; put(mark, { s: mo }); word(u, .7, 1.6); nj(u, 1.8, 3.3);
-    const lu = sp(u, 3.5, 'default'), lo = sp(u, 6.3, 'default'); show(list, u > 3.4 && u < 7.0); put(list, { y: (1 - lu) * 900, s: 1 + .25 * sp(u, 4.6, 'heavy') - .5 * lo, rot: -lo * 4 });
-    const so = u > 6.3; show(floor, so); show(store, so);
-    if (so) { const e = sp(u, 6.4, 'default'); put(floor, { y: (1 - e) * 400, skx: -22, sy: .55 }); store.style.transformOrigin = '50% 50%'; put(store, { y: (1 - e) * 200 + 6 * Math.sin(u * 3), s: .8 + .2 * e }); }
-    one(u, 6.9); sto(u, 7.1); };
-});
-// T 44.5-49.0: one store to a hundred: "Grows with you."
-scene(44.5, 49.0, BGD, cam => {
-  mk(cam, { left: -400, top: 380, width: 2720, height: 1200, transformOrigin: '50% 0%', background: 'repeating-linear-gradient(90deg,rgba(176,138,78,.3) 0 2px,transparent 2px 160px),repeating-linear-gradient(0deg,rgba(176,138,78,.3) 0 2px,transparent 2px 120px)', transform: 'skewX(-22deg) scaleY(.55)' });
-  const r = mulberry32(5), cards = Array.from({ length: 22 }, (_, i) => { const n = Object.keys(SHOES)[i % 6]; const g = glass(cam, 220, 150, '', { left: 0, top: 0 }); const s = shoe(g, n, 150); put(s, { x: 110, y: 78, rot: -4 }); return { g, x: 120 + (i % 8) * 230 + (Math.floor(i / 8) % 2) * 110, y: 430 + Math.floor(i / 8) * 190, d: r() * .9 }; });
-  const hero = glass(cam, 420, 290, '', { left: 750, top: 330, boxShadow: '0 0 0 3px rgba(200,167,102,.9),0 0 60px rgba(200,167,102,.5),0 40px 80px rgba(60,48,30,.25)' }); const hs = shoe(hero, 'axel-arigato', 300); put(hs, { x: 210, y: 150, rot: -5 });
-  const t1 = Rise(cam, { x: 360, y: 120, w: 1200, h: 110, html: 'to a <i style="color:#B08A4E">hundred.</i>', font: `400 92px/110px ${BOD}`, al: 'center' });
-  const t2 = Rise(cam, { x: 1180, y: 160, w: 700, h: 230, html: 'Grows<br><i style="color:#B08A4E">with you.</i>', font: `400 96px/112px ${BOD}` });
-  return u => { camMove(cam, u, 1.12, 1, 4.5, 0, -6);
-    cards.forEach((c, i) => { const e = sp(u, .3 + c.d, 'snappy'); c.g.style.transformOrigin = '50% 50%'; put(c.g, { x: c.x, y: c.y + (1 - e) * 60, s: e * .9 }); c.g.style.visibility = e < .01 ? 'hidden' : 'visible'; });
-    hero.style.transformOrigin = '50% 50%'; put(hero, { y: -sp(u, 2.0, 'heavy') * 160 + 5 * Math.sin(u * 3), x: -sp(u, 2.0, 'heavy') * 380, s: 1 + .15 * sp(u, 2.0, 'heavy') });
-    t1(u, .2, 1.9); t2(u, 2.3); };
-});
-// U 49.0-56.0: the hub: everything DRIP VERSE handles orbits the mark (no third-party logos)
-scene(49.0, 56.0, BGW, cam => {
-  const hub = mk(cam, { left: 960 - 170, top: 540 - 170, width: 340, height: 340, borderRadius: 170, background: 'rgba(255,255,255,.85)', boxShadow: '0 0 0 3px rgba(200,167,102,.7),0 0 80px rgba(200,167,102,.35),0 40px 80px rgba(60,48,30,.18)' }, `<div style="left:124px;top:66px;width:92px;height:130px">${DROP(1.5, 555)}</div><div style="left:0;top:214px;width:340px;height:44px;font:500 24px/44px ${GEIST};color:${INK};text-align:center;letter-spacing:.3em;padding-left:.3em">DRIP VERSE</div>`);
-  const L = ['DMs', 'Orders', 'Payments', 'Delivery', 'Restock', 'Receipts', 'Sizes', 'Returns', 'Pickup', 'Tracking', 'New drops', 'Reorders'];
-  const IC = ['bag', 'check', 'card', 'box', 'box', 'receipt', 'check', 'bag', 'box', 'check', 'bag', 'receipt'];
-  const ch = L.map((s, i) => mk(cam, {}, chip(s, IC[i])));
-  return u => { camMove(cam, u, 1, 1.1, 7, -9, 4); hub.style.transformOrigin = '50% 50%'; put(hub, { s: sp(u, .05, 'snappy') });
-    ch.forEach((c, i) => { const ring = i < 6 ? 0 : 1, k = ring ? i - 6 : i, a = k / 6 * Math.PI * 2 + (ring ? .5 : 0) + u * .12 * (ring ? -1 : 1), R = ring ? 460 : 300, t0 = ring ? 2.6 + k * .12 : .22 + k * .12;
-      const e = sp(u, t0, 'default'); put(c, { x: 960 + Math.cos(a) * R * 1.35 * e - 90, y: 540 + Math.sin(a) * R * .8 * e - 32, s: e }); c.style.visibility = e < .01 ? 'hidden' : 'visible'; }); };
-});
-// V 56.0-58.5: the notification over the on-foot photo
-scene(56.0, 58.5, '#2A2620', cam => {
-  const p = photo(cam, 'jordan-4', 1920, 1905, { left: 0, top: -400, borderRadius: 0 });
-  const n = glass(cam, 760, 150, `<div style="left:24px;top:24px">${iconBox('bag', 100)}</div><div style="left:150px;top:30px;width:580px;height:40px;font:600 28px/40px ${GEIST};color:${INK}">DRIP VERSE</div><div style="left:150px;top:74px;width:580px;height:44px;font:400 28px/44px ${GEIST};color:rgba(18,18,20,.7)">Your order is on its way.</div>`, { left: 580, top: 120 });
-  return u => { put(p, { x: -40 * u, y: -20 * u, s: 1 + .02 * u }); const e = sp(u, .3, 'snappy'); n.style.transformOrigin = '50% 0%'; put(n, { y: (1 - e) * -200, s: .9 + .1 * e }); };
-});
-// W 58.5-62.5: in one tap (Asics on foot)
-scene(58.5, 62.5, BGW, cam => {
-  const p = photo(cam, 'asics-kayano', 500, 888, { left: 1180, top: 96 });
-  const t = Rise(cam, { x: 150, y: 400, w: 1000, h: 280, html: 'At your door,<br><i style="color:#B08A4E">in one tap.</i>', font: `400 110px/130px ${BOD}` });
-  return u => { camMove(cam, u, 1, 1.07, 4, -6, 0); p.firstChild.style.transform = `scale(${1.06 - .015 * u}) translateY(${-6 * u}px)`; t(u, .2); };
-});
-// X-Y 62.5-71.3: the drops resolve into the mark, then the end card
-scene(62.5, END, BGD, cam => {
-  const D = drops(cam, 14, 31);
-  const mark = mk(cam, { left: 960 - 46, top: 300, width: 92, height: 130 }, DROP(1.5, 888));
-  const word = Rise(cam, { x: 460, y: 440, w: 1000, h: 150, html: 'DRIP VERSE', font: `500 84px/150px ${GEIST}`, ls: '.32em', al: 'center' });
-  const tag = Rise(cam, { x: 460, y: 600, w: 1000, h: 60, html: 'One order. <i style="color:#B08A4E">Every step handled.</i>', font: `400 46px/60px ${BOD}`, al: 'center', sp: 'snappy' });
-  const sub = Rise(cam, { x: 460, y: 600, w: 1000, h: 60, html: 'Luxury footwear, delivered.', font: `400 40px/60px ${GEIST}`, color: 'rgba(18,18,20,.6)', al: 'center', sp: 'snappy' });
-  const dm = mk(cam, { left: 960 - 220, top: 700, width: 440, height: 100, borderRadius: 50, background: GRAD, boxShadow: '0 24px 50px rgba(120,90,40,.28)', font: `600 34px/100px ${GEIST}`, color: '#FFF9EE', textAlign: 'center', transformOrigin: '50% 50%' }, 'Send us a DM');
-  const pw = Rise(cam, { x: 660, y: 830, w: 600, h: 44, html: 'Powered by Climax Store', font: `400 26px/44px ${GEIST}`, color: 'rgba(18,18,20,.55)', al: 'center', sp: 'snappy' });
-  return u => { camMove(cam, u, 1.12, 1, 8.8, -9, 4);
-    const conv = sp(u, 1.0, 'heavy'); D.forEach(d => { put(d.el, { x: lerp(d.x + d.vx * u * 2.5, 960 - 30, conv), y: lerp(d.y + d.vy * u * 2.5, 360, conv), rot: lerp(d.rot, 0, conv), s: 1 - conv * .95 }); d.el.style.visibility = u > 1.75 ? 'hidden' : 'visible'; });
-    mark.style.transformOrigin = '50% 60%'; put(mark, { y: -40 * sp(u, 1.5, 'default'), s: sp(u, 1.2, 'snappy') * (1 + .04 * Math.sin(u * 2.4)) });
-    word(u, 1.5); tag(u, 2.6, 4.6); sub(u, 4.8);
-    const d = sp(u, 5.2, 'snappy'); put(dm, { s: d }); dm.style.visibility = d < .01 ? 'hidden' : 'visible'; pw(u, 5.8); };
-});
+// ---------- card contents (each laid out at its own state size, centred in the card) ----------
+function photoC(n, w, h, tIn, tOut, z0 = 1.08, z1 = 1.0) { let img; const el = content(w, h, tIn, tOut, `<img src="assets/photos/${n}.jpg" style="left:0;top:0;width:${w}px;height:${h}px;object-fit:cover;transform-origin:50% 50%">`,
+  t => { img.style.transform = `scale(${lerp(z0, z1, clamp((t - tIn) / (tOut - tIn)))})`; }); img = el.firstChild; return el; }
+photoC('nb-550', 560, 700, 2.35, 3.5);
+// catalogue: one hero tile, the rest recede
+content(1560, 880, 3.6, 5.0, `<div style="left:60px;top:44px;font:${LABEL};letter-spacing:.22em;color:rgba(18,18,20,.55)">DRIP VERSE · NEW IN</div>` +
+  ['nb-550', 'adidas-niteball', 'axel-arigato', 'nike-zoom', 'nb-480', 'nike-af1', 'nb-550', 'axel-arigato'].map((n, i) => { const hero = i === 0, x = 60 + (i % 4) * 365, y = 110 + Math.floor(i / 4) * 375;
+    return `<div style="left:${x}px;top:${y}px;width:345px;height:355px;border-radius:24px;background:${STONE};opacity:${hero ? 1 : .55};${hero ? 'box-shadow:0 0 0 3px #C9A15C,0 20px 40px rgba(60,48,30,.18);transform:scale(1.05)' : ''}"><div style="left:172px;top:160px">${shoeImg(n, 270)}</div><div style="left:24px;top:300px;font:600 22px/30px ${GEIST};color:${INK}">${n.replace(/-/g, ' ').replace(/\b\w/g, m => m.toUpperCase())}</div></div>`; }).join(''));
+// delivery map: the route draws as a glowing line with a bright head
+{ const R = 'M140 820 C 420 680, 560 760, 800 590 S 1180 420, 1380 470 S 1640 300, 1580 200';
+  let rt, head, L; const el = content(1700, 940, 5.1, 6.95, `<svg width="1700" height="940" style="left:0;top:0">${Array.from({ length: 13 }, (_, i) => `<path d="M${-100 + i * 150} -40 L ${180 + i * 130} 1000" stroke="#E7E0D3" stroke-width="${i % 3 ? 3 : 10}"/>`).join('')}${Array.from({ length: 8 }, (_, i) => `<path d="M-40 ${60 + i * 125} L 1740 ${-30 + i * 140}" stroke="#E7E0D3" stroke-width="${i % 2 ? 3 : 9}"/>`).join('')}<path id="rt" d="${R}" fill="none" stroke="#C9A15C" stroke-width="10" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" style="filter:drop-shadow(0 0 8px rgba(220,170,80,.9))"/><circle cx="140" cy="820" r="16" fill="${INK}"/></svg><div class="hd" style="width:0;height:0"><div style="left:-60px;top:-60px;width:120px;height:120px;border-radius:60px;background:radial-gradient(closest-side,rgba(255,238,200,1),rgba(226,178,92,.6) 40%,rgba(226,178,92,0))"></div><div style="left:-18px;top:-18px;width:36px;height:36px;border-radius:18px;background:${GRAD};box-shadow:0 6px 14px rgba(0,0,0,.2)"></div></div><div class="ch" style="left:1580px;top:120px">${chipHTML('On its way', 'box')}</div>`,
+    t => { const p = clamp(S(t, 5.2, 'heavy')); rt.style.strokeDashoffset = 1 - p; const pt = rt.getPointAtLength(L * p); put(head, { x: pt.x, y: pt.y }); const c = S(t, 6.0, 'snappy'); ch.style.transformOrigin = '0 0'; put(ch, { s: c }); vis(ch, c > .01); });
+  rt = el.querySelector('#rt'); L = rt.getTotalLength(); head = el.querySelector('.hd'); var ch = el.querySelector('.ch'); }
+// product page: the hero shoe flies into the image slot (SHOE2 below)
+content(1520, 860, 8.1, 10.0, `<div style="left:40px;top:40px;width:760px;height:780px;border-radius:26px;background:${STONE}"></div>
+  <div style="left:880px;top:90px;font:600 64px/1 ${GEIST};color:${INK};letter-spacing:-.02em">Niteball</div>
+  <div style="left:882px;top:172px;font:400 30px/1 ${GEIST};color:rgba(18,18,20,.5)">adidas Originals</div>
+  <div style="left:882px;top:290px;font:${LABEL};letter-spacing:.22em;color:rgba(18,18,20,.5)">SIZE (EU)</div>` +
+  [40, 41, 42, 43, 44].map((n, i) => `<div style="left:${880 + i * 108}px;top:336px;width:92px;height:92px;border-radius:46px;background:${n === 42 ? GRAD : '#fff'};box-shadow:${n === 42 ? 'none' : 'inset 0 0 0 2px rgba(18,18,20,.12)'};font:600 30px/92px ${GEIST};color:${n === 42 ? '#FFF9EE' : INK};text-align:center">${n}</div>`).join('') +
+  `<div style="left:880px;top:500px;width:540px;height:104px;border-radius:52px;background:${INK};font:600 32px/104px ${GEIST};color:#FFF9EE;text-align:center">Add to bag</div>`);
+content(820, 440, 10.1, 12.0, `<div class="fx" style="left:0;top:110px;width:820px;height:160px"><div style="font:${DISPLAY};color:${INK};letter-spacing:-.02em">Size 42</div></div>
+  <div class="fx" style="left:0;top:300px;width:820px;height:50px"><div style="font:${SUPPORT};color:rgba(18,18,20,.6)">Packed and ready to ship.</div></div>`);
+content(700, 800, 12.1, 13.1, `<div style="left:50px;top:54px;font:600 36px/1 ${GEIST};color:${INK}">Order DV-0428</div>` +
+  ['nb-550', 'adidas-niteball'].map((n, i) => `<div style="left:50px;top:${130 + i * 200}px;width:600px;height:176px;border-radius:24px;background:${STONE}"><div style="left:120px;top:88px">${shoeImg(n, 190)}</div><div style="left:250px;top:70px;font:600 30px/36px ${GEIST};color:${INK}">${n === 'nb-550' ? 'New Balance 550' : 'adidas Niteball'}</div></div>`).join('') +
+  `<div style="left:50px;top:610px;width:600px;height:110px;border-radius:55px;background:${GRAD};font:600 34px/110px ${GEIST};color:#FFF9EE;text-align:center">Pay</div>`);
+// dashboard plane: steps, the two pairs, sales bars (only the last bar is gold)
+{ let bars; const el = content(1300, 720, 13.25, 20.45, `<div style="left:56px;top:46px;font:600 32px/1 ${GEIST};color:${INK}">Order DV-0428</div>` +
+    ['Confirmed', 'Paid', 'Packed', 'Shipped'].map((s, i) => `<div style="left:${56 + i * 302}px;top:110px;width:282px;height:96px;border-radius:20px;background:${i === 0 ? '#F6EEDD' : STONE}"><div style="left:44px;top:48px;width:48px;height:48px;transform:translate(-50%,-50%);border-radius:24px;background:${i === 0 ? GRAD : '#CFC6B6'}"><svg width="48" height="48" viewBox="0 0 64 64" style="left:0;top:0">${ICON.check}</svg></div><div style="left:84px;top:34px;font:600 26px/30px ${GEIST};color:${INK}">${s}</div></div>`).join('') +
+    ['nb-550', 'adidas-niteball'].map((n, i) => `<div style="left:${56 + i * 604}px;top:236px;width:584px;height:120px;border-radius:20px;background:#FAF7F2"><div style="left:90px;top:60px">${shoeImg(n, 140)}</div><div style="left:180px;top:42px;font:600 26px/36px ${GEIST};color:${INK}">${n === 'nb-550' ? 'New Balance 550' : 'adidas Niteball'}</div></div>`).join('') +
+    [.35, .5, .42, .62, .55, .74, .68, .86, .8, .95].map((h, i) => `<div class="bar" style="left:${70 + i * 118}px;top:${680 - h * 280}px;width:76px;height:${h * 280}px;border-radius:14px;background:${i === 9 ? GRAD : '#E6DDCC'};transform-origin:50% 100%"></div>`).join(''),
+    t => bars.forEach((b, i) => { const g = S(t, 16.7 + i * .07, 'snappy'); put(b, { sy: Math.max(.001, g) }); }));
+  bars = [...el.querySelectorAll('.bar')]; }
+content(170, 170, 20.6, 25.0, `<div style="left:85px;top:85px">${svgIcon('receipt', 110)}</div>`);
+// stock chart: the line draws with a glowing head, Restock is the one gold thing
+{ let sl, hd, L, lo; const el = content(1440, 760, 25.1, 28.0, `<div style="left:64px;top:56px;font:600 40px/1 ${GEIST};color:${INK}">Niteball · size 42</div>
+  <div style="left:66px;top:118px;font:${LABEL};letter-spacing:.22em;color:rgba(18,18,20,.5)">STOCK</div>
+  <svg width="1320" height="480" style="left:60px;top:200px">${[0, 1, 2, 3].map(i => `<path d="M0 ${60 + i * 120} H1320" stroke="#EFE9DF" stroke-width="2"/>`).join('')}<path id="sl" d="M0 50 C 220 80, 360 130, 560 200 S 880 330, 1060 390" fill="none" stroke="#C9A15C" stroke-width="8" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" style="filter:drop-shadow(0 0 8px rgba(220,170,80,.85))"/><path d="M1060 390 C 1150 410, 1240 425, 1310 440" fill="none" stroke="#C9A15C" stroke-width="5" stroke-dasharray="10 12" opacity=".5"/></svg>
+  <div class="hd" style="left:60px;top:200px;width:0;height:0"><div style="left:-50px;top:-50px;width:100px;height:100px;border-radius:50px;background:radial-gradient(closest-side,rgba(255,238,200,1),rgba(226,178,92,.55) 40%,rgba(226,178,92,0))"></div></div>
+  <div class="lo" style="left:1120px;top:520px">${chipHTML('Low stock', 'bag')}</div>
+  <div style="left:1140px;top:46px;width:240px;height:84px;border-radius:42px;background:${GRAD};font:600 30px/84px ${GEIST};color:#FFF9EE;text-align:center" class="btn">Restock</div>`,
+    t => { const p = clamp(S(t, 25.25, 'heavy')); sl.style.strokeDashoffset = 1 - p; const pt = sl.getPointAtLength(L * p); put(hd, { x: pt.x, y: pt.y }); const c = S(t, 26.0, 'snappy'); put(lo, { s: c }); vis(lo, c > .01);
+      const b = el.querySelector('.btn'); b.style.transformOrigin = '50% 50%'; put(b, { s: 1 - .07 * (S(t, 26.9, 'snappy') - S(t, 27.02, 'snappy')) }); });
+  sl = el.querySelector('#sl'); L = sl.getTotalLength(); hd = el.querySelector('.hd'); lo = el.querySelector('.lo'); }
+photoC('nb-550', 560, 700, 28.1, 30.0, 1.0, 1.08);
+content(680, 440, 30.1, 32.0, `<div style="left:340px;top:110px;width:110px;height:110px;transform:translate(-50%,-50%);border-radius:55px;background:${GRAD}"><svg width="110" height="110" viewBox="0 0 64 64" style="left:0;top:0">${ICON.check}</svg></div>
+  <div class="fx" style="left:0;top:210px;width:680px;height:70px"><div style="font:600 50px/1 ${GEIST};color:${INK};letter-spacing:-.02em">Payment completed</div></div>
+  <div class="fx" style="left:0;top:300px;width:680px;height:50px"><div style="font:400 30px/1 ${GEIST};color:rgba(18,18,20,.55)">Order DV-0428 · confirmed</div></div>`);
+content(420, 300, 32.1, 35.45, `<div style="left:210px;top:150px">${shoeImg('adidas-niteball', 320)}</div>`);
+content(130, 130, 35.6, 39.15, `<div style="left:65px;top:69px">${DROPW(.9)}</div>`);
+content(1320, 760, 39.3, 42.0, `<div style="left:60px;top:46px;font:${LABEL};letter-spacing:.22em;color:rgba(18,18,20,.55)">ORDERS</div>` +
+  ['nb-550', 'adidas-niteball', 'axel-arigato', 'nike-zoom'].map((n, i) => { const hero = i === 1; return `<div style="left:60px;top:${100 + i * 154}px;width:1200px;height:134px;border-radius:22px;background:${hero ? '#F6EEDD' : '#FAF7F2'}"><div style="left:100px;top:67px">${shoeImg(n, 150)}</div><div style="left:200px;top:47px;font:600 ${hero ? 32 : 28}px/40px ${GEIST};color:${hero ? INK : 'rgba(18,18,20,.6)'}">${['New Balance 550', 'adidas Niteball', 'Axel Arigato Area', 'Nike Zoom Vomero'][i]}</div><div style="left:940px;top:35px;width:220px;height:64px;border-radius:32px;background:${hero ? GRAD : STONE};font:600 24px/64px ${GEIST};color:${hero ? '#FFF9EE' : 'rgba(18,18,20,.6)'};text-align:center">${['Delivered', 'On its way', 'Packed', 'Confirmed'][i]}</div></div>`; }).join(''));
+content(560, 400, 42.1, 49.0, `<div class="fx" style="left:0;top:34px;width:560px;height:30px"><div style="font:${LABEL};letter-spacing:.3em;padding-left:.3em;color:${INK}">DRIP VERSE</div></div><div style="left:280px;top:225px">${shoeImg('axel-arigato', 400)}</div>`);
+content(340, 340, 49.1, 56.0, `<div style="left:170px;top:140px">${DROPB(1.3, 777).replace('style="left:0;top:0;', 'style="left:-39px;top:-56px;')}</div><div class="fx" style="left:0;top:228px;width:340px;height:30px"><div style="font:${LABEL};letter-spacing:.3em;padding-left:.3em;color:${INK}">DRIP VERSE</div></div>`);
+photoC('jordan-4', 2080, 1180, 56.05, 58.5, 1.0, 1.06);
+photoC('asics-kayano', 520, 680, 58.6, 62.45, 1.08, 1.0);
+content(130, 130, 62.6, END + 1, `<div style="left:65px;top:69px">${DROPW(.9)}</div>`);
 
+// ---------- world objects outside the card ----------
+const SHOE1 = mk(WORLD, { width: 0, height: 0 }, shoeImg('axel-arigato', 440));
+const SHOE2 = mk(WORLD, { width: 0, height: 0 }, shoeImg('adidas-niteball', 820));
+function shoes(t) {
+  const fall = u => lerp(-320, 540, S(u, .05, 'default')), y = fall(t), v = (fall(t + .004) - fall(t - .004)) / .008, k = clamp(Math.abs(v) / 5000, 0, .22);
+  const land = S(t, .42, 'snappy') - S(t, .52, 'default'), out = S(t, 2.22, 'snappy');
+  vis(SHOE1, out < .99); put(SHOE1, { x: gapX('open'), y: y + 8 * Math.sin(t * 2.6) * S(t, .6), rot: -7 + 3 * Math.sin(t * 1.7), sx: (1 - .55 * k + .05 * land) * (1 - out), sy: (1 + k - .07 * land) * (1 - out) });
+  const rise = S(t, 7.0, 'default'), slot = S(t, 8.05, 'default'), off = S(t, 9.95, 'snappy');
+  const x2 = lerp(960, 620, slot) + off * 1500, y2 = lerp(lerp(900, 560, rise), 540, slot) - off * 800;
+  vis(SHOE2, t > 6.9 && off < .99); put(SHOE2, { x: x2, y: y2 + 6 * Math.sin(t * 3) * (1 - slot), rot: -5 - off * 20, s: (lerp(.3, 1, rise) * lerp(1, .8, slot)) * (1 + .3 * off) });
+}
+// reconciliation: a second gold icon slides out of the card; a glowing line draws between them with light travelling along it
+const ICON2 = mk(WORLD, { width: 170, height: 170, borderRadius: 48, background: GRAD, boxShadow: '0 20px 40px rgba(120,90,40,.25)' }, `<div style="left:85px;top:85px">${svgIcon('card', 110)}</div>`);
+const LINE = mk(WORLD, { width: W, height: H }, `<svg width="1920" height="1080" style="left:0;top:0"><path id="ln" d="M800 440 L1120 440" stroke="#C9A15C" stroke-width="7" stroke-linecap="round" fill="none" style="filter:drop-shadow(0 0 7px rgba(220,170,80,.9))"/></svg><div class="dot" style="width:0;height:0"><div style="left:-34px;top:-34px;width:68px;height:68px;border-radius:34px;background:radial-gradient(closest-side,rgba(255,240,205,1),rgba(226,178,92,.5) 45%,rgba(226,178,92,0))"></div></div>`);
+const LN = LINE.querySelector('#ln'), LDOT = LINE.querySelector('.dot');
+function recon(t) {
+  const e = S(t, 20.75, 'default'), o = S(t, 24.85, 'snappy'); vis(ICON2, e > .01 && o < .99); ICON2.style.transformOrigin = '50% 50%';
+  put(ICON2, { x: lerp(700, 1220, e) - 85 - o * 260, y: 440 - 85, s: e * (1 - o) });
+  const d = clamp(S(t, 21.2, 'heavy')) * (1 - o); vis(LINE, d > .01); LN.setAttribute('d', `M800 440 L${800 + 320 * d} 440`);
+  const lu = ((t - 21.4) % 1.1 + 1.1) % 1.1 / 1.1; put(LDOT, { x: 800 + 320 * d * lu, y: 440 }); LDOT.style.opacity = t > 21.4 ? Math.sin(Math.PI * lu) : 0;
+}
+// chips around the order card
+function Chip(x, y, txt, icon, tIn, tOut, dim) { const el = mk(WORLD, { width: 0, height: 0 }, chipHTML(txt, icon, dim)); return { el, x, y, tIn, tOut }; }
+const CHIPS = [Chip(1440, 330, 'Paid', 'card', 12.35, 13.0), Chip(480, 760, 'Packing', 'box', 12.6, 13.0)];
+function chips(t, list) { list.forEach(c => { const s = S(t, c.tIn, 'snappy') * (1 - S(t, c.tOut, 'snappy')); vis(c.el, s > .01); put(c.el, { x: c.x, y: c.y, s }); }); }
+// collage: six tiles come out of the card, then go back in
+const COL = [[400, 270], [1520, 270], [330, 560], [1590, 560], [400, 850], [1520, 850]].map(([x, y], i) => ({ x, y, el: mk(WORLD, { width: 340, height: 240, borderRadius: 24, background: PAPER, boxShadow: '0 20px 50px rgba(60,48,30,.16)', overflow: 'hidden' }, `<div style="left:170px;top:120px">${shoeImg(['nb-550', 'axel-arigato', 'nike-zoom', 'nb-480', 'nike-af1', 'axel-arigato'][i], 250)}</div>`) }));
+function collage(t) { COL.forEach((c, i) => { const e = S(t, 32.1 + i * .06, 'default'), b = S(t, 35.4 + i * .03, 'snappy'), k = e * (1 - b); vis(c.el, k > .01);
+  c.el.style.transformOrigin = '50% 50%'; c.el.style.filter = `blur(${2 + 5 * S(t, 34.0, 'default')}px)`;
+  put(c.el, { x: lerp(960, c.x, k) - 170, y: lerp(540, c.y, k) - 120 + 6 * Math.sin(t * 2 + i), s: .3 + .55 * k, rot: (i % 2 ? 3 : -3) * k }); }); }
+// one store to a hundred: a ripple of shop tiles around the hero card, then all of them are pulled into the hub
+const GRID = []; for (let gy = -3; gy <= 3; gy++) for (let gx = -4; gx <= 4; gx++) { if (!gx && !gy) continue; const d = Math.hypot(gx, gy * 1.2);
+  GRID.push({ x: 960 + gx * 640, y: 650 + gy * 460, d, el: mk(WORLD, { width: 560, height: 400, borderRadius: 30, background: PAPER, boxShadow: '0 24px 60px rgba(60,48,30,.14)', overflow: 'hidden' }, `<div style="left:280px;top:215px">${shoeImg(Object.keys(SHOES)[(gx + 4 + (gy + 3) * 9) % 6], 380)}</div>`) }); }
+function grid(t) { GRID.forEach(g => { const e = S(t, 44.75 + g.d * .14, 'default'), b = S(t, 48.95 + (6 - g.d) * .03, 'snappy'), k = e * (1 - b); vis(g.el, k > .01);
+  g.el.style.transformOrigin = '50% 50%'; put(g.el, { x: lerp(960, g.x, 1 - b) - 280, y: lerp(540, g.y, 1 - b) - 200 + (1 - e) * 120, s: k * .72 }); g.el.style.opacity = .82; }); }
+// the hub: an orbiting gold light ring and labelled chips (centred on their own width)
+const RING = mk(WORLD, { left: 960 - 215, top: 540 - 215, width: 430, height: 430, borderRadius: '50%', transformOrigin: '50% 50%',
+  WebkitMaskImage: 'radial-gradient(closest-side,transparent 88%,#000 90%,#000 100%)', maskImage: 'radial-gradient(closest-side,transparent 88%,#000 90%,#000 100%)', filter: 'drop-shadow(0 0 12px rgba(226,178,92,.8))' });
+const HL = ['DMs', 'Orders', 'Payments', 'Delivery', 'Restock', 'Receipts', 'Sizes', 'Returns', 'Pickup', 'Tracking', 'New drops', 'Reorders'], HI = ['bag', 'check', 'card', 'box', 'box', 'receipt', 'check', 'bag', 'box', 'check', 'bag', 'receipt'];
+const HCH = HL.map((s, i) => ({ i, el: mk(WORLD, { width: 0, height: 0 }, chipHTML(s, HI[i], i >= 6)) }));
+function hub(t) { const on = S(t, 49.25, 'default') * (1 - S(t, 55.9, 'snappy')); vis(RING, on > .01); RING.style.background = rimConic(-120 * t); put(RING, { rot: 0, s: .8 + .2 * on }); RING.style.opacity = on;
+  HCH.forEach(c => { const r2 = c.i >= 6, k = r2 ? c.i - 6 : c.i, a = k / 6 * Math.PI * 2 + (r2 ? Math.PI / 6 : 0) + (t - 49) * .1 * (r2 ? -1 : 1);
+    const e = S(t, (r2 ? 51.0 : 49.5) + k * .1, 'default') * (1 - S(t, 55.6 + k * .02, 'snappy')); vis(c.el, e > .01);
+    put(c.el, { x: 960 + Math.cos(a) * (r2 ? 700 : 430) * e, y: 540 + Math.sin(a) * (r2 ? 390 : 260) * e, s: e * (r2 ? .84 : 1) }); }); }
+// cursor for the Restock click
+const CUR = mk(WORLD, { width: 44, height: 62 }, `<svg width="44" height="62" viewBox="0 0 28 40" style="left:0;top:0;overflow:visible"><path d="M3 2 L3 30 L10 24 L15 36 L20 34 L15 22 L24 22 Z" fill="${INK}" stroke="#fff" stroke-width="2.4" stroke-linejoin="round"/></svg>`);
+function cursor(t) { const k = S(t, 26.2, 'default'), o = S(t, 27.6, 'snappy'); vis(CUR, t > 26.1 && o < .99);
+  put(CUR, { x: lerp(1760, 1530, k) + o * 300, y: lerp(1000, 250, k) + o * 400, s: 1 - .15 * (S(t, 26.9, 'snappy') - S(t, 27.02, 'snappy')) }); }
+
+// ---------- type: centred flex lines, masked rises with overlap, upward exits ----------
+const LINES = [], GAPS = {};
+const gapX = id => { const g = GAPS[id]; return g ? g.offsetLeft + g.offsetWidth / 2 : 960; };   // layout only, no transforms: same answer every frame
+function Line(o) {
+  const scr = o.scrim ? mk(TYPE, { left: 160, top: o.y - o.h * .9, width: W - 320, height: o.h * 2.8, borderRadius: '50%', background: 'radial-gradient(closest-side,rgba(250,245,236,.96) 0%,rgba(250,245,236,.85) 55%,rgba(250,245,236,0) 100%)' }) : null;
+  const box = mk(TYPE, { left: 0, top: o.y, width: W, height: o.h }); box.className = 'fx'; box.style.gap = (o.gap ?? 40) + 'px';
+  const words = o.words.map(wd => { if (typeof wd === 'number') { const sp = mk(box, { width: wd, height: 1 }); sp.style.left = ''; sp.style.top = ''; if (o.id) GAPS[o.id] = sp; return null; }
+    const m = mk(box, { height: o.h, overflow: 'hidden', padding: '0 8px' }), inn = mk(m, { font: o.font, color: o.color || INK, letterSpacing: o.ls || '-.02em', whiteSpace: 'nowrap', lineHeight: o.h + 'px', paddingLeft: o.ls && o.ls[0] !== '-' ? o.ls : '0' }, wd);
+    m.style.left = ''; m.style.top = ''; inn.style.left = ''; inn.style.top = ''; return inn; }).filter(Boolean);
+  box.style.left = '0px';
+  LINES.push(t => { const on = t > o.tIn - .05 && t < o.tOut + .8;
+    if (scr) { const k = S(t, o.tIn - .1, 'default') * (1 - S(t, o.tOut + .1, 'default')); vis(scr, k > .01); scr.style.opacity = k; scr.style.transformOrigin = '50% 50%'; put(scr, { sx: .7 + .3 * k, sy: .7 + .3 * k }); }
+    if (!vis(box, on)) return;
+    words.forEach((w, i) => { const u = S(t, o.tIn + i * .07, o.sp || 'heavy'), v = S(t, o.tOut + i * .05, 'snappy'); w.style.transform = `translateY(${((1 - u) - v) * o.h * 1.1}px)`; }); });
+}
+const D = (y, words, tIn, tOut, extra = {}) => Line({ y, h: 180, font: DISPLAY, words, tIn, tOut, ...extra });
+const SUP = (y, text, tIn, tOut) => Line({ y, h: 60, font: SUPPORT, words: [text], tIn, tOut, color: 'rgba(18,18,20,.62)', ls: '0', sp: 'default' });
+const LAB = (y, text, tIn, tOut) => Line({ y, h: 40, font: LABEL, words: [text], tIn, tOut, color: 'rgba(18,18,20,.6)', ls: '.24em', sp: 'default' });
+D(450, ['One', 500, 'order.'], .45, 2.25, { gap: 0, id: 'open' });
+LAB(950, 'IT STARTS WITH ONE PAIR', 2.6, 3.35);
+SUP(900, 'In stock, ready to ship.', 7.3, 7.9);
+D(110, ['Order', 'confirmed.'], 13.3, 16.2);
+LAB(150, 'EVERY SALE, TRACKED', 16.7, 20.3);
+D(600, ['Payments,', 'reconciled.'], 21.0, 24.75);
+LAB(960, 'RESTOCK ORDER PLACED', 28.5, 29.85);
+D(450, ['In', 'one', 'tap.'], 34.1, 35.35, { scrim: true });
+Line({ y: 520, h: 150, font: `500 104px/1 ${GEIST}`, words: ['DRIP VERSE'], tIn: 36.0, tOut: 37.45, ls: '.3em' });
+D(500, ['Not', 'just', 'a', 'shop.'], 37.7, 39.1);
+D(120, ['One', 'store.'], 42.3, 44.4);
+D(110, ['To', 'a', 'hundred.'], 44.9, 46.6, { scrim: true });
+D(110, ['Grows', 'with', 'you.'], 46.9, 48.85, { scrim: true });
+D(70, ['At', 'your', 'door.'], 58.8, 62.35);
+Line({ y: 500, h: 150, font: `500 104px/1 ${GEIST}`, words: ['DRIP VERSE'], tIn: 63.3, tOut: 999, ls: '.3em' });
+SUP(668, 'One order. Every step handled.', 63.9, 66.4);
+SUP(668, 'Luxury footwear, delivered.', 66.7, 999);
+LAB(925, 'POWERED BY CLIMAX STORE', 67.7, 999);
+// notification (screen space) over the on-foot photo
+const NOTE = mk(HUD, { left: 960 - 390, top: 90, width: 780, height: 150, borderRadius: 34, background: 'rgba(255,253,249,.94)', boxShadow: '0 24px 60px rgba(0,0,0,.25)' },
+  `<div style="left:28px;top:25px;width:100px;height:100px;border-radius:26px;background:${GRAD}"><div style="left:50px;top:50px">${svgIcon('bag', 70)}</div></div><div style="left:156px;top:34px;font:${LABEL};letter-spacing:.22em;color:${INK}">DRIP VERSE</div><div style="left:156px;top:76px;font:400 34px/1.2 ${GEIST};color:${INK}">Your order is on its way.</div>`);
+function note(t) { const e = S(t, 56.4, 'snappy'), o = S(t, 58.3, 'snappy'); vis(NOTE, e > .01 && o < .99); NOTE.style.transformOrigin = '50% 0%'; put(NOTE, { y: (1 - e) * -260 - o * 300, s: .92 + .08 * e }); }
+// the CTA pill with its own travelling rim light
+const CTA = mk(WORLD, { left: 960 - 240, top: 790 - 54, width: 480, height: 108, borderRadius: 54, transformOrigin: '50% 50%' },
+  `<div class="rg" style="left:-10px;top:-10px;width:500px;height:128px;border-radius:64px;filter:blur(14px)"></div><div class="rm" style="left:-3px;top:-3px;width:486px;height:114px;border-radius:57px"></div><div style="left:0;top:0;width:480px;height:108px;border-radius:54px;background:${GRAD};box-shadow:0 24px 50px rgba(120,90,40,.28)"></div><div class="fx" style="left:0;top:0;width:480px;height:108px"><div style="font:600 36px/1 ${GEIST};color:#FFF9EE">Send us a DM</div></div>`);
+const CRG = CTA.querySelector('.rg'), CRM = CTA.querySelector('.rm');
+function cta(t) { const e = S(t, 67.1, 'snappy'); vis(CTA, e > .01); put(CTA, { s: e }); const ri = Math.max(bump(t, 67.5, .7), bump(t, 69.2, .7)) * .9 + .1 * e;
+  CRG.style.background = CRM.style.background = rimConic(160 * t); CRG.style.opacity = ri; CRM.style.opacity = ri; }
+
+window.TIMELINE = { SWEEPS, PASSES };
 window.seek = function (t) {
-  // each scene switches 5 ms before its cut so no motion-blurred frame straddles a hard cut
-  for (const s of SC) { const a = s.t0 ? s.t0 - .005 : -1, b = s.t1 - .005, on = t >= a && t < b; if (show(s.el, on)) s.upd(Math.max(0, t - s.t0), t); }
+  camera(t); bgWipe(t); bokeh(t); pool(t); card(t); shoes(t); recon(t); chips(t, CHIPS); collage(t); grid(t); hub(t); cursor(t); note(t); cta(t); sweep(t);
+  LINES.forEach(f => f(t));
 };

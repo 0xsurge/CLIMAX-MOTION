@@ -22,26 +22,26 @@ out *= (1 - np.clip((t - 69.6) / 1.6, 0, 1) ** 1.5)[:, None]
 out[-int(0.01 * SR):] *= np.linspace(1, 0, int(0.01 * SR))[:, None]
 sf.write('audio/music.wav', out.astype('float32'), SR, subtype='PCM_16'); print('music.wav', len(out) / SR, 's')
 
-import re
-CUTS = [float(x) for x in re.search(r'const CUTS = \[([^\]]*)\]', open('film.js').read()).group(1).replace('END', '71.2667').split(',')]
-CUES = [   # (mixkit id, film time, mode, gain, max duration); times match the film.js scene timings
- *[(2356, c, 'peak', .35, None) for c in CUTS[1:-1] if c not in (13.0, 35.5, 62.5)],
- (175, .45, 'peak', .4, None), (2358, .6, 'peak', .4, None), (2357, .62, 'peak', .4, None), (2357, .87, 'peak', .4, None),
- (2354, 2.65, 'peak', .3, None), (2578, 3.55, 'peak', .45, 1.0), (1489, 5.05, 'start', .4, 1.2), (2357, 5.5, 'peak', .4, None), (2358, 6.3, 'peak', .4, None),
- (2357, 7.3, 'peak', .4, None), (2357, 8.35, 'peak', .4, None), (2358, 8.75, 'peak', .4, None), (175, 10.1, 'peak', .4, None),
- (2357, 12.2, 'peak', .4, None), (2358, 12.45, 'peak', .4, None),
- (2900, 13.0, 'peak', .6, None), (1317, 13.0, 'peak', .5, None), (2350, 13.3, 'peak', .4, 1.4), (2578, 14.1, 'peak', .45, 1.0), (175, 15.7, 'peak', .4, None),
- (2354, 17.4, 'peak', .3, None), *[(2358, 17.55 + .12 * i, 'peak', .25, None) for i in range(4)],
- (1489, 20.65, 'start', .5, 1.2), (2578, 20.9, 'peak', .4, 1.0), (2357, 21.45, 'peak', .4, None), (2357, 21.65, 'peak', .4, None), (2354, 21.95, 'peak', .3, None), (2867, 22.7, 'peak', .45, None),
- (2357, 26.05, 'peak', .4, None), (1109, 27.2, 'peak', .9, None), (2357, 28.75, 'peak', .4, None),
- (933, 30.35, 'peak', .6, None), *[(2357, 32.15 + .1 * i, 'peak', .25, None) for i in range(4)], (2350, 34.15, 'peak', .35, 1.4),
- (1489, 35.5, 'start', .45, 1.0), (1317, 36.05, 'peak', .6, None), (2350, 36.25, 'peak', .35, 1.4), (2354, 37.35, 'peak', .3, None), (2578, 39.1, 'peak', .45, 1.0),
- (175, 41.85, 'peak', .4, None), (1311, 42.0, 'peak', .5, None), (2357, 42.45, 'peak', .4, None), (2357, 42.65, 'peak', .4, None),
- *[(2358, 44.9 + .15 * i, 'peak', .2, None) for i in range(5)], (2354, 44.75, 'peak', .3, None), (175, 46.55, 'peak', .4, None), (2350, 46.85, 'peak', .35, 1.4),
- (1317, 49.1, 'peak', .5, None), *[(2357, 49.27 + .12 * i, 'peak', .22, None) for i in range(6)], *[(2358, 51.65 + .12 * i, 'peak', .2, None) for i in range(6)],
- (2867, 56.35, 'peak', .5, None), (2354, 58.75, 'peak', .3, None),
- (1489, 62.5, 'start', .45, 1.2), (1143, 63.0, 'peak', .4, 2.0), (1317, 63.7, 'peak', .7, None), (1321, 63.7, 'start', .3, 1.6), (2350, 64.05, 'peak', .35, 1.4),
- (2354, 65.15, 'peak', .3, None), (2354, 67.35, 'peak', .3, None), (2357, 67.75, 'peak', .5, None), (2354, 68.35, 'peak', .3, None)]
+# v2: one continuous take. Cues follow film.js: the light sweeps, the card morphs, the light passes and every pop and click.
+SWEEPS = [2.4, 4.9, 7.9, 12.9, 20.4, 24.9, 29.9, 35.4, 44.4, 48.9, 55.9, 62.4]
+MORPHS = [3.5, 6.95, 10.0, 12.0, 16.3, 28.0, 32.0, 39.2, 42.0, 58.5]          # card morphs that have no sweep of their own
+CUES = [   # (mixkit id, film time, mode, gain, max duration)
+ *[(2356, s + .3, 'peak', .4, None) for s in SWEEPS], *[(2578, m + .08, 'peak', .32, 1.0) for m in MORPHS],
+ (175, .3, 'peak', .4, None), (2358, .43, 'peak', .45, None), (2354, .5, 'peak', .3, None), (2354, .6, 'peak', .25, None), (2357, 2.22, 'peak', .4, None),
+ (2350, 2.6, 'peak', .22, 1.2), (1489, 5.2, 'start', .35, 1.2), (2357, 6.05, 'peak', .4, None), (175, 7.05, 'peak', .4, None), (2358, 7.35, 'peak', .3, None),
+ (2356, 8.1, 'peak', .35, None), (2357, 12.38, 'peak', .4, None), (2358, 12.63, 'peak', .4, None),
+ (2900, 13.0, 'peak', .6, None), (1317, 13.0, 'peak', .5, None), (2350, 13.35, 'peak', .35, 1.4),
+ *[(2358, 16.72 + .07 * i, 'peak', .15, None) for i in range(10)], (2354, 16.75, 'peak', .25, None),
+ (2357, 20.8, 'peak', .4, None), (2350, 21.05, 'peak', .3, 1.4), (2354, 21.25, 'peak', .3, None),
+ (1489, 25.25, 'start', .35, 1.2), (2357, 26.05, 'peak', .4, None), (1109, 26.9, 'peak', .9, None), (2354, 28.55, 'peak', .25, None),
+ (933, 30.2, 'peak', .6, None), *[(2357, 32.15 + .06 * i, 'peak', .2, None) for i in range(6)], (2350, 34.15, 'peak', .32, 1.4),
+ (1489, 35.4, 'start', .45, 1.0), (1317, 35.65, 'peak', .6, None), (2350, 36.05, 'peak', .32, 1.4), (2354, 37.75, 'peak', .3, None),
+ (2354, 42.35, 'peak', .3, None), (2350, 42.4, 'peak', .22, 1.2), (175, 44.55, 'peak', .45, None), (1321, 44.6, 'start', .28, 1.6),
+ *[(2358, 44.9 + .13 * i, 'peak', .15, None) for i in range(8)], (2354, 44.95, 'peak', .3, None), (2354, 46.95, 'peak', .3, None),
+ (1489, 48.95, 'start', .45, 1.0), (1317, 49.3, 'peak', .5, None), *[(2357, 49.55 + .1 * i, 'peak', .2, None) for i in range(6)],
+ *[(2358, 51.05 + .1 * i, 'peak', .17, None) for i in range(6)], (175, 56.05, 'peak', .4, None), (2867, 56.45, 'peak', .5, None), (2354, 58.85, 'peak', .3, None),
+ (1489, 62.5, 'start', .4, 1.0), (1143, 63.0, 'peak', .35, 2.0), (1317, 63.35, 'peak', .65, None), (1321, 63.35, 'start', .3, 1.6),
+ (2354, 63.95, 'peak', .28, None), (2354, 66.75, 'peak', .28, None), (2357, 67.15, 'peak', .5, None), (2350, 67.55, 'peak', .25, 1.2), (2354, 67.75, 'peak', .25, None), (2350, 69.25, 'peak', .2, 1.2)]
 def load(i):
     y, _ = librosa.load(f'{SRC}/sfx/{i}.mp3', sr=SR, mono=False); return np.stack([y, y], 1) if y.ndim == 1 else y.T
 def anchor(y, mode):

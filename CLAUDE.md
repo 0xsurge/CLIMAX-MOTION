@@ -13,6 +13,7 @@
 - Text inside a morphing box enters after the morph starts and leaves before the next one (swapAlpha).
 - A pure opacity fade is never an enter or an exit.
 - Never hold still: the camera is always moving. Every scene has a slow push-in or pull-out plus a gentle drift (left/right, up/down) that alternates scene to scene and hands over to the next scene through a spring, so motion never stops. Landed elements keep a small float. Measure it: no frozen stretch of 0.25 s or more.
+- One continuous take by default: one camera for the whole film, built from spring keys plus a sway that always returns to centre (never linear, never reset at a scene change). Scenes change by morphing a carrier object, not by cutting; keep hard cuts for at most two or three big beats. Overlap: the next element moves before the last one settles. Measure it: flow_check.py, no jerks.
 
 ## Look
 - Banned defaults (clichés):
@@ -25,6 +26,9 @@
   - spins, glitches, light leaks
   - bouncy easing on UI
   - dead time
+- Centre what is centred: lay out statements as one centred group (flexbox, measured gaps), balance tracked type, and let the camera settle on true centre at every lockup. Measure it: flow_check.py --centre, within 8 px.
+- Hierarchy: three type levels only (display, support, label) with big jumps between them; one focal point per frame; when type speaks, the UI recedes (smaller, blurred), and the reverse.
+- Moving light is allowed when it is motivated: rim light passes that travel along an edge and die away, soft light sweeps that carry a scene change, light pools under products, glowing lines as they draw. Random light leaks and static glow on buttons stay banned.
 - One display face, one UI face. One accent color unless the brief says otherwise.
 - Real product UI, logos and fonts. Never redraw UI that exists.
 - Every 2 to 4 seconds something new must happen on screen.
