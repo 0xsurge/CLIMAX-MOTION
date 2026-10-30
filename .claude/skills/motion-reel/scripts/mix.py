@@ -32,7 +32,7 @@ j = json.loads(re.search(r'\{[^{}]*"input_i"[^{}]*\}', m.stderr, re.S).group(0))
 ln = (f'loudnorm=I={a.lufs}:TP={a.tp}:LRA=11:measured_I={j["input_i"]}:measured_TP={j["input_tp"]}:measured_LRA={j["input_lra"]}'
       f':measured_thresh={j["input_thresh"]}:offset={j["target_offset"]}:linear=true')
 os.makedirs(os.path.dirname(os.path.abspath(a.out)), exist_ok=True)
-r = subprocess.run(args + ['-filter_complex', flt + f';[mix]{ln},alimiter=limit=0.70:level=disabled,aresample=48000[o]', '-map', '0:v', '-map', '[o]', '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k', '-shortest', a.out], capture_output=True, text=True)
+r = subprocess.run(args + ['-filter_complex', flt + f';[mix]{ln},alimiter=limit=0.70:level=disabled,aresample=48000[o]', '-map', '0:v', '-map', '[o]', '-c:v', 'copy', '-bsf:v', 'h264_metadata=level=4.2', '-c:a', 'aac', '-b:a', '192k', '-shortest', '-movflags', '+faststart', a.out], capture_output=True, text=True)
 if r.returncode: sys.exit(r.stderr)
 v = subprocess.run(['ffmpeg', '-hide_banner', '-i', a.out, '-af', f'loudnorm=I={a.lufs}:TP={a.tp}:print_format=json', '-f', 'null', '-'], capture_output=True, text=True)
 k = json.loads(re.search(r'\{[^{}]*"input_i"[^{}]*\}', v.stderr, re.S).group(0))
