@@ -70,18 +70,18 @@ const CAMK = [
   { t: 5.0, z: 1 }, { t: 5.3, z: 1.07, sp: SLOW }, { t: 7.0, z: 1.02 }, { t: 7.3, z: 1.08, sp: SLOW }, { t: 8.0, z: 1 }, { t: 8.3, z: 1.05, sp: SLOW },
   { t: 10, z: 1.02 }, { t: 10.3, z: 1.08, sp: SLOW }, { t: 12, z: 1 }, { t: 12.3, z: 1.06, sp: SLOW },
   { t: 13.0, z: 1.12, sp: 'snappy' }, { t: 13.12, z: 1 }, { t: 13.4, z: 1.05, sp: SLOW }, { t: 16.3, z: 1 }, { t: 16.6, z: 1.07, sp: SLOW },
-  { t: 20.5, z: 1 }, { t: 20.8, z: 1.06, sp: SLOW }, { t: 25, z: 1 }, { t: 25.3, z: 1.05, sp: SLOW }, { t: 28, z: 1 }, { t: 28.3, z: 1.07, sp: SLOW },
-  { t: 30, z: 1 }, { t: 30.3, z: 1.05, sp: SLOW }, { t: 32, z: 1 }, { t: 32.3, z: 1.05, sp: SLOW }, { t: 35.5, z: 1 }, { t: 35.8, z: 1.06, sp: SLOW },
+  { t: 20.5, z: 1 }, { t: 20.8, z: 1.06, sp: SLOW }, { t: 22.8, z: 1.1, sp: SLOW }, { t: 25, z: 1 }, { t: 25.3, z: 1.05, sp: SLOW }, { t: 28, z: 1 }, { t: 28.3, z: 1.07, sp: SLOW },
+  { t: 30, z: 1 }, { t: 30.3, z: 1.05, sp: SLOW }, { t: 32, z: 1 }, { t: 32.3, z: 1.05, sp: SLOW }, { t: 35.5, z: 1 }, { t: 35.8, z: 1.06, sp: SLOW }, { t: 36.4, z: 1.1, sp: SLOW },
   { t: 39.2, z: 1 }, { t: 39.5, z: 1.05, sp: SLOW }, { t: 42, z: 1, y: 110 }, { t: 42.3, z: 1.05, sp: SLOW },
   { t: 44.5, z: .42, sp: { k: 9, c: 6 } }, { t: 49, z: 1, y: 0 }, { t: 49.3, z: 1.07, sp: SLOW },
-  { t: 56, z: 1 }, { t: 56.3, z: 1.05, sp: SLOW }, { t: 58.5, z: 1 }, { t: 58.8, z: 1.05, sp: SLOW }, { t: 62.5, z: 1 }, { t: 62.8, z: 1.04, sp: SLOW }];
+  { t: 56, z: 1 }, { t: 56.3, z: 1.05, sp: SLOW }, { t: 58.5, z: 1 }, { t: 58.8, z: 1.05, sp: SLOW }, { t: 62.5, z: 1 }, { t: 62.8, z: 1.04, sp: SLOW }, { t: 64.6, z: 1.06, sp: SLOW }, { t: 66.6, z: 1.08, sp: SLOW }, { t: 68.6, z: 1.1, sp: SLOW }, { t: 70.2, z: 1.11, sp: SLOW }];
 const camZ = keyed(CAMK, 'z'), camY = keyed(CAMK, 'y');
-const swayA = t => 1 - .82 * S(t, 64.6, 'heavy');                      // the lockup settles almost exactly on centre
+const swayA = t => 1 - .55 * S(t, 64.6, 'heavy');                      // the lockup settles almost exactly on centre
 function camera(t) {
   const a = swayA(t), sx = a * 16 * Math.sin(t * 2 * Math.PI / 6.4), sy = a * 9 * Math.sin(t * 2 * Math.PI / 4.7 + 1), r = a * .3 * Math.sin(t * 2 * Math.PI / 8.3);
   const z = camZ(t) * (1 + .012 * Math.sin(t * 2 * Math.PI / 9));
   WORLD.style.transform = `translate(${960 + sx}px,${540 + sy}px) rotate(${r}deg) scale(${z}) translate(-960px,${-540 - camY(t)}px)`;
-  TYPE.style.transform = `translate(${sx * .5}px,${sy * .5}px)`; HUD.style.transform = TYPE.style.transform;
+  const ts = 1 + (camZ(t) - 1) * S(t, 62.5, 'heavy'); TYPE.style.transformOrigin = '960px 540px'; TYPE.style.transform = `translate(${sx * .5}px,${sy * .5}px) scale(${ts})`; HUD.style.transform = `translate(${sx * .5}px,${sy * .5}px)`;
   BOKEH.style.transform = `translate(${sx * .3}px,${sy * .3}px)`;
 }
 
@@ -126,7 +126,7 @@ function content(w, h, tIn, tOut, html, upd) { const el = mk(CARD, { width: w, h
 const PASSES = [2.6, 3.8, 5.3, 8.3, 10.3, 12.3, 16.6, 25.3, 28.3, 30.3, 39.5, 42.3, 43.7, 49.3, 58.8];
 const rimConic = a => `conic-gradient(from ${a}deg,rgba(226,182,98,0) 0deg,rgba(226,182,98,0) 200deg,#D9B26A 280deg,#FFF1D2 305deg,#D9B26A 330deg,rgba(226,182,98,0) 360deg)`;
 function card(t) {
-  const w = C.w(t), h = C.h(t), x = C.x(t), y = C.y(t), r = Math.max(0, C.r(t)), s = C.s(t), on = s > .005;
+  const w = C.w(t), h = C.h(t), x = C.x(t), y = C.y(t) + 6 * Math.sin(t * 1.8) * S(t, 63.0, 'heavy'), r = Math.max(0, C.r(t)), s = C.s(t), on = s > .005;
   const tf = el => { el.style.transformOrigin = '50% 50%'; put(el, { rot: C.rot(t), skx: C.skx(t), sx: s, sy: s * C.sy(t) }); };
   const geo = (el, d) => { el.style.left = (x - w / 2 - d) + 'px'; el.style.top = (y - h / 2 - d) + 'px'; el.style.width = (w + 2 * d) + 'px'; el.style.height = (h + 2 * d) + 'px'; el.style.borderRadius = (r + d) + 'px'; tf(el); };
   vis(CARD, on); geo(CARD, 0); CARD.style.filter = C.bl(t) > .2 ? `blur(${C.bl(t)}px)` : 'none'; GOLD.style.opacity = clamp(C.g(t));

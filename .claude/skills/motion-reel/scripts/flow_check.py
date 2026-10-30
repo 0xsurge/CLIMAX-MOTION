@@ -2,7 +2,8 @@
 """Motion checks on a RENDERED mp4: smoothness, stillness, pops, and centring.
    python3 flow_check.py out/final_16x9.mp4 [--cuts 13.0,56.0] [--centre 64.5,70.9] [--fps 60]
 smoothness: the global image motion per frame (phase correlation at 480x270) must not change speed or direction abruptly.
-            A jerk is a frame-to-frame change in that motion above 2.5 px (at 480 wide) that is not on an intended cut.
+            A jerk is a frame-to-frame change in that motion above 2.5 px (at 480 wide) that is not on an intended cut. Frames where the
+            match confidence is low (a content swap inside a morph) are skipped: they change the image, they don't move it.
 stillness:  no stretch of 0.25 s or more where the mean frame difference stays under 0.05.
 pops:       no single-frame spike in frame difference (> 1.5 and > 3x both neighbours) except on intended cuts.
 centre:     at each --centre time, the centre of the dark content (type, objects) must be within 8 px of the frame centre."""
@@ -15,9 +16,10 @@ F = np.frombuffer(raw, np.uint8).reshape(-1, 270, 480).astype(np.float32)
 oncut = lambda t: any(abs(t - c) < 1.5 / fps for c in cuts)
 d = np.abs(np.diff(F, axis=0)).mean((1, 2))
 win = cv2.createHanningWindow((480, 270), cv2.CV_32F)
-v = np.array([cv2.phaseCorrelate(F[i], F[i + 1], win)[0] for i in range(len(F) - 1)])
+PC = [cv2.phaseCorrelate(F[i], F[i + 1], win) for i in range(len(F) - 1)]
+v = np.array([x[0] for x in PC]); conf = np.array([x[1] for x in PC])   # low confidence = the content changed (a swap), not a move
 jerk = np.hypot(*np.diff(v, axis=0).T)
-J = [(round((i + 2) / fps, 3), round(float(jerk[i]), 2)) for i in range(len(jerk)) if jerk[i] > 2.5 and not oncut((i + 2) / fps) and d[i + 1] > .05]
+J = [(round((i + 2) / fps, 3), round(float(jerk[i]), 2)) for i in range(len(jerk)) if jerk[i] > 2.5 and min(conf[i], conf[i + 1]) > .4 and not oncut((i + 2) / fps) and d[i + 1] > .05]
 still = d < .05; runs, s0 = [], None
 for i, s in enumerate(list(still) + [False]):
     if s and s0 is None: s0 = i
