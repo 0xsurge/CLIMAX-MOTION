@@ -81,7 +81,7 @@ function camera(t) {
   const a = swayA(t), sx = a * 16 * Math.sin(t * 2 * Math.PI / 6.4), sy = a * 9 * Math.sin(t * 2 * Math.PI / 4.7 + 1), r = a * .3 * Math.sin(t * 2 * Math.PI / 8.3);
   const z = camZ(t) * (1 + .012 * Math.sin(t * 2 * Math.PI / 9));
   WORLD.style.transform = `translate(${960 + sx}px,${540 + sy}px) rotate(${r}deg) scale(${z}) translate(-960px,${-540 - camY(t)}px)`;
-  const ts = 1 + (camZ(t) - 1) * S(t, 62.5, 'heavy'); TYPE.style.transformOrigin = '960px 540px'; TYPE.style.transform = `translate(${sx * .5}px,${sy * .5}px) scale(${ts})`; HUD.style.transform = `translate(${sx * .5}px,${sy * .5}px)`;
+  const ts = 1 + (camZ(t) - 1) * S(t, 62.5, 'heavy'); TYPE.style.transformOrigin = '960px 540px'; const fl = 5 * Math.sin(t * 1.4) * (S(t, 35.9, 'heavy') - S(t, 39.0, 'heavy') + S(t, 63.2, 'heavy')); TYPE.style.transform = `translate(${sx * .5}px,${sy * .5 + fl}px) scale(${ts})`; HUD.style.transform = `translate(${sx * .5}px,${sy * .5}px)`;
   BOKEH.style.transform = `translate(${sx * .3}px,${sy * .3}px)`;
 }
 
@@ -126,7 +126,7 @@ function content(w, h, tIn, tOut, html, upd) { const el = mk(CARD, { width: w, h
 const PASSES = [2.6, 3.8, 5.3, 8.3, 10.3, 12.3, 16.6, 25.3, 28.3, 30.3, 39.5, 42.3, 43.7, 49.3, 58.8];
 const rimConic = a => `conic-gradient(from ${a}deg,rgba(226,182,98,0) 0deg,rgba(226,182,98,0) 200deg,#D9B26A 280deg,#FFF1D2 305deg,#D9B26A 330deg,rgba(226,182,98,0) 360deg)`;
 function card(t) {
-  const w = C.w(t), h = C.h(t), x = C.x(t), y = C.y(t) + 6 * Math.sin(t * 1.8) * S(t, 63.0, 'heavy'), r = Math.max(0, C.r(t)), s = C.s(t), on = s > .005;
+  const w = C.w(t), h = C.h(t), x = C.x(t), y = C.y(t) + 9 * Math.sin(t * 1.8) * S(t, 63.0, 'heavy') + 8 * Math.sin(t * 2.2) * (S(t, 35.8, 'heavy') - S(t, 39.2, 'heavy')), r = Math.max(0, C.r(t)), s = C.s(t), on = s > .005;
   const tf = el => { el.style.transformOrigin = '50% 50%'; put(el, { rot: C.rot(t), skx: C.skx(t), sx: s, sy: s * C.sy(t) }); };
   const geo = (el, d) => { el.style.left = (x - w / 2 - d) + 'px'; el.style.top = (y - h / 2 - d) + 'px'; el.style.width = (w + 2 * d) + 'px'; el.style.height = (h + 2 * d) + 'px'; el.style.borderRadius = (r + d) + 'px'; tf(el); };
   vis(CARD, on); geo(CARD, 0); CARD.style.filter = C.bl(t) > .2 ? `blur(${C.bl(t)}px)` : 'none'; GOLD.style.opacity = clamp(C.g(t));
