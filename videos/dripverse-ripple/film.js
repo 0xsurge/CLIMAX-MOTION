@@ -238,7 +238,7 @@ scene(49.0, 56.0, BGW, cam => {
   const IC = ['bag', 'check', 'card', 'box', 'box', 'receipt', 'check', 'bag', 'box', 'check', 'bag', 'receipt'];
   const ch = L.map((s, i) => mk(cam, {}, chip(s, IC[i])));
   return u => { camMove(cam, u, 1, 1.1, 7, -9, 4); hub.style.transformOrigin = '50% 50%'; put(hub, { s: sp(u, .05, 'snappy') });
-    ch.forEach((c, i) => { const ring = i < 6 ? 0 : 1, k = ring ? i - 6 : i, a = k / 6 * Math.PI * 2 + (ring ? .5 : 0) + u * .12 * (ring ? -1 : 1), R = ring ? 460 : 300, t0 = ring ? 2.6 + k * .12 : .5 + k * .12;
+    ch.forEach((c, i) => { const ring = i < 6 ? 0 : 1, k = ring ? i - 6 : i, a = k / 6 * Math.PI * 2 + (ring ? .5 : 0) + u * .12 * (ring ? -1 : 1), R = ring ? 460 : 300, t0 = ring ? 2.6 + k * .12 : .22 + k * .12;
       const e = sp(u, t0, 'default'); put(c, { x: 960 + Math.cos(a) * R * 1.35 * e - 90, y: 540 + Math.sin(a) * R * .8 * e - 32, s: e }); c.style.visibility = e < .01 ? 'hidden' : 'visible'; }); };
 });
 // V 56.0-58.5: the notification over the on-foot photo
@@ -263,9 +263,9 @@ scene(62.5, END, BGD, cam => {
   const dm = mk(cam, { left: 960 - 220, top: 700, width: 440, height: 100, borderRadius: 50, background: GRAD, boxShadow: '0 24px 50px rgba(120,90,40,.28)', font: `600 34px/100px ${GEIST}`, color: '#FFF9EE', textAlign: 'center', transformOrigin: '50% 50%' }, 'Send us a DM');
   const pw = Rise(cam, { x: 660, y: 830, w: 600, h: 44, html: 'Powered by Climax Store', font: `400 26px/44px ${GEIST}`, color: 'rgba(18,18,20,.55)', al: 'center', sp: 'snappy' });
   return u => { camMove(cam, u, 1.12, 1, 8.8, -9, 4);
-    const conv = sp(u, 1.0, 'heavy'); D.forEach(d => { put(d.el, { x: lerp(d.x + d.vx * u * 2.5, 960 - 30, conv), y: lerp(d.y + d.vy * u * 2.5, 360, conv), rot: lerp(d.rot, 0, conv), s: 1 - conv * .95 }); d.el.style.visibility = u > 1.6 ? 'hidden' : 'visible'; });
-    mark.style.transformOrigin = '50% 60%'; put(mark, { s: sp(u, 1.25, 'snappy') * (1 + .04 * Math.sin(u * 2.4)) });
-    word(u, 2.0); tag(u, 2.6, 4.6); sub(u, 4.8);
+    const conv = sp(u, 1.0, 'heavy'); D.forEach(d => { put(d.el, { x: lerp(d.x + d.vx * u * 2.5, 960 - 30, conv), y: lerp(d.y + d.vy * u * 2.5, 360, conv), rot: lerp(d.rot, 0, conv), s: 1 - conv * .95 }); d.el.style.visibility = u > 1.75 ? 'hidden' : 'visible'; });
+    mark.style.transformOrigin = '50% 60%'; put(mark, { y: -40 * sp(u, 1.5, 'default'), s: sp(u, 1.2, 'snappy') * (1 + .04 * Math.sin(u * 2.4)) });
+    word(u, 1.5); tag(u, 2.6, 4.6); sub(u, 4.8);
     const d = sp(u, 5.2, 'snappy'); put(dm, { s: d }); dm.style.visibility = d < .01 ? 'hidden' : 'visible'; pw(u, 5.8); };
 });
 

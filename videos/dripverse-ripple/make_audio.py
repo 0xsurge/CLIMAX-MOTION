@@ -38,9 +38,9 @@ CUES = [   # (mixkit id, film time, mode, gain, max duration); times match the f
  (1489, 35.5, 'start', .45, 1.0), (1317, 36.05, 'peak', .6, None), (2350, 36.25, 'peak', .35, 1.4), (2354, 37.35, 'peak', .3, None), (2578, 39.1, 'peak', .45, 1.0),
  (175, 41.85, 'peak', .4, None), (1311, 42.0, 'peak', .5, None), (2357, 42.45, 'peak', .4, None), (2357, 42.65, 'peak', .4, None),
  *[(2358, 44.9 + .15 * i, 'peak', .2, None) for i in range(5)], (2354, 44.75, 'peak', .3, None), (175, 46.55, 'peak', .4, None), (2350, 46.85, 'peak', .35, 1.4),
- (1317, 49.1, 'peak', .5, None), *[(2357, 49.55 + .12 * i, 'peak', .22, None) for i in range(6)], *[(2358, 51.65 + .12 * i, 'peak', .2, None) for i in range(6)],
+ (1317, 49.1, 'peak', .5, None), *[(2357, 49.27 + .12 * i, 'peak', .22, None) for i in range(6)], *[(2358, 51.65 + .12 * i, 'peak', .2, None) for i in range(6)],
  (2867, 56.35, 'peak', .5, None), (2354, 58.75, 'peak', .3, None),
- (1489, 62.5, 'start', .45, 1.2), (1143, 63.0, 'peak', .4, 2.0), (1317, 63.8, 'peak', .7, None), (1321, 63.8, 'start', .3, 1.6), (2350, 64.55, 'peak', .35, 1.4),
+ (1489, 62.5, 'start', .45, 1.2), (1143, 63.0, 'peak', .4, 2.0), (1317, 63.7, 'peak', .7, None), (1321, 63.7, 'start', .3, 1.6), (2350, 64.05, 'peak', .35, 1.4),
  (2354, 65.15, 'peak', .3, None), (2354, 67.35, 'peak', .3, None), (2357, 67.75, 'peak', .5, None), (2354, 68.35, 'peak', .3, None)]
 def load(i):
     y, _ = librosa.load(f'{SRC}/sfx/{i}.mp3', sr=SR, mono=False); return np.stack([y, y], 1) if y.ndim == 1 else y.T
