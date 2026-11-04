@@ -64,3 +64,8 @@ three.js 0.187.0 is vendored in the motion-reel engine (engine/lib/three, MIT) f
 engine/lib/three-stage.js, transforms computed from springs of t, one render per seek, no animation loop or clock. It ships only as ES modules;
 render.mjs launches Chromium with --allow-file-access-from-files so file:// films can import them. See engine/lib/three/README.md and
 templates/three-example.
+
+## ComfyUI
+ComfyUI (github.com/Comfy-Org/ComfyUI) with the SDXL Lightning 4-step checkpoint (OpenRAIL++, commercial use allowed) installs to /opt/ComfyUI via
+install_comfyui.sh; comfy_generate.py makes one seeded image headless (~2-4 min per 1024 px image on this CPU). Not SDXL Turbo: non-commercial.
+Generated images are for sets, plates, backgrounds and textures only, never in place of a brand's real products, logos, photos or UI.
