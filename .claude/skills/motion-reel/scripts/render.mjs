@@ -20,8 +20,10 @@ const from = +(a.from || 0), to = +(a.to || a.dur || 5);
 
 const { chromium } = await import('playwright');
 let browser;
-try { browser = await chromium.launch(); }
-catch { browser = await chromium.launch({ executablePath: process.env.CHROME || '/opt/pw-browsers/chromium' }); }
+// --allow-file-access-from-files: lets a film loaded from file:// import ES modules next to it (three.js ships only as modules).
+const args = ['--allow-file-access-from-files'];
+try { browser = await chromium.launch({ args }); }
+catch { browser = await chromium.launch({ args, executablePath: process.env.CHROME || '/opt/pw-browsers/chromium' }); }
 const page = await browser.newPage({ viewport: { width: W, height: H }, deviceScaleFactor: 1 });
 page.on('pageerror', e => { console.error('page error:', e.message); process.exitCode = 2; });
 await page.goto(pathToFileURL(film + '/index.html').href + `?w=${W}&h=${H}`);

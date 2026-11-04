@@ -58,3 +58,9 @@ The Impeccable design skill (.claude/skills/impeccable, from github.com/pbakaus/
 without its automatic hooks. Use it to critique and audit the pages, UI screens and players we build (`impeccable detect <file-or-url>` for the
 62-rule detector). Its engine downloads to ~/.impeccable on first use, checksum-verified; telemetry is off (`impeccable telemetry off`, rerun in a
 fresh session). For films, these motion rules win where it differs: springs only, one continuous take, no light leaks.
+
+## three.js
+three.js 0.187.0 is vendored in the motion-reel engine (engine/lib/three, MIT) for real 3D inside window.seek films: createStage() from
+engine/lib/three-stage.js, transforms computed from springs of t, one render per seek, no animation loop or clock. It ships only as ES modules;
+render.mjs launches Chromium with --allow-file-access-from-files so file:// films can import them. See engine/lib/three/README.md and
+templates/three-example.
