@@ -73,5 +73,5 @@ Generated images are for sets, plates, backgrounds and textures only, never in p
 ## HyperFrames
 HeyGen's HyperFrames agent skills (hyperframes, hyperframes-cli, hyperframes-registry, media-use, figma, remotion-to-hyperframes, reverse-any-video,
 slideshow, style-sampling) live in .claude/skills, from github.com/heygen-com/hyperframes at commit 2679bcd (Apache 2.0). Use them when a film is
-built in HyperFrames. Run its CLI with HYPERFRAMES_NO_TELEMETRY=1. These rules win where its defaults differ: springs only, one continuous take,
+built in HyperFrames. Run its CLI through .claude/skills/motion-reel/scripts/hyperframes.sh (pinned 0.9.13, telemetry off, local Chromium). These rules win where its defaults differ: springs only, one continuous take,
 no light leaks, glitches or film grain, real brand assets only.
