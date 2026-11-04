@@ -52,3 +52,9 @@ The Remotion agent skills (remotion-*) live in .claude/skills, installed from gi
 GSAP 3.15.1 and its plugins (MorphSVG, DrawSVG, MotionPath, SplitText, Flip, CustomEase) are vendored in the motion-reel engine (engine/lib/gsap).
 Use them inside the render contract: one paused master timeline, primeTimeline(tl) once, window.seek = t => { tl.seek(t, false); } (returns nothing),
 and springEase(preset) for every ease, never GSAP's built-in curves. See engine/lib/gsap/README.md.
+
+## Impeccable
+The Impeccable design skill (.claude/skills/impeccable, from github.com/pbakaus/impeccable at commit 5af4319, skill v4.8.0, Apache 2.0) is installed
+without its automatic hooks. Use it to critique and audit the pages, UI screens and players we build (`impeccable detect <file-or-url>` for the
+62-rule detector). Its engine downloads to ~/.impeccable on first use, checksum-verified; telemetry is off (`impeccable telemetry off`, rerun in a
+fresh session). For films, these motion rules win where it differs: springs only, one continuous take, no light leaks.
