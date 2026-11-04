@@ -44,3 +44,6 @@
 4. Only then do the full render.
 
 The /motion-reel skill (.claude/skills/motion-reel) holds the full pipeline. Its reference/RULES.md has the detailed version of these rules.
+
+## Remotion
+The Remotion agent skills (remotion-*) live in .claude/skills, installed from github.com/remotion-dev/skills at commit c7cb2fd (skills v4.0.540). Use them when a film is built in Remotion. Where their defaults differ from these rules, these rules win: springs (Remotion's spring() or lib/motion.js) instead of interpolate() with easing curves for anything that enters, exits or retargets, and no light leaks.
