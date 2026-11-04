@@ -47,3 +47,8 @@ The /motion-reel skill (.claude/skills/motion-reel) holds the full pipeline. Its
 
 ## Remotion
 The Remotion agent skills (remotion-*) live in .claude/skills, installed from github.com/remotion-dev/skills at commit c7cb2fd (skills v4.0.540). Use them when a film is built in Remotion. Where their defaults differ from these rules, these rules win: springs (Remotion's spring() or lib/motion.js) instead of interpolate() with easing curves for anything that enters, exits or retargets, and no light leaks.
+
+## GSAP
+GSAP 3.15.1 and its plugins (MorphSVG, DrawSVG, MotionPath, SplitText, Flip, CustomEase) are vendored in the motion-reel engine (engine/lib/gsap).
+Use them inside the render contract: one paused master timeline, primeTimeline(tl) once, window.seek = t => { tl.seek(t, false); } (returns nothing),
+and springEase(preset) for every ease, never GSAP's built-in curves. See engine/lib/gsap/README.md.

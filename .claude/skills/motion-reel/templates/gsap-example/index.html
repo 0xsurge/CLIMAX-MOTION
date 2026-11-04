@@ -1,0 +1,27 @@
+<!doctype html><meta charset="utf-8"><title>gsap test</title>
+<style>html,body{margin:0;background:#F3EFE8}#stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:Georgia,serif}
+#w{position:absolute;left:0;top:700px;width:1920px;text-align:center;font-size:120px;letter-spacing:.2em;color:#121214}</style>
+<div id="stage">
+<svg width="1920" height="1080" style="position:absolute;left:0;top:0">
+ <path id="drop" d="M960 180 C 930 300 840 380 840 470 a120 120 0 0 0 240 0 C 1080 380 990 300 960 180z" fill="#B08A4E"/>
+ <circle id="circ" cx="960" cy="440" r="150" fill="none"/>
+ <path id="ln" d="M300 950 C 700 850 1200 1050 1620 900" stroke="#B08A4E" stroke-width="8" fill="none"/>
+ <path id="arc" d="M200 600 C 600 100 1300 100 1720 600" fill="none"/>
+ <circle id="dot" r="22" fill="#121214"/>
+</svg>
+<div id="w">DRIP VERSE</div></div>
+<script src="../../engine/lib/motion.js"></script><script src="../../engine/lib/gsap/gsap.min.js"></script>
+<script src="../../engine/lib/gsap/MorphSVGPlugin.min.js"></script><script src="../../engine/lib/gsap/DrawSVGPlugin.min.js"></script>
+<script src="../../engine/lib/gsap/MotionPathPlugin.min.js"></script><script src="../../engine/lib/gsap/SplitText.min.js"></script><script src="../../engine/lib/gsap-spring.js"></script>
+<script>
+gsap.registerPlugin(MorphSVGPlugin, DrawSVGPlugin, MotionPathPlugin, SplitText);
+const tl = gsap.timeline({ paused: true });
+tl.to('#drop', { morphSVG: '#circ', ...springEase('heavy') }, 0.3);
+tl.fromTo('#ln', { drawSVG: '0%' }, { drawSVG: '100%', ...springEase({ k: 30, c: 11 }) }, 0.2);
+tl.to('#dot', { motionPath: { path: '#arc', align: '#arc', alignOrigin: [0.5, 0.5] }, ...springEase({ k: 20, c: 9 }) }, 0.1);
+const split = SplitText.create('#w', { type: 'chars' });
+tl.from(split.chars, { yPercent: 120, rotation: 8, stagger: 0.05, ...springEase('default') }, 0.6);
+primeTimeline(tl);
+window.seek = t => { tl.seek(t, false); };
+document.fonts.ready.then(() => { window.seek(0); window.__ready = true; });
+</script>
