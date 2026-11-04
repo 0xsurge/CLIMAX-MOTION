@@ -64,7 +64,7 @@ const K = (keys, p, def = 'default') => { const k = keys.filter(o => o[p] !== un
 const camZ = K(CAMK, 'z'), camX = K(CAMK, 'x'), camY = K(CAMK, 'y');
 let SW = { x: 0, y: 0 };
 function camera(t) {
-  const a = 1 - .7 * S(t, b(55), 'heavy');
+  const a = 1 - .5 * S(t, b(55), 'heavy');
   SW = { x: a * 14 * Math.sin(t * 2 * Math.PI / 6.4), y: a * 8 * Math.sin(t * 2 * Math.PI / 4.7 + 1) };
   const z = camZ(t) * (1 + .01 * Math.sin(t * 2 * Math.PI / 9));
   WORLD.style.transform = `translate(${960 + SW.x}px,${540 + SW.y}px) rotate(${a * .25 * Math.sin(t * 2 * Math.PI / 8.3)}deg) scale(${z}) translate(${-960 - camX(t)}px,${-540 - camY(t)}px)`;
@@ -232,9 +232,10 @@ window.seek = function (t) {
   // the skills list: centred, active line large and blue, the rest small and grey; the list rolls so the active line sits at the centre
   const lon = S(t, T.list, 'heavy') * (1 - S(t, T.grow, 'snappy')); vis(LIST, lon > .01);
   if (lon > .01) { const ai = activeIdx(t), roll = track(t, [{ t: 0, v: 0 }, ...T.act.map((a, j) => ({ t: a - .15, v: j, spring: 'default' }))]);
-    SK.forEach((k, i) => { const d = i - roll, on = i === ai ? S(t, T.act[i] - .15, 'snappy') : 0, off = i < ai ? 1 : 0;
+    // each line lights on its own beat and dims on the next one, both on springs (a colour switch in one frame reads as a pop)
+    SK.forEach((k, i) => { const d = i - roll, on = clamp(S(t, T.act[i] - .15, 'snappy') - (i < 4 ? S(t, T.act[i + 1] - .15, 'snappy') : 0));
       put(k.row, { y: 515 + d * 96 + (1 - lon) * 120 }); k.row.style.opacity = lon * clamp(1 - Math.abs(d) * .28);
-      k.tx.style.color = on > .5 && !off ? BLUE : '#A3ABB8'; k.tx.style.transform = `scale(${.6 + .4 * on})`; }); }
+      k.tx.style.color = `rgb(${Math.round(lerp(163, 0, on))},${Math.round(lerp(171, 81, on))},${Math.round(lerp(184, 255, on))})`; k.tx.style.transform = `scale(${.6 + .4 * on})`; }); }
   // the ring around the big orb, with a light that travels round it
   const rg = S(t, T.ring, 'default') * (1 - S(t, T.ringOut, 'snappy')); vis(RING, rg > .01); vis(RLIGHT, rg > .01);
   put(RING, { rot: -(t - T.ring) * 22, s: .8 + .2 * rg }); RING.style.opacity = rg; RLIGHT.style.background = rimConic(140 * t); put(RLIGHT, { s: .8 + .2 * rg }); RLIGHT.style.opacity = rg * .9;
