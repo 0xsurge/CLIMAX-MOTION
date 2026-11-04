@@ -69,3 +69,9 @@ templates/three-example.
 ComfyUI (github.com/Comfy-Org/ComfyUI) with the SDXL Lightning 4-step checkpoint (OpenRAIL++, commercial use allowed) installs to /opt/ComfyUI via
 install_comfyui.sh; comfy_generate.py makes one seeded image headless (~2-4 min per 1024 px image on this CPU). Not SDXL Turbo: non-commercial.
 Generated images are for sets, plates, backgrounds and textures only, never in place of a brand's real products, logos, photos or UI.
+
+## HyperFrames
+HeyGen's HyperFrames agent skills (hyperframes, hyperframes-cli, hyperframes-registry, media-use, figma, remotion-to-hyperframes, reverse-any-video,
+slideshow, style-sampling) live in .claude/skills, from github.com/heygen-com/hyperframes at commit 2679bcd (Apache 2.0). Use them when a film is
+built in HyperFrames. Run its CLI with HYPERFRAMES_NO_TELEMETRY=1. These rules win where its defaults differ: springs only, one continuous take,
+no light leaks, glitches or film grain, real brand assets only.
