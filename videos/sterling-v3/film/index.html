@@ -25,7 +25,7 @@
   #cursor { position: absolute; left: 0; top: 0; width: 100px; height: 108px; transform-origin: 8% 8%; filter: drop-shadow(0 8px 16px rgba(0,0,0,.55)); }
   .let { position: absolute; left: 0; top: 0; width: 498px; height: 130px; transform-origin: 50% 50%; }
 </style>
-<div id="stage"><canvas id="out" width="1920" height="1080"></canvas><div id="ui"></div></div>
+<div id="stage"><canvas id="out" width="1920" height="1080"></canvas><div id="ui"></div></div><svg width="0" height="0" style="position:absolute"><filter id="mb" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur id="mbg" stdDeviation="0 0"/></filter></svg>
 <script src="../../sterling-v2/assets/js/motion.js"></script>
 <script src="../assets/word-letters.js"></script>
 <script type="importmap">{"imports":{"three":"../assets/three/three.module.js","three/addons/":"../assets/three/addons/"}}</script>
@@ -78,7 +78,7 @@ function renderWorld(t, chapter) {
   const env = pm.fromScene(envScene, .015); scene.environment = env.texture;
   const c = camAt(t);
   cam.position.set(c[0] + .35 * Math.sin(t * .37), c[1] + .2 * Math.sin(t * .29 + 1), c[2] - .03 * t); cam.lookAt(c[3], c[4], 0);
-  world.rotation.y = c[5] + .04 * Math.sin(t * .21) + CAM[0] * .00022; cam.position.y += -CAM[1] * .0016; cam.fov = 30 / (1 + (CAM[2] - 1) * .55); cam.updateProjectionMatrix(); cam.rotateZ(CAM[3] * Math.PI / 180 * .6); tick.rotation.y = -.6 + .12 * Math.sin(t * .35); rA.rotation.z = t * .01; tick2.rotation.x = -.2 + .1 * Math.sin(t * .23);
+  world.rotation.y = c[5] + .04 * Math.sin(t * .21) + CAM[0] * .00022; cam.position.y += -CAM[1] * .0016; cam.fov = 30 / (1 + (CAM[2] - 1) * .55); cam.updateProjectionMatrix(); tick.rotation.y = -.6 + .12 * Math.sin(t * .35); rA.rotation.z = t * .01; tick2.rotation.x = -.2 + .1 * Math.sin(t * .23);
   r.setRenderTarget(null); r.setClearColor(0x030404, 1); r.render(scene, cam); env.dispose();
 }
 // ---- sweep compositing ----
@@ -219,48 +219,71 @@ function drawCursor(t) {
 // each move a spring, plus a sway that returns to centre. The chrome world follows with parallax.
 const SP = { hook: [0, 0], drop: [0, 900], doubt: [1700, 900], turn: [1700, 900], mark: [1700, -150], name: [1700, -150], promise: [3300, -150], code: [3300, 950], route: [4900, 950], checks: [4900, -150], ver: [4900, -150], range: [6500, -150], steps: [6500, 950], end: [6500, 950] };
 const SEQ = ['hook', 'drop', 'doubt', 'turn', 'mark', 'name', 'promise', 'code', 'route', 'checks', 'ver', 'range', 'steps', 'end'];
-const ZK = { hook: .93, drop: 1.07, doubt: .97, turn: 1.12, mark: 1.0, name: .94, promise: 1.02, code: 1.07, route: .95, checks: 1.04, ver: 1.13, range: .96, steps: 1.04, end: .9 };
-const RK = { hook: 0, drop: -1.4, doubt: 1.1, turn: 0, mark: -.8, name: 0, promise: 1.2, code: -1, route: 1.3, checks: -1.1, ver: 0, range: 1, steps: -1.2, end: 0 };
-const LEAD = .32, MOVE = { k: 26, c: 9.2 };
-const camKeys = j => [{ t: 0, v: j < 2 ? SP.hook[j] : j === 2 ? ZK.hook : RK.hook }, ...SEQ.slice(1).map(k => ({ t: T[k] - LEAD, v: j < 2 ? SP[k][j] : j === 2 ? ZK[k] : RK[k], spring: j < 2 ? MOVE : j === 2 ? { k: 2.6, c: 3.1 } : { k: 8, c: 4.6 } }))];
-const CK0 = camKeys(0), CK1 = camKeys(1), CK2 = camKeys(2), CK3 = camKeys(3);
-const caretX = t => { const k = Math.floor(clamp((t - (T.code + .45)) / .036, 0, 45)); return Math.max(0, 40.9 * k - 1250) * .98; };
+// Camera from /camera-style: flat 2D (pan, tilt, zoom; roll 0), each move an exponential ease-in-out (camMove),
+// fast tau ~0.12 s, slow tau ~0.3 s, holds between moves, zoom dives into the thing that matters.
+const camMove = (t, tc, tau) => t < tc ? 0.5 * Math.exp((t - tc) / tau) : 1 - 0.5 * Math.exp(-(t - tc) / tau);
+const BTN = [3300 + (1360 - 960) * .82, -150 + (610 - 540) * .82];
+const CAMKEYS = [
+  { t: 0, x: 0, y: 0, z: .96 },
+  { t: T.drop - .06, x: 0, y: 900, z: 1.06, tau: .09 },
+  { t: T.doubt - .06, x: 1700, y: 900, z: .98, tau: .12 },
+  { t: T.turn + .2, z: 1.1, tau: .32 },
+  { t: T.mark - .06, x: 1700, y: -150, z: 1.3, tau: .12 },
+  { t: T.name + .1, z: .96, tau: .3 },
+  { t: T.promise - .06, x: 3300, y: -150, z: 1.0, tau: .12 },
+  { t: PRESS[0] - .3, x: BTN[0], y: BTN[1], z: 1.42, tau: .14 },
+  { t: T.code - .06, x: 3300, y: 950, z: 1.04, tau: .13 },
+  { t: T.route - .02, x: 4900, y: 950, z: .97, tau: .3 },
+  { t: T.checks - .06, x: 4900, y: -150, z: 1.03, tau: .12 },
+  { t: T.ver + P - .08, z: 1.13, tau: .09 },
+  { t: T.range - .06, x: 6500, y: -150, z: .97, tau: .12 },
+  { t: T.steps - .06, x: 6500, y: 950, z: 1.03, tau: .13 },
+  { t: T.end + .1, z: .92, tau: .32 },
+  { t: T.end + 2.6, z: 1.0, tau: .7 },
+];
+const camAxis = (t, key) => { let v = CAMKEYS[0][key], prev = v;
+  for (let i = 1; i < CAMKEYS.length; i++) { const k = CAMKEYS[i]; if (k[key] === undefined) continue; v += (k[key] - prev) * camMove(t, k.t, k.tau); prev = k[key]; } return v; };
+const caretX = t => { const k = clamp((t - (T.code + .45)) / .036, 0, 45); return Math.max(0, 40.9 * k - 1250) * .98; };
 function filmCam(t) {
-  let x = TR(t, CK0), y = TR(t, CK1), z = TR(t, CK2), rl = TR(t, CK3);
-  // ride along with the typing, then hand the offset back through a spring
-  if (t >= T.code) { const fin = caretX(T.route); x += t < T.route ? caretX(t) : fin * (1 - S(t - T.route, MOVE)); }
-  x += 16 * Math.sin(t * .52) + 7 * Math.sin(t * 1.13); y += 10 * Math.sin(t * .41 + 1) + 4 * Math.sin(t * .97);
-  return [x, y, z, rl];
+  let x = camAxis(t, 'x'), y = camAxis(t, 'y'), z = camAxis(t, 'z');
+  if (t >= T.code) { const fin = caretX(T.route); x += t < T.route - .02 ? caretX(t) : fin * (1 - camMove(t, T.route + .23, .3)); }
+  x += 4 * Math.sin(t * .52); y += 3 * Math.sin(t * .41 + 1);
+  return [x, y, z, 0];
 }
 const sceneOf = t => { let k = 'hook'; SEQ.forEach(s2 => { if (t >= T[s2]) k = s2; }); return k; };
 let CAM = [0, 0, 1, 0];
+function smear(img, bx, by, vx, vy, dx = 0, dy = 0) {
+  const n = (bx > .5 || by > .5) ? 7 : 1;
+  if (n === 1) { out.drawImage(img, dx, dy); return; }
+  const sx = Math.sign(vx) * bx * 2.2, sy = Math.sign(vy) * by * 2.2, a0 = out.globalAlpha;
+  for (let i = 0; i < n; i++) { const f = i / (n - 1) - .5; out.globalAlpha = a0 * (i === 0 ? 1 : 1 / (i + 1)); out.drawImage(img, dx + f * sx, dy + f * sy); }
+  out.globalAlpha = a0;
+}
 // ================= 3. seek =================
 const out = document.getElementById('out').getContext('2d');
 const blurC = document.createElement('canvas'); blurC.width = W; blurC.height = H; const bctx = blurC.getContext('2d');
 window.seek = t => {
-  CAM = filmCam(t); const prev = filmCam(t - 1 / 30); const vel = Math.hypot(CAM[0] - prev[0], CAM[1] - prev[1]) * CAM[2]; const mb = clamp((vel - 8) * .055, 0, 9);
+  CAM = filmCam(t); const prev = filmCam(t - 1 / 30); const vx = (CAM[0] - prev[0]) * CAM[2], vy = (CAM[1] - prev[1]) * CAM[2], vz = (CAM[2] - prev[2]) * 900;
+  const bx = clamp((Math.abs(vx) - 10) * .12, 0, 26), by = clamp((Math.abs(vy) - 10) * .12, 0, 26), bz = clamp((Math.abs(vz) - 6) * .08, 0, 6); const mb = Math.max(bx, by, bz);
   WRAPS.forEach(({ wr, key }) => { const k = typeof key === 'function' ? key(t) : key, p = SP[k];
     wr.style.transform = `translate(960px,540px) rotate(${CAM[3]}deg) scale(${CAM[2]}) translate(${p[0] - 960 - CAM[0]}px,${p[1] - 540 - CAM[1]}px)`; });
-  ui.style.filter = mb > .3 ? `blur(${mb.toFixed(2)}px)` : '';
+  document.getElementById('mbg').setAttribute('stdDeviation', `${(bx + bz).toFixed(2)} ${(by + bz).toFixed(2)}`); ui.style.filter = mb > .3 ? 'url(#mb)' : '';
   // ---- ground ----
   const src = groundFrame(t);
-  out.globalCompositeOperation = 'source-over'; out.filter = mb > .3 ? `blur(${(mb * .6).toFixed(2)}px)` : 'none'; out.drawImage(src, 0, 0); out.filter = 'none';
+  out.globalCompositeOperation = 'source-over'; out.filter = 'none'; smear(src, bx * .6, by * .6, vx, vy);
   bctx.globalCompositeOperation = 'source-over'; bctx.clearRect(0, 0, W, H); bctx.filter = 'blur(22px)'; bctx.drawImage(src, 0, 0); bctx.filter = 'none'; bctx.globalCompositeOperation = 'destination-out';
   const g = bctx.createRadialGradient(W / 2, H / 2, 200, W / 2, H / 2, 1000); g.addColorStop(0, 'rgba(0,0,0,1)'); g.addColorStop(.5, 'rgba(0,0,0,.55)'); g.addColorStop(1, 'rgba(0,0,0,0)'); bctx.fillStyle = g; bctx.fillRect(0, 0, W, H); out.drawImage(blurC, 0, 0);
   // dark type band, always: type sits in the dark like the references
   const v = out.createRadialGradient(W / 2, H / 2, 0, W / 2, H / 2, 900); v.addColorStop(0, 'rgba(3,4,4,.82)'); v.addColorStop(.5, 'rgba(3,4,4,.5)'); v.addColorStop(1, 'rgba(3,4,4,0)'); out.fillStyle = v; out.fillRect(0, 0, W, H);
   // ---- tilted cards ----
   const kOn = t >= T.promise && t < T.code + .35, rOn = t >= T.route && t < T.checks + .35;
-  keyCard.m.visible = kOn; routeCard.m.visible = rOn;
   if (kOn || rOn) {
-    let press = 0; if (kOn) press = clamp(S(t - PRESS[0], { k: 700, c: 42 }));
-    if (kOn) { const u = t - T.promise, e = S(u - .15, dflt), dive = 0;
-      drawKeyCard(t, press); keyCard.m.position.set(0, -1.6 + (1 - e) * -5 + .1 * Math.sin(u), 0 + dive * 15.5); keyCard.m.rotation.set(-.42 + .1 * e + .3 * dive, .1 * Math.sin(u * .5), -.07 * (1 - dive));
-      keyCard.m.position.x = dive * -2.6; }
-    if (rOn) { const u = t - T.route, e = S(u, dflt); drawRouteCard(t); routeCard.m.position.set(.3, -1.1 - (1 - e) * 6, -1.5 + .25 * u); routeCard.m.rotation.set(.18, -.32 + .05 * u, .02); }
-    const ck = kOn ? 'promise' : 'route', pxu = 10.72 / 1080, dx = CAM[0] - SP[ck][0], dy = CAM[1] - SP[ck][1];
-    cardCam.position.set(dx * pxu, -dy * pxu, 20); cardCam.fov = 30 / CAM[2]; cardCam.updateProjectionMatrix(); cardCam.rotation.set(0, 0, CAM[3] * Math.PI / 180);
-    r.setRenderTarget(null); r.setClearColor(0x000000, 0); const bg = scene.background; r.toneMapping = THREE.NoToneMapping; r.render(cardScene, cardCam); r.toneMapping = THREE.ACESFilmicToneMapping; out.filter = mb > .3 ? `blur(${mb.toFixed(2)}px)` : 'none'; out.drawImage(r.domElement, 0, 0); out.filter = 'none';
+    const place = (ck, cd, cx, cy, sc) => { const z = CAM[2], p = SP[ck]; out.setTransform(z * sc, 0, 0, z * sc, 960 + z * (cx + p[0] - 960 - CAM[0]), 540 + z * (cy + p[1] - 540 - CAM[1]));
+      smear(cd.cv, bx * .8 / (z * sc), by * .8 / (z * sc), vx, vy, -cd.w / 2, -cd.h / 2); out.setTransform(1, 0, 0, 1, 0, 0); };
+    if (kOn) { const u = t - T.promise, e = S(u - .15, dflt), press = clamp(S(t - PRESS[0], { k: 700, c: 42 })); drawKeyCard(t, press);
+      out.save(); out.globalAlpha = clamp(e * 1.6); place('promise', keyCard, 960, 700 + (1 - e) * 420 + 6 * Math.sin(u * 1.3), 1); out.restore(); }
+    if (rOn) { const u = t - T.route, e = S(u, dflt); drawRouteCard(t);
+      out.save(); out.globalAlpha = clamp(e * 1.6); place('route', routeCard, 960, 650 + (1 - e) * 520 + 5 * Math.sin(u * 1.1), .96); out.restore(); }
   }
   // ---- type ----
   buildLine(L.hook, t, .05, P / 4, 500, { exit: T.drop - .02 });
