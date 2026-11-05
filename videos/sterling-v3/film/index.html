@@ -1,0 +1,294 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Sterling v3</title>
+<!-- Sterling v3, "The claim and the check". 1920x1080, ~30.4 s, cut to Thunder (drop at 1.9 s, beat 0.625653 s).
+     window.seek(t) paints frame t. Layers: (1) a continuous three.js chrome world with a travelling gradient light,
+     defocused at the edges; (2) tilted 3D cards (three.js planes with canvas textures); (3) DOM type, cursor, logo,
+     2D transforms only. Chapter change = luma gradient sweep (shader). Springs only (lib motion.js), no state between frames. -->
+<style>
+  @font-face { font-family: 'Z'; src: url(../assets/zalando.woff2) format('woff2'); font-weight: 500; }
+  @font-face { font-family: 'P'; src: url(../assets/public.woff2) format('woff2'); font-weight: 100 900; }
+  html, body { margin: 0; background: #030404; overflow: hidden; }
+  #stage { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #030404; color: #EEF3F0; font-family: 'Z', sans-serif; }
+  #out { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+  #ui { position: absolute; inset: 0; }
+  .ab { position: absolute; left: 0; top: 0; transform-origin: 50% 50%; }
+  .line { position: absolute; left: 0; width: 1920px; display: flex; justify-content: center; align-items: baseline; white-space: nowrap; }
+  .w { display: inline-block; margin: 0 .13em; }
+  .cap { font: 500 66px/1 'Z'; letter-spacing: -.02em; }
+  .slam { font: 500 300px/1 'Z'; letter-spacing: -.05em; }
+  .gc { background: linear-gradient(100deg, #FF3D12, #FF8A1F 55%, #FFC46B); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .gv { background: linear-gradient(100deg, #0FBF7A, #3DFFB0 60%, #D8FF7A); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .card { position: absolute; background: #121414; border-radius: 26px; box-shadow: 0 40px 90px rgba(0,0,0,.6), inset 0 0 0 1.5px rgba(255,255,255,.06); font-family: 'P', sans-serif; }
+  .mono { font-family: 'DejaVu Sans Mono', ui-monospace, monospace; }
+  .pill { position: absolute; border-radius: 22px; font: 600 40px/1 'P'; display: flex; align-items: center; justify-content: center; }
+  #cursor { position: absolute; left: 0; top: 0; width: 100px; height: 108px; transform-origin: 8% 8%; filter: drop-shadow(0 8px 16px rgba(0,0,0,.55)); }
+  .let { position: absolute; left: 0; top: 0; width: 498px; height: 130px; transform-origin: 50% 50%; }
+</style>
+<div id="stage"><canvas id="out" width="1920" height="1080"></canvas><div id="ui"></div></div>
+<script src="../../sterling-v2/assets/js/motion.js"></script>
+<script src="../assets/word-letters.js"></script>
+<script type="importmap">{"imports":{"three":"../assets/three/three.module.js","three/addons/":"../assets/three/addons/"}}</script>
+<script type="module">
+import * as THREE from 'three';
+const M = window.Motion, S = (t, p) => M.spring(t, p), TR = (t, k, d) => M.track(t, k, d);
+const W = 1920, H = 1080, P = 0.625653, D = 1.9, B = n => D + n * P;
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x)), lerp = (a, b, u) => a + (b - a) * u;
+const snappy = 'snappy', heavy = 'heavy', dflt = 'default';
+// ---------------- scene times ----------------
+const T = { hook: 0, drop: D, doubt: B(2), turn: B(4), mark: B(6), name: B(7.5), promise: B(9.5), code: B(13.5), route: B(17.5), checks: B(21.5), ver: B(26.5), range: B(29.5), steps: B(33.5), end: B(38.5), out: B(45.5) };
+window.FILM_DUR = T.out;
+
+// ================= 1. the chrome world =================
+const r = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true, alpha: true });
+r.setSize(W, H, false); r.setPixelRatio(1); r.outputColorSpace = THREE.SRGBColorSpace; r.toneMapping = THREE.ACESFilmicToneMapping; r.toneMappingExposure = 1.15;
+const scene = new THREE.Scene(); scene.background = new THREE.Color('#030404');
+const cam = new THREE.PerspectiveCamera(30, W / H, .1, 200);
+const PAL = { claim: ['#1a0300', '#ff3d12', '#ff8a1f', '#ffd36b', '#ff2d6f', '#5fd6ff'], verified: ['#00140d', '#0fbf7a', '#3dffb0', '#d8ff7a', '#0aa3a3', '#9fe8ff'] };
+const domeMat = new THREE.ShaderMaterial({ side: THREE.BackSide, uniforms: { ph: { value: 0 }, gain: { value: 1 }, c: { value: PAL.claim.map(x => new THREE.Color(x)) } },
+  vertexShader: 'varying vec3 vP; void main(){ vP = normalize(position); gl_Position = projectionMatrix*modelViewMatrix*vec4(position,1.); }',
+  fragmentShader: `varying vec3 vP; uniform float ph, gain; uniform vec3 c[6];
+    vec3 ramp(float x){ x = fract(x); float s = x*5.; int i = int(floor(s)); float f = smoothstep(0.,1.,fract(s));
+      vec3 a = c[1], b = c[2]; if(i==1){a=c[2];b=c[3];} else if(i==2){a=c[3];b=c[4];} else if(i==3){a=c[4];b=c[1];} else if(i==4){a=c[1];b=c[2];} return mix(a,b,f); }
+    void main(){ float az = atan(vP.z, vP.x)/6.2831853 + ph; float el = vP.y;
+      float band = pow(max(0., sin(az*6.2831853*2.)), 2.2) * smoothstep(-.6, .3, el) * (1. - smoothstep(.55, .95, el));
+      float rim = smoothstep(.86, .96, el) * .9;
+      gl_FragColor = vec4((c[0]*.4 + ramp(az*1.3 + el*.25)*band*5.*gain + c[5]*rim*2.5), 1.); }` });
+const envScene = new THREE.Scene(); envScene.add(new THREE.Mesh(new THREE.SphereGeometry(50, 64, 32), domeMat));
+const pm = new THREE.PMREMGenerator(r);
+const chrome = new THREE.MeshPhysicalMaterial({ color: 0xffffff, metalness: 1, roughness: .1, clearcoat: 1, clearcoatRoughness: .04 });
+const sc = 1 / 48.6, cx = 108.15, cy = 214.34, PT = (x, y, z = 0) => new THREE.Vector3((x - cx) * sc, -(y - cy) * sc, z);
+const tickCurve = new THREE.CatmullRomCurve3([PT(84, 214, .3), PT(92, 222, .1), PT(99.5, 230, 0), PT(104, 226, -.1), PT(118, 210, -.2), PT(132, 196, -.4)], false, 'catmullrom', .5);
+const ribbon = (pts, w, d) => { const sh = new THREE.Shape(); const rr = d * .5; sh.moveTo(-w / 2 + rr, -d / 2); sh.lineTo(w / 2 - rr, -d / 2); sh.quadraticCurveTo(w / 2, -d / 2, w / 2, 0); sh.quadraticCurveTo(w / 2, d / 2, w / 2 - rr, d / 2); sh.lineTo(-w / 2 + rr, d / 2); sh.quadraticCurveTo(-w / 2, d / 2, -w / 2, 0); sh.quadraticCurveTo(-w / 2, -d / 2, -w / 2 + rr, -d / 2);
+  return new THREE.ExtrudeGeometry(sh, { steps: 260, bevelEnabled: false, extrudePath: new THREE.CatmullRomCurve3(pts, false, 'catmullrom', .5) }); };
+const world = new THREE.Group(); scene.add(world);
+const tick = new THREE.Mesh(new THREE.TubeGeometry(tickCurve, 260, .34, 64, false), chrome); tick.position.set(7.2, -.4, 2); tick.scale.setScalar(9.5); tick.rotation.set(.3, -.6, .15);
+const rA = new THREE.Mesh(ribbon([new THREE.Vector3(-9, -7, -6), new THREE.Vector3(-4, -2, -3), new THREE.Vector3(-1, 1.5, -5), new THREE.Vector3(3, 2, -8), new THREE.Vector3(8, 7, -12)], 5.2, .7), chrome); rA.position.set(-2, 0, -8);
+const rB = new THREE.Mesh(ribbon([new THREE.Vector3(14, -9, -4), new THREE.Vector3(9, -3, -2), new THREE.Vector3(7.5, 1, -1), new THREE.Vector3(9, 5, -3), new THREE.Vector3(13, 8, -6)], 6.5, .9), chrome);
+const tick2 = new THREE.Mesh(tick.geometry, chrome); tick2.position.set(-9, 1, -4); tick2.scale.setScalar(8); tick2.rotation.set(-.2, .8, -2.7);
+world.add(tick, rA, rB, tick2);
+// camera framings per scene: [x, y, z, lookX, lookY, worldRotY]; one camera for the whole film, each change is a spring
+const CAMK = [[0, 0, 19, 0, 0, 0], [1.5, -.4, 14.5, 2.2, -.4, -.12], [-1.2, .5, 18, -1, 0, .35], [0, 0, 19, 0, 0, .2], [0, .2, 15.5, 0, 0, .05], [0, 0, 18.5, 0, 0, -.1], [-.6, .4, 20.5, 0, 0, -.45], [.8, 0, 17, 0, 0, -.25], [0, -.5, 21, 0, 0, .3], [1, .3, 16.5, .6, 0, .6], [0, 0, 15, 0, 0, .4], [-1, 0, 20, 0, 0, .1], [.5, .4, 18, 0, 0, -.2], [0, 0, 22, 0, 0, -.05]];
+const CAMT = [T.hook, T.drop, T.doubt, T.turn, T.mark, T.name, T.promise, T.code, T.route, T.checks, T.ver, T.range, T.steps, T.end];
+const camAt = t => { const out = []; for (let j = 0; j < 6; j++) out.push(TR(t, CAMT.map((tt, i) => ({ t: tt, v: CAMK[i][j], spring: { k: 9, c: 6 } })))); return out; };
+function renderWorld(t, chapter) {
+  domeMat.uniforms.c.value = PAL[chapter].map(x => new THREE.Color(x)); domeMat.uniforms.ph.value = t * .11 + (chapter === 'verified' ? .3 : 0);
+  // light passes: the band brightens as it crosses during the five checks and the ending
+  domeMat.uniforms.gain.value = 1 + .6 * Math.exp(-Math.pow((t - (T.checks + 1.2)) / .5, 2)) + .5 * Math.exp(-Math.pow((t - (T.end + 2.4)) / .6, 2));
+  const env = pm.fromScene(envScene, .015); scene.environment = env.texture;
+  const c = camAt(t);
+  cam.position.set(c[0] + .35 * Math.sin(t * .37), c[1] + .2 * Math.sin(t * .29 + 1), c[2] - .03 * t); cam.lookAt(c[3], c[4], 0);
+  world.rotation.y = c[5] + .04 * Math.sin(t * .21); tick.rotation.y = -.6 + .12 * Math.sin(t * .35); rA.rotation.z = t * .01; tick2.rotation.x = -.2 + .1 * Math.sin(t * .23);
+  r.setRenderTarget(null); r.setClearColor(0x030404, 1); r.render(scene, cam); env.dispose();
+}
+// ---- sweep compositing ----
+const rtA = new THREE.WebGLRenderTarget(W, H, { colorSpace: THREE.SRGBColorSpace }), rtB = new THREE.WebGLRenderTarget(W, H, { colorSpace: THREE.SRGBColorSpace });
+const sweepMat = new THREE.ShaderMaterial({ uniforms: { A: { value: null }, Bt: { value: null }, p: { value: 0 }, solidA: { value: 0 }, colA: { value: new THREE.Color('#0FBF7A') } },
+  vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = vec4(position.xy, 0., 1.); }',
+  fragmentShader: `varying vec2 vUv; uniform sampler2D A, Bt; uniform float p, solidA; uniform vec3 colA;
+    vec3 ramp(float x){ x = clamp(x, 0., 1.) * 5.; vec3 c0 = vec3(.10,.02,.22), c1 = vec3(.42,.08,.55), c2 = vec3(.95,.22,.12), c3 = vec3(1.,.62,.18), c4 = vec3(.10,.80,.50), c5 = vec3(.80,1.,.80);
+      if (x < 1.) return mix(c0, c1, x); if (x < 2.) return mix(c1, c2, x-1.); if (x < 3.) return mix(c2, c3, x-2.); if (x < 4.) return mix(c3, c4, x-3.); return mix(c4, c5, x-4.); }
+    void main(){ vec3 a = mix(texture2D(A, vUv).rgb, colA, solidA); vec3 b = texture2D(Bt, vUv).rgb; float L = dot(b, vec3(.2126,.7152,.0722));
+      float th = p*1.4 - .2; float m = clamp((th - (1. - L)*.75)/.2, 0., 1.);
+      vec3 wash = ramp(L*.9 + p*.55 - .05); float res = clamp((p - .55)/.45, 0., 1.); vec3 nc = mix(wash, b, res);
+      gl_FragColor = vec4(mix(a, nc, m), 1.); }` });
+const quad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), sweepMat); const qScene = new THREE.Scene(); qScene.add(quad); const qCam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+const worldToRT = (rt, t, ch) => { const prev = r.toneMapping; renderWorld(t, ch); r.setRenderTarget(rt); r.setClearColor(0x030404, 1); r.render(scene, cam); r.setRenderTarget(null); };
+// the sweep runs on the finished (tone-mapped) frames, pixel by pixel: A = what was, B = what comes
+const cA = document.createElement('canvas'), cB = document.createElement('canvas'), cS = document.createElement('canvas'); [cA, cB, cS].forEach(c => { c.width = W; c.height = H; });
+const xA = cA.getContext('2d', { willReadFrequently: true }), xB = cB.getContext('2d', { willReadFrequently: true }), xS = cS.getContext('2d');
+const RAMP = [[.10, .02, .22], [.42, .08, .55], [.95, .22, .12], [1, .62, .18], [.10, .80, .50], [.80, 1, .80]];
+function sweep(p, solidA) {
+  const a = solidA ? null : xA.getImageData(0, 0, W, H).data, bI = xB.getImageData(0, 0, W, H), b = bI.data, th = p * 1.4 - .2, res = solidA ? clamp((p - .2) / .4) : clamp((p - .55) / .45);
+  for (let i = 0; i < b.length; i += 4) {
+    const br = b[i] / 255, bg = b[i + 1] / 255, bb = b[i + 2] / 255, Lm = .2126 * br + .7152 * bg + .0722 * bb;
+    const m = clamp((th - (1 - Lm) * .75) / .2); let x = clamp(Lm * .9 + p * .55 - .05) * 5; const k = Math.min(4, Math.floor(x)), f = x - k, r0 = RAMP[k], r1 = RAMP[k + 1];
+    const wr = r0[0] + (r1[0] - r0[0]) * f, wg = r0[1] + (r1[1] - r0[1]) * f, wb = r0[2] + (r1[2] - r0[2]) * f;
+    const nr = wr + (br - wr) * res, ng = wg + (bg - wg) * res, nb = wb + (bb - wb) * res;
+    const ar = solidA ? .059 : a[i] / 255, ag = solidA ? .749 : a[i + 1] / 255, ab = solidA ? .478 : a[i + 2] / 255;
+    b[i] = 255 * (ar + (nr - ar) * m); b[i + 1] = 255 * (ag + (ng - ag) * m); b[i + 2] = 255 * (ab + (nb - ab) * m); }
+  xS.putImageData(bI, 0, 0); return cS;
+}
+function groundFrame(t) {
+  const sw1 = (t - T.turn) / (1.5 * P * 1.33), sw2 = (t - T.end) / 1.1;
+  if (sw1 >= 0 && sw1 < 1) { renderWorld(t, 'claim'); xA.drawImage(r.domElement, 0, 0); renderWorld(t, 'verified'); xB.drawImage(r.domElement, 0, 0); return sweep(S(sw1 * 1.6, { k: 6, c: 4.9 }), false); }
+  if (sw2 >= 0 && sw2 < 1) { renderWorld(t, 'verified'); xB.drawImage(r.domElement, 0, 0); return sweep(S(sw2 * 1.6, { k: 6, c: 4.9 }), true); }
+  renderWorld(t, t < T.turn ? 'claim' : 'verified'); return r.domElement;
+}
+// ---- tilted cards: planes with canvas textures, rendered sharp over the defocused world ----
+const cardScene = new THREE.Scene(); const cardCam = new THREE.PerspectiveCamera(30, W / H, .1, 100); cardCam.position.set(0, 0, 20);
+const mkCard = (w, h) => { const cv = document.createElement('canvas'); cv.width = w; cv.height = h; const tx = new THREE.CanvasTexture(cv); tx.colorSpace = THREE.SRGBColorSpace; tx.anisotropy = 8;
+  const m = new THREE.Mesh(new THREE.PlaneGeometry(w / 100, h / 100), new THREE.MeshBasicMaterial({ map: tx, transparent: true, toneMapped: false })); m.visible = false; cardScene.add(m); return { cv, ctx: cv.getContext('2d'), tx, m, w, h }; };
+const keyCard = mkCard(1260, 520), routeCard = mkCard(1100, 680);
+const rr = (c, x, y, w, h, rad) => { c.beginPath(); c.moveTo(x + rad, y); c.arcTo(x + w, y, x + w, y + h, rad); c.arcTo(x + w, y + h, x, y + h, rad); c.arcTo(x, y + h, x, y, rad); c.arcTo(x, y, x + w, y, rad); c.closePath(); };
+const MARK = new Path2D('M84.5347 209.479L99.1184 223.369L131.758 190.034V206.007L99.8128 238.647L84.5347 224.063V209.479Z'), BAR = new Path2D('M85.2292 191.424H101.202V197.674H85.2292V191.424Z');
+const drawMark = (c, x, y, s, col) => { c.save(); c.translate(x, y); c.scale(s, s); c.translate(-82.53, -188.03); c.fillStyle = col; c.fill(MARK); c.fill(BAR); c.restore(); };
+function cardBase(cd) { const c = cd.ctx; c.clearRect(0, 0, cd.w, cd.h); rr(c, 0, 0, cd.w, cd.h, 30); c.fillStyle = '#121414'; c.fill(); c.strokeStyle = 'rgba(255,255,255,.07)'; c.lineWidth = 2; c.stroke();
+  const g = c.createLinearGradient(40, 0, cd.w - 40, 0); g.addColorStop(0, 'rgba(61,255,176,0)'); g.addColorStop(.5, 'rgba(61,255,176,.9)'); g.addColorStop(1, 'rgba(61,255,176,0)'); c.fillStyle = g; c.fillRect(40, 0, cd.w - 80, 3); return c; }
+function drawKeyCard(t, press) { const c = cardBase(keyCard);
+  c.font = "600 24px P"; c.fillStyle = 'rgba(255,255,255,.45)'; c.letterSpacing = '5px'; c.fillText('YOUR STERLING KEY', 70, 92); c.letterSpacing = '0px';
+  c.font = "500 56px 'DejaVu Sans Mono'"; c.fillStyle = '#E8F2EE'; c.fillText('••••••••••••••••••••', 70, 182);
+  const bx = 880, by = 118, bw = 300, bh = 104; c.save(); c.translate(bx + bw / 2, by + bh / 2); c.scale(1 - .06 * press, 1 - .06 * press);
+  c.shadowColor = `rgba(61,255,176,${.25 + .5 * press})`; c.shadowBlur = 30 + 50 * press; rr(c, -bw / 2, -bh / 2, bw, bh, 20); c.fillStyle = '#0FBF7A'; c.fill(); c.shadowBlur = 0;
+  c.fillStyle = '#03140D'; c.font = '600 36px P'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(press > .5 ? 'Copied' : 'Copy', 0, 2); c.restore(); c.textAlign = 'left'; c.textBaseline = 'alphabetic';
+  c.font = '500 30px P'; c.fillStyle = 'rgba(255,255,255,.5)'; c.fillText('One key for Claude, GPT, Gemini and more.', 70, 330); keyCard.tx.needsUpdate = true; }
+function drawRouteCard(t) { const c = cardBase(routeCard); const rows = [['Provider 1', 1], ['Provider 2', 1], ['Provider 3', 0], ['Provider 4', 1]];
+  rows.forEach(([n, ok], i) => { const t0 = T.route + .35 + i * P * .75, u = t - t0, s = S(u, { k: 500, c: 22 }), y = 80 + i * 140;
+    const fail = !ok ? S(u - .25, dflt) : 0;
+    c.save(); c.globalAlpha = clamp(S(t - (T.route + .1 + i * .07), dflt)) * (1 - .55 * fail); c.translate(fail * 40, 0);
+    rr(c, 60, y, 980, 108, 20); c.fillStyle = ok ? '#161A19' : `rgb(${22 + 12 * fail},${18},${16})`; c.fill();
+    if (ok && s > .02) { c.strokeStyle = `rgba(61,255,176,${.85 * clamp(s) * Math.exp(-Math.max(0, u - .2) * 2.5) + .12})`; c.lineWidth = 3; rr(c, 60, y, 980, 108, 20); c.stroke(); }
+    c.font = '500 38px P'; c.fillStyle = ok ? '#E8F2EE' : 'rgba(255,255,255,.45)'; c.fillText(`${n} · claude-sonnet-5-5`, 110, y + 68);
+    if (u > 0) { if (ok) { c.save(); c.translate(860, y + 54); c.scale(.7 * s, .7 * s); drawMark(c, -26, -27, 1, '#3DFFB0'); c.restore(); c.font = '600 28px P'; c.fillStyle = `rgba(61,255,176,${clamp(s)})`; c.fillText('verified', 900, y + 64); }
+      else { c.font = '600 26px P'; c.fillStyle = `rgba(255,106,61,${clamp(s)})`; c.fillText('not verified · skipped', 770, y + 64); } }
+    c.restore(); });
+  routeCard.tx.needsUpdate = true; }
+
+// ================= 2. DOM layer =================
+const ui = document.getElementById('ui');
+const el = (html) => { const d = document.createElement('div'); d.innerHTML = html.trim(); const e = d.firstChild; ui.appendChild(e); return e; };
+const words = (cls, list) => `<div class="line ${cls}">${list.map(([w, c]) => `<span class="w ${c || ''}">${w}</span>`).join('')}</div>`;
+const L = {
+  hook: el(words('cap', [['A'], ['model'], ['name'], ['on'], ['an'], ['API']])),
+  isa: el(words('cap', [['is'], ['a']])),
+  claim: el(`<div class="line slam"><span class="w gc">claim.</span></div>`),
+  doubt: el(`<div class="line cap"><span class="w">Is</span><span class="w">it</span><span class="w">really</span><span class="w gc" id="dw" style="min-width:360px;text-align:left">Claude?</span></div>`),
+  turn: el(words('cap', [['Time'], ['to'], ['check', 'gv'], ['it.']])),
+  promise: el(words('cap', [['One'], ['key.'], ['Every', 'gv'], ['model.', 'gv']])),
+  code1: el(words('cap', [['Change'], ['the'], ['endpoint.']])),
+  code2: el(words('cap', [['Keep'], ['your'], ['workflow.']])),
+  route: el(words('cap', [['Routed'], ['only'], ['to'], ['verified', 'gv'], ['providers.']])),
+  checks: el(`<div class="line cap"><span class="w">Checked</span><span class="w">for</span><span class="w gv" id="cw" style="min-width:640px;text-align:left">model identity</span></div>`),
+  pay: el(words('cap', [['The'], ['model'], ['you'], ['pay'], ['for.']])),
+  verified: el(`<div class="line slam"><span class="w gv">Verified.</span></div>`),
+  range: el(words('cap', [['One'], ['key.'], ['Every'], ['model.']])),
+  steps: el(words('cap', [['Three'], ['steps.'], ['Then', 'gv'], ["you're", 'gv'], ['in.', 'gv']])),
+  inf: el(words('cap', [['Verified'], ['inference.']])),
+};
+L.inf.style.fontSize = '46px';
+const codeCard = el(`<div class="card" style="left:120px;top:440px;width:1680px;height:220px;overflow:hidden"><div style="position:absolute;left:40px;right:40px;top:0;height:3px;background:linear-gradient(90deg,transparent,#3DFFB0,transparent)"></div>
+  <div id="codeIn" class="mono" style="position:absolute;left:70px;top:72px;font-size:68px;color:#9AA39E;white-space:nowrap"><span id="ct1"></span><span id="ct2" style="color:#3DFFB0"></span><span id="caret" style="display:inline-block;width:6px;height:72px;background:#3DFFB0;vertical-align:-12px;margin-left:4px"></span></div></div>`);
+const respCard = el(`<div class="card" style="left:560px;top:230px;width:800px;height:520px"><div style="position:absolute;left:40px;right:40px;top:0;height:3px;background:linear-gradient(90deg,transparent,#3DFFB0,transparent)"></div>
+  <div style="position:absolute;left:64px;top:64px;font:600 22px P;letter-spacing:.2em;color:rgba(255,255,255,.45)">RESPONSE</div>
+  <div class="mono" style="position:absolute;left:64px;top:130px;font-size:44px;color:#9AA39E">"model":</div>
+  <div class="mono" id="rm" style="position:absolute;left:64px;top:205px;font-size:76px;color:#fff">"claude"</div>
+  <div style="position:absolute;left:64px;top:370px;font:600 36px P;color:#3DFFB0;display:flex;align-items:center;gap:14px"><svg width="38" height="39" viewBox="82.5 188 51.3 52.6"><path d="M84.5347 209.479L99.1184 223.369L131.758 190.034V206.007L99.8128 238.647L84.5347 224.063V209.479Z" fill="#3DFFB0"/><path d="M85.2292 191.424H101.202V197.674H85.2292V191.424Z" fill="#3DFFB0"/></svg>Verified provider</div></div>`);
+const pills = ['Create your key', 'Add credit', 'Plug into your app'].map((s, i) => el(`<div class="pill" style="left:${250 + i * 500}px;top:470px;width:420px;height:140px;background:#161A19;color:rgba(255,255,255,.5)">${s}</div>`));
+const sub = el(`<div class="line" style="font:500 32px P;color:rgba(255,255,255,.55)">USDC or MIRA. Pay as you go.</div>`);
+const MARKSVG = `<svg viewBox="82.5347 188.034 51.3 52.6" width="100%" height="100%"><path d="M84.5347 209.479L99.1184 223.369L131.758 190.034V206.007L99.8128 238.647L84.5347 224.063V209.479Z" fill="#fff"/><path d="M85.2292 191.424H101.202V197.674H85.2292V191.424Z" fill="#fff"/></svg>`;
+const bigMark = el(`<div class="ab" style="width:360px;height:369px">${MARKSVG}</div>`);
+const letters = window.WORD_LETTERS.map(d => el(`<svg class="let" viewBox="149.98 188.034 213.95 55.806"><path d="${d}" fill="#fff"/></svg>`));
+const LETX = [0, 1, 2, 3, 4, 5, 6, 7].map(i => [169, 203, 230, 259, 276, 288, 312, 347][i]); // letter centres in viewBox units
+const urlPill = el(`<div style="position:absolute;left:740px;top:0;width:440px;height:76px;border-radius:38px;display:flex;align-items:center;justify-content:center;font:500 32px P;color:#E8F2EE;background:#0D1010"><span>sterling.mira.network</span></div>`);
+const urlRing = el(`<canvas width="460" height="96" style="position:absolute;left:730px;top:0"></canvas>`);
+const powered = el(`<img src="../assets/poweredby.svg" style="position:absolute;left:840px;top:0;width:240px;filter:invert(1)">`);
+const cursor = el(`<svg id="cursor" viewBox="0 0 46 50"><path d="M4 4 L42 20 L24 25 L18 44 Z" fill="#0B0C0D" stroke="#fff" stroke-width="4.2" stroke-linejoin="round"/></svg>`);
+const pillFill = el(`<div style="position:absolute;left:0;top:0;width:420px;height:140px;border-radius:22px;background:#0FBF7A"></div>`);
+
+// ---- type helpers (pure functions of t) ----
+function buildLine(node, t, t0, step, y, { exit = Infinity, creep = .035, sideways = 34 } = {}) {
+  const ws = node.children; let vis = t >= t0 - .01 && t < exit + .14; node.style.display = vis ? 'flex' : 'none'; if (!vis) return;
+  const life = t - t0, ex = clamp((t - exit) / .12);
+  node.style.top = y + 'px'; node.style.transform = `translateX(${-18 * clamp(life / 2.5) - 40 * ex}px) scale(${1 - creep * clamp(life / 2.5)})`; node.style.filter = ex > 0 ? `blur(${10 * ex}px)` : '';
+  node.style.opacity = 1 - ex;
+  for (let i = 0; i < ws.length; i++) { const s = S(t - (t0 + i * step), { k: 900, c: 50 }); const w = ws[i]; w.style.opacity = clamp(s * 1.4); w.style.filter = `blur(${(1 - clamp(s)) * 12}px)`; w.style.transform = `translateX(${(1 - s) * sideways}px)`; }
+}
+function slam(node, t, t0, exit, y) { const vis = t >= t0 && t < exit; node.style.display = vis ? 'flex' : 'none'; if (!vis) return;
+  const u = t - t0, s = S(u, { k: 520, c: 46 }); node.style.top = y + 'px';
+  node.style.transform = `scale(${(1.3 - .3 * s) * (1 - .1 * u)})`; node.style.filter = `blur(${(1 - clamp(s)) * 22}px)`; node.style.opacity = clamp(s * 2); }
+function swap(span, t, t0, step, list, color) { const k = clamp(Math.floor((t - t0) / step), 0, list.length - 1), u = t - (t0 + k * step);
+  span.textContent = list[k]; const s = S(u, { k: 700, c: 42 }); span.style.transform = `translateX(${(1 - s) * 130}px)`; span.style.filter = `blur(${(1 - clamp(s)) * 10}px)`;
+  const tr = (1 - clamp(s)); span.style.textShadow = tr > .02 ? `${-40 * tr}px 0 18px ${color}${Math.round(140 * tr).toString(16).padStart(2, '0')}, ${-100 * tr}px 0 34px ${color}${Math.round(90 * tr).toString(16).padStart(2, '0')}` : 'none'; }
+const show = (n, on) => { n.style.display = on ? '' : 'none'; };
+
+// ---- cursor path: keys of [t, x, y], each a spring; press times ----
+const CK = [[0, 2200, 1200], [T.promise + .9, 1395, 640], [T.promise + 1.9, 1395, 640], [T.code - .05, 2300, 900], [T.steps + .2, 1200, 760], [T.steps + P * .45, 470, 590], [T.steps + P * 1.75, 960, 590], [T.steps + P * 3.05, 1460, 590], [T.steps + P * 4.2, 1460, 590], [T.steps + P * 4.6, 2300, 1300]];
+const PRESS = [T.promise + 1.45, T.steps + P * 1.0, T.steps + P * 2.3, T.steps + P * 3.6];
+function drawCursor(t) {
+  const on = (t > T.promise + .2 && t < T.code) || (t > T.steps + .15 && t < T.steps + P * 4.6); cursor.style.display = on ? '' : 'none'; if (!on) return;
+  const x = TR(t, CK.map(([tt, v]) => ({ t: tt, v: 0 })).map((k, i) => ({ t: CK[i][0], v: CK[i][1], spring: dflt }))), y = TR(t, CK.map((k) => ({ t: k[0], v: k[2], spring: { k: 160, c: 21 } })));
+  let p = 0; PRESS.forEach(pt => { p += S(t - pt, { k: 1600, c: 60 }) - S(t - pt - .09, { k: 1600, c: 60 }); });
+  cursor.style.transform = `translate(${x + 3 * Math.sin(t * 2.1)}px, ${y + 3 * Math.sin(t * 1.7)}px) scale(${1 - .12 * p})`;
+}
+
+// ================= 3. seek =================
+const out = document.getElementById('out').getContext('2d');
+const blurC = document.createElement('canvas'); blurC.width = W; blurC.height = H; const bctx = blurC.getContext('2d');
+window.seek = t => {
+  // ---- ground ----
+  const src = groundFrame(t);
+  out.globalCompositeOperation = 'source-over'; out.filter = 'none'; out.drawImage(src, 0, 0);
+  bctx.globalCompositeOperation = 'source-over'; bctx.clearRect(0, 0, W, H); bctx.filter = 'blur(22px)'; bctx.drawImage(src, 0, 0); bctx.filter = 'none'; bctx.globalCompositeOperation = 'destination-out';
+  const g = bctx.createRadialGradient(W / 2, H / 2, 200, W / 2, H / 2, 1000); g.addColorStop(0, 'rgba(0,0,0,1)'); g.addColorStop(.5, 'rgba(0,0,0,.55)'); g.addColorStop(1, 'rgba(0,0,0,0)'); bctx.fillStyle = g; bctx.fillRect(0, 0, W, H); out.drawImage(blurC, 0, 0);
+  // dark type band, always: type sits in the dark like the references
+  const v = out.createRadialGradient(W / 2, H / 2, 0, W / 2, H / 2, 900); v.addColorStop(0, 'rgba(3,4,4,.82)'); v.addColorStop(.5, 'rgba(3,4,4,.5)'); v.addColorStop(1, 'rgba(3,4,4,0)'); out.fillStyle = v; out.fillRect(0, 0, W, H);
+  // ---- tilted cards ----
+  const kOn = t >= T.promise && t < T.code, rOn = t >= T.route && t < T.checks;
+  keyCard.m.visible = kOn; routeCard.m.visible = rOn;
+  if (kOn || rOn) {
+    let press = 0; if (kOn) press = clamp(S(t - PRESS[0], { k: 700, c: 42 }));
+    if (kOn) { const u = t - T.promise, e = S(u - .15, dflt), dive = S(t - (T.code - .42), { k: 70, c: 14 });
+      drawKeyCard(t, press); keyCard.m.position.set(0, -1.6 + (1 - e) * -5 + .1 * Math.sin(u), 0 + dive * 15.5); keyCard.m.rotation.set(-.42 + .1 * e + .3 * dive, .1 * Math.sin(u * .5), -.07 * (1 - dive));
+      keyCard.m.position.x = dive * -2.6; }
+    if (rOn) { const u = t - T.route, e = S(u, dflt); drawRouteCard(t); routeCard.m.position.set(.3, -1.1 - (1 - e) * 6, -1.5 + .25 * u); routeCard.m.rotation.set(.18, -.32 + .05 * u, .02); }
+    r.setRenderTarget(null); r.setClearColor(0x000000, 0); const bg = scene.background; r.toneMapping = THREE.NoToneMapping; r.render(cardScene, cardCam); r.toneMapping = THREE.ACESFilmicToneMapping; out.drawImage(r.domElement, 0, 0);
+  }
+  // ---- type ----
+  buildLine(L.hook, t, .05, P / 4, 500, { exit: T.drop - .02 });
+  buildLine(L.isa, t, T.drop, P / 4, 300, { exit: T.doubt - .02 }); slam(L.claim, t, T.drop + .02, T.doubt, 410);
+  buildLine(L.doubt, t, T.doubt, P / 4, 500, { exit: T.turn - .02 }); if (t >= T.doubt && t < T.turn) swap(document.getElementById('dw'), t, T.doubt + P * .5, P / 2, ['Claude?', 'GPT?', 'Gemini?'], '#FF5A1F');
+  buildLine(L.turn, t, T.turn + .1, P / 4, 500, { exit: T.mark - .02 });
+  buildLine(L.promise, t, T.promise, P / 4, 200, { exit: T.code - .3 });
+  buildLine(L.code1, t, T.code, P / 4, 260, { exit: T.code + P * 2 - .02 }); buildLine(L.code2, t, T.code + P * 2, P / 4, 260, { exit: T.route - .02 });
+  buildLine(L.route, t, T.route, P / 5, 150, { exit: T.checks - .02 });
+  buildLine(L.checks, t, T.checks, P / 4, 500, { exit: T.ver - .02, creep: .02 }); if (t >= T.checks && t < T.ver) swap(document.getElementById('cw'), t, T.checks + P, P * .8, ['model identity', 'tool calls', 'parameters honoured', 'silent failures', 'declared context'], '#3DFFB0');
+  buildLine(L.pay, t, T.ver, P / 5, 270, { exit: T.range - .02 }); slam(L.verified, t, T.ver + P, T.range, 410);
+  buildLine(L.range, t, T.range + P * .5, P / 4, 860, { exit: T.steps - .02 });
+  buildLine(L.steps, t, T.steps, P / 4, 220, { exit: T.end - .02 });
+  buildLine(L.inf, t, T.end + 2.0, P / 4, 600, {});
+  // ---- endpoint typing, camera tracking the caret ----
+  const cOn = t >= T.code && t < T.route; show(codeCard, cOn);
+  if (cOn) { const s1 = 'base_url = ', s2 = '"https://sterling.mira.network/v1"', k = Math.floor(clamp((t - (T.code + .45)) / .036, 0, s1.length + s2.length));
+    document.getElementById('ct1').textContent = s1.slice(0, k); document.getElementById('ct2').textContent = s2.slice(0, Math.max(0, k - s1.length));
+    const cw = 40.9 * k; codeCard.style.transform = `translateX(${-Math.max(0, cw - 1250) * .98}px) scale(${1 + .06 * clamp((t - T.code) / 4)})`; codeCard.style.transformOrigin = '30% 50%';
+    const e = S(t - T.code, dflt); codeCard.style.opacity = clamp(e * 1.5); codeCard.style.filter = `blur(${(1 - clamp(e)) * 10}px)`; document.getElementById('caret').style.opacity = (Math.floor(t * 4) % 2 || k < s1.length + s2.length) ? 1 : .2; }
+  // ---- response card, model swapping every 4 frames ----
+  const rOn2 = t >= T.range && t < T.steps; show(respCard, rOn2);
+  if (rOn2) { const u = t - T.range, e = S(u, { k: 300, c: 30 }); respCard.style.transform = `translateY(${(1 - e) * 120}px) scale(${.92 + .08 * e + .012 * u})`; respCard.style.opacity = clamp(e * 1.5); respCard.style.filter = `blur(${(1 - clamp(e)) * 12}px)`;
+    const fam = ['"claude"', '"gpt"', '"gemini"'], k = Math.floor(Math.max(0, u - .5) / (4 / 30)); document.getElementById('rm').textContent = fam[k % 3]; }
+  // ---- three steps ----
+  const sOn = t >= T.steps && t < PRESS[3] + .32; pills.forEach((p, i) => { show(p, sOn); if (!sOn) return; const tp = PRESS[i + 1], e = S(t - (T.steps + .2 + i * .1), { k: 400, c: 30 }), pr = clamp(S(t - tp, { k: 700, c: 42 }));
+    p.style.transform = `translateY(${(1 - e) * 80}px) scale(${(.9 + .1 * e) * (1 + .08 * pr) * (1 - .05 * (S(t - tp, { k: 1600, c: 60 }) - S(t - tp - .09, { k: 1600, c: 60 })))})`; p.style.opacity = clamp(e * 1.5);
+    p.style.background = pr > .5 ? '#0FBF7A' : '#161A19'; p.style.color = pr > .5 ? '#03140D' : 'rgba(255,255,255,.5)'; p.style.boxShadow = pr > .5 ? `0 0 0 2px #3DFFB0, 0 0 ${40 * pr}px rgba(61,255,176,.5)` : 'none'; });
+  show(sub, sOn); if (sOn) { sub.style.top = '700px'; const e = S(t - PRESS[2], dflt); sub.style.opacity = clamp(e) * .9; sub.style.filter = `blur(${(1 - clamp(e)) * 8}px)`; }
+  // the last pill grows into the next world
+  const gOn = t >= PRESS[3] && t < T.end + 1.1; show(pillFill, gOn);
+  if (gOn) { const g2 = S(t - (PRESS[3] + .12), { k: 60, c: 13 }); pillFill.style.transform = `translate(${1250 + (-1250 - 300) * g2 * .0}px, 470px)`; pillFill.style.left = '0px';
+    const sx = 1 + g2 * 9, x0 = 1250 + 210, y0 = 540; pillFill.style.transformOrigin = '50% 50%'; pillFill.style.transform = `translate(${x0 - 210 + (960 - x0) * g2}px, ${y0 - 70 + (540 - y0) * g2}px) scale(${sx}, ${1 + g2 * 14})`;
+    pillFill.style.opacity = t < T.end ? 1 : 1 - clamp((t - T.end) / .12); }
+  // ---- the mark and the name ----
+  const mOn = t >= T.mark && t < T.promise; show(bigMark, mOn);
+  if (mOn) { const u = t - T.mark, s = S(u, { k: 300, c: 34 }), mv = S(t - T.name, { k: 140, c: 23 });
+    const big = 360, small = 119.5, sz = lerp(big, small, mv), x = lerp(960 - big / 2, 632, mv), y = lerp(540 - big / 2 * 1.025, 474, mv);
+    bigMark.style.transform = `translate(${x}px, ${y}px) scale(${sz / big * (1.25 - .25 * s) * (1 - .04 * u * (1 - mv))})`; bigMark.style.transformOrigin = '0 0'; bigMark.style.filter = `blur(${(1 - clamp(s)) * 18}px)`; bigMark.style.opacity = clamp(s * 2) * (t > T.promise - .12 ? 1 - clamp((t - (T.promise - .12)) / .12) : 1); }
+  const endOn = t >= T.end + .3; const nOn = (t >= T.name && t < T.promise) || endOn;
+  letters.forEach((lt, i) => { show(lt, nOn); if (!nOn) return; const t0 = (endOn ? T.end + .75 : T.name + .2) + i * .085, s = S(t - t0, { k: 420, c: 30 });
+    const r0 = M.mulberry32(17 + i)(), r1 = M.mulberry32(91 + i)(); const dx = (r0 - .5) * 900, dy = (r1 - .5) * 620;
+    const baseX = 632 + 119.5 + 37.6, baseY = endOn ? 386 : 470; const out2 = endOn ? 0 : clamp((t - (T.promise - .12)) / .12);
+    lt.style.transform = `translate(${baseX + (1 - s) * dx}px, ${baseY + (1 - s) * dy}px) rotate(${(1 - s) * (r0 - .5) * 60}deg) scale(${1 + (1 - s) * .4})`;
+    lt.style.filter = `blur(${(1 - clamp(s)) * 8 + out2 * 10}px)`; lt.style.opacity = clamp(s * 2) * (1 - out2); });
+  if (endOn) { show(bigMark, true); const s = S(t - (T.end + .3), { k: 300, c: 34 }); const sz = 119.5;
+    bigMark.style.transformOrigin = '0 0'; bigMark.style.transform = `translate(632px, ${390 + (1 - s) * 0}px) scale(${sz / 360 * (1.6 - .6 * s)})`; bigMark.style.filter = `blur(${(1 - clamp(s)) * 14}px)`; bigMark.style.opacity = clamp(s * 2); }
+  // float the lockup a little at the end
+  // ---- URL pill with a light drawing its outline ----
+  const uOn = t >= T.end + 2.4; show(urlPill, uOn); show(urlRing, uOn); show(powered, t >= T.end + 3.0);
+  if (uOn) { const e = S(t - (T.end + 2.4), dflt); urlPill.style.top = '700px'; urlPill.style.transform = `translateY(${(1 - e) * 30}px)`; urlPill.style.opacity = clamp(e * 1.5); urlPill.style.filter = `blur(${(1 - clamp(e)) * 8}px)`;
+    urlRing.style.top = '690px'; const c = urlRing.getContext('2d'); c.clearRect(0, 0, 460, 96); const d = clamp(S(t - (T.end + 2.6), { k: 18, c: 8.5 })); const per = 2 * (440 - 76) + Math.PI * 76;
+    c.setLineDash([per * d, per]); c.lineWidth = 2.5; const gr = c.createLinearGradient(0, 0, 460, 0); gr.addColorStop(0, '#0FBF7A'); gr.addColorStop(.6, '#3DFFB0'); gr.addColorStop(1, '#D8FF7A'); c.strokeStyle = gr;
+    c.shadowColor = 'rgba(61,255,176,.8)'; c.shadowBlur = 10 * (1 - d) + 4; rr(c, 11, 11, 438, 74, 37); c.stroke(); }
+  if (t >= T.end + 3.0) { const e = S(t - (T.end + 3.0), dflt); powered.style.top = '830px'; powered.style.opacity = .55 * clamp(e); powered.style.transform = `translateY(${(1 - e) * 16}px)`; }
+  drawCursor(t);
+};
+await Promise.all([document.fonts.load("500 60px 'Z'"), document.fonts.load("500 30px 'P'"), document.fonts.load("600 30px 'P'"), ...[...document.images].map(i => i.decode().catch(() => {}))]);
+window.seek(0); window.__ready = true;
+</script>

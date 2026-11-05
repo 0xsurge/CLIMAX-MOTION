@@ -6,3 +6,5 @@ test/
 sound/*.mp4
 sound/*.wav
 sound/*.wav
+renders/
+review/
