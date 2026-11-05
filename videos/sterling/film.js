@@ -14,9 +14,9 @@ const A = 'assets/net/', U = 'assets/ui/', M = 'assets/mira/net/';
 
 // ---------- TIMELINE (beats) ----------
 const B = { w1: 0, w2: 2, drop: 4, pills: 5, label: 6.5, suck: 10.4, zoom: 11.1, unlock: 11.6, h1: 12.6, sub: 13.6,
-  card: 20, steps: [21.5, 23, 24.5], grow: 27.4, routed: 27.9, cards: 32.6, focus: [33.4, 35.9, 38.4, 40.9, 43.4], gather: 45,
+  card: 20, steps: [21.5, 23, 24.5], grow: 27.4, routed: 28.5, cards: 32.6, focus: [33.4, 35.9, 38.4, 40.9, 43.4], gather: 45,
   three: 45.6, deal: 49.2, keyIn: 50.6, code: 55.2, url: 57, fold: 60.6, onekey: 61.2, lock: 64.4, btn: 65.6, click: 67,
-  mira: 68.4, light: [69, 70.6, 72.2, 74], miraL: 69.2, tag: 70.2 };
+  mira: 68.4, light: [69, 70.6, 72.2, 74, 75.4], miraL: 69.2, tag: 70.2 };
 const T = Object.fromEntries(Object.entries(B).map(([k, v]) => [k, Array.isArray(v) ? v.map(b) : b(v)]));
 window.TIMELINE = { BEAT, beats: B, seconds: T };
 
@@ -55,7 +55,8 @@ function Line(parent, o) {   // a centred flex line of masked words
 }
 
 // ---------- layers: paper, the aurora (opened through the keyhole), the world under the camera, the Mira frame, light sweeps ----------
-mk(STAGE, { width: W, height: H, background: `radial-gradient(120% 100% at 50% 40%,#FFFFFF 0%,${PAPER} 60%,#EAF1EC 100%)` });
+const PAGEBG = `radial-gradient(120% 100% at 50% 40%,#FFFFFF 0%,${PAPER} 60%,#EAF1EC 100%)`;
+mk(STAGE, { width: W, height: H, background: PAGEBG });
 const AUR = mk(STAGE, { width: W, height: H, overflow: 'hidden' }, `<img src="${A}aurora.webp" style="left:-120px;top:-90px;width:2160px;height:1260px;object-fit:cover">`);
 const WORLD = mk(STAGE, { width: W, height: H, transformOrigin: '0 0' });
 const MIRA = mk(STAGE, { width: W, height: H, overflow: 'hidden' });
@@ -101,7 +102,7 @@ const H1c = Line(AUR, { y: 670, h: 50, font: `400 32px/50px ${BODY}`, words: ['S
 const HC = { x: 560, y: 180, w: 800, h: 800 * 838 / 1026 };
 const HCARD = mk(AUR, { left: HC.x, top: HC.y, width: HC.w, height: HC.h, borderRadius: 30, overflow: 'hidden', boxShadow: '0 40px 90px rgba(0,0,0,.35)', transformOrigin: '50% 50%' }, `<img src="${U}herocard.png" style="left:0;top:0;width:${HC.w}px;height:${HC.h}px">`);
 const STEPGLOW = [382, 499, 616].map(y => mk(AUR, { left: 592, top: y, width: 740, height: 112, borderRadius: 18, boxShadow: `0 0 0 3px ${MINT}, 0 0 36px rgba(89,217,163,.55)` }));
-const GROWR = mk(STAGE, { background: PAPER });   // the card grows into the paper page
+const GROWR = mk(STAGE, { backgroundImage: PAGEBG, backgroundSize: `${W}px ${H}px`, backgroundRepeat: 'no-repeat' });   // the card grows into the paper page
 
 // ---------- scene 3: routed only to verified providers, and the five real checks ----------
 const R1 = Line(WORLD, { y: 410, h: 124, font: `500 104px/124px ${DISP}`, words: ['Routed only to providers'] });
@@ -146,7 +147,7 @@ const keyOn = t => (t < T.unlock + 1.4) || (t > T.keyIn - .05 && t < T.keyIn + .
 
 window.seek = function (t) {
   camera(t); sweep(t);
-  const inAur = t >= T.unlock - .05 && t < T.grow + .7, inMira = t >= T.mira + .5;
+  const inAur = t >= T.unlock - .05 && t < T.grow + .48, inMira = t >= T.mira + .5;
   // the hook
   L1.upd(t, -.25, T.w2 - .05, WHIP); L1.box.style.transformOrigin = '50% 50%'; L1.box.style.transform = `scale(${1 + .5 * (1 - S(t, -.25, WHIP))})`;
   L2.upd(t, T.w2 - .05, T.drop - .05, WHIP); L2.box.style.transformOrigin = '50% 50%'; L2.box.style.transform = `scale(${1 + .5 * (1 - S(t, T.w2 - .05, WHIP))})`;
@@ -173,10 +174,10 @@ window.seek = function (t) {
     const ce = S(t, T.card, 'default'); vis(HCARD, ce > .01); put(HCARD, { y: (1 - ce) * 1000 + 6 * Math.sin(t * 1.4), s: .94 + .06 * ce });
     STEPGLOW.forEach((g, i) => { const k = bump(t, T.steps[i], .5) * (1 - S(t, T.grow, 'snappy')); vis(g, k > .01); g.style.opacity = k; put(g, { y: (1 - ce) * 1000 + 6 * Math.sin(t * 1.4) }); }); }
   // the card grows into the paper page
-  const gr = S(t, T.grow, 'default'); vis(GROWR, t > T.grow && t < T.grow + .75);
+  const gr = S(t, T.grow, 'default'); vis(GROWR, t > T.grow && t < T.grow + .48);
   if (t > T.grow) { const x0 = HC.x, y0 = HC.y + 6 * Math.sin(t * 1.4), w = lerp(HC.w, W + 80, gr), h = lerp(HC.h, H + 80, gr);
-    Object.assign(GROWR.style, { left: lerp(x0, -40, gr) + 'px', top: lerp(y0, -40, gr) + 'px', width: w + 'px', height: h + 'px', borderRadius: lerp(30, 0, gr) + 'px' }); }
-  vis(WORLD, !inAur || (t < T.unlock + 1.2 && r < 1110)); WORLD.style.opacity = 1;
+    const gl = lerp(x0, -40, gr), gt = lerp(y0, -40, gr); Object.assign(GROWR.style, { left: gl + 'px', top: gt + 'px', width: w + 'px', height: h + 'px', borderRadius: lerp(30, 0, gr) + 'px', backgroundPosition: `${-gl}px ${-gt}px` }); }
+  vis(WORLD, !inAur || t < T.unlock || KP[2](t) < 34); WORLD.style.opacity = 1;
   // routed + the five checks: the focused card large and sharp, the rest small and blurred
   R1.upd(t, T.routed, T.cards - .1); R2.upd(t, T.routed + .1, T.cards - .05); LB2.upd(t, T.cards + .3, T.gather, 'default');
   const ve = S(t, T.cards, 'default'), vg = S(t, T.gather, 'snappy');
@@ -207,7 +208,7 @@ window.seek = function (t) {
   // the button grows into Mira's frame; the light moves across the three bars; the tagline rises
   vis(MIRA, t > T.mira); const mr = 2300 * S(t, T.mira, { k: 30, c: 11 });
   MIRA.style.clipPath = t < T.mira + 1.5 ? `circle(${mr}px at 960px 612px)` : 'none';
-  const lt = track(t, [{ t: 0, v: 1 }, ...T.light.map((l, i) => ({ t: l, v: [0, 1, 2, 1][i], spring: SOFT }))]);
+  const lt = track(t, [{ t: 0, v: 1 }, ...T.light.map((l, i) => ({ t: l, v: [0, 1, 2, 1, 0][i], spring: SOFT }))]);
   MB.forEach((e, i) => { e.style.opacity = clamp(1 - Math.abs(i - lt)); put(e, { x: -60 * (t - T.mira) / 4, y: -24 * (t - T.mira) / 4, s: 1 + .03 * (t - T.mira) / 4 }); });
   MLB.upd(t, T.miraL, 999, 'default'); MTAG.upd(t, T.tag, 999, 'heavy'); MTAG.box.style.transform = `translateY(${6 * Math.sin(t * 1.3)}px)`;
 };
