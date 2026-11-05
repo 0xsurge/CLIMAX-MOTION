@@ -182,6 +182,7 @@ const bigMark = el(`<div class="ab" style="width:360px;height:369px">${MARKSVG}<
 const letters = window.WORD_LETTERS.map(d => el(`<svg class="let" viewBox="149.98 188.034 213.95 55.806"><path d="${d}" fill="#fff"/></svg>`, t => t < T.end ? 'name' : 'end'));
 const LETX = [0, 1, 2, 3, 4, 5, 6, 7].map(i => [169, 203, 230, 259, 276, 288, 312, 347][i]); // letter centres in viewBox units
 const urlPill = el(`<div style="position:absolute;left:740px;top:0;width:440px;height:76px;border-radius:38px;display:flex;align-items:center;justify-content:center;font:500 32px P;color:#E8F2EE;background:#0D1010"><span>sterling.mira.network</span></div>`, 'end');
+urlPill.dataset.d = 'flex';
 const urlRing = el(`<canvas width="460" height="96" style="position:absolute;left:730px;top:0"></canvas>`, 'end');
 const powered = el(`<img src="../assets/poweredby.svg" style="position:absolute;left:840px;top:0;width:240px;filter:invert(1)">`, 'end');
 const cursor = el(`<svg id="cursor" viewBox="0 0 46 50"><path d="M4 4 L42 20 L24 25 L18 44 Z" fill="#0B0C0D" stroke="#fff" stroke-width="4.2" stroke-linejoin="round"/></svg>`, t => t < T.code + .5 ? 'promise' : 'steps');
@@ -201,7 +202,7 @@ function slam(node, t, t0, exit, y) { exit += .3; const vis = t >= t0 && t < exi
 function swap(span, t, t0, step, list, color) { const k = clamp(Math.floor((t - t0) / step), 0, list.length - 1), u = t - (t0 + k * step);
   span.textContent = list[k]; const s = S(u, { k: 700, c: 42 }); span.style.transform = `translateX(${(1 - s) * 130}px)`; span.style.filter = `blur(${(1 - clamp(s)) * 10}px)`;
   const tr = (1 - clamp(s)); span.style.textShadow = tr > .02 ? `${-40 * tr}px 0 18px ${color}${Math.round(140 * tr).toString(16).padStart(2, '0')}, ${-100 * tr}px 0 34px ${color}${Math.round(90 * tr).toString(16).padStart(2, '0')}` : 'none'; }
-const show = (n, on) => { n.style.display = on ? '' : 'none'; };
+const show = (n, on) => { n.style.display = on ? (n.dataset.d || '') : 'none'; };
 
 // ---- cursor path: keys of [t, x, y], each a spring; press times ----
 const CK = [[0, 2200, 1200], [T.promise + .9, 1395, 640], [T.promise + 1.9, 1395, 640], [T.code - .05, 2300, 900], [T.steps + .2, 1200, 760], [T.steps + P * .45, 470, 590], [T.steps + P * 1.75, 960, 590], [T.steps + P * 3.05, 1460, 590], [T.steps + P * 4.2, 1460, 590], [T.steps + P * 4.6, 2300, 1300]];
@@ -272,7 +273,7 @@ window.seek = t => {
   buildLine(L.checks, t, T.checks, P / 4, 500, { exit: T.ver - .02, creep: .02 }); if (t >= T.checks && t < T.ver) swap(document.getElementById('cw'), t, T.checks + P, P * .8, ['model identity', 'tool calls', 'parameters honoured', 'silent failures', 'declared context'], '#3DFFB0');
   buildLine(L.pay, t, T.ver, P / 5, 270, { exit: T.range - .02 }); slam(L.verified, t, T.ver + P, T.range, 410);
   buildLine(L.range, t, T.range + P * .5, P / 4, 860, { exit: T.steps - .02 });
-  buildLine(L.steps, t, T.steps, P / 4, 220, { exit: T.end - .02 });
+  buildLine(L.steps, t, T.steps, P / 4, 220, { exit: PRESS[3] - .1 });
   buildLine(L.inf, t, T.end + 2.0, P / 4, 600, {});
   // ---- endpoint typing, camera tracking the caret ----
   const cOn = t >= T.code && t < T.route + .35; show(codeCard, cOn);
