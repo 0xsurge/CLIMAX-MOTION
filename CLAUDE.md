@@ -75,3 +75,6 @@ HeyGen's HyperFrames agent skills (hyperframes, hyperframes-cli, hyperframes-reg
 slideshow, style-sampling) live in .claude/skills, from github.com/heygen-com/hyperframes at commit 2679bcd (Apache 2.0). Use them when a film is
 built in HyperFrames. Run its CLI through .claude/skills/motion-reel/scripts/hyperframes.sh (pinned 0.9.13, telemetry off, local Chromium). These rules win where its defaults differ: springs only, one continuous take,
 no light leaks, glitches or film grain, real brand assets only.
+
+## Launch style
+For any launch, promo or product film, read .claude/skills/launch-style/SKILL.md first (the look reverse-engineered from the six reference launches the user chose; study in videos/reference/launch-study/STUDY.md). Never use whoosh/swish sounds on movement or tonal/melodic SFX that follow motion.
