@@ -78,7 +78,7 @@ function renderWorld(t, chapter) {
   const env = pm.fromScene(envScene, .015); scene.environment = env.texture;
   const c = camAt(t);
   cam.position.set(c[0] + .35 * Math.sin(t * .37), c[1] + .2 * Math.sin(t * .29 + 1), c[2] - .03 * t); cam.lookAt(c[3], c[4], 0);
-  world.rotation.y = c[5] + .04 * Math.sin(t * .21); tick.rotation.y = -.6 + .12 * Math.sin(t * .35); rA.rotation.z = t * .01; tick2.rotation.x = -.2 + .1 * Math.sin(t * .23);
+  world.rotation.y = c[5] + .04 * Math.sin(t * .21) + CAM[0] * .00022; cam.position.y += -CAM[1] * .0016; cam.fov = 30 / (1 + (CAM[2] - 1) * .55); cam.updateProjectionMatrix(); cam.rotateZ(CAM[3] * Math.PI / 180 * .6); tick.rotation.y = -.6 + .12 * Math.sin(t * .35); rA.rotation.z = t * .01; tick2.rotation.x = -.2 + .1 * Math.sin(t * .23);
   r.setRenderTarget(null); r.setClearColor(0x030404, 1); r.render(scene, cam); env.dispose();
 }
 // ---- sweep compositing ----
@@ -146,54 +146,56 @@ function drawRouteCard(t) { const c = cardBase(routeCard); const rows = [['Provi
 
 // ================= 2. DOM layer =================
 const ui = document.getElementById('ui');
-const el = (html) => { const d = document.createElement('div'); d.innerHTML = html.trim(); const e = d.firstChild; ui.appendChild(e); return e; };
+const WRAPS = [];
+const el = (html, key) => { const wr = document.createElement('div'); wr.style.cssText = 'position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0'; ui.appendChild(wr);
+  const d = document.createElement('div'); d.innerHTML = html.trim(); const e = d.firstChild; wr.appendChild(e); WRAPS.push({ wr, key }); return e; };
 const words = (cls, list) => `<div class="line ${cls}">${list.map(([w, c]) => `<span class="w ${c || ''}">${w}</span>`).join('')}</div>`;
 const L = {
-  hook: el(words('cap', [['A'], ['model'], ['name'], ['on'], ['an'], ['API']])),
-  isa: el(words('cap', [['is'], ['a']])),
-  claim: el(`<div class="line slam"><span class="w gc">claim.</span></div>`),
-  doubt: el(`<div class="line cap"><span class="w">Is</span><span class="w">it</span><span class="w">really</span><span class="w gc" id="dw" style="min-width:360px;text-align:left">Claude?</span></div>`),
-  turn: el(words('cap', [['Time'], ['to'], ['check', 'gv'], ['it.']])),
-  promise: el(words('cap', [['One'], ['key.'], ['Every', 'gv'], ['model.', 'gv']])),
-  code1: el(words('cap', [['Change'], ['the'], ['endpoint.']])),
-  code2: el(words('cap', [['Keep'], ['your'], ['workflow.']])),
-  route: el(words('cap', [['Routed'], ['only'], ['to'], ['verified', 'gv'], ['providers.']])),
-  checks: el(`<div class="line cap"><span class="w">Checked</span><span class="w">for</span><span class="w gv" id="cw" style="min-width:640px;text-align:left">model identity</span></div>`),
-  pay: el(words('cap', [['The'], ['model'], ['you'], ['pay'], ['for.']])),
-  verified: el(`<div class="line slam"><span class="w gv">Verified.</span></div>`),
-  range: el(words('cap', [['One'], ['key.'], ['Every'], ['model.']])),
-  steps: el(words('cap', [['Three'], ['steps.'], ['Then', 'gv'], ["you're", 'gv'], ['in.', 'gv']])),
-  inf: el(words('cap', [['Verified'], ['inference.']])),
+  hook: el(words('cap', [['A'], ['model'], ['name'], ['on'], ['an'], ['API']]), 'hook'),
+  isa: el(words('cap', [['is'], ['a']]), 'drop'),
+  claim: el(`<div class="line slam"><span class="w gc">claim.</span></div>`, 'drop'),
+  doubt: el(`<div class="line cap"><span class="w">Is</span><span class="w">it</span><span class="w">really</span><span class="w gc" id="dw" style="min-width:360px;text-align:left">Claude?</span></div>`, 'doubt'),
+  turn: el(words('cap', [['Time'], ['to'], ['check', 'gv'], ['it.']]), 'turn'),
+  promise: el(words('cap', [['One'], ['key.'], ['Every', 'gv'], ['model.', 'gv']]), 'promise'),
+  code1: el(words('cap', [['Change'], ['the'], ['endpoint.']]), 'code'),
+  code2: el(words('cap', [['Keep'], ['your'], ['workflow.']]), 'code'),
+  route: el(words('cap', [['Routed'], ['only'], ['to'], ['verified', 'gv'], ['providers.']]), 'route'),
+  checks: el(`<div class="line cap"><span class="w">Checked</span><span class="w">for</span><span class="w gv" id="cw" style="min-width:640px;text-align:left">model identity</span></div>`, 'checks'),
+  pay: el(words('cap', [['The'], ['model'], ['you'], ['pay'], ['for.']]), 'ver'),
+  verified: el(`<div class="line slam"><span class="w gv">Verified.</span></div>`, 'ver'),
+  range: el(words('cap', [['One'], ['key.'], ['Every'], ['model.']]), 'range'),
+  steps: el(words('cap', [['Three'], ['steps.'], ['Then', 'gv'], ["you're", 'gv'], ['in.', 'gv']]), 'steps'),
+  inf: el(words('cap', [['Verified'], ['inference.']]), 'end'),
 };
 L.inf.style.fontSize = '46px';
 const codeCard = el(`<div class="card" style="left:120px;top:440px;width:1680px;height:220px;overflow:hidden"><div style="position:absolute;left:40px;right:40px;top:0;height:3px;background:linear-gradient(90deg,transparent,#3DFFB0,transparent)"></div>
-  <div id="codeIn" class="mono" style="position:absolute;left:70px;top:72px;font-size:68px;color:#9AA39E;white-space:nowrap"><span id="ct1"></span><span id="ct2" style="color:#3DFFB0"></span><span id="caret" style="display:inline-block;width:6px;height:72px;background:#3DFFB0;vertical-align:-12px;margin-left:4px"></span></div></div>`);
+  <div id="codeIn" class="mono" style="position:absolute;left:70px;top:72px;font-size:68px;color:#9AA39E;white-space:nowrap"><span id="ct1"></span><span id="ct2" style="color:#3DFFB0"></span><span id="caret" style="display:inline-block;width:6px;height:72px;background:#3DFFB0;vertical-align:-12px;margin-left:4px"></span></div></div>`, 'code');
 const respCard = el(`<div class="card" style="left:560px;top:230px;width:800px;height:520px"><div style="position:absolute;left:40px;right:40px;top:0;height:3px;background:linear-gradient(90deg,transparent,#3DFFB0,transparent)"></div>
   <div style="position:absolute;left:64px;top:64px;font:600 22px P;letter-spacing:.2em;color:rgba(255,255,255,.45)">RESPONSE</div>
   <div class="mono" style="position:absolute;left:64px;top:130px;font-size:44px;color:#9AA39E">"model":</div>
   <div class="mono" id="rm" style="position:absolute;left:64px;top:205px;font-size:76px;color:#fff">"claude"</div>
-  <div style="position:absolute;left:64px;top:370px;font:600 36px P;color:#3DFFB0;display:flex;align-items:center;gap:14px"><svg width="38" height="39" viewBox="82.5 188 51.3 52.6"><path d="M84.5347 209.479L99.1184 223.369L131.758 190.034V206.007L99.8128 238.647L84.5347 224.063V209.479Z" fill="#3DFFB0"/><path d="M85.2292 191.424H101.202V197.674H85.2292V191.424Z" fill="#3DFFB0"/></svg>Verified provider</div></div>`);
-const pills = ['Create your key', 'Add credit', 'Plug into your app'].map((s, i) => el(`<div class="pill" style="left:${250 + i * 500}px;top:470px;width:420px;height:140px;background:#161A19;color:rgba(255,255,255,.5)">${s}</div>`));
-const sub = el(`<div class="line" style="font:500 32px P;color:rgba(255,255,255,.55)">USDC or MIRA. Pay as you go.</div>`);
+  <div style="position:absolute;left:64px;top:370px;font:600 36px P;color:#3DFFB0;display:flex;align-items:center;gap:14px"><svg width="38" height="39" viewBox="82.5 188 51.3 52.6"><path d="M84.5347 209.479L99.1184 223.369L131.758 190.034V206.007L99.8128 238.647L84.5347 224.063V209.479Z" fill="#3DFFB0"/><path d="M85.2292 191.424H101.202V197.674H85.2292V191.424Z" fill="#3DFFB0"/></svg>Verified provider</div></div>`, 'range');
+const pills = ['Create your key', 'Add credit', 'Plug into your app'].map((s, i) => el(`<div class="pill" style="left:${250 + i * 500}px;top:470px;width:420px;height:140px;background:#161A19;color:rgba(255,255,255,.5)">${s}</div>`, 'steps'));
+const sub = el(`<div class="line" style="font:500 32px P;color:rgba(255,255,255,.55)">USDC or MIRA. Pay as you go.</div>`, 'steps');
 const MARKSVG = `<svg viewBox="82.5347 188.034 51.3 52.6" width="100%" height="100%"><path d="M84.5347 209.479L99.1184 223.369L131.758 190.034V206.007L99.8128 238.647L84.5347 224.063V209.479Z" fill="#fff"/><path d="M85.2292 191.424H101.202V197.674H85.2292V191.424Z" fill="#fff"/></svg>`;
-const bigMark = el(`<div class="ab" style="width:360px;height:369px">${MARKSVG}</div>`);
-const letters = window.WORD_LETTERS.map(d => el(`<svg class="let" viewBox="149.98 188.034 213.95 55.806"><path d="${d}" fill="#fff"/></svg>`));
+const bigMark = el(`<div class="ab" style="width:360px;height:369px">${MARKSVG}</div>`, t => t < T.end ? 'name' : 'end');
+const letters = window.WORD_LETTERS.map(d => el(`<svg class="let" viewBox="149.98 188.034 213.95 55.806"><path d="${d}" fill="#fff"/></svg>`, t => t < T.end ? 'name' : 'end'));
 const LETX = [0, 1, 2, 3, 4, 5, 6, 7].map(i => [169, 203, 230, 259, 276, 288, 312, 347][i]); // letter centres in viewBox units
-const urlPill = el(`<div style="position:absolute;left:740px;top:0;width:440px;height:76px;border-radius:38px;display:flex;align-items:center;justify-content:center;font:500 32px P;color:#E8F2EE;background:#0D1010"><span>sterling.mira.network</span></div>`);
-const urlRing = el(`<canvas width="460" height="96" style="position:absolute;left:730px;top:0"></canvas>`);
-const powered = el(`<img src="../assets/poweredby.svg" style="position:absolute;left:840px;top:0;width:240px;filter:invert(1)">`);
-const cursor = el(`<svg id="cursor" viewBox="0 0 46 50"><path d="M4 4 L42 20 L24 25 L18 44 Z" fill="#0B0C0D" stroke="#fff" stroke-width="4.2" stroke-linejoin="round"/></svg>`);
-const pillFill = el(`<div style="position:absolute;left:0;top:0;width:420px;height:140px;border-radius:22px;background:#0FBF7A"></div>`);
+const urlPill = el(`<div style="position:absolute;left:740px;top:0;width:440px;height:76px;border-radius:38px;display:flex;align-items:center;justify-content:center;font:500 32px P;color:#E8F2EE;background:#0D1010"><span>sterling.mira.network</span></div>`, 'end');
+const urlRing = el(`<canvas width="460" height="96" style="position:absolute;left:730px;top:0"></canvas>`, 'end');
+const powered = el(`<img src="../assets/poweredby.svg" style="position:absolute;left:840px;top:0;width:240px;filter:invert(1)">`, 'end');
+const cursor = el(`<svg id="cursor" viewBox="0 0 46 50"><path d="M4 4 L42 20 L24 25 L18 44 Z" fill="#0B0C0D" stroke="#fff" stroke-width="4.2" stroke-linejoin="round"/></svg>`, t => t < T.code + .5 ? 'promise' : 'steps');
+const pillFill = el(`<div style="position:absolute;left:0;top:0;width:420px;height:140px;border-radius:22px;background:#0FBF7A"></div>`, 'steps');
 
 // ---- type helpers (pure functions of t) ----
 function buildLine(node, t, t0, step, y, { exit = Infinity, creep = .035, sideways = 34 } = {}) {
-  const ws = node.children; let vis = t >= t0 - .01 && t < exit + .14; node.style.display = vis ? 'flex' : 'none'; if (!vis) return;
+  exit += .3; const ws = node.children; let vis = t >= t0 - .01 && t < exit + .14; node.style.display = vis ? 'flex' : 'none'; if (!vis) return;
   const life = t - t0, ex = clamp((t - exit) / .12);
   node.style.top = y + 'px'; node.style.transform = `translateX(${-18 * clamp(life / 2.5) - 40 * ex}px) scale(${1 - creep * clamp(life / 2.5)})`; node.style.filter = ex > 0 ? `blur(${10 * ex}px)` : '';
   node.style.opacity = 1 - ex;
   for (let i = 0; i < ws.length; i++) { const s = S(t - (t0 + i * step), { k: 900, c: 50 }); const w = ws[i]; w.style.opacity = clamp(s * 1.4); w.style.filter = `blur(${(1 - clamp(s)) * 12}px)`; w.style.transform = `translateX(${(1 - s) * sideways}px)`; }
 }
-function slam(node, t, t0, exit, y) { const vis = t >= t0 && t < exit; node.style.display = vis ? 'flex' : 'none'; if (!vis) return;
+function slam(node, t, t0, exit, y) { exit += .3; const vis = t >= t0 && t < exit; node.style.display = vis ? 'flex' : 'none'; if (!vis) return;
   const u = t - t0, s = S(u, { k: 520, c: 46 }); node.style.top = y + 'px';
   node.style.transform = `scale(${(1.3 - .3 * s) * (1 - .1 * u)})`; node.style.filter = `blur(${(1 - clamp(s)) * 22}px)`; node.style.opacity = clamp(s * 2); }
 function swap(span, t, t0, step, list, color) { const k = clamp(Math.floor((t - t0) / step), 0, list.length - 1), u = t - (t0 + k * step);
@@ -205,33 +207,59 @@ const show = (n, on) => { n.style.display = on ? '' : 'none'; };
 const CK = [[0, 2200, 1200], [T.promise + .9, 1395, 640], [T.promise + 1.9, 1395, 640], [T.code - .05, 2300, 900], [T.steps + .2, 1200, 760], [T.steps + P * .45, 470, 590], [T.steps + P * 1.75, 960, 590], [T.steps + P * 3.05, 1460, 590], [T.steps + P * 4.2, 1460, 590], [T.steps + P * 4.6, 2300, 1300]];
 const PRESS = [T.promise + 1.45, T.steps + P * 1.0, T.steps + P * 2.3, T.steps + P * 3.6];
 function drawCursor(t) {
-  const on = (t > T.promise + .2 && t < T.code) || (t > T.steps + .15 && t < T.steps + P * 4.6); cursor.style.display = on ? '' : 'none'; if (!on) return;
+  const on = (t > T.promise + .2 && t < T.code + .35) || (t > T.steps + .15 && t < T.steps + P * 4.6); cursor.style.display = on ? '' : 'none'; if (!on) return;
   const x = TR(t, CK.map(([tt, v]) => ({ t: tt, v: 0 })).map((k, i) => ({ t: CK[i][0], v: CK[i][1], spring: dflt }))), y = TR(t, CK.map((k) => ({ t: k[0], v: k[2], spring: { k: 160, c: 21 } })));
   let p = 0; PRESS.forEach(pt => { p += S(t - pt, { k: 1600, c: 60 }) - S(t - pt - .09, { k: 1600, c: 60 }); });
   cursor.style.transform = `translate(${x + 3 * Math.sin(t * 2.1)}px, ${y + 3 * Math.sin(t * 1.7)}px) scale(${1 - .12 * p})`;
 }
 
+// ================= 2b. the film camera =================
+// Every beat has a place on one big canvas; one camera travels between them (pans, tilts, push-ins, a slight roll),
+// each move a spring, plus a sway that returns to centre. The chrome world follows with parallax.
+const SP = { hook: [0, 0], drop: [0, 900], doubt: [1700, 900], turn: [1700, 900], mark: [1700, -150], name: [1700, -150], promise: [3300, -150], code: [3300, 950], route: [4900, 950], checks: [4900, -150], ver: [4900, -150], range: [6500, -150], steps: [6500, 950], end: [6500, 950] };
+const SEQ = ['hook', 'drop', 'doubt', 'turn', 'mark', 'name', 'promise', 'code', 'route', 'checks', 'ver', 'range', 'steps', 'end'];
+const ZK = { hook: .93, drop: 1.07, doubt: .97, turn: 1.12, mark: 1.0, name: .94, promise: 1.02, code: 1.07, route: .95, checks: 1.04, ver: 1.13, range: .96, steps: 1.04, end: .9 };
+const RK = { hook: 0, drop: -1.4, doubt: 1.1, turn: 0, mark: -.8, name: 0, promise: 1.2, code: -1, route: 1.3, checks: -1.1, ver: 0, range: 1, steps: -1.2, end: 0 };
+const LEAD = .32, MOVE = { k: 26, c: 9.2 };
+const camKeys = j => [{ t: 0, v: j < 2 ? SP.hook[j] : j === 2 ? ZK.hook : RK.hook }, ...SEQ.slice(1).map(k => ({ t: T[k] - LEAD, v: j < 2 ? SP[k][j] : j === 2 ? ZK[k] : RK[k], spring: j < 2 ? MOVE : j === 2 ? { k: 2.6, c: 3.1 } : { k: 8, c: 4.6 } }))];
+const CK0 = camKeys(0), CK1 = camKeys(1), CK2 = camKeys(2), CK3 = camKeys(3);
+const caretX = t => { const k = Math.floor(clamp((t - (T.code + .45)) / .036, 0, 45)); return Math.max(0, 40.9 * k - 1250) * .98; };
+function filmCam(t) {
+  let x = TR(t, CK0), y = TR(t, CK1), z = TR(t, CK2), rl = TR(t, CK3);
+  // ride along with the typing, then hand the offset back through a spring
+  if (t >= T.code) { const fin = caretX(T.route); x += t < T.route ? caretX(t) : fin * (1 - S(t - T.route, MOVE)); }
+  x += 16 * Math.sin(t * .52) + 7 * Math.sin(t * 1.13); y += 10 * Math.sin(t * .41 + 1) + 4 * Math.sin(t * .97);
+  return [x, y, z, rl];
+}
+const sceneOf = t => { let k = 'hook'; SEQ.forEach(s2 => { if (t >= T[s2]) k = s2; }); return k; };
+let CAM = [0, 0, 1, 0];
 // ================= 3. seek =================
 const out = document.getElementById('out').getContext('2d');
 const blurC = document.createElement('canvas'); blurC.width = W; blurC.height = H; const bctx = blurC.getContext('2d');
 window.seek = t => {
+  CAM = filmCam(t); const prev = filmCam(t - 1 / 30); const vel = Math.hypot(CAM[0] - prev[0], CAM[1] - prev[1]) * CAM[2]; const mb = clamp((vel - 8) * .055, 0, 9);
+  WRAPS.forEach(({ wr, key }) => { const k = typeof key === 'function' ? key(t) : key, p = SP[k];
+    wr.style.transform = `translate(960px,540px) rotate(${CAM[3]}deg) scale(${CAM[2]}) translate(${p[0] - 960 - CAM[0]}px,${p[1] - 540 - CAM[1]}px)`; });
+  ui.style.filter = mb > .3 ? `blur(${mb.toFixed(2)}px)` : '';
   // ---- ground ----
   const src = groundFrame(t);
-  out.globalCompositeOperation = 'source-over'; out.filter = 'none'; out.drawImage(src, 0, 0);
+  out.globalCompositeOperation = 'source-over'; out.filter = mb > .3 ? `blur(${(mb * .6).toFixed(2)}px)` : 'none'; out.drawImage(src, 0, 0); out.filter = 'none';
   bctx.globalCompositeOperation = 'source-over'; bctx.clearRect(0, 0, W, H); bctx.filter = 'blur(22px)'; bctx.drawImage(src, 0, 0); bctx.filter = 'none'; bctx.globalCompositeOperation = 'destination-out';
   const g = bctx.createRadialGradient(W / 2, H / 2, 200, W / 2, H / 2, 1000); g.addColorStop(0, 'rgba(0,0,0,1)'); g.addColorStop(.5, 'rgba(0,0,0,.55)'); g.addColorStop(1, 'rgba(0,0,0,0)'); bctx.fillStyle = g; bctx.fillRect(0, 0, W, H); out.drawImage(blurC, 0, 0);
   // dark type band, always: type sits in the dark like the references
   const v = out.createRadialGradient(W / 2, H / 2, 0, W / 2, H / 2, 900); v.addColorStop(0, 'rgba(3,4,4,.82)'); v.addColorStop(.5, 'rgba(3,4,4,.5)'); v.addColorStop(1, 'rgba(3,4,4,0)'); out.fillStyle = v; out.fillRect(0, 0, W, H);
   // ---- tilted cards ----
-  const kOn = t >= T.promise && t < T.code, rOn = t >= T.route && t < T.checks;
+  const kOn = t >= T.promise && t < T.code + .35, rOn = t >= T.route && t < T.checks + .35;
   keyCard.m.visible = kOn; routeCard.m.visible = rOn;
   if (kOn || rOn) {
     let press = 0; if (kOn) press = clamp(S(t - PRESS[0], { k: 700, c: 42 }));
-    if (kOn) { const u = t - T.promise, e = S(u - .15, dflt), dive = S(t - (T.code - .42), { k: 70, c: 14 });
+    if (kOn) { const u = t - T.promise, e = S(u - .15, dflt), dive = 0;
       drawKeyCard(t, press); keyCard.m.position.set(0, -1.6 + (1 - e) * -5 + .1 * Math.sin(u), 0 + dive * 15.5); keyCard.m.rotation.set(-.42 + .1 * e + .3 * dive, .1 * Math.sin(u * .5), -.07 * (1 - dive));
       keyCard.m.position.x = dive * -2.6; }
     if (rOn) { const u = t - T.route, e = S(u, dflt); drawRouteCard(t); routeCard.m.position.set(.3, -1.1 - (1 - e) * 6, -1.5 + .25 * u); routeCard.m.rotation.set(.18, -.32 + .05 * u, .02); }
-    r.setRenderTarget(null); r.setClearColor(0x000000, 0); const bg = scene.background; r.toneMapping = THREE.NoToneMapping; r.render(cardScene, cardCam); r.toneMapping = THREE.ACESFilmicToneMapping; out.drawImage(r.domElement, 0, 0);
+    const ck = kOn ? 'promise' : 'route', pxu = 10.72 / 1080, dx = CAM[0] - SP[ck][0], dy = CAM[1] - SP[ck][1];
+    cardCam.position.set(dx * pxu, -dy * pxu, 20); cardCam.fov = 30 / CAM[2]; cardCam.updateProjectionMatrix(); cardCam.rotation.set(0, 0, CAM[3] * Math.PI / 180);
+    r.setRenderTarget(null); r.setClearColor(0x000000, 0); const bg = scene.background; r.toneMapping = THREE.NoToneMapping; r.render(cardScene, cardCam); r.toneMapping = THREE.ACESFilmicToneMapping; out.filter = mb > .3 ? `blur(${mb.toFixed(2)}px)` : 'none'; out.drawImage(r.domElement, 0, 0); out.filter = 'none';
   }
   // ---- type ----
   buildLine(L.hook, t, .05, P / 4, 500, { exit: T.drop - .02 });
@@ -247,13 +275,13 @@ window.seek = t => {
   buildLine(L.steps, t, T.steps, P / 4, 220, { exit: T.end - .02 });
   buildLine(L.inf, t, T.end + 2.0, P / 4, 600, {});
   // ---- endpoint typing, camera tracking the caret ----
-  const cOn = t >= T.code && t < T.route; show(codeCard, cOn);
+  const cOn = t >= T.code && t < T.route + .35; show(codeCard, cOn);
   if (cOn) { const s1 = 'base_url = ', s2 = '"https://sterling.mira.network/v1"', k = Math.floor(clamp((t - (T.code + .45)) / .036, 0, s1.length + s2.length));
     document.getElementById('ct1').textContent = s1.slice(0, k); document.getElementById('ct2').textContent = s2.slice(0, Math.max(0, k - s1.length));
-    const cw = 40.9 * k; codeCard.style.transform = `translateX(${-Math.max(0, cw - 1250) * .98}px) scale(${1 + .06 * clamp((t - T.code) / 4)})`; codeCard.style.transformOrigin = '30% 50%';
+    const cw = 40.9 * k; codeCard.style.transform = `scale(${1 + .03 * clamp((t - T.code) / 4)})`; codeCard.style.transformOrigin = '30% 50%';
     const e = S(t - T.code, dflt); codeCard.style.opacity = clamp(e * 1.5); codeCard.style.filter = `blur(${(1 - clamp(e)) * 10}px)`; document.getElementById('caret').style.opacity = (Math.floor(t * 4) % 2 || k < s1.length + s2.length) ? 1 : .2; }
   // ---- response card, model swapping every 4 frames ----
-  const rOn2 = t >= T.range && t < T.steps; show(respCard, rOn2);
+  const rOn2 = t >= T.range && t < T.steps + .35; show(respCard, rOn2);
   if (rOn2) { const u = t - T.range, e = S(u, { k: 300, c: 30 }); respCard.style.transform = `translateY(${(1 - e) * 120}px) scale(${.92 + .08 * e + .012 * u})`; respCard.style.opacity = clamp(e * 1.5); respCard.style.filter = `blur(${(1 - clamp(e)) * 12}px)`;
     const fam = ['"claude"', '"gpt"', '"gemini"'], k = Math.floor(Math.max(0, u - .5) / (4 / 30)); document.getElementById('rm').textContent = fam[k % 3]; }
   // ---- three steps ----

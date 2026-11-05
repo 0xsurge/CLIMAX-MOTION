@@ -145,6 +145,15 @@ Open on the problem or a provocation ("Designing buildings has always been hard"
 - Springs only (CLAUDE.md): snappy for word entrances and cursor presses, default for planes and camera,
   heavy for slams and the logo.
 
+## 6a. The film camera (the user asked for this explicitly)
+- Motion inside the frame is not enough: there must be a **camera over the whole composition** that the eye has to follow.
+- Lay the beats out on one large canvas (each beat at its own x/y position, ~1600 px apart), and move one camera between
+  them: pans left/right, tilts up/down, push-ins and pull-outs per beat (zoom 0.9–1.13), a slight roll (±1.5°) on big moves.
+- Each move is a spring that starts ~0.3 s before the beat (the camera arrives as the content lands), plus a small sway.
+  Content of the old beat stays on its spot while the camera leaves it, so the move reads as travel, not a cut.
+- The background world moves with parallax (slower than the type); the camera rides along with typing; motion blur
+  on fast moves. Reference: `videos/sterling-v3/film/index.html` (filmCam, SP, ZK, RK).
+
 ## 7. The logo ending (quiet)
 - Build the logo from its own pieces: the symbol slams in big and blurred and shrinks to size; the wordmark
   letters fly in from scattered positions and snap into the line ~0.1 s apart (V1); or one object folds
