@@ -113,6 +113,20 @@ Open on the problem or a provocation ("Designing buildings has always been hard"
   the 3D forms, a glowing line drawing under a number. Hard window-stripe shadows on a device mockup are a
   good photographic beat (V5).
 
+## 4a. The travelling light and the colour sweep (the user's favourite moments)
+- **Travelling gradient light** (V1, the orange chapter): smooth, thick chrome forms (fat tubes, folded ribbons)
+  in the void, lit by a gradient studio that rotates, so a band of light glides along the surfaces and the
+  chrome changes colour as it passes (deep red → orange → hot gold → pink, with a cyan rim; or the brand's
+  chapter palette). In three.js: a dome with a moving colour ramp as the environment map, metalness 1,
+  roughness ~0.1, slow camera drift. Reference build: `videos/sterling-v3/grounds/index.html`.
+- **Luma gradient sweep** (V4, the astronaut on the hill): the next shot floods in through its own brightness
+  levels — bright parts first, then the dark ground — painted by a moving gradient ramp (violet → red-orange →
+  amber → the new chapter colour), then relaxes into true colour over ~1 s. Use it to change chapters.
+  Reference: `videos/sterling-v3/sweep.py`.
+- **Its sound:** a bright, airy, pitchless swell high in the treble (energy 2.5–11 kHz, centroid ~4 kHz) that
+  rises over the pass, peaks ~1 s in and blooms off fast — dense tiny noise grains, not a swish. Put it only on
+  sweeps and big light passes. Sketch: `videos/sterling-v3/sound/shimmer.py` (pending the user's confirmation).
+
 ## 5. Transitions (use 3–5 kinds, each caused by something on screen)
 - **On-beat hard cut** between type lines and slams — the default; most cuts land on a beat or half-beat.
 - **Object becomes the world**: a clicked button grows into the next ground; a flower folds into the logo
