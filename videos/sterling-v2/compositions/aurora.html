@@ -1,0 +1,37 @@
+<template>
+  <style>
+@font-face{font-family:'Zalando';src:url('assets/fonts/zalando.woff2') format('woff2');font-weight:500}
+@font-face{font-family:'Public Sans';src:url('assets/fonts/public-sans.woff2') format('woff2');font-weight:100 900}
+@font-face{font-family:'GT Super';src:url('assets/fonts/gt-super.woff2') format('woff2');font-weight:400}
+#root{position:absolute;inset:0;overflow:hidden}
+#root *{box-sizing:border-box}
+.cam{position:absolute;inset:0;transform-origin:50% 50%}
+.line{position:absolute;left:0;width:1920px;display:flex;justify-content:center;align-items:center;gap:.26em;white-space:nowrap}
+.w{display:block;overflow:hidden;padding:0 .05em}
+.w>span{display:block}
+.disp{font-family:'Zalando',sans-serif;font-weight:500;letter-spacing:-.03em}
+#au-bg{position:absolute;left:-120px;top:-80px;width:2160px;height:1240px;object-fit:cover}
+.au{font-size:128px;line-height:150px;color:#fff}
+#au-sub{top:760px;height:50px;font:400 34px/50px 'Public Sans';color:rgba(255,255,255,.85);letter-spacing:0}
+  </style>
+  <div id="root" data-composition-id="aurora" data-width="1920" data-height="1080" data-duration="3.7539">
+    <div class="cam" id="au-cam"><img id="au-bg" src="assets/img/aurora.webp"></div>
+    <div class="line disp au" style="top:370px;height:150px"><span class="w"><span id="au-a0">The</span></span><span class="w"><span id="au-a1">model</span></span><span class="w"><span id="au-a2">you</span></span><span class="w"><span id="au-a3">pay</span></span><span class="w"><span id="au-a4">for.</span></span></div>
+    <div class="line disp au" style="top:520px;height:150px"><span class="w"><span id="au-b0">From</span></span><span class="w"><span id="au-b1">a</span></span><span class="w"><span id="au-b2">verified</span></span><span class="w"><span id="au-b3">provider.</span></span></div>
+    <div class="line" id="au-sub"><span class="w"><span id="au-s">Sterling sends every request to a provider Mira Network has tested.</span></span></div>
+    <div id="au-whip"></div>
+  </div>
+  <script>
+    (function () {
+      const P = 0.625653, sp = window.springEase, tl = gsap.timeline({ paused: true });
+      const at = n => n * P;
+      tl.fromTo('#au-cam', { scale: 1.25, rotation: -3 }, { scale: 1.05, rotation: 0, ...sp({ k: 30, c: 9 }) }, 0);
+      tl.fromTo('#au-cam', { x: 0 }, { x: -60, ...sp({ k: 4, c: 4 }) }, .3);
+      document.querySelectorAll('[id^="au-a"],[id^="au-b"]').forEach((w, j) => tl.fromTo(w, { filter: 'blur(14px)', opacity: 0, scale: 1.25 }, { filter: 'blur(0px)', opacity: 1, scale: 1, ...sp({ k: 300, c: 30 }) }, .15 + j * .075));
+      tl.fromTo('#au-s', { yPercent: 110 }, { yPercent: 0, ...sp('heavy') }, at(2.2));
+      // whip out: everything smears left as the next world arrives
+      tl.to(['#au-cam', '.au', '#au-sub'], { x: -2400, filter: 'blur(24px)', ...sp('snappy') }, at(5.55));
+      window.__timelines["aurora"] = tl;
+    })();
+  </script>
+</template>

@@ -1,0 +1,43 @@
+<template>
+  <style>
+@font-face{font-family:'Zalando';src:url('assets/fonts/zalando.woff2') format('woff2');font-weight:500}
+@font-face{font-family:'Public Sans';src:url('assets/fonts/public-sans.woff2') format('woff2');font-weight:100 900}
+@font-face{font-family:'GT Super';src:url('assets/fonts/gt-super.woff2') format('woff2');font-weight:400}
+#root{position:absolute;inset:0;overflow:hidden}
+#root *{box-sizing:border-box}
+.cam{position:absolute;inset:0;transform-origin:50% 50%}
+.line{position:absolute;left:0;width:1920px;display:flex;justify-content:center;align-items:center;gap:.26em;white-space:nowrap}
+.w{display:block;overflow:hidden;padding:0 .05em}
+.w>span{display:block}
+.disp{font-family:'Zalando',sans-serif;font-weight:500;letter-spacing:-.03em}
+.bg{position:absolute;inset:0;background:#F6F7F6}
+.big{font-size:180px;line-height:240px;color:#111}
+.g{color:#059669}
+#claim-flood{position:absolute;left:0;top:0;width:60px;height:60px;border-radius:50%;background:#059669}
+  </style>
+  <div id="root" data-composition-id="claim" data-width="1920" data-height="1080" data-duration="2.5026">
+    <div class="bg"></div>
+    <div class="cam" id="claim-cam">
+      <div class="line disp big" style="top:180px;height:240px"><span class="w"><span id="claim-a0">A</span></span><span class="w"><span id="claim-a1">model</span></span><span class="w"><span id="claim-a2">name</span></span></div>
+      <div class="line disp big" style="top:420px;height:240px"><span class="w"><span id="claim-b0">on</span></span><span class="w"><span id="claim-b1">an</span></span><span class="w"><span id="claim-b2">API</span></span></div>
+      <div class="line disp big" style="top:660px;height:240px"><span class="w"><span id="claim-c0">is</span></span><span class="w"><span id="claim-c1">a</span></span><span class="w"><span id="claim-c2" class="g">claim.</span></span></div>
+    </div>
+    <div id="claim-flood"></div>
+  </div>
+  <script>
+    (function () {
+      const P = 0.625653, sp = window.springEase, tl = gsap.timeline({ paused: true });
+      const at = n => n * P;
+      const ids = ['claim-a0','claim-a1','claim-a2','claim-b0','claim-b1','claim-b2','claim-c0','claim-c1','claim-c2'];
+      ids.forEach((id, i) => { const t0 = i < 3 ? i * .12 : i < 6 ? at(1) + (i - 3) * .12 : at(2) + (i - 6) * .12;
+        tl.fromTo('#' + id, { yPercent: 110, scaleY: 1.4 }, { yPercent: 0, scaleY: 1, ...sp({ k: 520, c: 38 }) }, t0); });
+      tl.fromTo('#claim-cam', { scale: 1.12 }, { scale: 1, ...sp({ k: 160, c: 22 }) }, 0);
+      tl.fromTo('#claim-cam', { x: 0 }, { x: -24, ...sp({ k: 4, c: 4 }) }, .2);
+      tl.fromTo('#claim-cam', { rotation: 0 }, { rotation: -1.2, ...sp('snappy') }, at(2));
+      // the full stop of "claim." grows into the next ground (object becomes the world)
+      tl.fromTo('#claim-flood', { x: 1405, y: 860, scale: 0 }, { scale: 0.6, ...sp('snappy') }, at(3));
+      tl.fromTo('#claim-flood', { scale: .6 }, { scale: 80, ...sp({ k: 40, c: 11 }) }, at(3.35));
+      window.__timelines["claim"] = tl;
+    })();
+  </script>
+</template>

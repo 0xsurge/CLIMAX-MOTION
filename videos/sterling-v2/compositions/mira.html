@@ -1,0 +1,41 @@
+<template>
+  <style>
+@font-face{font-family:'Zalando';src:url('assets/fonts/zalando.woff2') format('woff2');font-weight:500}
+@font-face{font-family:'Public Sans';src:url('assets/fonts/public-sans.woff2') format('woff2');font-weight:100 900}
+@font-face{font-family:'GT Super';src:url('assets/fonts/gt-super.woff2') format('woff2');font-weight:400}
+#root{position:absolute;inset:0;overflow:hidden}
+#root *{box-sizing:border-box}
+.cam{position:absolute;inset:0;transform-origin:50% 50%}
+.line{position:absolute;left:0;width:1920px;display:flex;justify-content:center;align-items:center;gap:.26em;white-space:nowrap}
+.w{display:block;overflow:hidden;padding:0 .05em}
+.w>span{display:block}
+.disp{font-family:'Zalando',sans-serif;font-weight:500;letter-spacing:-.03em}
+#mr-2,#mr-3{opacity:0}
+.mb{position:absolute;left:-80px;top:-50px;width:2080px;height:1180px;object-fit:cover}
+#mr-l{top:120px;height:40px;font:600 30px/40px 'Public Sans';letter-spacing:.26em;color:rgba(255,255,255,.62)}
+.tg{font-family:'GT Super',serif;font-weight:400;font-size:124px;line-height:150px;color:#fff;letter-spacing:-.01em}
+  </style>
+  <div id="root" data-composition-id="mira" data-width="1920" data-height="1080" data-duration="4.3796">
+    <div class="cam" id="mr-cam">
+      <img class="mb" id="mr-1" src="assets/img/mira_1.webp"><img class="mb" id="mr-2" src="assets/img/mira_2.webp"><img class="mb" id="mr-3" src="assets/img/mira_3.webp">
+    </div>
+    <div class="line" id="mr-l"><span class="w"><span id="mr-ls">STERLING IS BUILT ON MIRA NETWORK</span></span></div>
+    <div class="line tg" style="top:770px;height:150px"><span class="w"><span id="mr-t0">The</span></span><span class="w"><span id="mr-t1">Trust</span></span><span class="w"><span id="mr-t2">Layer</span></span><span class="w"><span id="mr-t3">of</span></span><span class="w"><span id="mr-t4">AI</span></span></div>
+  </div>
+  <script>
+    (function () {
+      const P = 0.625653, sp = window.springEase, tl = gsap.timeline({ paused: true });
+      const at = n => n * P;
+      tl.fromTo('#mr-cam', { scale: 1.12 }, { scale: 1.02, ...sp({ k: 6, c: 5 }) }, 0);
+      tl.fromTo('#mr-cam', { x: 0 }, { x: -40, ...sp({ k: 4, c: 4 }) }, .2);
+      // the light moves across the three bars: each render of the mark lights one bar; they hand over on the beat
+
+      [[1, 2], [2, 3], [3, 2], [2, 1]].forEach(([a, b], i) => { const t0 = at(1 + i * 1.5);
+        tl.to('#mr-' + b, { opacity: 1, ...sp(SOFT_()) }, t0); tl.to('#mr-' + a, { opacity: 0, ...sp(SOFT_()) }, t0 + .05); });
+      function SOFT_() { return { k: 60, c: 15 }; }
+      tl.fromTo('#mr-ls', { yPercent: 110 }, { yPercent: 0, ...sp('default') }, at(.8));
+      document.querySelectorAll('[id^="mr-t"]').forEach((w, j) => tl.fromTo(w, { opacity: 0, filter: 'blur(8px)' }, { opacity: 1, filter: 'blur(0px)', ...sp({ k: 200, c: 28 }) }, at(1.6) + j * .1));
+      window.__timelines["mira"] = tl;
+    })();
+  </script>
+</template>

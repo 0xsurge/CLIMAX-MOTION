@@ -1,0 +1,57 @@
+<template>
+  <style>
+@font-face{font-family:'Zalando';src:url('assets/fonts/zalando.woff2') format('woff2');font-weight:500}
+@font-face{font-family:'Public Sans';src:url('assets/fonts/public-sans.woff2') format('woff2');font-weight:100 900}
+@font-face{font-family:'GT Super';src:url('assets/fonts/gt-super.woff2') format('woff2');font-weight:400}
+#root{position:absolute;inset:0;overflow:hidden}
+#root *{box-sizing:border-box}
+.cam{position:absolute;inset:0;transform-origin:50% 50%}
+.line{position:absolute;left:0;width:1920px;display:flex;justify-content:center;align-items:center;gap:.26em;white-space:nowrap}
+.w{display:block;overflow:hidden;padding:0 .05em}
+.w>span{display:block}
+.disp{font-family:'Zalando',sans-serif;font-weight:500;letter-spacing:-.03em}
+.bg{position:absolute;inset:0;background:#F6F7F6}
+.g{color:#059669}
+.step{position:absolute;inset:0;opacity:0}
+.num{position:absolute;left:0;top:40px;width:1920px;text-align:center;font:500 560px/600px 'Zalando';letter-spacing:-.04em;color:#E2F2EA}
+.ill{position:absolute;left:560px;top:110px;width:800px;filter:drop-shadow(0 40px 50px rgba(6,40,30,.22))}
+  </style>
+  <div id="root" data-composition-id="steps" data-width="1920" data-height="1080" data-duration="5.0052">
+    <div class="bg"></div>
+    <div class="cam" id="st-cam">
+    <div class="line disp" id="st-intro" style="top:420px;height:240px;font-size:112px;line-height:240px;color:#111"><span class="w"><span id="st-i0">Three</span></span><span class="w"><span id="st-i1">steps.</span></span><span class="w"><span id="st-i2" class="g">Then</span></span><span class="w"><span id="st-i3" class="g">you're</span></span><span class="w"><span id="st-i4" class="g">in.</span></span></div>
+    <div class="step" id="st-s0">
+      <div class="num" id="st-n0">01</div>
+      <img class="ill" id="st-img0" src="assets/img/key.webp">
+      <div class="line disp" style="top:700px;height:170px;font-size:130px;line-height:170px;color:#111"><span class="w"><span id="st-t0-0">Create</span></span><span class="w"><span id="st-t0-1">your</span></span><span class="w"><span id="st-t0-2">key.</span></span></div>
+    </div>
+    <div class="step" id="st-s1">
+      <div class="num" id="st-n1">02</div>
+      <img class="ill" id="st-img1" src="assets/img/coins.webp">
+      <div class="line disp" style="top:700px;height:170px;font-size:130px;line-height:170px;color:#111"><span class="w"><span id="st-t1-0">Add</span></span><span class="w"><span id="st-t1-1">credit.</span></span></div>
+    </div>
+    <div class="step" id="st-s2">
+      <div class="num" id="st-n2">03</div>
+      <img class="ill" id="st-img2" src="assets/img/plug.webp">
+      <div class="line disp" style="top:700px;height:170px;font-size:130px;line-height:170px;color:#111"><span class="w"><span id="st-t2-0">Plug</span></span><span class="w"><span id="st-t2-1">into</span></span><span class="w"><span id="st-t2-2">your</span></span><span class="w"><span id="st-t2-3">app.</span></span></div>
+    </div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      const P = 0.625653, sp = window.springEase, tl = gsap.timeline({ paused: true });
+      const at = n => n * P;
+      tl.fromTo('#st-cam', { scale: 1.06 }, { scale: 1, ...sp({ k: 4, c: 4 }) }, 0);
+      document.querySelectorAll('[id^="st-i"]').forEach((w, j) => tl.fromTo(w, { yPercent: 110 }, { yPercent: 0, ...sp({ k: 520, c: 38 }) }, .05 + j * .08));
+      tl.to('#st-intro', { y: -900, ...sp({ k: 300, c: 34 }) }, at(1.8));
+      for (let i = 0; i < 3; i++) { const t0 = at(2) + i * at(2);
+        tl.set('#st-s' + i, { opacity: 1 }, t0); if (i < 2) tl.set('#st-s' + i, { opacity: 0 }, t0 + at(2));
+        tl.fromTo('#st-n' + i, { yPercent: 40, scale: .7 }, { yPercent: 0, scale: 1, ...sp({ k: 160, c: 20 }) }, t0);
+        tl.fromTo('#st-img' + i, { x: i % 2 ? -1400 : 1400, rotation: i % 2 ? -30 : 30, scale: .6 }, { x: 0, rotation: -4, scale: 1, ...sp({ k: 260, c: 18 }) }, t0 + .03);
+        document.querySelectorAll('[id^="st-t' + i + '-"]').forEach((w, j) => tl.fromTo(w, { yPercent: 110 }, { yPercent: 0, ...sp({ k: 520, c: 38 }) }, t0 + .15 + j * .07)); }
+      // the plug flies off to the right, into the next world (carry across)
+      tl.to('#st-img2', { x: 1600, y: -120, rotation: 12, scale: .5, ...sp({ k: 120, c: 16 }) }, at(7.35));
+      window.__timelines["steps"] = tl;
+    })();
+  </script>
+</template>

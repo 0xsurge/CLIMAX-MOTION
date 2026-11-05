@@ -1,0 +1,44 @@
+{
+  "$schema": "https://hyperframes.heygen.com/schema/hyperframes.json",
+  "registry": "https://raw.githubusercontent.com/heygen-com/hyperframes/main/registry",
+  "paths": {
+    "blocks": "compositions",
+    "components": "compositions/components",
+    "assets": "assets"
+  },
+  "media": {
+    "autoProxy": true
+  },
+  "registryItems": [
+    {
+      "name": "split-flap-board",
+      "type": "hyperframes:block",
+      "target": "compositions/split-flap-board.html"
+    },
+    {
+      "name": "code-typing",
+      "type": "hyperframes:block",
+      "target": "compositions/code-typing.html"
+    },
+    {
+      "name": "sdf-iris",
+      "type": "hyperframes:block",
+      "target": "compositions/sdf-iris.html"
+    },
+    {
+      "name": "whip-pan",
+      "type": "hyperframes:block",
+      "target": "compositions/whip-pan.html"
+    },
+    {
+      "name": "flash-through-white",
+      "type": "hyperframes:block",
+      "target": "compositions/flash-through-white.html"
+    },
+    {
+      "name": "extruded-logo",
+      "type": "hyperframes:block",
+      "target": "compositions/extruded-logo.html"
+    }
+  ]
+}

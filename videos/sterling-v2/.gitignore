@@ -1,0 +1,8 @@
+# captured brand fonts/images and licensed music stay local
+assets/fonts/
+assets/img/
+assets/audio/*.mp3
+audio/*.wav
+renders/
+.hyperframes/
+node_modules/
