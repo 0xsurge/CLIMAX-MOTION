@@ -84,7 +84,7 @@ function Line(parent, o) {   // centred flex line of masked words; o.words: stri
 }
 
 // S1 0-4 s: collage of real photos and cutout tiles sliding diagonally at three depths; one gold tile wins the centre
-const S1 = scene(0, T.frame + .05);
+const S1 = scene(0, T.frame);
 const R = mulberry32(5);
 const TILES = Array.from({ length: 13 }, (_, i) => { const depth = [1, .75, .55][i % 3], w = (i % 4 === 0 ? 300 : 230) * depth * 1.25;
   const isCut = i % 3 === 1, n = isCut ? CUTS[i % CUTS.length] : PHOTOS[i % PHOTOS.length];
@@ -168,6 +168,8 @@ const WIPES = [[T.wipe1, [CREAM, '#FFFFFF', CHAMP]], [T.wipe2, ['#C9A15C', '#A57
   [T.wipe4, [CREAM, CHAMP, '#E2C48A']], [T.wipe5, ['#F7EBD3', '#E2C48A', '#FFFFFF']], [T.wipe6, [INK, '#2A241B', GOLD]]];
 function wipe(t) { let w = null; for (const x of WIPES) if (t >= x[0] - .02 && t < x[0] + 1.25) w = x;
   if (!vis(WIPE, !!w)) return; const [t0, pal] = w;
+  // the covered hold still drifts and breathes, so the frame never freezes behind the blocks
+  WIPE.style.transformOrigin = '50% 50%'; put(WIPE, { x: 26 * Math.sin((t - t0) * 5), y: 10 * Math.sin((t - t0) * 4 + 1), s: 1.04 + .03 * Math.sin((t - t0) * 6) });
   BLOCKS.forEach(k => { const d = ((k.c + k.r * .7) / (COLS + ROWS * .7)) * .28 + k.n * .1, d2 = ((COLS - k.c + k.r * .7) / (COLS + ROWS * .7)) * .28 + k.m * .12;
     const s = clamp(S(t, t0 + d * .8, 'snappy')) * (1 - clamp(S(t, t0 + .62 + d2, 'snappy')));
     const q = Math.round(s * 4) / 4;   // stepped, the way the reference does it: blocks snap in quarter sizes, never fade
@@ -196,7 +198,7 @@ window.seek = function (t) {
   ANY.upd(t, T.any, T.mascot - .3);
   // the mascot: falls in, squashes on landing, keeps a little bounce
   const fall = S(t, T.mascot, 'playful'), land = S(t, T.mascot + .25, 'snappy') - S(t, T.mascot + .4, 'default');
-  vis(MASCOT, t > T.mascot - .05); put(MASCOT, { x: 960, y: lerp(-300, 380, fall) - 10 * Math.abs(Math.sin((t - T.mascot) * 3.1)) * S(t, T.mascot + .8), sx: 1 + .14 * land, sy: 1 - .16 * land, rot: 6 * Math.sin(t * 2.2) });
+  vis(MASCOT, t > T.mascot - .05); put(MASCOT, { x: 960, y: lerp(-300, 380, fall) - 10 * Math.abs(Math.sin((t - T.mascot) * 3.1)) * S(t, T.mascot + .8), sx: 1 + .14 * land + .03 * Math.sin(t * 3), sy: 1 - .16 * land - .03 * Math.sin(t * 3), rot: 8 * Math.sin(t * 2.2) });
   WM.upd(t, T.word); const cp = S(t, T.chip, 'snappy'); vis(CHIP, cp > .01); put(CHIP, { s: cp });
   // S4 the DM demo: the box rises, the message types, the photo drops in, the cursor sends
   const bx = S(t, T.wipe1 + .4, 'default'); put(BOX, { y: (1 - bx) * 160 });
@@ -229,7 +231,7 @@ window.seek = function (t) {
   const rg = S(t, T.ring, 'heavy') - S(t, T.words[5] - .2, 'default'); vis(RING, rg > .01); put(RING, { s: clamp(rg, 0, 1.2) * 1.1, rot: 30 * t });
   // S9 Send us a DM, a word at a time, centred as a group; then the mascot fills the frame and carries us to the end card
   let x = 0; const ws = DMW.map(e => { const w = e.offsetWidth; return w; }); const total = ws.reduce((a, c) => a + c, 0) + 3 * 40; x = 960 - total / 2;
-  DMW.forEach((e, i) => { const t0 = T.dm[i], u = S(t, t0, 'snappy'); vis(e, u > .01); put(e, { x: x, y: 445 + (1 - u) * 40 }); e.style.opacity = u; x += ws[i] + 40; });
+  DMW.forEach((e, i) => { const t0 = T.dm[i], u = S(t, t0, 'snappy'); vis(e, u > .01); put(e, { x: x + 14 * Math.sin(t * 1.3), y: 445 + (1 - u) * 40 + 6 * Math.sin(t * 1.7) }); e.style.opacity = u; x += ws[i] + 40; });
   const z = S(t, T.zoom, 'default'); vis(BIG, t > T.zoom - .05 && t < T.end + .1); put(BIG, { x: 960, y: lerp(1500, 600, z), s: lerp(.4, 1.6, z) });
   // S10 end card: the drop bounces in, squashes, lands above the wordmark; the pill with a travelling rim light; powered by
   const ef = S(t, T.end, 'playful'), el = S(t, T.end + .3, 'snappy') - S(t, T.end + .45, 'default');
