@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Sterling: One key</title>
+<style>
+  html, body { margin: 0; background: #F6F7F6; overflow: hidden; }
+  #stage { position: relative; overflow: hidden; width: 1920px; height: 1080px; background: #F6F7F6; }
+</style>
+<script src="engine/lib/motion.js"></script>
+</head>
+<body>
+<div id="stage"></div>
+<script src="film.js"></script>
+<script>
+  window.__ready = false;
+  Promise.all(window.__preload || []).then(() => document.fonts.ready).then(() => window.seek(0)).then(() => { window.__ready = true; });
+</script>
+</body>
+</html>
