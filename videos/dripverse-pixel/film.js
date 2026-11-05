@@ -13,7 +13,7 @@ const SLOW = { k: 4, c: 4 }, SOFT = { k: 120, c: 20 };
 const STAGE = document.getElementById('stage');
 
 // ---------- TIMELINE (beats) ----------
-const B = { card: 6, frame: 8, list: 8.6, roll: [9.2, 10, 10.8], any: 12.2, mascot: 15, word: 16, chip: 17,
+const B = { card: 6, frame: 8, list: 8.25, roll: [9.2, 10, 10.8], any: 12.2, mascot: 15, word: 16, chip: 17,
   wipe1: 20, type0: 21.5, type1: 24.5, attach: 25, curIn: 25.6, click: 27, ink: 28, ch1: 28.6, ch2: 32,
   wipe2: 36, fresh: 36.6, wipe3: 40, luxe: 40.6, wipe4: 44, every: 44.6, chips: 45.5,
   wipe5: 50, words: [51, 52.5, 54, 55.5, 57, 59.5, 61], ring: 57.8, wipe6: 62.5, dm: [63.4, 64.4, 65.4, 66.4], zoom: 68.5,
@@ -55,16 +55,16 @@ const BG = mk(STAGE, { width: W, height: H, background: CREAM });
 const WORLD = mk(STAGE, { width: W, height: H, transformOrigin: '0 0' });
 const WIPE = mk(STAGE, { width: W, height: H });
 // background per time window (switched only while a wipe or a growing card covers the frame)
-const BGS = [[0, CREAM], [T.frame + .02, GOLD], [T.wipe1 + .25, CREAM], [T.ink, INK], [T.wipe2 + .25, WARM], [T.wipe4 + .25, CREAM],
-  [T.wipe5 + .25, 'linear-gradient(180deg,#FBF4E6 0%,#F1E2C4 60%,#E2C48A 100%)'], [T.wipe6 + .25, INK], [T.end, 'linear-gradient(180deg,#FFFDF8 0%,#F5EAD3 55%,#D9B477 100%)']];
+const BGS = [[0, CREAM], [T.frame - .05, GOLD], [T.wipe1 + .5, CREAM], [T.ink, INK], [T.wipe2 + .5, WARM], [T.wipe4 + .5, CREAM],
+  [T.wipe5 + .5, 'linear-gradient(180deg,#FBF4E6 0%,#F1E2C4 60%,#E2C48A 100%)'], [T.wipe6 + .5, INK], [T.end, 'linear-gradient(180deg,#FFFDF8 0%,#F5EAD3 55%,#D9B477 100%)']];
 const bgAt = t => { let c = CREAM; for (const [t0, v] of BGS) if (t >= t0) c = v; return c; };
 
 // ---------- camera: one take; slow pushes per scene plus a sway that always returns to centre ----------
 const CAMK = [{ t: 0, v: 1.06 }, { t: 0, v: 1, s: SLOW }, ...[T.frame, T.wipe1, T.ink, T.wipe2, T.wipe3, T.wipe4, T.wipe5, T.wipe6, T.end].flatMap((t0, i) => [{ t: t0, v: 1, s: 'default' }, { t: t0 + .3, v: i % 2 ? .97 : 1.05, s: SLOW }]),
-  { t: T.click - .6, v: 1.25, s: 'heavy' }, { t: T.ink, v: 1 }];
+  { t: T.click - .6, v: 1.25, s: 'heavy' }, { t: T.ink, v: 1 }, { t: T.pill + .8, v: 1.09, s: SLOW }];
 const camZ = t => track(t, CAMK.map(k => ({ t: k.t, v: k.v, spring: k.s || 'default' })));
 function camera(t) {
-  const a = 1 - .6 * S(t, T.pill, 'heavy'), sx = a * 12 * Math.sin(t * 2 * Math.PI / 6.4), sy = a * 7 * Math.sin(t * 2 * Math.PI / 4.7 + 1);
+  const a = 1 - .3 * S(t, T.pill, 'heavy'), sx = a * 12 * Math.sin(t * 2 * Math.PI / 6.4), sy = a * 7 * Math.sin(t * 2 * Math.PI / 4.7 + 1);
   const z = camZ(t) * (1 + .01 * Math.sin(t * 2 * Math.PI / 9)), fx = t > T.click - 1 && t < T.ink + .3 ? CLICKP : [960, 540];
   const k = S(t, T.click - .6, 'heavy') * (1 - S(t, T.ink, 'default'));
   const ox = lerp(960, fx[0], k), oy = lerp(540, fx[1], k);
@@ -77,7 +77,7 @@ const scene = (t0, t1) => { const el = mk(WORLD, { width: W, height: H }); SC.pu
 function Line(parent, o) {   // centred flex line of masked words; o.words: strings, or {t, color, italic} objects
   const box = mk(parent, { left: 0, top: o.y, width: W, height: o.h }); box.className = 'fx'; box.style.gap = (o.gap ?? 28) + 'px';
   const ws = o.words.map(wd => { const w = typeof wd === 'string' ? { t: wd } : wd; const m = mk(box, { height: o.h, overflow: 'hidden', padding: '0 10px' });
-    const inn = mk(m, { font: (w.italic ? 'italic ' : '') + o.font, color: w.color || o.color || INK, letterSpacing: o.ls || '-.02em', whiteSpace: 'nowrap', lineHeight: o.h + 'px' }, w.t);
+    const inn = mk(m, { font: (w.italic ? 'italic ' : '') + o.font, color: w.color || o.color || INK, letterSpacing: o.ls || '-.02em', paddingLeft: o.ls && o.ls[0] !== '-' ? o.ls : '0', whiteSpace: 'nowrap', lineHeight: o.h + 'px' }, w.t);
     [m, inn].forEach(e => { e.style.left = ''; e.style.top = ''; }); return { m, inn }; });
   return { box, ws, upd: (t, tIn, tOut = 999, p = 'heavy') => { vis(box, t > tIn - .05 && t < tOut + .6);
     ws.forEach((w, i) => { const u = S(t, tIn + i * .06, p), v = S(t, tOut + i * .04, 'snappy'); w.inn.style.transform = `translateY(${((1 - u) - v) * o.h * 1.1}px)`; }); } };
@@ -91,9 +91,9 @@ const TILES = Array.from({ length: 13 }, (_, i) => { const depth = [1, .75, .55]
   const el = mk(S1, { width: w, height: w * 1.22, borderRadius: 22, overflow: 'hidden', background: isCut ? (i % 2 ? CHAMP : '#fff') : '#ddd', boxShadow: '0 20px 50px rgba(40,28,10,.16)' },
     isCut ? `<div style="left:${w / 2}px;top:${w * .62}px">${cut(n, w * .92)}</div>` : `<img src="assets/photos/${n}.jpg" style="left:0;top:0;width:${w}px;height:${w * 1.22}px;object-fit:cover">`);
   return { el, w, h: w * 1.22, depth, x0: -300 + (i * 173) % 2300, y0: 80 + ((i * 397) % 980), rot: (R() - .5) * 10 }; });
-const HERO = mk(S1, { width: 300, height: 360, borderRadius: 26, overflow: 'hidden', background: GRAD, boxShadow: '0 30px 60px rgba(120,90,40,.3)' }, `<div style="left:150px;top:220px">${cut('nike-af1', 280)}</div>`);
+const HERO = mk(S1, { width: 300, height: 360, borderRadius: 26, overflow: 'hidden', background: GOLD, boxShadow: '0 30px 60px rgba(120,90,40,.3)' }, `<div style="left:150px;top:220px">${cut('nike-af1', 280)}</div>`);
 // S2 4-10 s: the gold frame; a rolling list, then "Any pair, delivered."
-const S2 = scene(T.frame, T.wipe1 + .25);
+const S2 = scene(T.frame, T.wipe1 + .5);
 const LIST = ['Runners', 'Court classics', 'Any pair', 'Lifestyle', 'Limited drops'];
 const LROWS = LIST.map((s, i) => { const r = mk(S2, { left: 0, top: 0, width: W, height: 150 }); r.className = 'fx';
   const tx = mk(r, { font: `500 120px/150px ${BOD}`, color: INK, letterSpacing: '-.02em', whiteSpace: 'nowrap', transformOrigin: '50% 50%' }, s); tx.style.left = ''; tx.style.top = ''; return { r, tx }; });
@@ -103,7 +103,7 @@ const MASCOT = mk(S2, { width: 0, height: 0 }, DROP(3.2, 1));
 const WM = Line(S2, { y: 640, h: 90, font: `600 64px/90px ${GEIST}`, words: ['DRIP VERSE'], ls: '.3em' });
 const CHIP = mk(S2, { left: 960 - 170, top: 760, width: 340, height: 64, borderRadius: 32, background: INK, color: '#F8EBD0', font: `500 26px/64px ${GEIST}`, textAlign: 'center', letterSpacing: '.04em', transformOrigin: '50% 50%' }, 'Luxury footwear');
 // S4 10-14 s: the DM demo (a stand-in message box, not a copy of any app)
-const S4 = scene(T.wipe1 + .25, T.ink);
+const S4 = scene(T.wipe1 + .5, T.ink);
 const BOX = mk(S4, { left: 960 - 560, top: 390, width: 1120, height: 300, borderRadius: 44, background: '#FFFDF8', boxShadow: '0 30px 80px rgba(40,28,10,.14), inset 0 0 0 2px #EADFCB' });
 mk(BOX, { left: 48, top: 44, width: 40, height: 40, font: `300 44px/40px ${GEIST}`, color: '#9A8F80' }, '+');
 const MSG = 'Is the Niteball in size 42?';
@@ -115,7 +115,7 @@ const CUR = mk(S4, { width: 44, height: 62 }, `<svg width="44" height="62" viewB
 // the send button grows into the ink frame (card to frame)
 const GROW = mk(WORLD, { background: INK });
 // S5 14-18 s: chapter cards on ink
-const S5 = scene(T.ink, T.wipe2 + .25);
+const S5 = scene(T.ink, T.wipe2 + .5);
 function chapter(lines, num) { const g = mk(S5, { width: W, height: H });
   const l1 = Line(g, { y: 330, h: 170, font: `500 150px/170px ${BOD}`, words: [lines[0]], color: '#FFF8EA' });
   const l2 = Line(g, { y: 500, h: 170, font: `italic 500 150px/170px ${BOD}`, words: [lines[1]], color: GOLD });
@@ -128,7 +128,7 @@ const CH = [chapter(['Any pair,', 'at your door.'], '01'), chapter(['Paid. Packe
 const PANEL = mk(S5, { left: 0, top: 0, width: W, height: H, background: '#1E1A14' });   // the 02 card slides in over 01
 S5.appendChild(CH[1].g);
 // S6 18-22 s: giant word behind a real cutout, twice, on the warm gradient
-const S6 = scene(T.wipe2 + .25, T.wipe4 + .25);
+const S6 = scene(T.wipe2 + .5, T.wipe4 + .5);
 function giant(word, n, tag) { const g = mk(S6, { width: W, height: H });
   const w = mk(g, { left: 0, top: 250, width: W, height: 560, font: `600 520px/560px ${BOD}`, letterSpacing: '-.04em', textAlign: 'center', color: 'transparent',
     backgroundImage: 'linear-gradient(180deg,rgba(255,250,238,.95),rgba(255,240,210,.55))', WebkitBackgroundClip: 'text', backgroundClip: 'text' }, word);
@@ -136,19 +136,19 @@ function giant(word, n, tag) { const g = mk(S6, { width: W, height: H });
   return { g, w, sh, tg }; }
 const GI = [giant('Fresh', 'adidas-niteball', 'ADIDAS NITEBALL'), giant('Luxe', 'axel-arigato', 'AXEL ARIGATO')];
 // S7 22-25 s: "every [size] counts" with a cycling chip and chips flying round
-const S7 = scene(T.wipe4 + .25, T.wipe5 + .25);
+const S7 = scene(T.wipe4 + .5, T.wipe5 + .5);
 const EV = Line(S7, { y: 470, h: 140, font: `500 120px/140px ${BOD}`, words: ['Every', ' '.repeat(8), 'size.'], gap: 34 });
 const SLOT = mk(S7, { left: 960 - 105, top: 480, width: 210, height: 120, borderRadius: 60, background: GRAD, boxShadow: '0 20px 40px rgba(120,90,40,.28)', overflow: 'hidden', transformOrigin: '50% 50%' });
 const SLOTN = [40, 41, 42, 43, 44].map((n, i) => mk(SLOT, { left: 0, top: 0, width: 210, height: 120, font: `600 64px/120px ${GEIST}`, color: '#FFF9EE', textAlign: 'center' }, String(n)));
 const FLY = ['In stock', 'Ready to ship', 'EU 40-44', 'Original box', 'Authentic'].map((s, i) => ({ s, el: mk(S7, { height: 60, padding: '0 26px', borderRadius: 30, background: '#FFFDF8', boxShadow: '0 14px 30px rgba(40,28,10,.14)', color: INK, font: `500 34px/60px ${GEIST}`, whiteSpace: 'nowrap', transformOrigin: '50% 50%' }, s),
   to: [[520, 300], [1400, 330], [560, 760], [1360, 760], [960, 230]][i] }));
 // S8 25-31 s: kinetic words, one at a time; the "o" of "one" grows into a ring and folds back into the drop
-const S8 = scene(T.wipe5 + .25, T.wipe6 + .25);
+const S8 = scene(T.wipe5 + .5, T.wipe6 + .5);
 const WORDS = ['your', 'next', 'pair', 'is', 'one', 'DM', 'away.'];
 const KW = WORDS.map((w, i) => mk(S8, { left: 0, top: 330, width: W, height: 420, font: `italic 600 ${w.length > 4 ? 300 : 360}px/420px ${BOD}`, color: i === 5 ? GOLDD : '#B48A47', textAlign: 'center', letterSpacing: '-.03em', transformOrigin: '50% 60%' }, w));
 const RING = mk(S8, { left: 960 - 600, top: 540 - 600, width: 1200, height: 1200, borderRadius: '50%', border: `120px solid ${GOLD}`, transformOrigin: '50% 50%' });
 // S9 31-35 s: "Send us a DM" typed a word at a time on ink
-const S9 = scene(T.wipe6 + .25, T.end);
+const S9 = scene(T.wipe6 + .5, T.end);
 const DMW = ['Send', 'us', 'a', 'DM'].map((w, i) => mk(S9, { font: `500 170px/190px ${GEIST}`, color: i === 3 ? GOLD : '#FFF8EA', whiteSpace: 'nowrap' }, w));
 const BIG = mk(WORLD, { width: 0, height: 0 }, DROP(14, 9));
 // S10 35-40 s: the end card
@@ -166,10 +166,10 @@ const BLOCKS = Array.from({ length: COLS * ROWS }, (_, i) => { const c = i % COL
   return { el: mk(WIPE, { left: c * CW, top: r * RH, width: CW + 1, height: RH + 1, transformOrigin: '50% 50%' }), c, r, n: RB(), m: RB() }; });
 const WIPES = [[T.wipe1, [CREAM, '#FFFFFF', CHAMP]], [T.wipe2, ['#C9A15C', '#A57E3E', '#E2C48A']], [T.wipe3, ['#B8904F', '#E2C48A', '#8E6A31']],
   [T.wipe4, [CREAM, CHAMP, '#E2C48A']], [T.wipe5, ['#F7EBD3', '#E2C48A', '#FFFFFF']], [T.wipe6, [INK, '#2A241B', GOLD]]];
-function wipe(t) { let w = null; for (const x of WIPES) if (t >= x[0] - .02 && t < x[0] + 1.1) w = x;
+function wipe(t) { let w = null; for (const x of WIPES) if (t >= x[0] - .02 && t < x[0] + 1.25) w = x;
   if (!vis(WIPE, !!w)) return; const [t0, pal] = w;
   BLOCKS.forEach(k => { const d = ((k.c + k.r * .7) / (COLS + ROWS * .7)) * .28 + k.n * .1, d2 = ((COLS - k.c + k.r * .7) / (COLS + ROWS * .7)) * .28 + k.m * .12;
-    const s = clamp(S(t, t0 + d, 'snappy')) * (1 - clamp(S(t, t0 + .5 + d2, 'snappy')));
+    const s = clamp(S(t, t0 + d * .8, 'snappy')) * (1 - clamp(S(t, t0 + .62 + d2, 'snappy')));
     const q = Math.round(s * 4) / 4;   // stepped, the way the reference does it: blocks snap in quarter sizes, never fade
     vis(k.el, q > 0); put(k.el, { s: q }); k.el.style.background = pal[k.m < .62 ? 0 : k.m < .85 ? 1 : 2]; }); }
 
@@ -186,7 +186,7 @@ window.seek = function (t) {
   // card to frame: the gold tile grows to fill the frame on the frame beat
   const gf = S(t, T.frame - .45, 'default');
   HERO.style.transformOrigin = '50% 50%';
-  if (t < T.frame) { const w = lerp(300 * hs, W + 40, gf), h = lerp(360 * hs, H + 40, gf); Object.assign(HERO.style, { left: lerp(hx + 150 - 150 * hs, -20, gf) + 'px', top: lerp(hy + 180 - 180 * hs, -20, gf) + 'px', width: w + 'px', height: h + 'px', borderRadius: lerp(26, 0, gf) + 'px' });
+  if (vis(HERO, t < T.frame)) { const w = lerp(300 * hs, W + 40, gf), h = lerp(360 * hs, H + 40, gf); Object.assign(HERO.style, { left: lerp(hx + 150 - 150 * hs, -20, gf) + 'px', top: lerp(hy + 180 - 180 * hs, -20, gf) + 'px', width: w + 'px', height: h + 'px', borderRadius: lerp(26, 0, gf) + 'px' });
     HERO.firstChild.style.opacity = 1 - gf; HERO.firstChild.style.left = w / 2 + 'px'; HERO.firstChild.style.top = h * .6 + 'px'; }
   // S2 rolling list: the current line large and ink, the neighbours smaller and faded; the stack rolls to "Any pair"
   const roll = track(t, [{ t: 0, v: -1 }, { t: T.list, v: 0, spring: 'default' }, ...T.roll.map((r, i) => ({ t: r, v: i + 1, spring: 'snappy' }))]);
@@ -212,7 +212,7 @@ window.seek = function (t) {
   CH.forEach((c, i) => { const t0 = i ? T.ch2 : T.ch1; c.l1.upd(t, t0); c.l2.upd(t, t0 + .15); const e = S(t, t0 + .4, 'snappy');
     put(c.n, { y: (1 - e) * 60 }); c.n.style.opacity = e; put(c.ar, { x: 10 * Math.sin(t * 4) * e, s: e }); c.ul.style.transform = `scaleX(${clamp(S(t, t0 + .7, { k: 30, c: 11 }))})`; });
   // S6 the giant words: each with a real shoe floating and turning over it, and its name on a tag
-  GI.forEach((g, i) => { const t0 = i ? T.luxe : T.fresh, on = t >= (i ? T.wipe3 + .25 : 0) && t < (i ? 999 : T.wipe3 + .25); vis(g.g, on); if (!on) return;
+  GI.forEach((g, i) => { const t0 = i ? T.luxe : T.fresh, on = t >= (i ? T.wipe3 + .5 : 0) && t < (i ? 999 : T.wipe3 + .5); vis(g.g, on); if (!on) return;
     const e = S(t, t0, 'heavy'), f = S(t, t0 + .2, 'default'); put(g.w, { y: (1 - e) * 120, s: 1 + .03 * (t - t0) });
     put(g.sh, { x: 960 + 30 * Math.sin(t * .8), y: 620 + (1 - f) * 500 + 14 * Math.sin(t * 1.6), rot: -10 + 5 * Math.sin(t * .9), s: .9 + .1 * f });
     const tg = S(t, t0 + .6, 'snappy'); put(g.tg, { s: tg }); vis(g.tg, tg > .01); });
