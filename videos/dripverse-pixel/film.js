@@ -13,7 +13,7 @@ const SLOW = { k: 4, c: 4 }, SOFT = { k: 120, c: 20 };
 const STAGE = document.getElementById('stage');
 
 // ---------- TIMELINE (beats) ----------
-const B = { card: 6, frame: 8, list: 8.25, roll: [9.2, 10, 10.8], any: 12.2, mascot: 15, word: 16, chip: 17,
+const B = { card: 6, frame: 8, list: 7.7, roll: [9.2, 10, 10.8], any: 12.2, mascot: 15, word: 16, chip: 17,
   wipe1: 20, type0: 21.5, type1: 24.5, attach: 25, curIn: 25.6, click: 27, ink: 28, ch1: 28.6, ch2: 32,
   wipe2: 36, fresh: 36.6, wipe3: 40, luxe: 40.6, wipe4: 44, every: 44.6, chips: 45.5,
   wipe5: 50, words: [51, 52.5, 54, 55.5, 57, 59.5, 61], ring: 57.8, wipe6: 62.5, dm: [63.4, 64.4, 65.4, 66.4], zoom: 68.5,
@@ -199,7 +199,7 @@ window.seek = function (t) {
   // the mascot: falls in, squashes on landing, keeps a little bounce
   const fall = S(t, T.mascot, 'playful'), land = S(t, T.mascot + .25, 'snappy') - S(t, T.mascot + .4, 'default');
   vis(MASCOT, t > T.mascot - .05); put(MASCOT, { x: 960, y: lerp(-300, 380, fall) - 10 * Math.abs(Math.sin((t - T.mascot) * 3.1)) * S(t, T.mascot + .8), sx: 1 + .14 * land + .03 * Math.sin(t * 3), sy: 1 - .16 * land - .03 * Math.sin(t * 3), rot: 8 * Math.sin(t * 2.2) });
-  WM.upd(t, T.word); const cp = S(t, T.chip, 'snappy'); vis(CHIP, cp > .01); put(CHIP, { s: cp });
+  WM.upd(t, T.word); WM.box.style.transform = `translateY(${5 * Math.sin(t * 1.9)}px)`; const cp = S(t, T.chip, 'snappy'); vis(CHIP, cp > .01); put(CHIP, { s: cp, y: 6 * Math.sin(t * 2.3 + 1) });
   // S4 the DM demo: the box rises, the message types, the photo drops in, the cursor sends
   const bx = S(t, T.wipe1 + .4, 'default'); put(BOX, { y: (1 - bx) * 160 });
   const n = Math.round(clamp((t - T.type0) / (T.type1 - T.type0)) * MSG.length); TYPED.innerHTML = MSG.slice(0, n) + (t < T.click && Math.floor(t * 2.4) % 2 ? '<span style="color:#C9A15C">|</span>' : '');
