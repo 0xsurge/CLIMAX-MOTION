@@ -169,10 +169,10 @@
             g.rotation.y = -2.4 * (1 - spr(u, { k: 160, c: 16 })) + .35 * Math.sin(u * 1.4); g.rotation.x = .25 - .2 * spr(u, 'default'); });
           // ---- aurora: a glass mark turns behind the line ----
           glassMark.visible = t >= S.aurora && t < S.steps;
-          if (glassMark.visible) { const u = t - S.aurora; glassMark.position.set(-.3 + cam.position.x * 0 , .1, -6 + 2 * spr(u, { k: 2, c: 2.8 }));
+          if (glassMark.visible) { const u = t - S.aurora; glassMark.position.set(-.3, .1, -10 + 2 * spr(u, { k: 2, c: 2.8 }));
             glassMark.scale.setScalar(7.5 * (.6 + .4 * spr(u, { k: 40, c: 11 }))); glassMark.rotation.set(.2, -1.2 + 1.1 * spr(u, { k: 3, c: 3 }) + .1 * u, .08); }
           // ---- one key: an emerald mark rises behind the key ----
-          okMark.visible = t >= S.onekey && t < S.lockup + at(1);
+          okMark.visible = false;
           if (okMark.visible) { const u = t - S.onekey; okMark.position.set(cam.position.x * .6, 1.6 + .1 * Math.sin(u * 2), -9); okMark.scale.setScalar(5.5 * spr(u - .1, { k: 120, c: 14 }) * (1 - spr(t - (S.lockup - .1), 'snappy')));
             okMark.rotation.set(.15, -.9 + .7 * spr(u, { k: 3, c: 3 }), 0); }
           // ---- floating props ----
