@@ -146,6 +146,7 @@ Open on the problem or a provocation ("Designing buildings has always been hard"
   heavy for slams and the logo.
 
 ## 6a. The film camera (the user asked for this explicitly)
+- **Use /camera-style for how the camera moves** (flat 2D camera, no roll or perspective, exponential ease-in-out moves, holds, zoom dives). It was measured from the user's favourite camera reference and overrides the spring-based camera notes below.
 - Motion inside the frame is not enough: there must be a **camera over the whole composition** that the eye has to follow.
 - Lay the beats out on one large canvas (each beat at its own x/y position, ~1600 px apart), and move one camera between
   them: pans left/right, tilts up/down, push-ins and pull-outs per beat (zoom 0.9–1.13), a slight roll (±1.5°) on big moves.

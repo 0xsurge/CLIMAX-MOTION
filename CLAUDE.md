@@ -78,3 +78,6 @@ no light leaks, glitches or film grain, real brand assets only.
 
 ## Launch style
 For any launch, promo or product film, read .claude/skills/launch-style/SKILL.md first (the look reverse-engineered from the six reference launches the user chose; study in videos/reference/launch-study/STUDY.md). Never use whoosh/swish sounds on movement or tonal/melodic SFX that follow motion.
+
+## Camera
+For every film camera, follow .claude/skills/camera-style/SKILL.md (measured from the user's favourite camera reference, study in videos/reference/camera-study/STUDY.md): flat 2D camera with no roll and no perspective on type or UI, exponential ease-in-out moves (camMove), holds between moves, zoom dives. Camera moves are the one exception to springs-only.
