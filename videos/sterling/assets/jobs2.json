@@ -1,0 +1,1 @@
+[{ "name": "herocard", "selector": "div.w-full.bg-white:has(h2:has-text(\"Then the verified model\"))", "index": 0 }]

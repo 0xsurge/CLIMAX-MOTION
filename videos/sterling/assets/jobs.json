@@ -1,0 +1,4 @@
+[{ "name": "herocard", "selector": "div.rounded-2xl:has(h2:has-text(\"Then the verified model\"))", "all": true },
+ { "name": "card", "selector": "div.grid.gap-4 > div", "all": true },
+ { "name": "code", "selector": "div.overflow-hidden:has(span:text-is(\"curl\"))", "all": true },
+ { "name": "mira", "selector": "div.bg-card:has(h2:has-text(\"Built on Mira Network\"))", "all": true }]

@@ -1,0 +1,57 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Sterling storyboard frames</title>
+<!-- Storyboard key frames for the Sterling film, composed at 1920x1080 from the real assets. window.seek(n) shows panel n (1-11).
+     Rendered with render.mjs --stills. The panels are the planning poses the film will animate between. -->
+<style>
+  @font-face { font-family: 'Zalando'; src: url(../assets/net/zalando-sans-expanded-500.b8897a08ae.woff2) format('woff2'); font-weight: 500; }
+  @font-face { font-family: 'Public'; src: url(../assets/net/public-sans-latin-wght-normal.035c7fe496.woff2) format('woff2'); font-weight: 100 900; }
+  html, body { margin: 0; overflow: hidden; }
+  #stage { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #F6F7F6; font-family: 'Public', sans-serif; color: #111; }
+  #stage * { position: absolute; box-sizing: border-box; margin: 0; }
+  .fx { display: flex; justify-content: center; align-items: center; left: 0; width: 1920px; text-align: center; }
+  .fx * { position: relative; }
+  .d { font: 500 96px/1.08 'Zalando', sans-serif; letter-spacing: -.02em; }
+  .s { font: 400 34px/1.4 'Public', sans-serif; color: #4d5550; }
+  .l { font: 600 20px/1 'Public', sans-serif; letter-spacing: .22em; text-transform: uppercase; color: #5f6b64; }
+  .pill { height: 76px; padding: 0 34px; border-radius: 38px; background: #fff; font: 500 32px/76px 'Public'; box-shadow: 0 16px 40px rgba(6,61,49,.12), inset 0 0 0 1.5px rgba(6,61,49,.12); white-space: nowrap; }
+  .aurora { left: 0; top: 0; width: 1920px; height: 1080px; background: url(../assets/net/aurora.webp) center/cover; }
+  .shadow { filter: drop-shadow(0 30px 40px rgba(6,40,30,.18)); }
+  .glow { box-shadow: 0 0 0 3px #59d9a3, 0 0 40px rgba(89,217,163,.55); }
+</style>
+<div id="stage"></div>
+<script>
+const $ = document.getElementById('stage'), A = '../assets/net/', U = '../assets/ui/';
+const img = (src, x, y, w, extra = '') => `<img src="${src}" style="left:${x}px;top:${y}px;width:${w}px;${extra}">`;
+const P = {
+  1: () => `${img(A + 'key.webp', 700, 210, 520, 'transform:rotate(-8deg)')}<div class="fx d" style="top:640px;height:120px">A model name on an API is a claim.</div>`,
+  2: () => `${img(A + 'key.webp', 760, 330, 400, 'transform:rotate(-14deg);opacity:.9')}
+    <div class="pill" style="left:330px;top:250px">Claude</div><div class="pill" style="left:1380px;top:300px">GPT</div><div class="pill" style="left:420px;top:760px">Gemini</div><div class="pill" style="left:1290px;top:740px">and more</div>
+    <div class="fx l" style="top:120px;height:30px">One key for Claude, GPT, Gemini and more</div>`,
+  3: () => `<div class="aurora"></div><div class="fx d" style="top:380px;height:120px;color:#fff">The model you pay for.</div><div class="fx d" style="top:500px;height:120px;color:#fff">From a verified provider.</div>
+    <div class="fx s" style="top:680px;height:50px;color:rgba(255,255,255,.8)">Sterling sends every request to a provider Mira Network has tested.</div>`,
+  4: () => `<div class="aurora"></div>${img(U + 'herocard.png', 960 - 400, 180, 800, 'border-radius:30px')}
+    <div style="left:592px;top:372px;width:740px;height:118px;border-radius:18px" class="glow"></div>`,
+  5: () => `<div class="fx d" style="top:420px;height:120px">Routed only to providers</div><div class="fx d" style="top:540px;height:120px">that are verified.</div>`,
+  6: () => `${img(U + 'card_0.png', 140, 380, 360, 'filter:blur(5px);opacity:.6')}${img(U + 'card_2.png', 1420, 380, 360, 'filter:blur(5px);opacity:.6')}
+    ${img(U + 'card_1.png', 960 - 380, 250, 760, 'filter:drop-shadow(0 30px 60px rgba(6,61,49,.18))')}<div class="fx l" style="top:120px;height:30px">Checked on a schedule, per model and provider</div>`,
+  7: () => `<div class="fx d" style="top:420px;height:120px">Three steps.</div><div class="fx d" style="top:540px;height:120px">Then you're in.</div>`,
+  8: () => `${img(U + 'card_5.png', 150, 300, 520)}${img(U + 'card_6.png', 700, 300, 520)}${img(U + 'card_7.png', 1250, 300, 520)}`,
+  9: () => `<div class="fx d" style="top:110px;height:110px;font-size:80px">Change the endpoint. Keep your workflow.</div>${img(U + 'code_0.png', 960 - 760, 300, 1520, 'border-radius:26px')}
+    <div style="left:232px;top:397px;width:860px;height:44px;border-radius:10px" class="glow"></div>`,
+  10: () => `<div style="left:560px;top:260px;width:800px;height:240px;border-radius:50%;background:radial-gradient(closest-side,rgba(89,217,163,.45),rgba(89,217,163,0))"></div>${img(A + 'key.webp', 740, 130, 440, 'transform:rotate(-4deg)')}
+    <div class="fx d" style="top:560px;height:120px">One key. Every model.</div><div class="fx d" style="top:680px;height:120px;color:#063D31">Verified inference.</div>`,
+  11: () => `<div class="fx" style="top:340px;height:110px"><img src="${U}logo_0.svg" style="height:104px"></div>
+    <div class="fx" style="top:500px;height:28px"><img src="${U}poweredby.svg" style="height:24px"></div>
+    <div class="fx" style="top:610px;height:100px"><div style="height:100px;padding:0 56px;border-radius:24px;background:#111;color:#fff;font:600 38px/100px 'Public'" class="glow">Get your key</div></div>
+    <div class="fx s" style="top:770px;height:50px">sterling.mira.network</div>`,
+  12: () => `<div style="left:0;top:0;width:1920px;height:1080px;background:url(../assets/mira/net/bg_2.5089ebe7.webp) center/cover"></div>
+    <div class="fx" style="top:150px;height:30px"><div class="l" style="color:rgba(255,255,255,.6)">Sterling is built on Mira Network</div></div>
+    <div class="fx d" style="top:760px;height:120px;color:#fff;font-family:Georgia,'Times New Roman',serif;font-weight:400;font-size:104px">The Trust Layer of AI</div>`,
+};
+// every panel is built once (so its images are loaded before any screenshot); seek only switches which one shows
+const PANELS = Object.keys(P).map(k => { const d = document.createElement('div'); d.style.cssText = 'left:0;top:0;width:1920px;height:1080px;display:none'; d.innerHTML = P[k](); $.appendChild(d); return d; });
+window.seek = n => { PANELS.forEach((d, i) => { d.style.display = i === Math.round(n) - 1 ? 'block' : 'none'; }); };
+const imgs = [...document.images].map(i => i.decode().catch(() => {}));
+Promise.all([document.fonts.load("500 40px 'Zalando'"), document.fonts.load("400 40px 'Public'"), ...imgs]).then(() => { window.seek(1); window.__ready = true; });
+</script>

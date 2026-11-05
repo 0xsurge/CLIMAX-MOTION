@@ -1,0 +1,1093 @@
+{
+  "title": "Sterling",
+  "description": "One key. Every model. Verified inference.",
+  "ogImage": "https://sterling.mira.network/sterling-og.png",
+  "favicon": "https://sterling.mira.network/sterling.png?v=figma-20261104",
+  "themeColor": "#fff",
+  "body": {
+    "bg": "rgb(246, 247, 246)",
+    "color": "rgb(17, 17, 17)",
+    "font": "\"Public Sans Variable\", \"Public Sans\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif"
+  },
+  "rootVars": {
+    "--radius": "1rem",
+    "--app-header-height": "3rem",
+    "--app-rev": "\"2k6e8r7p\"",
+    "--font-body": "var(--font-sans)",
+    "--background": "#fff",
+    "--foreground": "#0a0a0a",
+    "--card": "#fff",
+    "--card-foreground": "#0a0a0a",
+    "--popover": "#fff",
+    "--popover-foreground": "#0a0a0a",
+    "--primary": "#3ea4ec",
+    "--primary-foreground": "#fff",
+    "--secondary": "#eee",
+    "--secondary-foreground": "#004f8b",
+    "--muted": "#f5f5f5",
+    "--muted-foreground": "#606060",
+    "--accent": "var(--primary)",
+    "--accent-foreground": "#0a0a0a",
+    "--destructive": "#e40014",
+    "--destructive-foreground": "#fafafa",
+    "--success": "#009767",
+    "--success-foreground": "#fafafa",
+    "--warning": "#cd8900",
+    "--warning-foreground": "#0a0a0a",
+    "--info": "#0084cc",
+    "--info-foreground": "#fafafa",
+    "--neutral": "#a1a1a1",
+    "--neutral-foreground": "#0a0a0a",
+    "--border": "#e8e8e8",
+    "--input": "#e8e8e8",
+    "--ring": "#42a6ff",
+    "--chart-1": "#4ca9ff",
+    "--chart-2": "#00a3aa",
+    "--chart-3": "#9095e8",
+    "--chart-4": "#d068d8",
+    "--chart-5": "#20b46b",
+    "--overview-accent-1": "#4ca9ff",
+    "--overview-accent-2": "#00a3aa",
+    "--overview-accent-3": "#9095e8",
+    "--sidebar": "var(--foreground)",
+    "--sidebar-foreground": "#0a0a0a",
+    "--sidebar-primary": "#128bff",
+    "--sidebar-primary-foreground": "#fff",
+    "--sidebar-accent": "var(--primary)",
+    "--sidebar-accent-foreground": "#0276ea",
+    "--sidebar-border": "#e8e8e8",
+    "--sidebar-ring": "#007cdc",
+    "--skeleton-base": "#f5f5f5",
+    "--skeleton-highlight": "#fafafa",
+    "--table-row": "var(--background)",
+    "--table-header": "var(--foreground)",
+    "--table-header-hover": "var(--foreground)",
+    "--table-disabled": "var(--foreground)",
+    "--table-disabled-hover": "var(--foreground)",
+    "--table-disabled-border": "var(--foreground)"
+  },
+  "fontFaces": [
+    {
+      "family": "Public Sans Variable",
+      "weight": "100 900",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Public Sans Variable",
+      "weight": "100 900",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Public Sans Variable",
+      "weight": "100 900",
+      "style": "normal",
+      "status": "loaded"
+    },
+    {
+      "family": "Lora Variable",
+      "weight": "400 700",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Lora Variable",
+      "weight": "400 700",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Lora Variable",
+      "weight": "400 700",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Lora Variable",
+      "weight": "400 700",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Lora Variable",
+      "weight": "400 700",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Lora Variable",
+      "weight": "400 700",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Lora Variable",
+      "weight": "400 700",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "KaTeX_AMS",
+      "weight": "400",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "KaTeX_Caligraphic",
+      "weight": "700",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "KaTeX_Caligraphic",
+      "weight": "400",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "KaTeX_Fraktur",
+      "weight": "700",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "KaTeX_Fraktur",
+      "weight": "400",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "KaTeX_Main",
+      "weight": "700",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "KaTeX_Main",
+      "weight": "700",
+      "style": "italic",
+      "status": "unloaded"
+    },
+    {
+      "family": "KaTeX_Main",
+      "weight": "400",
+      "style": "italic",
+      "status": "unloaded"
+    },
+    {
+      "family": "KaTeX_Main",
+      "weight": "400",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "KaTeX_Math",
+      "weight": "700",
+      "style": "italic",
+      "status": "unloaded"
+    },
+    {
+      "family": "KaTeX_Math",
+      "weight": "400",
+      "style": "italic",
+      "status": "unloaded"
+    },
+    {
+      "family": "KaTeX_SansSerif",
+      "weight": "700",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "KaTeX_SansSerif",
+      "weight": "400",
+      "style": "italic",
+      "status": "unloaded"
+    },
+    {
+      "family": "KaTeX_SansSerif",
+      "weight": "400",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "KaTeX_Script",
+      "weight": "400",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "KaTeX_Size1",
+      "weight": "400",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "KaTeX_Size2",
+      "weight": "400",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "KaTeX_Size3",
+      "weight": "400",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "KaTeX_Size4",
+      "weight": "400",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "KaTeX_Typewriter",
+      "weight": "400",
+      "style": "normal",
+      "status": "unloaded"
+    },
+    {
+      "family": "Zalando Sans Expanded",
+      "weight": "500",
+      "style": "normal",
+      "status": "loaded"
+    }
+  ],
+  "fontFamilies": {
+    "\"Public Sans Variable\", \"Public Sans\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif": 104,
+    "\"Zalando Sans Expanded\", \"Public Sans Variable\", \"Public Sans\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif": 16,
+    "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace": 2
+  },
+  "colors": {
+    "rgb(246, 247, 246)": {
+      "bg": 4,
+      "text": 2,
+      "border": 0
+    },
+    "rgb(17, 17, 17)": {
+      "bg": 2,
+      "text": 62,
+      "border": 0
+    },
+    "oklch(0.224594 0.0176389 174.463)": {
+      "bg": 0,
+      "text": 20,
+      "border": 0
+    },
+    "oklab(0.84491 -0.0122959 0.00119207 / 0.4)": {
+      "bg": 2,
+      "text": 0,
+      "border": 1
+    },
+    "rgb(6, 61, 49)": {
+      "bg": 1,
+      "text": 0,
+      "border": 0
+    },
+    "rgb(255, 255, 255)": {
+      "bg": 2,
+      "text": 8,
+      "border": 1
+    },
+    "oklab(0 0 0 / 0.1)": {
+      "bg": 1,
+      "text": 0,
+      "border": 0
+    },
+    "oklab(0.999994 0.0000455678 0.0000200868 / 0.85)": {
+      "bg": 0,
+      "text": 1,
+      "border": 0
+    },
+    "rgb(23, 36, 29)": {
+      "bg": 0,
+      "text": 1,
+      "border": 0
+    },
+    "rgb(23, 27, 25)": {
+      "bg": 2,
+      "text": 0,
+      "border": 0
+    },
+    "rgb(27, 37, 32)": {
+      "bg": 0,
+      "text": 12,
+      "border": 0
+    },
+    "rgb(105, 115, 109)": {
+      "bg": 0,
+      "text": 7,
+      "border": 0
+    },
+    "rgb(232, 237, 234)": {
+      "bg": 0,
+      "text": 0,
+      "border": 1
+    },
+    "rgb(226, 245, 238)": {
+      "bg": 0,
+      "text": 3,
+      "border": 0
+    },
+    "oklch(0.955517 0.00326925 174.463)": {
+      "bg": 2,
+      "text": 0,
+      "border": 0
+    },
+    "oklab(0.177624 0.00000809133 0.00000356138 / 0.4)": {
+      "bg": 0,
+      "text": 0,
+      "border": 1
+    },
+    "oklch(0.84491 0.0123535 174.463)": {
+      "bg": 0,
+      "text": 0,
+      "border": 2
+    },
+    "rgb(11, 61, 50)": {
+      "bg": 0,
+      "text": 1,
+      "border": 0
+    },
+    "oklab(0.84491 -0.0122959 0.00119207 / 0.3)": {
+      "bg": 0,
+      "text": 0,
+      "border": 1
+    },
+    "oklab(0.224594 -0.0175566 0.0017021 / 0.4)": {
+      "bg": 0,
+      "text": 4,
+      "border": 0
+    },
+    "oklab(0.224594 -0.0175566 0.0017021 / 0.3)": {
+      "bg": 0,
+      "text": 2,
+      "border": 0
+    }
+  },
+  "heads": [
+    {
+      "tag": "H1",
+      "text": "The model you pay for. From a verified provider.",
+      "font": "\"Zalando Sans Expanded\", \"Public Sans Variable\", \"Public Sans\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "size": "36px",
+      "weight": "500",
+      "color": "rgb(255, 255, 255)"
+    },
+    {
+      "tag": "H2",
+      "text": "Three steps. Then the verified model.",
+      "font": "\"Public Sans Variable\", \"Public Sans\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "size": "24px",
+      "weight": "500",
+      "color": "rgb(27, 37, 32)"
+    },
+    {
+      "tag": "H2",
+      "text": "Routed only to providers that are verified.",
+      "font": "\"Zalando Sans Expanded\", \"Public Sans Variable\", \"Public Sans\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "size": "48px",
+      "weight": "500",
+      "color": "rgb(17, 17, 17)"
+    },
+    {
+      "tag": "H3",
+      "text": "Model identity",
+      "font": "\"Zalando Sans Expanded\", \"Public Sans Variable\", \"Public Sans\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "size": "18px",
+      "weight": "500",
+      "color": "rgb(17, 17, 17)"
+    },
+    {
+      "tag": "H3",
+      "text": "Tool calls",
+      "font": "\"Zalando Sans Expanded\", \"Public Sans Variable\", \"Public Sans\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "size": "18px",
+      "weight": "500",
+      "color": "rgb(17, 17, 17)"
+    },
+    {
+      "tag": "H3",
+      "text": "Parameters honoured",
+      "font": "\"Zalando Sans Expanded\", \"Public Sans Variable\", \"Public Sans\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "size": "18px",
+      "weight": "500",
+      "color": "rgb(17, 17, 17)"
+    },
+    {
+      "tag": "H3",
+      "text": "Silent failures",
+      "font": "\"Zalando Sans Expanded\", \"Public Sans Variable\", \"Public Sans\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "size": "18px",
+      "weight": "500",
+      "color": "rgb(17, 17, 17)"
+    },
+    {
+      "tag": "H3",
+      "text": "Declared context",
+      "font": "\"Zalando Sans Expanded\", \"Public Sans Variable\", \"Public Sans\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "size": "18px",
+      "weight": "500",
+      "color": "rgb(17, 17, 17)"
+    },
+    {
+      "tag": "H2",
+      "text": "Three steps. Then you're in.",
+      "font": "\"Zalando Sans Expanded\", \"Public Sans Variable\", \"Public Sans\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "size": "48px",
+      "weight": "500",
+      "color": "rgb(17, 17, 17)"
+    },
+    {
+      "tag": "H3",
+      "text": "Create your key.",
+      "font": "\"Zalando Sans Expanded\", \"Public Sans Variable\", \"Public Sans\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "size": "20px",
+      "weight": "500",
+      "color": "rgb(17, 17, 17)"
+    },
+    {
+      "tag": "H3",
+      "text": "Add credit.",
+      "font": "\"Zalando Sans Expanded\", \"Public Sans Variable\", \"Public Sans\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "size": "20px",
+      "weight": "500",
+      "color": "rgb(17, 17, 17)"
+    },
+    {
+      "tag": "H3",
+      "text": "Plug into your app.",
+      "font": "\"Zalando Sans Expanded\", \"Public Sans Variable\", \"Public Sans\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "size": "20px",
+      "weight": "500",
+      "color": "rgb(17, 17, 17)"
+    },
+    {
+      "tag": "H2",
+      "text": "Change the endpoint. Keep your workflow.",
+      "font": "\"Zalando Sans Expanded\", \"Public Sans Variable\", \"Public Sans\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "size": "48px",
+      "weight": "500",
+      "color": "rgb(17, 17, 17)"
+    },
+    {
+      "tag": "H2",
+      "text": "Built on Mira Network",
+      "font": "\"Zalando Sans Expanded\", \"Public Sans Variable\", \"Public Sans\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "size": "48px",
+      "weight": "500",
+      "color": "rgb(17, 17, 17)"
+    }
+  ],
+  "buttons": [
+    {
+      "text": "Change language",
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(17, 17, 17)",
+      "radius": "12px",
+      "font": "\"Public Sans Variable\", \"Public Sans\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "weight": "500"
+    },
+    {
+      "text": "Toggle theme",
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(17, 17, 17)",
+      "radius": "12px",
+      "font": "\"Public Sans Variable\", \"Public Sans\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "weight": "500"
+    },
+    {
+      "text": "",
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(17, 17, 17)",
+      "radius": "12px",
+      "font": "\"Public Sans Variable\", \"Public Sans\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "weight": "500"
+    },
+    {
+      "text": "Sign in",
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(17, 17, 17)",
+      "radius": "3.35544e+07px",
+      "font": "\"Public Sans Variable\", \"Public Sans\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "weight": "500"
+    },
+    {
+      "text": "Get your key",
+      "bg": "rgb(17, 17, 17)",
+      "color": "rgb(246, 247, 246)",
+      "radius": "3.35544e+07px",
+      "font": "\"Public Sans Variable\", \"Public Sans\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "weight": "500"
+    },
+    {
+      "text": "See provider scores",
+      "bg": "rgb(255, 255, 255)",
+      "color": "rgb(23, 36, 29)",
+      "radius": "3.35544e+07px",
+      "font": "\"Public Sans Variable\", \"Public Sans\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "weight": "500"
+    },
+    {
+      "text": "Get your key",
+      "bg": "rgb(23, 27, 25)",
+      "color": "rgb(255, 255, 255)",
+      "radius": "3.35544e+07px",
+      "font": "\"Public Sans Variable\", \"Public Sans\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "weight": "500"
+    },
+    {
+      "text": "See Verification scores",
+      "bg": "rgb(23, 27, 25)",
+      "color": "rgb(255, 255, 255)",
+      "radius": "3.35544e+07px",
+      "font": "\"Public Sans Variable\", \"Public Sans\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "weight": "500"
+    },
+    {
+      "text": "Copy code",
+      "bg": "rgb(246, 247, 246)",
+      "color": "rgb(17, 17, 17)",
+      "radius": "3.35544e+07px",
+      "font": "\"Public Sans Variable\", \"Public Sans\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "weight": "500"
+    },
+    {
+      "text": "Read the quickstart",
+      "bg": "rgb(246, 247, 246)",
+      "color": "rgb(17, 17, 17)",
+      "radius": "3.35544e+07px",
+      "font": "\"Public Sans Variable\", \"Public Sans\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "weight": "500"
+    }
+  ],
+  "nav": [
+    {
+      "text": "",
+      "href": "/"
+    },
+    {
+      "text": "",
+      "href": "https://mira.network"
+    },
+    {
+      "text": "Models",
+      "href": "/models"
+    },
+    {
+      "text": "Pricing",
+      "href": "/pricing"
+    },
+    {
+      "text": "Verification",
+      "href": "/verification"
+    },
+    {
+      "text": "Docs",
+      "href": "/docs"
+    },
+    {
+      "text": "Sign in",
+      "href": "/sign-in"
+    },
+    {
+      "text": "Get your key",
+      "href": "/sign-up"
+    },
+    {
+      "text": "Models",
+      "href": "/models"
+    },
+    {
+      "text": "Pricing",
+      "href": "/pricing"
+    },
+    {
+      "text": "Verification",
+      "href": "/verification"
+    },
+    {
+      "text": "Docs",
+      "href": "/docs"
+    }
+  ],
+  "imgs": [
+    {
+      "src": "https://sterling.mira.network/sterling-home/aurora.webp",
+      "alt": "",
+      "w": 1505,
+      "h": 1143,
+      "box": {
+        "x": 144,
+        "y": 96,
+        "width": 1152,
+        "height": 576,
+        "top": 96,
+        "right": 1296,
+        "bottom": 672,
+        "left": 144
+      }
+    },
+    {
+      "src": "https://sterling.mira.network/sterling-home/key.webp",
+      "alt": "",
+      "w": 440,
+      "h": 320,
+      "box": {
+        "x": 224,
+        "y": 174.59375,
+        "width": 256,
+        "height": 186.171875,
+        "top": 174.59375,
+        "right": 480,
+        "bottom": 360.765625,
+        "left": 224
+      }
+    },
+    {
+      "src": "https://sterling.mira.network/sterling-home/step-key.webp",
+      "alt": "",
+      "w": 76,
+      "h": 74,
+      "box": {
+        "x": 766.140625,
+        "y": 329.90625,
+        "width": 36,
+        "height": 35.046875,
+        "top": 329.90625,
+        "right": 802.140625,
+        "bottom": 364.953125,
+        "left": 766.140625
+      }
+    },
+    {
+      "src": "https://sterling.mira.network/sterling-home/step-plus.webp",
+      "alt": "",
+      "w": 76,
+      "h": 74,
+      "box": {
+        "x": 766.140625,
+        "y": 417.96875,
+        "width": 36,
+        "height": 35.046875,
+        "top": 417.96875,
+        "right": 802.140625,
+        "bottom": 453.015625,
+        "left": 766.140625
+      }
+    },
+    {
+      "src": "https://sterling.mira.network/sterling-home/step-shield.webp",
+      "alt": "",
+      "w": 76,
+      "h": 74,
+      "box": {
+        "x": 766.140625,
+        "y": 515.78125,
+        "width": 36,
+        "height": 35.046875,
+        "top": 515.78125,
+        "right": 802.140625,
+        "bottom": 550.828125,
+        "left": 766.140625
+      }
+    },
+    {
+      "src": "https://sterling.mira.network/sterling-home/identity.webp",
+      "alt": "",
+      "w": 121,
+      "h": 120,
+      "box": {
+        "x": 657.59375,
+        "y": 800,
+        "width": 64,
+        "height": 56,
+        "top": 800,
+        "right": 721.59375,
+        "bottom": 856,
+        "left": 657.59375
+      }
+    },
+    {
+      "src": "https://sterling.mira.network/sterling-home/tools.webp",
+      "alt": "",
+      "w": 160,
+      "h": 111,
+      "box": {
+        "x": 996.796875,
+        "y": 800,
+        "width": 64,
+        "height": 56,
+        "top": 800,
+        "right": 1060.796875,
+        "bottom": 856,
+        "left": 996.796875
+      }
+    },
+    {
+      "src": "https://sterling.mira.network/sterling-home/parameters.webp",
+      "alt": "",
+      "w": 144,
+      "h": 120,
+      "box": {
+        "x": 657.59375,
+        "y": 1040,
+        "width": 64,
+        "height": 56,
+        "top": 1040,
+        "right": 721.59375,
+        "bottom": 1096,
+        "left": 657.59375
+      }
+    },
+    {
+      "src": "https://sterling.mira.network/sterling-home/failures.webp",
+      "alt": "",
+      "w": 160,
+      "h": 78,
+      "box": {
+        "x": 996.796875,
+        "y": 1040,
+        "width": 64,
+        "height": 56,
+        "top": 1040,
+        "right": 1060.796875,
+        "bottom": 1096,
+        "left": 996.796875
+      }
+    },
+    {
+      "src": "https://sterling.mira.network/sterling-home/context.webp",
+      "alt": "",
+      "w": 160,
+      "h": 113,
+      "box": {
+        "x": 657.59375,
+        "y": 1280,
+        "width": 64,
+        "height": 56,
+        "top": 1280,
+        "right": 721.59375,
+        "bottom": 1336,
+        "left": 657.59375
+      }
+    },
+    {
+      "src": "https://sterling.mira.network/sterling-home/key.webp",
+      "alt": "",
+      "w": 440,
+      "h": 320,
+      "box": {
+        "x": 341.328125,
+        "y": 1799.65625,
+        "width": 144,
+        "height": 112,
+        "top": 1799.65625,
+        "right": 485.328125,
+        "bottom": 1911.65625,
+        "left": 341.328125
+      }
+    },
+    {
+      "src": "https://sterling.mira.network/sterling-home/coins.webp",
+      "alt": "",
+      "w": 424,
+      "h": 320,
+      "box": {
+        "x": 730.65625,
+        "y": 1799.65625,
+        "width": 144,
+        "height": 112,
+        "top": 1799.65625,
+        "right": 874.65625,
+        "bottom": 1911.65625,
+        "left": 730.65625
+      }
+    },
+    {
+      "src": "https://sterling.mira.network/sterling-home/plug.webp",
+      "alt": "",
+      "w": 440,
+      "h": 282,
+      "box": {
+        "x": 1120,
+        "y": 1799.65625,
+        "width": 144,
+        "height": 112,
+        "top": 1799.65625,
+        "right": 1264,
+        "bottom": 1911.65625,
+        "left": 1120
+      }
+    },
+    {
+      "src": "https://sterling.mira.network/sterling-home/mira-pattern.webp",
+      "alt": "",
+      "w": 1403,
+      "h": 488,
+      "box": {
+        "x": 144,
+        "y": 2934.3125,
+        "width": 1152,
+        "height": 402.203125,
+        "top": 2934.3125,
+        "right": 1296,
+        "bottom": 3336.515625,
+        "left": 144
+      }
+    }
+  ],
+  "svgs": [
+    {
+      "box": {
+        "x": 168,
+        "y": 26,
+        "width": 142.1875,
+        "height": 28,
+        "top": 26,
+        "right": 310.1875,
+        "bottom": 54,
+        "left": 168
+      },
+      "html": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"82.5347 188.034 283.3933 55.806\" fill=\"currentColor\" role=\"img\" aria-label=\"Sterling\" class=\"h-7 w-auto shrink-0\"><path d=\"M84.5347 209.479L99.1184 223.369L131.758 190.034V206.007L99.8128 238.647L84.5347 224.063V209.479Z\"></path><path d=\"M85.2292 191.424H101.202V197.674H85.2292V191.424Z\"></path><path d=\"M169.744 232.499C166.499 232.499 163.664 232.236 161.239 231.712C158.813 231.155 156.781 230.368 155.142 229.352C153.503 228.336 152.258 227.14 151.405 225.763C150.553 224.386 150.078 222.878 149.98 221.24H158.19C158.387 222.026 158.764 222.764 159.321 223.452C159.878 224.108 160.616 224.698 161.534 225.222C162.484 225.714 163.631 226.107 164.975 226.402C166.352 226.664 167.942 226.795 169.744 226.795C172.006 226.795 173.923 226.599 175.497 226.205C177.103 225.812 178.316 225.238 179.135 224.485C179.987 223.731 180.413 222.813 180.413 221.731C180.413 221.076 180.249 220.502 179.922 220.01C179.594 219.519 179.069 219.109 178.348 218.781C177.66 218.421 176.759 218.159 175.644 217.995L163.795 216.52C161.829 216.257 160.042 215.897 158.436 215.438C156.83 214.946 155.453 214.307 154.306 213.521C153.192 212.734 152.323 211.767 151.7 210.62C151.11 209.44 150.815 208.063 150.815 206.49C150.815 204.884 151.225 203.442 152.045 202.163C152.864 200.852 154.06 199.754 155.634 198.869C157.207 197.951 159.124 197.247 161.386 196.755C163.648 196.263 166.221 196.018 169.105 196.018C172.088 196.018 174.677 196.263 176.873 196.755C179.069 197.247 180.905 197.951 182.38 198.869C183.855 199.787 184.969 200.869 185.723 202.114C186.51 203.36 186.952 204.72 187.051 206.195H178.84C178.709 205.31 178.266 204.54 177.512 203.884C176.759 203.196 175.677 202.671 174.268 202.311C172.858 201.917 171.072 201.721 168.908 201.721C166.778 201.721 164.959 201.901 163.451 202.262C161.976 202.622 160.862 203.13 160.108 203.786C159.387 204.441 159.026 205.228 159.026 206.146C159.026 206.834 159.239 207.457 159.665 208.014C160.091 208.538 160.698 208.965 161.484 209.292C162.304 209.62 163.271 209.866 164.385 210.03L176.726 211.554C179.25 211.849 181.397 212.406 183.167 213.226C184.937 214.045 186.297 215.127 187.247 216.471C188.198 217.814 188.673 219.453 188.673 221.387C188.673 223.223 188.263 224.829 187.444 226.205C186.625 227.582 185.412 228.746 183.806 229.696C182.2 230.614 180.217 231.319 177.857 231.81C175.529 232.269 172.825 232.499 169.744 232.499ZM204.134 231.81C201.511 231.81 199.43 231.122 197.89 229.745C196.382 228.369 195.628 226.451 195.628 223.993V199.705H203.249V222.813C203.249 224.091 203.593 225.058 204.281 225.714C204.969 226.369 205.904 226.697 207.084 226.697H212.049V231.81H204.134ZM189.728 211.603V206.539H196.415V211.603H189.728ZM202.462 211.603V206.539H212.049V211.603H202.462ZM230.248 232.499C226.806 232.499 223.84 231.941 221.349 230.827C218.891 229.713 216.99 228.156 215.646 226.156C214.335 224.124 213.679 221.797 213.679 219.175C213.679 217.569 213.909 216.094 214.367 214.75C214.859 213.373 215.564 212.144 216.482 211.062C217.432 209.948 218.579 209.014 219.923 208.26C221.267 207.473 222.808 206.883 224.545 206.49C226.282 206.064 228.183 205.851 230.248 205.851C232.739 205.851 234.984 206.146 236.984 206.736C238.983 207.326 240.671 208.243 242.048 209.489C243.457 210.702 244.523 212.259 245.244 214.16C245.965 216.028 246.309 218.257 246.276 220.846H218.497V216.667H238.557C238.393 215.749 238.082 214.946 237.623 214.258C237.164 213.537 236.574 212.931 235.853 212.439C235.132 211.947 234.296 211.587 233.346 211.357C232.395 211.128 231.346 211.013 230.199 211.013C229.019 211.013 227.937 211.144 226.954 211.406C226.003 211.669 225.151 212.046 224.397 212.537C223.676 212.996 223.07 213.57 222.578 214.258C222.119 214.914 221.759 215.651 221.497 216.471C221.267 217.29 221.152 218.191 221.152 219.175C221.152 220.748 221.48 222.157 222.136 223.403C222.824 224.616 223.857 225.583 225.233 226.304C226.61 226.992 228.314 227.336 230.346 227.336C232.215 227.336 233.788 227.107 235.066 226.648C236.345 226.15"
+    },
+    {
+      "box": {
+        "x": 322.1875,
+        "y": 34,
+        "width": 96,
+        "height": 12,
+        "top": 34,
+        "right": 418.1875,
+        "bottom": 46,
+        "left": 322.1875
+      },
+      "html": "<svg class=\"shrink-0 h-3 w-24 max-w-24\" viewBox=\"174.371 24.2396 125.327 15.5211\" fill=\"currentColor\" role=\"img\" aria-label=\"Powered by Mira\"><path d=\"M174.871 38.5109V29.3424H176.52L176.56 30.8705L176.386 30.7901C176.565 30.2629 176.855 29.8652 177.257 29.5971C177.668 29.3201 178.146 29.1816 178.692 29.1816C179.371 29.1816 179.934 29.3514 180.38 29.691C180.836 30.0305 181.176 30.4818 181.399 31.0448C181.623 31.6077 181.734 32.2333 181.734 32.9213C181.734 33.6094 181.618 34.2349 181.386 34.7979C181.162 35.3609 180.823 35.8122 180.367 36.1517C179.92 36.4913 179.357 36.6611 178.678 36.6611C178.321 36.6611 177.986 36.5985 177.673 36.4734C177.369 36.3483 177.105 36.1696 176.882 35.9373C176.668 35.7049 176.516 35.4324 176.426 35.1196L176.587 34.9856V38.5109H174.871ZM178.276 35.2671C178.794 35.2671 179.201 35.0615 179.496 34.6505C179.8 34.2305 179.952 33.6541 179.952 32.9213C179.952 32.1886 179.8 31.6167 179.496 31.2056C179.201 30.7856 178.794 30.5756 178.276 30.5756C177.928 30.5756 177.628 30.665 177.378 30.8437C177.128 31.0135 176.931 31.2726 176.788 31.6211C176.654 31.9697 176.587 32.4031 176.587 32.9213C176.587 33.4396 176.654 33.873 176.788 34.2215C176.922 34.5701 177.114 34.8337 177.365 35.0124C177.624 35.1822 177.928 35.2671 178.276 35.2671ZM186.175 36.6611C185.47 36.6611 184.848 36.5092 184.312 36.2054C183.785 35.8926 183.374 35.4547 183.079 34.8918C182.793 34.3288 182.65 33.672 182.65 32.9213C182.65 32.1618 182.793 31.505 183.079 30.9509C183.374 30.388 183.785 29.9546 184.312 29.6507C184.848 29.338 185.47 29.1816 186.175 29.1816C186.881 29.1816 187.498 29.338 188.025 29.6507C188.552 29.9546 188.959 30.388 189.245 30.9509C189.54 31.505 189.687 32.1618 189.687 32.9213C189.687 33.672 189.54 34.3288 189.245 34.8918C188.959 35.4547 188.552 35.8926 188.025 36.2054C187.498 36.5092 186.881 36.6611 186.175 36.6611ZM186.175 35.2671C186.729 35.2671 187.154 35.0615 187.449 34.6505C187.753 34.2394 187.905 33.663 187.905 32.9213C187.905 32.1886 187.753 31.6167 187.449 31.2056C187.154 30.7856 186.729 30.5756 186.175 30.5756C185.621 30.5756 185.192 30.7856 184.889 31.2056C184.585 31.6167 184.433 32.1886 184.433 32.9213C184.433 33.663 184.585 34.2394 184.889 34.6505C185.192 35.0615 185.621 35.2671 186.175 35.2671ZM192.264 36.5002L190.106 29.3424H191.862L193.256 34.5566L194.69 29.3424H196.191L197.639 34.5566L199.033 29.3424H200.789L198.631 36.5002H196.861L195.441 31.7016L194.033 36.5002H192.264ZM204.724 36.6611C204.009 36.6611 203.388 36.5092 202.86 36.2054C202.333 35.8926 201.927 35.4547 201.641 34.8918C201.355 34.3288 201.212 33.672 201.212 32.9213C201.212 32.1707 201.355 31.5184 201.641 30.9643C201.927 30.4014 202.329 29.9635 202.847 29.6507C203.374 29.338 203.986 29.1816 204.683 29.1816C205.363 29.1816 205.957 29.3335 206.466 29.6373C206.984 29.9412 207.382 30.379 207.659 30.9509C207.936 31.5229 208.075 32.2109 208.075 33.0152V33.4039H202.994C203.03 34.0294 203.2 34.503 203.504 34.8247C203.817 35.1375 204.228 35.2939 204.737 35.2939C205.121 35.2939 205.438 35.209 205.689 35.0392C205.948 34.8605 206.127 34.6147 206.225 34.302L207.981 34.4092C207.784 35.1062 207.395 35.6558 206.815 36.0579C206.243 36.46 205.546 36.6611 204.724 36.6611ZM202.994 32.2511H206.305C206.27 31.6703 206.104 31.2414 205.809 30.9643C205.514 30.6784 205.139 30.5354 204.683 30.5354C204.228 30.5354 203.848 30.6829 203.544 30.9778C203.249 31.2726 203.066 31.6971 202.994 32.2511ZM209.416 36.5002V29.3424H211.024L211.091 31.3263L210.944 31.2994C211.051 30.6114 211.252 30.1154 211.547 29.8116C211.851 29.4988 212.262 29.3424 212.78 29.3424H213.437V30.8169H212.767C212.4 30.8169 212.097 30.8705 211.855 30.9778C211.614 31.085 211.431 31.2548 211.306 31.4871C211.19 31.7105 211.132 32.0054 211.132 32.3718V36.5002H209.416ZM217.46 36.6611C216.745 36.6611 216.124 36.5092 215.597 36.2054C215.07 35.8926 214.663 35.4547 214.377 34.8918C214.091 34.3288 213.948 33.672 213.948 32.9213C213.948 32.1707 214.091 31.5184 214.377 30.9643C214.663 30.4014 215.065 29.9635 215.584 29.6507C216.111 29"
+    },
+    {
+      "box": {
+        "x": 986.28125,
+        "y": 30.40625,
+        "width": 19.1875,
+        "height": 19.1875,
+        "top": 30.40625,
+        "right": 1005.46875,
+        "bottom": 49.59375,
+        "left": 986.28125
+      },
+      "html": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-languages size-[1.2rem]\" aria-hidden=\"true\"><path d=\"m5 8 6 6\"></path><path d=\"m4 14 6-6 2-3\"></path><path d=\"M2 5h12\"></path><path d=\"M7 2h1\"></path><path d=\"m22 22-5-10-5 10\"></path><path d=\"M14 18h6\"></path></svg>"
+    },
+    {
+      "box": {
+        "x": 1024.28125,
+        "y": 30.40625,
+        "width": 19.1875,
+        "height": 19.1875,
+        "top": 30.40625,
+        "right": 1043.46875,
+        "bottom": 49.59375,
+        "left": 1024.28125
+      },
+      "html": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-sun size-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"4\"></circle><path d=\"M12 2v2\"></path><path d=\"M12 20v2\"></path><path d=\"m4.93 4.93 1.41 1.41\"></path><path d=\"m17.66 17.66 1.41 1.41\"></path><path d=\"M2 12h2\"></path><path d=\"M20 12h2\"></path><path d=\"m6.34 17.66-1.41 1.41\"></path><path d=\"m19.07 4.93-1.41 1.41\"></path></svg>"
+    },
+    {
+      "box": {
+        "x": 1062.28125,
+        "y": 30.40625,
+        "width": 19.1875,
+        "height": 19.1875,
+        "top": 30.40625,
+        "right": 1081.46875,
+        "bottom": 49.59375,
+        "left": 1062.28125
+      },
+      "html": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-bell size-[1.2rem]\" aria-hidden=\"true\"><path d=\"M10.268 21a2 2 0 0 0 3.464 0\"></path><path d=\"M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326\"></path></svg>"
+    },
+    {
+      "box": {
+        "x": 590.8125,
+        "y": 3014.3125,
+        "width": 258.375,
+        "height": 32,
+        "top": 3014.3125,
+        "right": 849.1875,
+        "bottom": 3046.3125,
+        "left": 590.8125
+      },
+      "html": "<svg class=\"shrink-0 h-6 w-auto sm:h-8\" viewBox=\"174.371 24.2396 125.327 15.5211\" fill=\"currentColor\" role=\"img\" aria-label=\"Powered by Mira\"><path d=\"M174.871 38.5109V29.3424H176.52L176.56 30.8705L176.386 30.7901C176.565 30.2629 176.855 29.8652 177.257 29.5971C177.668 29.3201 178.146 29.1816 178.692 29.1816C179.371 29.1816 179.934 29.3514 180.38 29.691C180.836 30.0305 181.176 30.4818 181.399 31.0448C181.623 31.6077 181.734 32.2333 181.734 32.9213C181.734 33.6094 181.618 34.2349 181.386 34.7979C181.162 35.3609 180.823 35.8122 180.367 36.1517C179.92 36.4913 179.357 36.6611 178.678 36.6611C178.321 36.6611 177.986 36.5985 177.673 36.4734C177.369 36.3483 177.105 36.1696 176.882 35.9373C176.668 35.7049 176.516 35.4324 176.426 35.1196L176.587 34.9856V38.5109H174.871ZM178.276 35.2671C178.794 35.2671 179.201 35.0615 179.496 34.6505C179.8 34.2305 179.952 33.6541 179.952 32.9213C179.952 32.1886 179.8 31.6167 179.496 31.2056C179.201 30.7856 178.794 30.5756 178.276 30.5756C177.928 30.5756 177.628 30.665 177.378 30.8437C177.128 31.0135 176.931 31.2726 176.788 31.6211C176.654 31.9697 176.587 32.4031 176.587 32.9213C176.587 33.4396 176.654 33.873 176.788 34.2215C176.922 34.5701 177.114 34.8337 177.365 35.0124C177.624 35.1822 177.928 35.2671 178.276 35.2671ZM186.175 36.6611C185.47 36.6611 184.848 36.5092 184.312 36.2054C183.785 35.8926 183.374 35.4547 183.079 34.8918C182.793 34.3288 182.65 33.672 182.65 32.9213C182.65 32.1618 182.793 31.505 183.079 30.9509C183.374 30.388 183.785 29.9546 184.312 29.6507C184.848 29.338 185.47 29.1816 186.175 29.1816C186.881 29.1816 187.498 29.338 188.025 29.6507C188.552 29.9546 188.959 30.388 189.245 30.9509C189.54 31.505 189.687 32.1618 189.687 32.9213C189.687 33.672 189.54 34.3288 189.245 34.8918C188.959 35.4547 188.552 35.8926 188.025 36.2054C187.498 36.5092 186.881 36.6611 186.175 36.6611ZM186.175 35.2671C186.729 35.2671 187.154 35.0615 187.449 34.6505C187.753 34.2394 187.905 33.663 187.905 32.9213C187.905 32.1886 187.753 31.6167 187.449 31.2056C187.154 30.7856 186.729 30.5756 186.175 30.5756C185.621 30.5756 185.192 30.7856 184.889 31.2056C184.585 31.6167 184.433 32.1886 184.433 32.9213C184.433 33.663 184.585 34.2394 184.889 34.6505C185.192 35.0615 185.621 35.2671 186.175 35.2671ZM192.264 36.5002L190.106 29.3424H191.862L193.256 34.5566L194.69 29.3424H196.191L197.639 34.5566L199.033 29.3424H200.789L198.631 36.5002H196.861L195.441 31.7016L194.033 36.5002H192.264ZM204.724 36.6611C204.009 36.6611 203.388 36.5092 202.86 36.2054C202.333 35.8926 201.927 35.4547 201.641 34.8918C201.355 34.3288 201.212 33.672 201.212 32.9213C201.212 32.1707 201.355 31.5184 201.641 30.9643C201.927 30.4014 202.329 29.9635 202.847 29.6507C203.374 29.338 203.986 29.1816 204.683 29.1816C205.363 29.1816 205.957 29.3335 206.466 29.6373C206.984 29.9412 207.382 30.379 207.659 30.9509C207.936 31.5229 208.075 32.2109 208.075 33.0152V33.4039H202.994C203.03 34.0294 203.2 34.503 203.504 34.8247C203.817 35.1375 204.228 35.2939 204.737 35.2939C205.121 35.2939 205.438 35.209 205.689 35.0392C205.948 34.8605 206.127 34.6147 206.225 34.302L207.981 34.4092C207.784 35.1062 207.395 35.6558 206.815 36.0579C206.243 36.46 205.546 36.6611 204.724 36.6611ZM202.994 32.2511H206.305C206.27 31.6703 206.104 31.2414 205.809 30.9643C205.514 30.6784 205.139 30.5354 204.683 30.5354C204.228 30.5354 203.848 30.6829 203.544 30.9778C203.249 31.2726 203.066 31.6971 202.994 32.2511ZM209.416 36.5002V29.3424H211.024L211.091 31.3263L210.944 31.2994C211.051 30.6114 211.252 30.1154 211.547 29.8116C211.851 29.4988 212.262 29.3424 212.78 29.3424H213.437V30.8169H212.767C212.4 30.8169 212.097 30.8705 211.855 30.9778C211.614 31.085 211.431 31.2548 211.306 31.4871C211.19 31.7105 211.132 32.0054 211.132 32.3718V36.5002H209.416ZM217.46 36.6611C216.745 36.6611 216.124 36.5092 215.597 36.2054C215.07 35.8926 214.663 35.4547 214.377 34.8918C214.091 34.3288 213.948 33.672 213.948 32.9213C213.948 32.1707 214.091 31.5184 214.377 30.9643C214.663 30.4014 215.065 29.9635 215.584 29.6507C216.111 29"
+    }
+  ],
+  "sections": [
+    {
+      "tag": "HEADER",
+      "id": "",
+      "cls": "pointer-events-none fixed inset-x-0 top-0 z-50",
+      "y": 0,
+      "h": 80,
+      "text": "Models Pricing Verification Docs Change language Toggle theme Sign in Get your key",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "tag": "SECTION",
+      "id": "",
+      "cls": "relative z-10 px-4 pt-20 pb-4 md:px-6 md:pt-24 md:pb-6",
+      "y": 0,
+      "h": 696,
+      "text": "The model you pay for. From a verified provider. Sterling sends every request to a provider Mira Network has tested, so the model you pay for is the one that answers. See provider scores Get your key Three steps. Then the verified model. Create your key, get credits, and route through a verified provider. STEP 01 Create your key One key for Claude, GPT, Gemini and more. STEP 02 Add credit USDC or ",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "tag": "SECTION",
+      "id": "",
+      "cls": "relative z-10 px-6 py-14 md:py-20",
+      "y": 696,
+      "h": 864,
+      "text": "Routed only to providers that are verified. A model name on an API is a claim. Mira Network tests every provider behind Sterling on a schedule and publishes the result per model-provider pair, with the request and response behind each verdict. See Verification scores Model identity The provider's outputs are compared with a reference snapshot of the model it says it serves, across repeated runs. T",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "tag": "SECTION",
+      "id": "",
+      "cls": "relative z-10 px-6 py-12 md:py-16",
+      "y": 1560,
+      "h": 592,
+      "text": "Three steps. Then you're in. 01 Create your key. One key for every model on Sterling. 02 Add credit. Top up in USDC or MIRA, then pay as you go. 03 Plug into your app. Change the base URL. Keep your code.",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "tag": "SECTION",
+      "id": "",
+      "cls": "relative z-10 px-6 py-12 md:py-16",
+      "y": 2152,
+      "h": 703,
+      "text": "Change the endpoint. Keep your workflow. curl Copy code curl https://sterling.mira.network/v1/chat/completions \\ -H \"Authorization: Bearer $STERLING_API_KEY\" \\ -H \"Content-Type: application/json\" \\ -d '{ \"model\": \"claude-sonnet-5-5\", \"messages\": [{\"role\": \"user\", \"content\": \"Hello\"}] }' OpenAI-compatible. Read the quickstart",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "tag": "SECTION",
+      "id": "",
+      "cls": "relative z-10 px-6 py-12 md:py-20",
+      "y": 2854,
+      "h": 562,
+      "text": "Built on Mira Network Mira is the decentralised verification protocol for AI. Sterling is the first inference product built on it: the same checks Mira runs across the open-model ecosystem, applied to every provider you route through. mira.network",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "tag": "FOOTER",
+      "id": "",
+      "cls": "border-border/40 relative z-10 overflow-hidden border-t",
+      "y": 3417,
+      "h": 265,
+      "text": "One API for Claude, GPT and Gemini, with prepaid billing and usage tracking included. Models Pricing Verification Docs © 2026 Sterling · User Agreement · Privacy Policy",
+      "bg": "rgba(0, 0, 0, 0)"
+    }
+  ],
+  "bodyText": "Models Pricing Verification Docs Change language Toggle theme Sign in Get your key The model you pay for. From a verified provider. Sterling sends every request to a provider Mira Network has tested, so the model you pay for is the one that answers. See provider scores Get your key Three steps. Then the verified model. Create your key, get credits, and route through a verified provider. STEP 01 Create your key One key for Claude, GPT, Gemini and more. STEP 02 Add credit USDC or MIRA. Pay as you go. STEP 03 Get your model, verified Sterling checks the provider before it serves your request, so the model you pay for is the one you get. Routed only to providers that are verified. A model name on an API is a claim. Mira Network tests every provider behind Sterling on a schedule and publishes the result per model-provider pair, with the request and response behind each verdict. See Verification scores Model identity The provider's outputs are compared with a reference snapshot of the model it says it serves, across repeated runs. Tool calls Tools trigger when they should, with valid arguments, as often as the reference does. Parameters honoured The temperature, max_tokens and other parameters you send are the ones the provider applies. Silent failures No empty, truncated or malformed responses returned as if they were fine. Declared context The provider honours the context window it advertises. Shown as \"not yet tested\" until the check is switched on. Three steps. Then you're in. 01 Create your key. One key for every model on Sterling. 02 Add credit. Top up in USDC or MIRA, then pay as you go. 03 Plug into your app. Change the base URL. Keep your code. Change the endpoint. Keep your workflow. curl Copy code curl https://sterling.mira.network/v1/chat/completions \\ -H \"Authorization: Bearer $STERLING_API_KEY\" \\ -H \"Content-Type: application/json\" \\ -d '{ \"model\": \"claude-sonnet-5-5\", \"messages\": [{\"role\": \"user\", \"content\": \"Hello\"}] }' OpenAI-compatible. Read the quickstart Built on Mira Network Mira is the decentralised verification protocol for AI. Sterling is the first inference product built on it: the same checks Mira runs across the open-model ecosystem, applied to every provider you route through. mira.network One API for Claude, GPT and Gemini, with prepaid billing and usage tracking included. Models Pricing Verification Docs © 2026 Sterling · User Agreement · Privacy Policy",
+  "url": "https://sterling.mira.network/",
+  "viewport": {
+    "w": 1440,
+    "h": 900
+  },
+  "pageHeight": 3682,
+  "failedRequests": [],
+  "videos": [],
+  "network": [
+    {
+      "url": "https://sterling.mira.network/sterling.png?v=figma-20261104",
+      "type": "image/png",
+      "status": 200,
+      "name": "sterling.png"
+    },
+    {
+      "url": "https://sterling.mira.network/static/font/public-sans-latin-wght-normal.035c7fe496.woff2",
+      "type": "font/woff2",
+      "status": 200,
+      "name": "public-sans-latin-wght-normal.035c7fe496.woff2"
+    },
+    {
+      "url": "https://sterling.mira.network/sterling-home/aurora.webp",
+      "type": "image/webp",
+      "status": 200,
+      "name": "aurora.webp"
+    },
+    {
+      "url": "https://sterling.mira.network/sterling-home/step-key.webp",
+      "type": "image/webp",
+      "status": 200,
+      "name": "step-key.webp"
+    },
+    {
+      "url": "https://sterling.mira.network/sterling-home/key.webp",
+      "type": "image/webp",
+      "status": 200,
+      "name": "key.webp"
+    },
+    {
+      "url": "https://sterling.mira.network/sterling-home/step-plus.webp",
+      "type": "image/webp",
+      "status": 200,
+      "name": "step-plus.webp"
+    },
+    {
+      "url": "https://sterling.mira.network/sterling-home/step-shield.webp",
+      "type": "image/webp",
+      "status": 200,
+      "name": "step-shield.webp"
+    },
+    {
+      "url": "https://sterling.mira.network/static/font/zalando-sans-expanded-500.b8897a08ae.woff2",
+      "type": "font/woff2",
+      "status": 200,
+      "name": "zalando-sans-expanded-500.b8897a08ae.woff2"
+    },
+    {
+      "url": "https://sterling.mira.network/sterling-home/tools.webp",
+      "type": "image/webp",
+      "status": 200,
+      "name": "tools.webp"
+    },
+    {
+      "url": "https://sterling.mira.network/sterling-home/context.webp",
+      "type": "image/webp",
+      "status": 200,
+      "name": "context.webp"
+    },
+    {
+      "url": "https://sterling.mira.network/sterling-home/parameters.webp",
+      "type": "image/webp",
+      "status": 200,
+      "name": "parameters.webp"
+    },
+    {
+      "url": "https://sterling.mira.network/sterling-home/identity.webp",
+      "type": "image/webp",
+      "status": 200,
+      "name": "identity.webp"
+    },
+    {
+      "url": "https://sterling.mira.network/sterling-home/coins.webp",
+      "type": "image/webp",
+      "status": 200,
+      "name": "coins.webp"
+    },
+    {
+      "url": "https://sterling.mira.network/sterling-home/plug.webp",
+      "type": "image/webp",
+      "status": 200,
+      "name": "plug.webp"
+    },
+    {
+      "url": "https://sterling.mira.network/sterling-home/failures.webp",
+      "type": "image/webp",
+      "status": 200,
+      "name": "failures.webp"
+    },
+    {
+      "url": "https://sterling.mira.network/sterling-home/mira-pattern.webp",
+      "type": "image/webp",
+      "status": 200,
+      "name": "mira-pattern.webp"
+    }
+  ]
+}
