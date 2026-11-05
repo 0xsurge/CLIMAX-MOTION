@@ -1,0 +1,7 @@
+assets/three/
+assets/*.png
+assets/*.woff2
+boards/*.png
+test/
+sound/*.mp4
+sound/*.wav
