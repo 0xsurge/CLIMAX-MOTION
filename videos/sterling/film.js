@@ -14,9 +14,9 @@ const A = 'assets/net/', U = 'assets/ui/', M = 'assets/mira/net/';
 
 // ---------- TIMELINE (beats) ----------
 const B = { w1: 0, w2: 2, drop: 4, pills: 5, label: 6.5, suck: 10.4, zoom: 11.1, unlock: 11.6, h1: 12.6, sub: 13.6,
-  card: 20, steps: [21.5, 23, 24.5], grow: 27.4, routed: 28.4, cards: 32.6, focus: [33.4, 35.9, 38.4, 40.9, 43.4], gather: 45,
+  card: 20, steps: [21.5, 23, 24.5], grow: 27.4, routed: 27.9, cards: 32.6, focus: [33.4, 35.9, 38.4, 40.9, 43.4], gather: 45,
   three: 45.6, deal: 49.2, keyIn: 50.6, code: 55.2, url: 57, fold: 60.6, onekey: 61.2, lock: 64.4, btn: 65.6, click: 67,
-  mira: 68.4, light: [69, 70.6, 72.2], miraL: 69.2, tag: 70.2 };
+  mira: 68.4, light: [69, 70.6, 72.2, 74], miraL: 69.2, tag: 70.2 };
 const T = Object.fromEntries(Object.entries(B).map(([k, v]) => [k, Array.isArray(v) ? v.map(b) : b(v)]));
 window.TIMELINE = { BEAT, beats: B, seconds: T };
 
@@ -73,7 +73,7 @@ const camZ = t => track(t, CAMK.map(k => ({ t: k.t, v: k.v, spring: k.s || 'defa
 const camY = t => track(t, [{ t: 0, v: 0 }, { t: T.url - .3, v: -30, spring: GLIDE }, { t: T.fold, v: 0, spring: 'default' }]);
 const camX = t => track(t, [{ t: 0, v: 0 }, { t: T.url - .3, v: -150, spring: GLIDE }, { t: T.fold, v: 0, spring: 'default' }]);
 function camera(t) {
-  const a = 1 - .4 * S(t, T.btn, 'heavy'), sx = a * 12 * Math.sin(t * 2 * Math.PI / 6.4), sy = a * 7 * Math.sin(t * 2 * Math.PI / 4.7 + 1);
+  const a = 1 - .92 * S(t, T.lock + .2, 'heavy'), sx = a * 12 * Math.sin(t * 2 * Math.PI / 6.4), sy = a * 7 * Math.sin(t * 2 * Math.PI / 4.7 + 1);
   const z = camZ(t) * (1 + .008 * Math.sin(t * 2 * Math.PI / 9));
   WORLD.style.transform = `translate(${960 + sx}px,${540 + sy}px) scale(${z}) translate(${-960 - camX(t)}px,${-540 - camY(t)}px)`;
   return { sx, sy };
@@ -91,7 +91,7 @@ const LB1 = Line(WORLD, { y: 96, h: 34, font: `600 24px/34px ${BODY}`, words: ['
 const PILLS = ['Claude', 'GPT', 'Gemini', 'and more', 'Claude', 'GPT', 'Gemini', 'and more'].map((s, i) => ({ i, el: mk(WORLD, { width: 0, height: 0 },
   `<div style="left:0;top:0;transform:translate(-50%,-50%);height:${i < 4 ? 84 : 64}px;padding:0 ${i < 4 ? 38 : 28}px;border-radius:42px;background:#fff;font:500 ${i < 4 ? 36 : 28}px/${i < 4 ? 84 : 64}px ${BODY};color:${INK};white-space:nowrap;box-shadow:0 18px 40px rgba(6,61,49,.14),inset 0 0 0 1.5px rgba(6,61,49,.12)">${s}</div>`) }));
 const KEY = mk(WORLD, { width: 0, height: 0, zIndex: 3 }, `<img src="${A}key.webp" style="left:-220px;top:-160px;width:440px;height:320px;filter:drop-shadow(0 30px 40px rgba(6,40,30,.22))">`);
-const HOLE = [.64 * 440 - 220, .26 * 320 - 160];   // the square hole in the key's bow, relative to the key's centre
+const HOLE = [.723 * 440 - 220, .279 * 320 - 160];   // the hole in the key's bow, relative to the key's centre (measured from the image's alpha)
 const POOL = mk(WORLD, { width: 900, height: 260, borderRadius: '50%', background: 'radial-gradient(closest-side,rgba(89,217,163,.5),rgba(89,217,163,.16) 55%,rgba(89,217,163,0))' });
 
 // ---------- scene 2: the aurora and the real "Three steps" card ----------
@@ -136,10 +136,13 @@ const MTAG = Line(MIRA, { y: 770, h: 130, font: `400 112px/130px ${SERIF}`, word
 // ---------- the key's journey ----------
 const KK = [{ t: 0, x: 2350, y: -380, s: 2.6, r: -30 }, { t: T.drop - .22, x: 960, y: 370, s: 1.18, r: -8, sp: WHIP },
   { t: T.suck, x: 960, y: 380, s: 1.1, r: 0, sp: 'default' }, { t: T.zoom, x: 960 - HOLE[0] * 7, y: 540 - HOLE[1] * 7, s: 7, sp: { k: 60, c: 13 } },
-  { t: T.keyIn, x: 960, y: -260, s: .7, r: -20, sp: 'snappy' }, { t: T.keyIn + .02, x: SCX[0] + .74 * SCW, y: SCY + .24 * SCH, s: SCW * .47 / 440, r: 0, sp: WHIP },
+  // keep flying at the camera: the hole outgrows the frame, so we pass through it into the aurora and nothing has to vanish
+  { t: T.unlock - .05, x: 960 - HOLE[0] * 46, y: 540 - HOLE[1] * 46, s: 46, sp: { k: 26, c: 8 } },
+  { t: T.unlock + 1.6, x: 960, y: -420, s: .7, r: -20, sp: 'snappy' }, { t: T.keyIn + .02, x: SCX[0] + .74 * SCW, y: SCY + .24 * SCH, s: SCW * .47 / 440, r: 0, sp: WHIP },
   { t: T.fold, x: 960, y: 360, s: 1.05, r: -6, sp: 'default' }, { t: T.lock, x: 960 - 264 + 52, y: 352, s: .2, r: -40, sp: 'default' }];
 const KP = ['x', 'y', 's', 'r'].map(p => { const k = KK.filter(o => o[p] !== undefined).map(o => ({ t: o.t, v: o[p], spring: o.sp || 'default' })); return t => track(t, k); });
-const keyOn = t => (t < T.zoom + .55) || (t > T.keyIn - .05 && t < T.keyIn + .62) || (t > T.fold - .05 && t < T.lock + .45);
+const auroraR = t => 1300 * S(t, T.unlock, { k: 40, c: 13 });
+const keyOn = t => (t < T.unlock + 1.4) || (t > T.keyIn - .05 && t < T.keyIn + .62) || (t > T.fold - .05 && t < T.lock + .45);
 
 window.seek = function (t) {
   camera(t); sweep(t);
@@ -153,7 +156,7 @@ window.seek = function (t) {
   Object.assign(UL.style, { left: (L3.ws[1].m.offsetLeft + 12) + 'px', width: (cw - 24) + 'px' }); UL.style.transform = `scaleX(${ulw * (1 - sk)})`;
   LB1.upd(t, T.label, T.suck, 'default');
   const kx = KP[0](t), ky = KP[1](t), ks = KP[2](t), kr = KP[3](t);
-  const vx = (KP[0](t + .006) - KP[0](t - .006)) / .012, vy = (KP[1](t + .006) - KP[1](t - .006)) / .012, sp = Math.hypot(vx, vy), st = clamp(sp / 9000, 0, .28);
+  const vx = (KP[0](t + .006) - KP[0](t - .006)) / .012, vy = (KP[1](t + .006) - KP[1](t - .006)) / .012, sp = Math.hypot(vx, vy), st = t > T.suck ? 0 : clamp(sp / 9000, 0, .28);   // no stretch in the dive: it would move the hole off centre
   const land = S(t, T.drop + .1, 'snappy') - S(t, T.drop + .26, 'default');
   vis(KEY, keyOn(t)); put(KEY, { x: kx, y: ky + 8 * Math.sin(t * 2.1) * S(t, T.drop + .5) * (1 - S(t, T.suck)), rot: kr + 4 * Math.sin(t * 1.4) * (t > T.drop + .5 && t < T.suck ? 1 : 0),
     sx: ks * (1 + st + .1 * land), sy: ks * (1 - .5 * st - .12 * land) });
@@ -163,17 +166,17 @@ window.seek = function (t) {
     const x = lerp(lerp(ox, fx, e), 960 + HOLE[0], sc), y = lerp(lerp(oy, fy, e), 380 + HOLE[1], sc); vis(p.el, e > .01 && sc < .99 && t < T.zoom + .3);
     put(p.el, { x, y, s: (big ? 1 : .85) * (1 - sc) }); p.el.style.opacity = big ? 1 : .7; });
   // through the keyhole into the aurora
-  const r = 1300 * S(t, T.unlock, { k: 40, c: 13 }); const hx = 960, hy = 540;
+  const r = auroraR(t); const hx = 960, hy = 540;
   vis(AUR, inAur); AUR.style.clipPath = t < T.unlock + 1.2 ? `circle(${r}px at ${hx}px ${hy}px)` : 'none';
   if (inAur) { H1a.upd(t, T.h1, T.card - .4); H1b.upd(t, T.h1 + .12, T.card - .35); H1c.upd(t, T.sub, T.card - .4, 'default');
     AUR.firstChild.style.transform = `translate(${-30 * Math.sin(t * .25)}px,${-14 * t / 8}px) scale(${1.02 + .01 * t / 8})`;
-    const ce = S(t, T.card, 'default'); vis(HCARD, ce > .01); put(HCARD, { y: (1 - ce) * 700 + 6 * Math.sin(t * 1.4), s: .94 + .06 * ce });
-    STEPGLOW.forEach((g, i) => { const k = bump(t, T.steps[i], .5) * (1 - S(t, T.grow, 'snappy')); vis(g, k > .01); g.style.opacity = k; put(g, { y: (1 - ce) * 700 + 6 * Math.sin(t * 1.4) }); }); }
+    const ce = S(t, T.card, 'default'); vis(HCARD, ce > .01); put(HCARD, { y: (1 - ce) * 1000 + 6 * Math.sin(t * 1.4), s: .94 + .06 * ce });
+    STEPGLOW.forEach((g, i) => { const k = bump(t, T.steps[i], .5) * (1 - S(t, T.grow, 'snappy')); vis(g, k > .01); g.style.opacity = k; put(g, { y: (1 - ce) * 1000 + 6 * Math.sin(t * 1.4) }); }); }
   // the card grows into the paper page
   const gr = S(t, T.grow, 'default'); vis(GROWR, t > T.grow && t < T.grow + .75);
   if (t > T.grow) { const x0 = HC.x, y0 = HC.y + 6 * Math.sin(t * 1.4), w = lerp(HC.w, W + 80, gr), h = lerp(HC.h, H + 80, gr);
     Object.assign(GROWR.style, { left: lerp(x0, -40, gr) + 'px', top: lerp(y0, -40, gr) + 'px', width: w + 'px', height: h + 'px', borderRadius: lerp(30, 0, gr) + 'px' }); }
-  vis(WORLD, !inAur || t < T.unlock + .4); WORLD.style.opacity = 1;
+  vis(WORLD, !inAur || (t < T.unlock + 1.2 && r < 1110)); WORLD.style.opacity = 1;
   // routed + the five checks: the focused card large and sharp, the rest small and blurred
   R1.upd(t, T.routed, T.cards - .1); R2.upd(t, T.routed + .1, T.cards - .05); LB2.upd(t, T.cards + .3, T.gather, 'default');
   const ve = S(t, T.cards, 'default'), vg = S(t, T.gather, 'snappy');
@@ -204,7 +207,7 @@ window.seek = function (t) {
   // the button grows into Mira's frame; the light moves across the three bars; the tagline rises
   vis(MIRA, t > T.mira); const mr = 2300 * S(t, T.mira, { k: 30, c: 11 });
   MIRA.style.clipPath = t < T.mira + 1.5 ? `circle(${mr}px at 960px 612px)` : 'none';
-  const lt = track(t, [{ t: 0, v: 1 }, ...T.light.map((l, i) => ({ t: l, v: [0, 1, 2][i], spring: SOFT }))]);
-  MB.forEach((e, i) => { e.style.opacity = clamp(1 - Math.abs(i - lt)); put(e, { x: -20 * (t - T.mira) / 6, y: -10 * (t - T.mira) / 6, s: 1 + .012 * (t - T.mira) }); });
-  MLB.upd(t, T.miraL, 999, 'default'); MTAG.upd(t, T.tag, 999, 'heavy');
+  const lt = track(t, [{ t: 0, v: 1 }, ...T.light.map((l, i) => ({ t: l, v: [0, 1, 2, 1][i], spring: SOFT }))]);
+  MB.forEach((e, i) => { e.style.opacity = clamp(1 - Math.abs(i - lt)); put(e, { x: -60 * (t - T.mira) / 4, y: -24 * (t - T.mira) / 4, s: 1 + .03 * (t - T.mira) / 4 }); });
+  MLB.upd(t, T.miraL, 999, 'default'); MTAG.upd(t, T.tag, 999, 'heavy'); MTAG.box.style.transform = `translateY(${6 * Math.sin(t * 1.3)}px)`;
 };
