@@ -57,10 +57,33 @@ Open on the problem or a provocation ("Designing buildings has always been hard"
      on a slow dolly or a fast push-in, edges falling into soft focus;
   3. **outputs in depth**: results as cards cascading in 3D space (V1 renders, V5 photo cards).
 - Never hold a flat full-screen UI for more than ~1.5 s.
-- **The cursor is a character.** Big (40–90 px), crisp, with real press (scale 0.9 on click) and real paths
-  (curved, accelerating). Collaborator cursors carry name pills in two contrasting colours. The cursor can
-  click a button that grows into the next ground (V3 "Get a demo" → lime world), or sweep the logo so it
-  lights up (V5).
+- **The cursor is a character** (see section 3a for its exact look and motion).
+
+## 3a. The cursor (exact)
+- **Shape: not the OS arrow.** A short, wide **arrowhead / dart**: a triangle with the tip at top-left, the
+  two long sides meeting at about 40–45°, and the back edge **notched inward** (a concave V), like a
+  navigation arrow or a Figma multiplayer cursor. Corners slightly rounded (radius ≈ 6% of its size). No
+  stem, no tail.
+- **Three skins**, one per film:
+  1. dark ground (V1): black fill, **thick white outline** (≈ 9–10% of the cursor's height), or white outline
+     only (hollow) on very dark UI;
+  2. light ground (V3, V6): **solid near-black navy fill (#141826)**, no outline, soft drop shadow
+     (y +4 px, blur 10 px, 25%);
+  3. collaborators (V1): the same dart filled in a pure colour (orange #F2542D, blue #2563EB), with a
+     rounded **name pill** in the same colour attached just below-right of the base ("Sarah", "Robert").
+- For pressing and typing, V5 swaps to a **cartoon hand** (white fill, thick black outline) on buttons and an
+  **I-beam** over text fields. Use the dart everywhere else.
+- **Size:** big — 50–110 px tall at 1080p (V3's is ~200 px in its hero shot). It is a hero object, not chrome.
+- **Motion:** enters from off-frame on a curved path, fast then decelerating (default spring), with motion
+  blur in flight; settles with a tiny overshoot; **press** = scale 0.88 for ~0.08 s and back (snappy) while
+  the target reacts (button darkens / a focus ring lights / the field fills). While idle it never freezes —
+  it drifts a few px.
+- **The camera follows what the cursor does:** after a click the camera **dives through the clicked thing**
+  (V1: the tool button scales ×3 through the frame into the drawing canvas — the click is the transition);
+  while typing, the camera **tracks the caret** so the text grows leftward and the caret stays put, and
+  slowly pushes in from a small prompt bar to a huge one (V5).
+- The cursor can click a button that grows into the next ground (V3 "Get a demo" → lime world), or sweep
+  the logo so it lights up in the gradient (V5).
 
 ## 4. Grounds and mood (pick ONE per film, change colour per chapter)
 - **A. Dark void + glossy 3D forms** (V1): near-black (#030404) with chrome / glassy ribbons, tubes or folds
@@ -75,6 +98,17 @@ Open on the problem or a provocation ("Designing buildings has always been hard"
   dither, soft blur.
 - **D. Lime/teal gradient tech** (V3): black → teal → lime gradient corners, bright white UI, one lime accent.
 - Generated plates (ComfyUI, `install_comfyui.sh`) are for grounds only. Real product, logo and UI stay real.
+- **Colour grade per mood:**
+  - A (dark): crushed true blacks (83% of pixels near #030404), no milky greys; UI cards #141414–#1C1C1C;
+    one saturated light colour with **bloom** on whatever is active (the selected tool, the focused field, the
+    send button) — a soft halo only on the focus element, never on idle chrome; a thin **rim light running
+    along the top edge of the tilted UI plane**; high contrast, cool.
+  - B (pastel): lifted, low-contrast, airy; white dominant (≈ 64% of pixels), text dark grey #2B2B2B, the
+    colour lives only in the fog; never pure black except the logo and the send button.
+  - C (generated world): saturated, sunny, clean skies; duotone washes in transitions only.
+  - D (lime tech): white UI and black text, gradient corners black → teal #152D2A → lime #D8FCAA.
+- **Depth of field:** tilted UI is shot with shallow focus — a sharp band across the middle, foreground and
+  far edge melting into blur (tilt-shift look). Macro shots too.
 - Light: only motivated light — a band of light that sweeps across to carry a change (V2), rim light along
   the 3D forms, a glowing line drawing under a number. Hard window-stripe shadows on a device mockup are a
   good photographic beat (V5).
