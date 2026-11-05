@@ -98,6 +98,54 @@ first slam word at 1.9 s**. Times below are in beats after the drop (B(n) = 1.9 
   draws). Never on idle chrome.
 - The palette is the story: the colour change is the turn of the film.
 
+## 3a. How we built this palette from scratch (do this again for every brand)
+This palette is **ours**. It was not taken from the brand's website: Sterling's site is a pale, light-theme page.
+Only two seeds came from outside:
+- the brand's own accent green (#059669), the anchor for the "verified" family;
+- the moving red-orange light in the Synaps reference the user loved, the anchor for the "claim" family.
+
+Everything else was built here. The workflow:
+1. **Start from meaning, not from the website.** Name the film's one tension (claim against check) and give each side
+   a colour that means it.
+   - Red-orange means heat, warning, unproven, a claim.
+   - Emerald means safe, passed, verified.
+   - Red-orange and green sit almost opposite on the colour wheel (complementary). The turn of the story is literally
+     the colour flipping to its opposite.
+2. **Colour is light, not paint.** The colour lives in the light that travels across black chrome, not in flat fills
+   or backgrounds. The surfaces only show colour where the light passes, which is why it feels premium and alive.
+   - Keep the void true black (#030404) so the light has something to glow against.
+   - Keep large areas dark and let the light take maybe 20–40% of the frame.
+3. **Build each chapter as a ramp of 4–5 hues, not one colour.**
+   - **Claim:** deep ember #1A0300, then red #FF3D12, orange #FF8A1F, gold #FFD36B, then a jump to hot pink #FF2D6F.
+   - **Verified:** deep #00140D, then emerald #0FBF7A, mint #3DFFB0, lime #D8FF7A, then a jump to teal #0AA3A3.
+   - **How the ramp is built:** analogous neighbours, with one bolder jump at the end so the gradient never looks flat.
+   - **The light cycles through the ramp as it travels:** that is the "colour changing on the objects" the user asked for.
+4. **Add one cool rim per chapter.** Cyan #5FD6FF against the warm claim, ice #9FE8FF against the green. A thin,
+   opposite-temperature edge light keeps the forms readable and gives depth.
+5. **Make the chapter change a colour event, not a cut: the luma sweep.** The sweep ramp passes **through violet**
+   (#1A0538 → #6B148C) on its way from red-orange to green. Mixing orange straight into green goes through a muddy
+   brown midpoint; violet is the clean bridge. Bright areas change first, then the dark ground, then everything
+   settles into the new true colour. That movement through the colour wheel is the drama.
+6. **Type and UI get the palette only as an accent.**
+   - Body type is near-white #EEF3F0. Only the key word takes the chapter gradient: claim #FF3D12 → #FFC46B,
+     verified #0FBF7A → #D8FF7A.
+   - UI cards are near-black #121414 with a thin mint rim.
+   - Glow goes only on the active element.
+   - A dark band always sits behind the type, so the value contrast (light type on dark) never depends on where the
+     chrome light happens to be.
+7. **Test it in motion before anyone approves it.**
+   - **Grounds:** render the two chapter grounds as stills.
+   - **Motion test:** render a short clip of the light travelling, then the sweep.
+   - **Mood board:** put both on the mood board page.
+   The user approved it there ("I love the palette, I love the colouring").
+
+To use this for a new brand:
+- Find the film's tension and give each side its meaning colour.
+- Anchor one side on the brand's real accent, pushed brighter.
+- Build two analogous ramps with one jump each, plus a cool or warm rim.
+- Bridge the two with a clean third hue in the sweep.
+- Keep the world black and the colour in moving light.
+
 ## 4. Type and text animation
 - **Fonts:** the brand's display face for everything (Sterling: Zalando Sans Expanded 500) and the brand's UI face
   for small UI text (Public Sans). Use a monospace face only for code.
