@@ -1,0 +1,193 @@
+<!doctype html><meta charset="utf-8"><title>world</title>
+<style>html,body{margin:0;overflow:hidden;background:#000}#w-canvas{display:block;width:1920px;height:1080px}</style>
+<canvas id="w-canvas" width="1920" height="1080"></canvas>
+<script src="../assets/js/gsap.min.js"></script><script src="../assets/js/motion.js"></script><script src="../assets/js/gsap-spring.js"></script>
+<script>
+    // The film's one continuous 3D world: lit grounds and set plates, a 3D Sterling mark cut from the real logo path,
+    // sculpted icons for the five checks, a glass mark in the aurora, floating marks and coins in depth.
+    // Every transform is a closed-form spring of film time t; one render per seek, no loop, no clock.
+    (function () {
+      window.__timelines = window.__timelines || {};
+      window.__hf = window.__hf || {}; window.__hf.buildReady = window.__hf.buildReady || {};
+      
+      const P = 0.625653, D = 1.9, at = n => n * P;
+      const S = { claim: D, checks: D + at(4), aurora: D + at(12), steps: D + at(18), code: D + at(26), onekey: D + at(32), lockup: D + at(36), mira: D + at(40) };
+      const M = window.Motion, spr = (t, p) => M.spring(t, p);
+      let draw = () => {};
+      const ready = (async () => {
+        const base = new URL('../', document.baseURI).href;
+        const T = await import(base + 'assets/js/three/three.module.js');
+        const { RoomEnvironment } = await import(base + 'assets/js/three/RoomEnvironment.js');
+        const { RoundedBoxGeometry } = await import(base + 'assets/js/three/RoundedBoxGeometry.js');
+        const canvas = document.getElementById('w-canvas');
+        const renderer = new T.WebGLRenderer({ canvas, antialias: true, preserveDrawingBuffer: true });
+        renderer.setPixelRatio(1); renderer.setSize(1920, 1080, false);
+        renderer.outputColorSpace = T.SRGBColorSpace; renderer.toneMapping = T.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
+        const scene = new T.Scene();
+        const pm = new T.PMREMGenerator(renderer); scene.environment = pm.fromScene(new RoomEnvironment(), 0.04).texture; pm.dispose();
+        const cam = new T.PerspectiveCamera(30, 1920 / 1080, 0.1, 300); scene.add(cam);
+        // lights: warm key, cool emerald rim that travels
+        const key = new T.DirectionalLight(0xfff4e8, 2.2); key.position.set(6, 8, 10); scene.add(key);
+        const rim = new T.PointLight(0x3DDC97, 60, 40, 1.6); scene.add(rim);
+        const fill = new T.DirectionalLight(0xd8fff0, .7); fill.position.set(-8, -2, 6); scene.add(fill);
+
+        // ---------- ground: a plane locked to the camera, gradient + set plate + a light pool ----------
+        const loader = new T.TextureLoader();
+        const tex = async n => { try { const x = await loader.loadAsync(base + 'assets/gen/' + n); x.colorSpace = T.SRGBColorSpace; return x; } catch (e) { return null; } };
+        const auroraTex = await loader.loadAsync(base + 'assets/img/aurora.webp').then(x => (x.colorSpace = T.SRGBColorSpace, x)).catch(() => null);
+        const PL = { hook: await tex('hook.png'), light: await tex('light.png'), crystal: await tex('crystal.png'), flow: await tex('flow.png'), aurora: auroraTex };
+        const blank = new T.DataTexture(new Uint8Array([0, 0, 0, 255]), 1, 1); blank.needsUpdate = true;
+        const gu = {
+          uIn: { value: new T.Color() }, uOut: { value: new T.Color() }, uC: { value: new T.Vector2(.5, .5) },
+          uTex: { value: blank }, uTexMix: { value: 0 }, uTexOff: { value: new T.Vector2() }, uTexZoom: { value: 1 }, uWash: { value: new T.Color() }, uWashAmt: { value: 0 },
+          uSpot: { value: new T.Vector3(.5, .5, 0) }, uSpotCol: { value: new T.Color('#9FF0C8') }, uSpotAmt: { value: 0 },
+        };
+        const gmat = new T.ShaderMaterial({ uniforms: gu, depthWrite: false, toneMapped: false,
+          vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }',
+          fragmentShader: `varying vec2 vUv; uniform vec3 uIn, uOut, uWash, uSpotCol; uniform vec2 uC, uTexOff; uniform float uTexMix, uTexZoom, uWashAmt, uSpotAmt; uniform vec3 uSpot; uniform sampler2D uTex;
+            void main(){ vec2 a = vec2(16.0/9.0, 1.0); float d = length((vUv - uC) * a);
+              vec3 g = mix(uIn, uOut, smoothstep(0.0, 1.05, d));
+              vec2 tu = (vUv - .5) / uTexZoom + .5 + uTexOff; vec3 tx = texture2D(uTex, tu).rgb;
+              vec3 c = mix(g, tx, uTexMix); c = mix(c, uWash, uWashAmt);
+              float s = exp(-pow(length((vUv - uSpot.xy) * a) / max(uSpot.z, .001), 2.0)); c += uSpotCol * s * uSpotAmt;
+              gl_FragColor = vec4(c, 1.0); }` });
+        const DIST = 90, hh = Math.tan(15 * Math.PI / 180) * DIST;
+        const ground = new T.Mesh(new T.PlaneGeometry(hh * 2 * 16 / 9 * 1.02, hh * 2 * 1.02), gmat); ground.position.z = -DIST; ground.renderOrder = -10; cam.add(ground);
+
+        // ---------- materials ----------
+        const emerald = new T.MeshPhysicalMaterial({ color: 0x059669, metalness: .25, roughness: .2, clearcoat: 1, clearcoatRoughness: .08 });
+        const clay = new T.MeshPhysicalMaterial({ color: 0xF4F7F5, roughness: .45, clearcoat: .4, clearcoatRoughness: .3 });
+        const glass = new T.MeshPhysicalMaterial({ color: 0xffffff, transmission: 1, roughness: .06, thickness: 1.2, ior: 1.5, metalness: 0, attenuationColor: new T.Color('#7FE8B8'), attenuationDistance: 3 });
+        const chrome = new T.MeshPhysicalMaterial({ color: 0xE8F2EE, metalness: 1, roughness: .12 });
+        const glowLine = new T.MeshBasicMaterial({ color: 0x3DDC97, toneMapped: false });
+
+        // ---------- the Sterling mark, from the real logo paths (check + bar), 1 unit tall ----------
+        const markShapes = () => {
+          const cx = 108.15, cy = 214.34, s = 1 / 48.6, p = (x, y) => new T.Vector2((x - cx) * s, -(y - cy) * s);
+          const a = new T.Shape([p(84.5347, 209.479), p(99.1184, 223.369), p(131.758, 190.034), p(131.758, 206.007), p(99.8128, 238.647), p(84.5347, 224.063)]);
+          const b = new T.Shape([p(85.2292, 191.424), p(101.202, 191.424), p(101.202, 197.674), p(85.2292, 197.674)]);
+          return [a, b];
+        };
+        const markGeo = new T.ExtrudeGeometry(markShapes(), { depth: .16, bevelEnabled: true, bevelThickness: .04, bevelSize: .025, bevelSegments: 4 }); markGeo.center();
+        const mkMark = mat => new T.Mesh(markGeo, mat);
+
+        // ---------- the five check icons, sculpted in the clay style ----------
+        const icon = [];
+        { // 1 identity: fingerprint arcs
+          const g = new T.Group();
+          [.14, .3, .46, .62, .78].forEach((r, i) => { const m = new T.Mesh(new T.TorusGeometry(r, .065, 20, 80, Math.PI * (1.15 + i * .04)), null); m.rotation.z = -Math.PI * (.075 + i * .02) + Math.PI * 0; g.add(m); });
+          icon.push(g);
+        }
+        { // 2 tool calls: wrench
+          const g = new T.Group(); const h = new T.Mesh(new RoundedBoxGeometry(1.5, .3, .22, 4, .1), null); h.position.x = -.25; g.add(h);
+          const sh = new T.Shape(); sh.absarc(0, 0, .42, 0, Math.PI * 2); const hole = new T.Path(); hole.absarc(.05, 0, .19, 0, Math.PI * 2); sh.holes.push(hole);
+          const head = new T.Mesh(new T.ExtrudeGeometry(sh, { depth: .22, bevelEnabled: true, bevelThickness: .03, bevelSize: .03, bevelSegments: 3 }), null);
+          head.position.set(.62, 0, -.11); g.add(head); g.rotation.z = .65; icon.push(g);
+        }
+        { // 3 parameters: sliders
+          const g = new T.Group();
+          [[.42, -.35], [0, .32], [-.42, -.05]].forEach(([y, k]) => { const r = new T.Mesh(new RoundedBoxGeometry(1.7, .13, .13, 3, .06), null); r.position.y = y; g.add(r);
+            const n = new T.Mesh(new RoundedBoxGeometry(.32, .32, .26, 4, .08), null); n.position.set(k * 1.6, y, .05); g.add(n); });
+          g.rotation.z = .35; icon.push(g);
+        }
+        { // 4 silent failures: a folded strip that breaks
+          const g = new T.Group();
+          for (let i = 0; i < 5; i++) { const m = new T.Mesh(new RoundedBoxGeometry(.36, .78, .07, 3, .03), null); m.position.set((i - 2) * .3, i === 3 ? -.12 : 0, (i % 2) * .12); m.rotation.y = i % 2 ? .85 : -.85; if (i === 3) m.rotation.z = .25; g.add(m); }
+          g.rotation.z = .2; icon.push(g);
+        }
+        { // 5 declared context: two linked chain links
+          const g = new T.Group();
+          const l1 = new T.Mesh(new T.TorusGeometry(.33, .085, 20, 64), null); l1.scale.x = 1.7; l1.position.x = -.33; g.add(l1);
+          const l2 = new T.Mesh(new T.TorusGeometry(.33, .085, 20, 64), null); l2.scale.x = 1.7; l2.position.x = .33; l2.rotation.x = Math.PI / 2; g.add(l2);
+          g.rotation.z = .3; icon.push(g);
+        }
+        const ICONMAT = [clay, clay, emerald, clay, clay];
+        icon.forEach((g, i) => { g.traverse(o => { if (o.isMesh) o.material = ICONMAT[i]; }); g.visible = false; scene.add(g); });
+
+        // ---------- hero objects ----------
+        const hero = mkMark(emerald); scene.add(hero);
+        const glassMark = mkMark(glass); scene.add(glassMark);
+        const okMark = mkMark(emerald); scene.add(okMark);
+        const coinGeo = new T.CylinderGeometry(.5, .5, .13, 64);
+        // floating props: seeded, kept to the frame edges so the type stays the focal point
+        const rnd = M.mulberry32(9);
+        const props = [];
+        const mkProps = (sc, t0, t1, n) => { for (let i = 0; i < n; i++) {
+          const side = i % 2 ? 1 : -1, kind = i % 3;
+          const m = kind === 0 ? new T.Mesh(coinGeo, i % 2 ? clay : chrome) : mkMark(kind === 1 ? emerald : glass);
+          const z = -3 - rnd() * 7, half = Math.tan(15 * Math.PI / 180) * (20 - z) * 16 / 9;
+          const x = side * (half * (.62 + rnd() * .3)), y = (rnd() - .5) * Math.tan(15 * Math.PI / 180) * (20 - z) * 1.6;
+          const s = .7 + rnd() * .9;
+          props.push({ m, sc, t0: t0 + i * .06, t1, x, y, z, s, ry: rnd() * 6, rx: rnd() * 6, w: .3 + rnd() * .5, side }); scene.add(m); } };
+        mkProps('claim', S.claim, S.checks, 6);
+        mkProps('steps', S.steps, S.code, 7);
+        mkProps('onekey', S.onekey + .05, S.lockup, 6);
+        // drawing light lines for the code scene
+        const lines = [0, 1, 2].map(i => { const m = new T.Mesh(new T.BoxGeometry(1, .025, .025), glowLine); scene.add(m); return m; });
+
+        const col = (o, a, b) => { o.uIn.value.set(a); o.uOut.value.set(b); };
+        draw = t => {
+          // ---- camera: one continuous take, spring keys + a sway that returns to centre ----
+          const ks = [0, S.claim, S.checks, S.aurora, S.steps, S.code, S.onekey, S.lockup, S.mira];
+          const zk = [{ t: 0, v: 21.5 }], xk = [{ t: 0, v: 0 }];
+          ks.slice(1).forEach((k, i) => { zk.push({ t: k, v: i % 2 ? 20.6 : 19.4, spring: { k: 1.6, c: 2.5 } }); xk.push({ t: k, v: i % 2 ? .35 : -.35, spring: { k: 1.2, c: 2.2 } }); });
+          cam.position.set(M.track(t, xk), .15 * Math.sin(t * .9), M.track(t, zk)); cam.lookAt(cam.position.x * .6, 0, 0);
+          // whip out of the aurora: the camera itself whips right
+          const whip = spr(t - (S.aurora + at(5.55)), 'snappy');
+          cam.position.x += t >= S.aurora && t < S.steps ? whip * 26 : 0;
+          rim.position.set(-9 + ((t * 2.3) % 18), 3, 3);
+
+          // ---- ground per scene ----
+          gu.uTexMix.value = 0; gu.uWashAmt.value = 0; gu.uSpotAmt.value = 0; gu.uTexOff.value.set(0, 0); gu.uTexZoom.value = 1 + .02 * Math.sin(t * .3);
+          gu.uC.value.set(.5 + .08 * Math.sin(t * .4), .45);
+          const plate = (k, mix, wash, amt) => { if (!PL[k]) return; gu.uTex.value = PL[k]; gu.uTexMix.value = mix; if (wash) { gu.uWash.value.set(wash); gu.uWashAmt.value = amt; } };
+          if (t < S.claim) { col(gu, '#0F2A21', '#050807'); plate('hook', .95, '#020504', .25); gu.uTexZoom.value = 1.04 + t * .04; }
+          else if (t < S.checks) { col(gu, '#FFFFFF', '#DCEFE5'); plate('light', .9, '#F6FBF8', .42); gu.uSpot.value.set(.78, .3, .35); gu.uSpotAmt.value = .25; }
+          else if (t < S.aurora) { const i = Math.min(4, Math.floor((t - S.checks) / at(1.6)));
+            const G = [['#0BB07D', '#03573D'], ['#15221D', '#040706'], ['#FFFFFF', '#D6E9DF'], ['#0BB07D', '#03573D'], ['#15221D', '#040706']][i]; col(gu, G[0], G[1]);
+            if (i === 1 || i === 4) plate('crystal', .6, '#030705', .5); else if (i === 2) plate('light', .85, '#F6FBF8', .45); else plate('crystal', .7, '#03573D', .25); }
+          else if (t < S.steps) { col(gu, '#0F3A2C', '#03100B'); plate('aurora', 1); plate(PL.crystal ? 'crystal' : 'aurora', 1, '#03130D', .42); gu.uTexOff.value.set(whip * .5, 0); }
+          else if (t < S.code) { col(gu, '#FFFFFF', '#DDEEE5'); plate('flow', .85, '#F4FAF7', .55); gu.uSpot.value.set(.5, .52, .32); gu.uSpotAmt.value = .22; }
+          else if (t < S.onekey) { col(gu, '#0E3326', '#020806'); plate('hook', .9, '#020806', .5); }
+          else if (t < S.lockup) { col(gu, '#FFFFFF', '#DCEFE5'); plate('light', .9, '#F6FBF8', .4); gu.uSpot.value.set(.5, .38, .3); gu.uSpotAmt.value = .4; }
+          else { col(gu, '#FFFFFF', '#E4F1EA'); plate('light', .8, '#F8FCFA', .6); gu.uSpot.value.set(.2 + .6 * spr(t - S.lockup, { k: 3, c: 3.4 }), .42, .28); gu.uSpotAmt.value = .3; }
+
+          // ---- hook: a huge emerald mark behind the flip board, a rim light passes, then it rushes the lens on the drop ----
+          hero.visible = t < S.claim;
+          if (hero.visible) { const rush = spr(t - 1.55, { k: 90, c: 12 });
+            hero.position.set(2.2 - 1.2 * spr(t, { k: 2, c: 2.8 }), .2, -10 + 28 * rush); hero.scale.setScalar(8.5);
+            hero.rotation.set(.15, -.7 + .9 * spr(t, { k: 2.2, c: 2.6 }), -.05); }
+          // ---- checks: each icon spins in over its title, keeps turning, the last one flies through the lens ----
+          icon.forEach((g, i) => { const t0 = S.checks + i * at(1.6), t1 = i < 4 ? t0 + at(1.6) : S.aurora; g.visible = t >= t0 && t < t1;
+            if (!g.visible) return; const u = t - t0, s = spr(u, { k: 420, c: 20 });
+            const fly = i === 4 ? spr(t - (t0 + at(1.1)), { k: 55, c: 12 }) : 0;
+            g.position.set(cam.position.x * .6, 2.35 + .08 * Math.sin(u * 3), fly * 19); g.scale.setScalar(2.4 * s);
+            g.rotation.y = -2.4 * (1 - spr(u, { k: 160, c: 16 })) + .35 * Math.sin(u * 1.4); g.rotation.x = .25 - .2 * spr(u, 'default'); });
+          // ---- aurora: a glass mark turns behind the line ----
+          glassMark.visible = t >= S.aurora && t < S.steps;
+          if (glassMark.visible) { const u = t - S.aurora; glassMark.position.set(-.3, .1, -10 + 2 * spr(u, { k: 2, c: 2.8 }));
+            glassMark.scale.setScalar(7.5 * (.6 + .4 * spr(u, { k: 40, c: 11 }))); glassMark.rotation.set(.2, -1.2 + 1.1 * spr(u, { k: 3, c: 3 }) + .1 * u, .08); }
+          // ---- one key: an emerald mark rises behind the key ----
+          okMark.visible = false;
+          if (okMark.visible) { const u = t - S.onekey; okMark.position.set(cam.position.x * .6, 1.6 + .1 * Math.sin(u * 2), -9); okMark.scale.setScalar(5.5 * spr(u - .1, { k: 120, c: 14 }) * (1 - spr(t - (S.lockup - .1), 'snappy')));
+            okMark.rotation.set(.15, -.9 + .7 * spr(u, { k: 3, c: 3 }), 0); }
+          // ---- floating props ----
+          props.forEach(p => { const on = t >= p.t0 - .5 && t < p.t1 + .6; p.m.visible = on; if (!on) return;
+            const e = spr(t - p.t0, { k: 120, c: 15 }), x = spr(t - (p.t1 - .25), { k: 160, c: 20 }), u = t - p.t0;
+            p.m.position.set(p.x + p.side * (1 - e) * 9 + p.side * x * 12, p.y + .25 * Math.sin(u * p.w * 2 + p.ry), p.z);
+            p.m.scale.setScalar(p.s * (p.m.geometry === coinGeo ? 1 : 1.3)); p.m.rotation.set(p.rx + u * p.w * .6, p.ry + u * p.w, .3 * Math.sin(u * p.w)); });
+          // ---- code: three light lines draw across under the endpoint and die away ----
+          lines.forEach((m, i) => { const t0 = S.code + at(1.2) + i * .18; const on = t >= t0 && t < S.onekey; m.visible = on; if (!on) return;
+            const g = spr(t - t0, { k: 30, c: 10 }), d = spr(t - (t0 + at(3.2)), { k: 60, c: 14 }), z = -2 - i * 2.5, half = Math.tan(15 * Math.PI / 180) * (20 - z) * 16 / 9;
+            const L = half * 2.2 * g * (1 - d) + .001; m.scale.set(L, 1 + i, 1 + i); m.position.set(-half * 1.1 + L / 2 + d * half * 2.2, -1.75 - i * .45, z); });
+          renderer.render(scene, cam);
+        };
+        renderer.compile(scene, cam); draw(0);
+      })();
+      window.__hf.buildReady.world = ready;
+      ready.then(() => { window.__ready = true; });
+      window.seek = t => { draw(t); };
+      window.addEventListener('hf-seek-unused', e => { const t = e.detail.time; if (e.detail.waitUntil) e.detail.waitUntil(ready.then(() => draw(t))); else ready.then(() => draw(t)); });
+      
+    })();
+  </script>
