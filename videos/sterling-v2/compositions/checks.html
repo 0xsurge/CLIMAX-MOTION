@@ -59,6 +59,7 @@
         tl.set('#chk-h' + i, { opacity: 1 }, t0); if (i < 4) tl.set('#chk-h' + i, { opacity: 0 }, t0 + D);
         tl.fromTo('#chk-c' + i, { scale: 1.12, x: i % 2 ? 40 : -40 }, { scale: 1, x: 0, ...sp({ k: 120, c: 14 }) }, t0);
         // the stamp: drops in big, squashes on landing, settles
+        tl.fromTo('#chk-c' + i, { y: 0, rotation: 0 }, { y: i % 2 ? 26 : -26, rotation: i % 2 ? .8 : -.8, ...sp({ k: 5, c: 4.5 }) }, t0 + .15);
         tl.fromTo('#chk-m' + i, { scale: 2.6, rotation: -14, y: -80 }, { scale: 1, rotation: 0, y: 0, ...sp({ k: 700, c: 30 }) }, t0 + .02);
         const ws = document.querySelectorAll('[id^="chk-t' + i + '-"]');
         ws.forEach((w, j) => tl.fromTo(w, { yPercent: 105 }, { yPercent: 0, ...sp({ k: 520, c: 38 }) }, t0 + .1 + j * .07)); }

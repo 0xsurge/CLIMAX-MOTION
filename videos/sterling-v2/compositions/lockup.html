@@ -34,6 +34,7 @@
       const P = 0.625653, sp = window.springEase, tl = gsap.timeline({ paused: true });
       const at = n => n * P;
       tl.fromTo('#lk-cam', { scale: 1.04 }, { scale: 1, ...sp({ k: 4, c: 4 }) }, 0);
+      tl.fromTo('#lk-grp', { y: 0 }, { y: -18, ...sp({ k: 3, c: 3.4 }) }, at(1));
       tl.fromTo('#lk-mark', { scale: 2.4, rotation: -30 }, { scale: 1, rotation: 0, ...sp({ k: 700, c: 30 }) }, 0);
       tl.fromTo('#lk-word', { clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0% 0 0)', ...sp('heavy') }, at(.5));
       tl.fromTo('#lk-pb', { y: 24, opacity: 0 }, { y: 0, opacity: 1, ...sp('default') }, at(1));

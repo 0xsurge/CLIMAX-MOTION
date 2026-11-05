@@ -31,6 +31,7 @@
       const at = n => n * P;
       tl.fromTo('#cd-cam', { scale: 1.15, x: 300 }, { scale: 1, x: 0, ...sp({ k: 60, c: 14 }) }, 0);
       tl.fromTo('#cd-cam', { y: 0 }, { y: -30, ...sp({ k: 4, c: 4 }) }, .3);
+      tl.fromTo('#cd-code', { scale: 1 }, { scale: 1.12, ...sp({ k: 2, c: 2.8 }) }, at(3));
       document.querySelectorAll('[id^="cd-a"],[id^="cd-b"]').forEach((w, j) => tl.fromTo(w, { yPercent: 110 }, { yPercent: 0, ...sp({ k: 520, c: 38 }) }, .05 + j * .07));
       // typing: one character per frame-pair, the base URL lights up as it lands
       document.querySelectorAll('#cd-code .ch').forEach((el, k) => tl.set(el, { opacity: 1 }, at(1.4) + k * .03));
