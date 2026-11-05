@@ -83,4 +83,4 @@ For any launch, promo or product film, read .claude/skills/launch-style/SKILL.md
 For every film camera, follow .claude/skills/camera-style/SKILL.md (measured from the user's favourite camera reference, study in videos/reference/camera-study/STUDY.md): flat 2D camera with no roll and no perspective on type or UI, exponential ease-in-out moves (camMove), holds between moves, zoom dives. Camera moves are the one exception to springs-only.
 
 ## The proven method
-For every launch, promo or product film, start with .claude/skills/climax-launch/SKILL.md: the complete method behind the Sterling film the user called perfect (videos/sterling-v3). It sits above launch-style and camera-style.
+For every launch, promo or product film, start with .claude/skills/climax-launch/SKILL.md: the formula (fixed taste and quality bar, then idea, colour theory, world, light, transitions, type, camera, pace and sound derived fresh from each brand's meaning) behind the Sterling film the user called perfect. Each film must be unique to its brand: never reuse Sterling's palette, world or structure by default; Sterling (videos/sterling-v3) is only a worked example.

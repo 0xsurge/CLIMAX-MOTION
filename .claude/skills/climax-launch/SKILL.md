@@ -1,284 +1,299 @@
 ---
 name: climax-launch
-description: The complete, proven method behind the Sterling "Claim and Check" film that the user called "the definition of perfect". Everything from scratch, in order. How to study references, find the product idea, build palette and chapters, type and text animation, the cursor, chrome grounds with travelling gradient light, luma colour sweeps, the measured flat camera, pacing, sound (music drop, glitter zips, what never to use), the build and render pipeline, delivery, the review loop and the bugs to avoid. Use it for every launch, promo, teaser or product film; it sits above launch-style and camera-style.
+description: The formula for making launch, promo and product films as good as the Sterling film the user called "the definition of perfect", without repeating it. Principles and decision steps that derive a unique look for each brand. Idea, colour (through colour theory), world, light, transitions, type, cursor, camera, pacing and sound are each worked out from the brand's own meaning, inside a fixed quality bar and the user's fixed taste. Sterling appears only as a worked example. Use it for every launch, promo, teaser or product film; launch-style and camera-style are its reference chapters.
 ---
 
-# /climax-launch: the method that made the perfect film
+# /climax-launch: a formula for unique films, not a template
 
-The reference build is `videos/sterling-v3/`. The film is `film/index.html`, the sound is in `sound/`, and the
-delivered file is `delivery/sterling-claim-and-check.mp4`. When a choice is unclear, open that film and do what it does.
-This skill is the master. `launch-style` (the look) and `camera-style` (the camera) are its detailed chapters, and
-`CLAUDE.md` holds the render contract. Where they differ, this file and the user's words win.
+**The point.** Every film must be unique to its brand: its own idea, colours, world, light, transitions and sound. What
+stays the same is the **strategy** that finds those things, the **quality bar**, and the **user's taste**. Never copy
+the Sterling film's palette, chrome, sweep or structure into another brand by default. Re-derive everything from the
+new brand's meaning. A choice is right when you can say *why it means this brand*, not because it worked last time.
+
+How this file is laid out:
+- **Part A:** what never changes.
+- **Part B:** the formula, one step per decision, each with its principle, the questions to answer, the options and a
+  test.
+- **Part C:** the Sterling film walked through the formula, as an illustration only.
 
 ---
 
-## 0. Who you are working for (what the user loves and hates)
+## Part A: the constants (same in every film)
+
+### A1. The user's taste (fixed)
 - **Loves:**
-  - bold, confident, premium launch films
-  - one strong idea told through colour
-  - deep blacks with moving coloured light on glossy chrome
+  - bold, premium, confident films
+  - one strong idea told visually
   - a camera that travels so the eye has to follow
-  - smooth moves with a sharp speed peak
+  - smooth moves with a sharp speed peak, then a calm landing
   - type that builds word by word
-  - real brand logos and fonts
-  - the glitter-zip sound on colour sweeps
-  - the Thunder track with its bass drop
-- **Hates**, which got earlier versions rejected:
-  - pale or white slideshow-like films, too much white space, plain "basic" visuals
+  - real brand assets
+  - colour that moves as light
+  - a sound that rides each big visual change
+  - music with a real drop
+- **Hates:**
+  - pale slideshow pacing, empty white space, "basic" visuals
   - small, timid UI
-  - a static camera with everything animating in the middle of the screen
-  - anything tilted or bent in 3D (type and UI must stay square)
-  - crossfade ghosting and garbled text transitions
-  - whoosh or "shh" swish sounds on movement
-  - chime, piano or melodic notes that follow light or motion
+  - a static camera with everything animating mid-frame
+  - anything tilted or bent in 3D (type and UI stay square to the lens)
+  - crossfade ghosting
+  - garbled text transitions
+  - whoosh or "shh" swishes on movement
+  - chime, piano or melodic notes that follow motion or light
 - **How they work:**
-  - They send reference videos and expect them studied deeply: measured, not eyeballed.
-  - They approve a mood board and storyboard before anything is built.
+  - They send references and expect them measured, not eyeballed.
+  - They approve a mood board and storyboard before the build.
   - They pick the music and the key sound by ear.
-  - They watch on an Artifact player page.
-  - They look at the last frame closely, so every frame must be clean.
-- Their own copy and brand assets are sacred: keep the copy word for word and use the real logo and font.
+  - They watch on an Artifact page.
+  - They check the last frame up close.
+- Their copy and brand assets are sacred: keep the words exact and use the real logo and fonts.
 
-## 1. The process, in order (do not skip steps)
-1. **Understand the product in one sentence.** Sterling: "one API key for every model, routed only to providers Mira
-   Network has verified really serve the model they name."
-2. **Pick one or two visual ideas that come from the product.** Sterling: *a model name is a claim, and Sterling is the
-   check.* The claim is red-orange, the check is emerald. The check mark becomes the 3D chrome. Do not copy the
-   website's look. The brand gives the logo, the fonts, the copy and the real product facts, and the world is ours to
-   invent.
-3. **Study the references the user sends.** Use contact sheets at 1 fps, 10–15 fps strips through every key moment,
-   cut detection, beat and loudness analysis, spectrograms of the sounds, and optical-flow camera graphs. Write a
-   `STUDY.md` beside them.
-4. **Mood board and storyboard as one Artifact page, then wait for approval.** It holds:
-   - the idea in colour (two rendered grounds)
-   - a short motion test of the key effect
-   - the palette, type and cursor
-   - the sound references next to your synthesized version
-   - every beat as a full-size 1920×1080 still made from the real assets, with timing, motion and sound per beat
-   - a closing question asking which look, which sound and which music
-5. **Iterate on the sound separately by ear.** Offer variants, A / B / A+B, each laid over the actual music, and let
-   the user pick.
-6. **Build, check the contact sheet, fix, then do the full render.**
-7. **Deliver on an Artifact player page.** Commit and push the film and the delivery file.
+### A2. The quality bar (fixed craft rules)
+- **Hook:** within 3 s, muted, there is text on screen, a striking visual and a bold statement.
+- **Pace:** something new every 0.5–1 s in type sections, never 2 s without change. Bursts against calm stretches,
+  and a quieter close.
+- **Type:** one display face and one UI face (the brand's own). Two sizes, caption and slam, with a big jump between
+  them. Every enter and exit has blur plus motion, never a pure fade.
+- **Camera:** flat 2D (pan, tilt, zoom), with roll 0° and no perspective on type or UI. Moves use the measured
+  exponential ease-in-out (`camMove`, see /camera-style): fast whips with tau about 0.1 s, slow moves with tau about
+  0.3–0.7 s. Holds between moves, zoom dives into what matters, directional motion blur that is gone on landing, and
+  centred landings.
+- **Readability:** type always sits on a calm, high-contrast zone, whatever the background is doing.
+- **Light:** only motivated light (it travels, sweeps, draws, pools). No random leaks, no static glow on idle UI.
+- **The product is shown real and close:** macro crops of real controls, and a cursor doing real tasks.
+- **Sound:** music leads, cut to its measured grid, mixed to −14 LUFS. SFX are few, physical and tied to real events.
+- **Render contract:** CLAUDE.md, a pure function of t.
+- **Before showing:** a contact sheet, the last frame checked up close, and seams checked after any splice.
 
-## 2. Structure and pacing (the 30 s template that worked)
-Cut everything to the music's grid. Measure the beat (Sterling: 95.9 BPM, P = 0.625653 s), and put the **drop on the
-first slam word at 1.9 s**. Times below are in beats after the drop (B(n) = 1.9 + n·P).
+---
 
-| beat | time | what happens |
-|---|---|---|
-| hook | 0–1.9 s | the problem line builds word by word from frame 1 on the claim-coloured chrome ("A model name on an API") |
-| drop | 1.9 s | the slam word lands on the bass drop ("is a **claim.**") |
-| doubt | B2 | word swap with a colour smear ("Is it really Claude? / GPT? / Gemini?") |
-| turn | B4 | **luma colour sweep** from the claim palette into the verified palette ("Time to **check** it.") |
-| mark | B6 | the brand mark slams in big and blurred and shrinks to size |
-| name | B7.5 | wordmark letters fly in from scattered seeded positions, about 0.085 s apart |
-| promise | B9.5 | the key card and the cursor presses Copy; the camera dives into the button ("One key. Every model.") |
-| code | B13.5 | the real endpoint types at display size; the camera rides along with the caret |
-| route | B17.5 | the provider list: a check per row on the beat, the unverified row skipped in claim colour |
-| checks | B21.5 | the five checks as a word swap, one per 0.8 beat, with a light pass on the chrome |
-| answer | B26.5 | the answer slam ("The model you pay for. **Verified.**") |
-| range | B29.5 | the same response card with the model name swapping every 4 frames |
-| steps | B33.5 | three pills pressed one per 1.3 beats; the last grows into an emerald flood |
-| end | B38.5 | the logo builds from its pieces, then the support line, the URL pill with a light drawing its outline, and "powered by" |
+## Part B: the formula (derive each of these fresh for every brand)
 
-- Something new every 0.5–1 s in type sections, never more than 2 s without a change.
-- Calm stretches against bursts. The ending is quieter: the camera nearly stops, with one slow push.
-- About 30 s in total, ending on a fade of the music over the last 1.6 s.
+### B1. Find the product truth
+- **Principle:** a film is about one truth, not a feature list.
+- **Do:** write what the product does, for whom, in one sentence, using the brand's own words. Then write the
+  **tension** it resolves as two opposing words: before and after, problem and answer.
+- **Test:** can a stranger repeat the sentence after one reading? Are the two tension words opposite and concrete?
 
-## 3. Colour: one idea, two chapters
-- **The void:** #030404 true black, never milky grey. Keep a dark band behind the type so it always reads: a radial
-  rgba(3,4,4,.82) at the centre falling to 0 at about 900 px.
-- **Chapter 1, the claim:** red #FF3D12, orange #FF8A1F, gold #FFD36B, hot pink #FF2D6F, cyan rim #5FD6FF.
-- **Chapter 2, verified:** emerald #0FBF7A, mint #3DFFB0, lime #D8FF7A, teal #0AA3A3, ice #9FE8FF.
-- **Accent type:** gradient text in the chapter colour on the key word only (claim: #FF3D12 → #FFC46B; verified:
-  #0FBF7A → #D8FF7A). Everything else is #EEF3F0.
-- **UI cards:** #121414 with a 1.5 px rgba(255,255,255,.06) inner line and a thin mint rim line along the top edge.
-- **Glow:** only on the active element (the button being pressed, a row being checked, the URL pill outline as it
-  draws). Never on idle chrome.
-- The palette is the story: the colour change is the turn of the film.
+### B2. Pick one or two visual ideas that embody the truth
+- **Principle:** the whole film is built from one or two objects or metaphors that come from the product itself, not
+  from stock imagery.
+- **Do:** list five candidate objects from the product's world: its logo's shape, its core action, its unit of value,
+  its core noun, a physical stand-in for it. Pick one hero object and at most one supporting idea. The hero should
+  be able to **transform** so it can carry the story's turn.
+- **Options to consider:**
+  - a shape from the logo turned into a 3D material
+  - a UI element that becomes the world
+  - a physical object (a key, a card, a seed, a lock)
+  - a substance (glass, liquid, fabric, paper, light)
+- **Test:** does the object belong only to this brand? Can it show both sides of the tension?
 
-## 3a. How we built this palette from scratch (do this again for every brand)
-This palette is **ours**. It was not taken from the brand's website: Sterling's site is a pale, light-theme page.
-Only two seeds came from outside:
-- the brand's own accent green (#059669), the anchor for the "verified" family;
-- the moving red-orange light in the Synaps reference the user loved, the anchor for the "claim" family.
+### B3. Derive the colour from meaning (colour theory)
+- **Principle:** the palette tells the story. It is chosen for what each colour *means* in this film, then tuned with
+  colour theory. It is never copied from the website and never reused from another film.
+- **Steps:**
+  1. **Assign a meaning colour to each side of the tension.**
+     - Use colour psychology: warm (red, orange) means urgency, heat, risk or energy. Green means safe, growth or
+       passed. Blue means trust, calm or depth. Violet means imagination or premium. Yellow means attention or
+       optimism. Neutrals and black mean luxury or focus.
+     - Check what the brand's audience and category expect, then decide whether to fit that expectation or break it
+       on purpose.
+  2. **Anchor on the brand.** One side usually starts from the brand's real accent colour, pushed in value and
+     saturation until it can glow. The other side is chosen to contrast with it.
+  3. **Choose the harmony between the sides.** Pick the relationship that matches the story's shape:
+     - **Complementary (opposites):** for a reversal or before-and-after.
+     - **Split-complementary:** for a softer turn.
+     - **Analogous:** for a gentle evolution.
+     - **Triadic:** for something playful and many-sided.
+     - **Value contrast (dark to light):** when the story is about clarity.
+  4. **Build each side as a ramp, not a swatch.** Use 4–5 analogous hues from deep to bright, plus one bolder jump,
+     so moving light has somewhere to travel.
+  5. **Add a temperature rim.** A thin edge light of the opposite temperature keeps forms readable and adds depth.
+  6. **Pick the ground's value.** A dark void makes colour glow (premium, tech). A light ground feels airy and open
+     (lifestyle, calm). A saturated world feels playful. Choose it from the brand's personality, but keep the type
+     zone calm either way.
+  7. **Plan the bridge.** When one palette must turn into the other, check the midpoint of the mix. If it goes
+     muddy (opposites mixed straight through grey or brown), route through a clean third hue.
+  8. **Keep accent discipline.** Type stays neutral, and only the key word takes the chapter colour. Glow only on the
+     active element.
+- **Test:**
+  - Can you say what every colour means?
+  - Does the turn of the story show as a change of colour?
+  - Is the type readable on every frame?
+  - Does it look like this brand and no other film you have made?
 
-Everything else was built here. The workflow:
-1. **Start from meaning, not from the website.** Name the film's one tension (claim against check) and give each side
-   a colour that means it.
-   - Red-orange means heat, warning, unproven, a claim.
-   - Emerald means safe, passed, verified.
-   - Red-orange and green sit almost opposite on the colour wheel (complementary). The turn of the story is literally
-     the colour flipping to its opposite.
-2. **Colour is light, not paint.** The colour lives in the light that travels across black chrome, not in flat fills
-   or backgrounds. The surfaces only show colour where the light passes, which is why it feels premium and alive.
-   - Keep the void true black (#030404) so the light has something to glow against.
-   - Keep large areas dark and let the light take maybe 20–40% of the frame.
-3. **Build each chapter as a ramp of 4–5 hues, not one colour.**
-   - **Claim:** deep ember #1A0300, then red #FF3D12, orange #FF8A1F, gold #FFD36B, then a jump to hot pink #FF2D6F.
-   - **Verified:** deep #00140D, then emerald #0FBF7A, mint #3DFFB0, lime #D8FF7A, then a jump to teal #0AA3A3.
-   - **How the ramp is built:** analogous neighbours, with one bolder jump at the end so the gradient never looks flat.
-   - **The light cycles through the ramp as it travels:** that is the "colour changing on the objects" the user asked for.
-4. **Add one cool rim per chapter.** Cyan #5FD6FF against the warm claim, ice #9FE8FF against the green. A thin,
-   opposite-temperature edge light keeps the forms readable and gives depth.
-5. **Make the chapter change a colour event, not a cut: the luma sweep.** The sweep ramp passes **through violet**
-   (#1A0538 → #6B148C) on its way from red-orange to green. Mixing orange straight into green goes through a muddy
-   brown midpoint; violet is the clean bridge. Bright areas change first, then the dark ground, then everything
-   settles into the new true colour. That movement through the colour wheel is the drama.
-6. **Type and UI get the palette only as an accent.**
-   - Body type is near-white #EEF3F0. Only the key word takes the chapter gradient: claim #FF3D12 → #FFC46B,
-     verified #0FBF7A → #D8FF7A.
-   - UI cards are near-black #121414 with a thin mint rim.
-   - Glow goes only on the active element.
-   - A dark band always sits behind the type, so the value contrast (light type on dark) never depends on where the
-     chrome light happens to be.
-7. **Test it in motion before anyone approves it.**
-   - **Grounds:** render the two chapter grounds as stills.
-   - **Motion test:** render a short clip of the light travelling, then the sweep.
-   - **Mood board:** put both on the mood board page.
-   The user approved it there ("I love the palette, I love the colouring").
+### B4. Invent the world (ground and material)
+- **Principle:** the background is a place the brand's idea lives in, built from the hero object, lit by the palette.
+- **Do:** choose the material and space from the brand's personality:
+  - glossy chrome or glass for precise or technical brands
+  - soft fabric, fog or paper for human or gentle brands
+  - liquid for fluid ones
+  - a generated landscape for imaginative ones
+  - real photography for place-based ones (generated images only for sets, never in place of real products)
+- Decide its depth of field, its motion (slow drift, parallax against the camera) and how much of the frame it
+  fills. Leave the type zone calm.
+- **Test:** would the world still read as this brand with the logo removed?
 
-To use this for a new brand:
-- Find the film's tension and give each side its meaning colour.
-- Anchor one side on the brand's real accent, pushed brighter.
-- Build two analogous ramps with one jump each, plus a cool or warm rim.
-- Bridge the two with a clean third hue in the sweep.
-- Keep the world black and the colour in moving light.
+### B5. Decide how colour moves (light design)
+- **Principle:** colour should move. Moving light is what makes a film feel alive and expensive.
+- **Options:**
+  - light travelling across forms, so surfaces change colour as it passes
+  - a band of light that sweeps across to carry a change
+  - a glow that draws along a line or outline
+  - light pooling under an object
+  - a rim light running along an edge
+- Choose the ones that fit the material: reflections suit chrome, translucency and caustics suit glass, soft
+  diffusion suits fabric and fog.
+- **Test:** is every light move motivated by something in the story or the material?
 
-## 4. Type and text animation
-- **Fonts:** the brand's display face for everything (Sterling: Zalando Sans Expanded 500) and the brand's UI face
-  for small UI text (Public Sans). Use a monospace face only for code.
-- **Two sizes only:** caption at 66 px, one centred line of 2–5 words, tracking −0.02 em; slam word at 300 px, one
-  word, tracking −0.05 em.
-- **Word-by-word build:** each word springs in (k 900, c 50) from blur 12 px and +34 px x to sharp, with the next word
-  P/4 later. The whole line creeps while read (scale −3.5% and x −18 px over 2.5 s). Exit: blur 10 px and slide −40 px
-  in 0.12 s. Keep it visible 0.3 s past its exit time so the camera can leave it.
-- **Slam:** scale 1.3 → 1.0 with blur 22 → 0 (spring k 520, c 46), then a slow shrink of 10% per second until the
-  next beat.
-- **Word swap:** the fixed lead-in stays, and the last word changes every 0.5 beat (or 0.8 beat for longer words). The
-  new word streaks in from +130 px with a coloured text-shadow smear behind it.
-- **Typing:** one character every 0.036 s at 68 px, with a real caret; the typed URL is in the accent colour.
-- **Logo build:** the mark at 360 px blurred and scaled 1.25, settling to its lockup size. The wordmark is split into
-  its real letter paths, and each letter flies in from a seeded random offset (±450 px, ±310 px, ±30°).
-- Never a pure opacity fade: every enter and exit has blur and motion.
+### B6. Design the transitions
+- **Principle:** each change of scene is caused by something on screen, and the biggest one is the story's turn.
+- **Do:** choose 3–5 transition kinds for the film.
+  - The **signature transition** carries the main turn, and its form should express the turn itself. A colour turn
+    suits a colour flood or a brightness-keyed sweep. A reveal suits an object opening or a dive into it. A
+    transformation suits a morph of the hero object.
+  - The rest come from:
+    - a cut on the beat
+    - a whip pan with motion blur
+    - a click that grows into the next ground
+    - an object becoming the world
+    - a page scroll
+    - a zoom dive into UI
+- **Never:** crossfades, spins, glitches, light leaks.
+- **Test:** can you name the cause of every transition?
 
-## 5. The cursor
-- **Shape:** a notched dart: a triangle with its tip at the top-left and the back edge notched inward (path
-  `M4 4 L42 20 L24 25 L18 44 Z`, viewBox 0 0 46 50). It is not the OS arrow.
-- **Look on dark grounds:** black #0B0C0D fill, thick white 4.2 stroke, drop shadow, about 100 px tall.
-- **Motion:** it enters from off-frame on a curved path (x on the default spring, y on a slightly different spring),
-  drifts about 3 px when idle, and presses with scale 0.88 for 0.09 s while the target reacts (it grows, turns
-  emerald and glows).
+### B7. Type voice and text animation
+- **Principle:** the type is the narrator. Its motion should feel like the brand speaking.
+- **Do:**
+  - Use the brand's display face.
+  - Pick the build style from the brand's voice: word by word from blur for confident or technical, letter by letter
+    for precise or playful, line wipes for calm.
+  - Pick a slam treatment for the few lines that matter most.
+  - Pick a word-swap device for lists (the lead-in stays, the end word changes on the beat).
+  - Decide how the product itself writes text: typing, counters, a cursor drawing a selection.
+- **Test:**
+  - Are all the lines 2–5 words?
+  - Does every word land on the grid?
+  - Is it readable at phone size?
 
-## 6. The grounds: a chrome world with travelling gradient light
-- **Forms (three.js):**
-  - **The brand mark as a fat chrome tube:** a CatmullRom curve through the check-mark stroke, tube radius 0.34, scale 9.5.
-  - **Two wide folded chrome ribbons:** extruded rounded rectangles along curves.
-  - **A second tick far behind.**
-  - **Material:** metalness 1, roughness 0.1, clearcoat 1.
-- **Light:** a dome environment map whose colour ramp rotates with t (phase t·0.11). The light glides along the
-  chrome and the surfaces change colour as it passes. That travelling light is the soul of the look. Use the chapter
-  palette in the ramp, a cyan or ice rim strip up high, and the gain raised briefly for big light passes.
-- **Lens:** a shallow-focus look. The frame is blurred 22 px at the edges with the centre sharp, using a radial mask.
-- The world moves with parallax: its rotation follows the film camera at 0.00022 rad per px, plus a slow drift.
-  Don't give it roll.
+### B8. The cursor and the UI as characters
+- **Principle:** the product is shown being used, close up, by a cursor with intent.
+- **Do:**
+  - Choose the cursor skin to suit the ground: on dark, a dark fill with a thick light outline; on light, a dark
+    solid fill with a soft shadow. Collaborators get coloured cursors with name pills.
+  - Choose the real UI moments worth a macro shot: the one button, the one field, the one result.
+  - The click is a beat: press, react, and often transition.
+- **Test:** does every UI moment show real product behaviour?
 
-## 7. The luma colour sweep (the chapter change)
-The next frame floods in through its own brightness: bright parts first, then the dark ground. It is painted by a
-moving gradient ramp (violet → red-orange → amber → emerald → mint) and then relaxes into true colour.
-- Per pixel: L = luma(B); th = 1.4p − 0.2; mask = clamp((th − (1 − L)·0.75)/0.2); wash = ramp(0.9L + 0.55p − 0.05);
-  res = clamp((p − 0.55)/0.45); out = mix(A, mix(wash, B, res), mask).
-- Drive p with a slow spring over about 1.5 beats.
-- **Do it in 2D on the finished frames** (getImageData), not in a WebGL render target: the render target lost tone
-  mapping and colour space and came out muddy brown.
-- **A second use:** a button pressed by the cursor grows into a solid emerald flood, and the sweep then resolves that
-  flood into the ending world (solidA mode).
+### B9. Choreograph the camera
+- **Principle:** the camera is a guide that travels through one big composed space. It is flat and never bends the
+  content.
+- **Do:**
+  - Lay the beats out on one large canvas, each at its own place.
+  - Plan the route so the directions alternate (down, right, up, right…) and match the story: dive towards
+    revelations, pull out for context, push in slowly for the close.
+  - Plan the zoom choreography (dives at landings, a punch-in on the key slam).
+  - Plan the holds.
+  - Mix fast and slow `tau`.
+  - Consider a ride-along with any typing.
+- **Test:** draw the route as a path on paper first. Does it flow without doubling back pointlessly? Does every
+  landing centre its subject?
 
-## 8. The camera: flat, measured, travelling (see /camera-style for the measurements)
-- **Layout:** every beat sits at its own place on one big canvas, so the camera travels between them.
-  - Sterling places, as [x, y]: hook [0, 0], drop [0, 900], doubt [1700, 900], mark [1700, −150],
-    promise [3300, −150], code [3300, 950], route [4900, 950], checks [4900, −150], range [6500, −150],
-    steps [6500, 950].
-  - The old beat stays on its spot while the camera leaves it.
-- **Flat 2D only:** pan, tilt and zoom. **Roll 0°, no perspective, no tilted cards.** Cards are drawn flat through the
-  same camera transform as the type.
-- **The move curve** is an exponential ease-in-out, `camMove(t, tc, tau)`. It creeps off, peaks sharply and glides in.
-  - Fast whips and pans: tau 0.09–0.13.
-  - Slow pushes, pulls and pans: tau 0.3–0.7.
-  - Each key is summed in order, one move per change.
-- **Holds:** between moves the camera holds, with only a 3–4 px sway, while the content animates.
-- **Zoom choreography:** zoom 0.92–1.42. A dive at the mark as it lands (1.3), a pull-out as the name builds (0.96),
-  a dive into the Copy button (1.42), a punch-in on the answer slam (1.13), a pull-out for the logo (0.92), then one
-  slow push to close (1.0, tau 0.7).
-- **Caret ride-along:** while typing, the camera's x follows the caret continuously, never in steps, and hands the
-  offset back with a slow move.
-- **Motion blur in the direction of travel:**
-  - **Type and UI layer:** an SVG feGaussianBlur with stdDeviation "bx by", where bx and by are about
-    0.12 × (|velocity| − 10 px per frame), capped at 26.
-  - **Canvas layers:** smeared as seven copies along the velocity.
-  - **Zoom speed:** adds blur on both axes.
-  - **On landing:** it is gone.
+### B10. Pace to the music
+- **Principle:** music is the clock. The structure follows its energy.
+- **Do:**
+  - Choose music for the brand's energy: a hard drop for bold launches, a gentle groove for calm brands.
+  - Offer the user 3–6 options with previews cut to their drops.
+  - Measure the beat grid. Put the **first slam on the drop**, inside the first 2 s.
+  - Map the story onto the track: hook during the build, the slam on the drop, the turn on a lift, the features in
+    the high-energy stretch, the close on the outro.
+  - Assign each beat a length in whole or half beats.
+- **Test:** does each section's energy match the music under it?
 
-## 9. Sound
-- **Music:** a supplied, licensed track with a big bass drop (Thunder, Mixkit), trimmed so the drop lands on the first
-  slam word at 1.9 s, with a fade-out over the last 1.6 s.
-- **The signature SFX, "glitter zips"**, measured from the reference spectrogram and approved by the user:
-  - Clusters of micro-chirps, each a bright sparkle sweeping **down from about 15–16.5 kHz to 7.5–9.5 kHz in
-    22–42 ms**, with a sharp attack and grainy noise mixed in.
-  - Spaced 6–16 ms apart, in two or three clusters (6, 7 and 4 zips), panned across with the light.
-  - One or two tiny glints after them (5.4 and 6.3 kHz pings of about 60 ms), with a faint air bed underneath.
-  - Placed on every colour sweep and every big light pass, at about 0.13–0.22 gain under the music.
-  - Code: `videos/sterling-v3/sound/glitter.py`.
-- **Small physical hits only:**
-  - a low thump (38–72 Hz pitch drop, 0.22 s decay) under each slam and mark landing
-  - a soft click (filtered noise plus a 2.4 kHz tick) on each press
-  - quiet key taps on every other typed character
-  - a tiny tick per checked row
-- **Never:** whoosh or "shh" swishes on movement, or tonal, chime, piano or melodic SFX that follow the light. Nothing
-  makes a sound just because it moves.
-- **Mix:** music plus SFX, then `mix.py` (two-pass loudnorm to −14 LUFS, true peak −1 dBTP). Mixer: `sound/make_mix.py`.
+### B11. Design the sound
+- **Principle:** sound makes the visuals physical. Every effect is tied to a real event, and each film gets one
+  signature sound for its signature visual.
+- **Do:**
+  - **The signature sound.** Derive it from the signature transition's material and motion: what would this light,
+    substance or object sound like? Sketch it in code, check it against any reference with a spectrogram (study
+    the shape, not just the averages), then offer variants on top of the actual music and let the user pick by ear.
+  - **Small physical hits.** A thump under slams, a click under presses, quiet taps under typing, a tick per checked
+    item.
+  - **Never** whooshes on movement, never melodic or tonal notes following motion.
+- **Test:** mute the music. Do the SFX only mark real events? With the music, are they felt more than heard?
 
-## 10. Build and render pipeline (what actually works here)
-- **One HTML page, `film/index.html`, with `window.seek(t)`.**
-  - **Layers:** a canvas carrying the three.js chrome world (with the sweep, the lens blur and the dark type band),
-    flat cards drawn onto the canvas through the camera, then the DOM type, cursor and logo.
-  - **Placement:** each DOM element sits inside a keyed wrapper, transformed by the camera as
-    `translate(960,540) scale(z) translate(place − 960 − camX, place − 540 − camY)`.
-  - **Contract:** pure function of t, seeded randomness, springs from `motion.js` for every element, `camMove` for
-    the camera.
-- **Render:** `node .claude/skills/motion-reel/scripts/render.mjs film --fmt=16x9 --fps=30 --dur=… --out=…`.
-  - It takes 3–4 s per frame for the WebGL world on this CPU, so about 55 min for 30 s. Run it in the background and
-    give the user honest progress (frame n of 911).
-  - Do not use the HyperFrames renderer for heavy WebGL: it stalled at frame 0.
-- **Partial re-render after a fix:** render only the changed span with `--from`/`--to`, splice it with ffmpeg
-  (`trim=end_frame=N`, concat), then mix again. Splice a little before the changed region and check the seam frames.
-- **Check:**
-  - `flow_check.py --fps 30` for stillness, pops and jerks. Fast measured whips read as "jerks" by design.
-  - A contact sheet of about 18 frames across the film.
-  - A close crop of the **last frame**.
-- **Deliver:**
-  - Re-encode to CRF 20 for the player.
-  - An Artifact player page: a dark screening column with the film, then length, format, music and sound.
-  - Commit the 1080p file with `git add -f` into `delivery/`. Brand-captured fonts and images, music sources, renders
-    and generated plates stay git-ignored.
+### B12. Study, prove, then build
+- **Principle:** decisions are proven before the full build, and references are measured.
+- **Do:**
+  - Measure the references: contact sheets, cut detection, beat analysis, optical-flow camera graphs, spectrograms.
+    Write the findings into a study file.
+  - Make a **mood board and storyboard Artifact page**. It holds:
+    - the idea in colour (a rendered ground for each chapter)
+    - a short motion test of the signature effect
+    - the palette with the meaning of each colour
+    - type, cursor and sound references next to your sketch
+    - every beat as a full-size still made from the real assets, with timing, motion and sound
+  - Wait for approval. Iterate on the sound separately.
+  - Build, check the contact sheet, fix, then do the full render. Deliver on an Artifact page, commit and push.
 
-## 11. Bugs and traps already paid for
-- `el.style.display = ''` wipes an inline `display:flex`, which un-centred the URL pill. Store the display mode
-  (`dataset.d`) and restore it.
-- A line kept on screen for the camera's exit can ghost over the next scene. End it before the flood or the cut.
-- WebGL render-target sweeps lose tone mapping, so do the sweep in 2D on the final frames.
-- The `seek` function must return nothing. Prime any GSAP timeline. Never use Math.random.
-- An opacity crossfade between two light states leaks content through (the v1 ghosting). Never crossfade.
-- 3D-tilted cards and camera roll were rejected. Keep everything flat facing the lens.
-- Text on bright chrome is unreadable, so always keep the dark type band.
+---
 
-## 12. Final checklist before showing the user
-- In the first 3 s, muted: is text on screen, with a striking visual and a bold claim?
-- One idea told through colour, with a chapter change done by the luma sweep?
-- Two type sizes, word-by-word builds, slams on beats, no pure fades?
-- A flat camera that travels between places with `camMove`, plus holds, zoom dives and directional blur?
-- Real logo and copy, the cursor pressing real UI, and every card flat and square?
-- Thunder's drop on the first slam, glitter zips on sweeps, small physical hits, no whooshes, no notes, −14 LUFS?
-- A contact sheet checked, the last frame checked up close, seams checked after any splice?
-- Delivered on an Artifact page, committed and pushed?
+## Part C: worked example (Sterling): how the formula produced one unique film
+This shows the reasoning, not a template to reuse. The build is in `videos/sterling-v3/`.
+- **B1, truth:** "One API key for every model, routed only to verified providers." The tension is **claim against
+  check**.
+- **B2, idea:** the brand's own check mark, turned into the hero object. The claim is something unproven and the
+  check proves it.
+- **B3, colour:**
+  - **Meanings:** the claim is risky and hot, so red-orange (seeded from the moving orange light the user loved in a
+    reference). Verified is safe and passed, so emerald (anchored on Sterling's accent #059669, pushed into glowing
+    mint and lime).
+  - **Harmony:** red-orange and green are near-complementary, which suits a reversal.
+  - **Ramps:** ember, red, orange, gold, then a jump to pink; deep green, emerald, mint, lime, then a jump to teal.
+  - **Rims:** cyan against the warm side, ice blue against the green.
+  - **Ground:** a true black void, for a premium developer tool.
+  - **Bridge:** orange mixed straight into green goes muddy, so the sweep routes through violet.
+  - **Type:** neutral, with only the key word in gradient.
+- **B4, world:** chrome bent from the check-mark stroke plus folded ribbons. Precise, technical, glossy, fitting an
+  infrastructure brand.
+- **B5, light:** a rotating gradient dome, so the light travels over the chrome and recolours it as it passes.
+- **B6, transitions:**
+  - **Signature:** a brightness-keyed colour sweep from claim to verified, because the turn is a colour change.
+  - **Others:** a slam on the drop, word swaps, whips, a click that grows into an emerald flood, the logo built from
+    its pieces.
+- **B7, type:** Zalando Sans Expanded. Words build from blur; slams on "claim." and "Verified." as a question and
+  its answer; word swaps for the model names and the five checks.
+- **B8, product:** the key card with Copy pressed, the endpoint typed huge, the provider list checked row by row, the
+  response card swapping models.
+- **B9, camera:** a route of down, right, up, right, down, right, up, right, down, with dives at the mark and the
+  Copy button, a punch-in on "Verified.", a pull-out for the logo and a slow push to close.
+- **B10, pace:** Thunder at 95.9 BPM, with the drop on "claim." at 1.9 s and 14 beats in 30 s.
+- **B11, sound:** the signature "glitter zips" (bright downward micro-chirps, 16 kHz down to 8 kHz in 20–40 ms,
+  in clusters), measured from the reference's sweep and picked by the user, plus thumps, clicks and taps.
+
+Another brand would come out entirely different through the same steps.
+- **Example:** a calm meditation app. Its tension might be noise against stillness; its idea, a ripple; its colours,
+  analogous blues into warm dawn on a light, airy ground; its world, soft water and fog; its signature transition,
+  a ripple that spreads; its sound, soft water drops; its music, a gentle build.
+
+---
+
+## Part D: build notes and traps (how to execute any of the above here)
+- **Build:**
+  - One `film/index.html` with `window.seek(t)`: a canvas world (three.js where 3D is needed), flat cards drawn
+    through the camera transform, then DOM type, cursor and logo in keyed wrappers.
+  - Render with `node .claude/skills/motion-reel/scripts/render.mjs`. Heavy WebGL takes 3–4 s per frame on this
+    CPU: run it in the background and report honest progress. Don't use the HyperFrames renderer for heavy WebGL
+    (it stalled).
+  - After a small fix, render only the changed span (`--from`/`--to`), splice with ffmpeg, mix again, and check the
+    seam.
+  - Mix with `mix.py` (−14 LUFS). Check with `flow_check.py --fps 30`; the measured whips read as jerks by design.
+- **Traps:**
+  - Brightness sweeps done in WebGL render targets lose tone mapping and go muddy. Do them in 2D on the finished
+    frames.
+  - Resetting `style.display = ''` wipes inline flex centring. Restore the stored mode.
+  - A line kept on screen for the camera's exit can ghost into the next scene.
+  - Opacity crossfades between states leak content.
+  - Text on bright backgrounds needs a calm band behind it.
+- **Delivery:** an Artifact player page (re-encode at CRF 20). Commit the 1080p file with `git add -f`. Captured
+  brand files, music sources and renders stay git-ignored.
