@@ -149,8 +149,8 @@
           else if (t < S.checks) { col(gu, '#FFFFFF', '#DCEFE5'); plate('light', .9, '#F6FBF8', .42); gu.uSpot.value.set(.78, .3, .35); gu.uSpotAmt.value = .25; }
           else if (t < S.aurora) { const i = Math.min(4, Math.floor((t - S.checks) / at(1.6)));
             const G = [['#0BB07D', '#03573D'], ['#15221D', '#040706'], ['#FFFFFF', '#D6E9DF'], ['#0BB07D', '#03573D'], ['#15221D', '#040706']][i]; col(gu, G[0], G[1]);
-            if (i === 1 || i === 4) plate('crystal', .55, '#040706', .45); }
-          else if (t < S.steps) { col(gu, '#0F3A2C', '#03100B'); plate('aurora', 1); plate(PL.crystal ? 'crystal' : 'aurora', 1, '#03130D', .18); gu.uTexOff.value.set(whip * .5, 0); }
+            if (i === 1 || i === 4) plate('crystal', .6, '#030705', .5); else if (i === 2) plate('light', .85, '#F6FBF8', .45); else plate('crystal', .7, '#03573D', .25); }
+          else if (t < S.steps) { col(gu, '#0F3A2C', '#03100B'); plate('aurora', 1); plate(PL.crystal ? 'crystal' : 'aurora', 1, '#03130D', .42); gu.uTexOff.value.set(whip * .5, 0); }
           else if (t < S.code) { col(gu, '#FFFFFF', '#DDEEE5'); plate('flow', .85, '#F4FAF7', .55); gu.uSpot.value.set(.5, .52, .32); gu.uSpotAmt.value = .22; }
           else if (t < S.onekey) { col(gu, '#0E3326', '#020806'); plate('hook', .9, '#020806', .5); }
           else if (t < S.lockup) { col(gu, '#FFFFFF', '#DCEFE5'); plate('light', .9, '#F6FBF8', .4); gu.uSpot.value.set(.5, .38, .3); gu.uSpotAmt.value = .4; }
