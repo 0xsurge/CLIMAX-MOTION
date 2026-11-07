@@ -1,6 +1,6 @@
 # Skills
 
-204 skills vendored from 10 upstream repos on 2026-11-07. Each skill folder keeps its upstream LICENSE (and NOTICE where one exists). Claude Code loads everything in this folder automatically when you open the repo.
+217 skills vendored from 11 upstream repos on 2026-11-07. Each skill folder keeps its upstream LICENSE (and NOTICE where one exists). Claude Code loads everything in this folder automatically when you open the repo.
 
 Large media (videos, gifs, audio, files over 5 MB), demo galleries and test suites were left out to keep the repo light. Where a skill name appeared in more than one repo, the original author's version was kept.
 
@@ -10,9 +10,13 @@ Large media (videos, gifs, audio, files over 5 MB), demo galleries and test suit
 
 `figma`, `hyperframes`, `hyperframes-cli`, `hyperframes-registry`, `media-use`, `remotion-to-hyperframes`, `reverse-any-video`, `slideshow`, `style-sampling`
 
-### [calesthio/OpenMontage](https://github.com/calesthio/OpenMontage) · AGPL-3.0 · 79 skills
+### [remotion-dev/skills](https://github.com/remotion-dev/skills) · no license file in repo (official Remotion skills) · 13 skills
 
-`3d-asset-generation`, `acestep`, `agents`, `ai-video-gen`, `atlas-cloud`, `avatar-video`, `azure-speech-to-text`, `azure-text-to-speech`, `beautiful-mermaid`, `bfl-api`, `canvas-procedural-animation`, `character-animation-qa`, `character-rigging`, `comfyui`, `create-video`, `d3-viz`, `dashscope`, `doubao-tts`, `elevenlabs`, `faceswap`, `ffmpeg`, `fish-audio-tts`, `flux-best-practices`, `framer-motion`, `gemini-omni`, `grok-media`, `heygen`, `hyperframes-animation`, `hyperframes-core`, `hyperframes-creative`, `hyperframes-media`, `kling-official`, `lottie-bodymovin`, `ltx2`, `lyria`, `manim-composer`, `manimce-best-practices`, `manimgl-best-practices`, `minimax-h3`, `motion-graphics`, `music`, `music-to-video`, `playwright-recording`, `pose-library-design`, `provider-model-refresh`, `provider-refresh-oct23`, `remotion`, `remotion-best-practices`, `seedance-2-0`, `seedance-2-5`, `setup-api-key`, `sound-effects`, `speech-to-text`, `svg-character-animation`, `synthetic-screen-recording`, `tailwind-design-system`, `text-to-speech`, `threejs-animation`, `threejs-fundamentals`, `threejs-geometry`, `threejs-interaction`, `threejs-lighting`, `threejs-loaders`, `threejs-materials`, `threejs-postprocessing`, `threejs-shaders`, `threejs-textures`, `threejs-world-generation`, `vercel-composition-patterns`, `vercel-react-best-practices`, `video-download`, `video-edit`, `video-toolkit`, `video-translate`, `video-understand`, `video_toolkit`, `visual-style`, `web-design-guidelines`, `website-to-video`
+`remotion-best-practices`, `remotion-captions`, `remotion-create`, `remotion-docs`, `remotion-interactivity`, `remotion-license`, `remotion-maps`, `remotion-markup`, `remotion-multimedia`, `remotion-render`, `remotion-saas`, `remotion-studio`, `remotion-upgrade`
+
+### [calesthio/OpenMontage](https://github.com/calesthio/OpenMontage) · AGPL-3.0 · 78 skills
+
+`3d-asset-generation`, `acestep`, `agents`, `ai-video-gen`, `atlas-cloud`, `avatar-video`, `azure-speech-to-text`, `azure-text-to-speech`, `beautiful-mermaid`, `bfl-api`, `canvas-procedural-animation`, `character-animation-qa`, `character-rigging`, `comfyui`, `create-video`, `d3-viz`, `dashscope`, `doubao-tts`, `elevenlabs`, `faceswap`, `ffmpeg`, `fish-audio-tts`, `flux-best-practices`, `framer-motion`, `gemini-omni`, `grok-media`, `heygen`, `hyperframes-animation`, `hyperframes-core`, `hyperframes-creative`, `hyperframes-media`, `kling-official`, `lottie-bodymovin`, `ltx2`, `lyria`, `manim-composer`, `manimce-best-practices`, `manimgl-best-practices`, `minimax-h3`, `motion-graphics`, `music`, `music-to-video`, `playwright-recording`, `pose-library-design`, `provider-model-refresh`, `provider-refresh-oct23`, `remotion`, `seedance-2-0`, `seedance-2-5`, `setup-api-key`, `sound-effects`, `speech-to-text`, `svg-character-animation`, `synthetic-screen-recording`, `tailwind-design-system`, `text-to-speech`, `threejs-animation`, `threejs-fundamentals`, `threejs-geometry`, `threejs-interaction`, `threejs-lighting`, `threejs-loaders`, `threejs-materials`, `threejs-postprocessing`, `threejs-shaders`, `threejs-textures`, `threejs-world-generation`, `vercel-composition-patterns`, `vercel-react-best-practices`, `video-download`, `video-edit`, `video-toolkit`, `video-translate`, `video-understand`, `video_toolkit`, `visual-style`, `web-design-guidelines`, `website-to-video`
 
 ## Motion
 
@@ -52,7 +56,6 @@ Large media (videos, gifs, audio, files over 5 MB), demo galleries and test suit
 
 `3dviz-pro-max`
 
-## Not vendored
+## Not a skill
 
-- **[remotion-dev/skills](https://github.com/remotion-dev/skills)** has no license file, so it isn't copied here. Install it directly: `npx skills add remotion-dev/skills`. (OpenMontage's own `remotion` and `remotion-best-practices` skills are included above.)
 - **[ahujasid/mcp-for-blender](https://github.com/ahujasid/mcp-for-blender)** is an MCP server, not a skill. It's wired up in `/.mcp.json`; you still need to install its Blender add-on (`addon.py` from that repo) inside Blender and click *Connect*.
