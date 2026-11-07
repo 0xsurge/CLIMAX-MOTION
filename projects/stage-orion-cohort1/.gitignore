@@ -1,0 +1,8 @@
+# Intern footage, transcripts and renders stay local (privacy + GitHub size limits)
+footage/
+footage-cfr/
+transcripts/
+renders/
+.cache/
+*.mov
+*.wav
