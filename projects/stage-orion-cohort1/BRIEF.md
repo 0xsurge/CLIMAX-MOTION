@@ -52,4 +52,13 @@ Tools allowed: everything in .claude/skills (HyperFrames, Remotion, three.js, GS
 - Stage Orion logo (transparent PNG/SVG)
 - Format (9:16 vertical or 16:9) and target length
 - Music track (or build the score), intern names for name tags
-- Re-attach the two reference videos and posters in the build chat (not stored in this public repo)
+
+
+## Files in this folder
+- references/ref1-sui-samsung-keynote.mp4: Reference 1 (answers style)
+- references/ref2-intercom-fin-motion.mp4: Reference 2 (question intros style)
+- references/questions.jpg: the three questions as sent by the client
+- references/palette-posters/: client Cohort 1.0 posters (palette + type source)
+
+## Build environment note
+Package installs (npm/pip) need the 'Use the internet while making files' setting, which was turned on 2026-11-07; start the build in a new chat so it takes effect.
