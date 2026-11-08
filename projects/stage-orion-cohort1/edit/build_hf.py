@@ -62,9 +62,11 @@ for i, c in enumerate(cuts):
     extra = ';height:720px;object-fit:cover;object-position:46% 40%' if c['img'] in WIDE else ''
     bh.append(f'''    <div id="{bid}" class="clip bro" data-start="{f(t)}" data-duration="{f(d)}" data-track-index="1">
       <div class="bground" id="{bid}g"><img class="bbg" src="assets/posters/{c['img']}.jpg" alt=""><div class="bshade"></div></div>
+      <div class="bxp" id="{bid}x"></div>
       <img class="bcard" id="{bid}c" src="assets/posters/{c['img']}.jpg" alt="Stage Orion Cohort 1.0 poster" style="width:{w}px;left:{(1080 - w) // 2}px;top:{ctop}px{extra}"></div>''')
     bj += [f'tl.fromTo("#{bid}g",{{clipPath:"inset(0% 0% 0% 100%)"}},{{clipPath:"inset(0% 0% 0% 0%)",duration:0.28,ease:"power3.out"}},{f(t)});',
            f'tl.fromTo("#{bid}c",{{opacity:0,scale:1.18,y:70,filter:"blur(12px)"}},{{opacity:1,scale:1,y:0,filter:"blur(0px)",duration:0.45,ease:"expo.out"}},{f(t + 0.05)});',
+           f'tl.fromTo("#{bid}x",{{opacity:0.6}},{{opacity:0,duration:0.18,ease:"power2.out"}},{f(t + 0.12)});',
            f'tl.to("#{bid}c",{{y:-24,duration:{f(d - 0.8)},ease:"none"}},{f(t + 0.5)});',
            f'tl.to("#{bid}c",{{y:-260,opacity:0,filter:"blur(10px)",duration:0.24,ease:"power3.in"}},{f(t + d - 0.26)});',
            f'tl.to("#{bid}g",{{clipPath:"inset(0% 100% 0% 0%)",duration:0.26,ease:"power3.in"}},{f(t + d - 0.27)});']
@@ -90,6 +92,7 @@ broll = f'''<template>
     .kw-mid {{ font-size:190px; }}
     .bground {{ position:absolute; inset:0; overflow:hidden; background:{PAL['navy']}; }}
     .bbg {{ position:absolute; left:-240px; top:-120px; width:1560px; height:2160px; object-fit:cover; filter:blur(40px) saturate(1.2); opacity:.55; }}
+    .bxp {{ position:absolute; inset:0; background:#fff4e6; opacity:0; z-index:3; mix-blend-mode:plus-lighter; }}
     .bshade {{ position:absolute; inset:0; background:radial-gradient(90% 60% at 50% 42%, rgba(1,4,42,.15) 0%, rgba(1,4,42,.85) 100%); }}
     .bcard {{ position:absolute; border-radius:22px; box-shadow:0 30px 80px rgba(0,0,0,.55), 0 0 0 2px rgba(224,226,232,.12), 0 0 70px rgba(0,28,210,.45); }}
   </style>
@@ -221,6 +224,26 @@ captions = f'''<template>
 </template>'''
 open(f'{OUT}/compositions/captions.html', 'w').write(captions)
 
+# ---------------- Ref 3 transitions: flash cuts, block peeks, exposure pops ----------------
+import random as _r
+_rng = _r.Random(7)
+SEGS = E['segments']; FX = []
+kin_starts = {k['key'] for k in kcards}
+kinds = ['flash', 'blocks', 'zoom', 'pop']; kc = 0; jc = 0
+for i_ in range(1, len(SEGS)):
+    a_, b_ = SEGS[i_ - 1], SEGS[i_]
+    if b_['q'] == 'HOOK' or b_['q'] != a_['q']: continue
+    t = b_['t_in']
+    if any(c_['t'] - 0.4 <= t <= c_['t'] + c_['d'] + 0.4 for c_ in cuts): continue          # poster cutaway owns this moment
+    if b_['key'] != a_['key']:
+        if a_['key'] in kin_starts: continue                                                # the type card already whips out here
+        FX.append(dict(t=t, kind=kinds[kc % 4], seg=i_)); kc += 1
+    elif b_['jump']:
+        if jc % 3 == 0: FX.append(dict(t=t, kind='mini', seg=i_))
+        jc += 1
+FX = [e for k_, e in enumerate(FX) if k_ == 0 or e['t'] - FX[k_ - 1]['t'] > 0.35]
+json.dump([dict(t=e['t'], kind=e['kind']) for e in FX], open('edit/fx_events.json', 'w'))
+
 # ---------------- footage (punch-ins) ----------------
 fj = []
 for sg, sc in zip(E['segments'], SEG_SCALE):
@@ -229,25 +252,81 @@ for sg, sc in zip(E['segments'], SEG_SCALE):
 for q in ('Q1', 'Q2'):
     t = sec[f'answers_{q}']['start']
     fj.append(f'tl.fromTo("#frame",{{x:260}},{{x:0,duration:0.38,ease:"expo.out"}},{f(t)});')
+# the camera never sits still: slow push across every shot
+for sg in SEGS:
+    fj.append(f'tl.fromTo("#push",{{scale:1}},{{scale:1.035,duration:{f(sg["t_out"] - sg["t_in"])},ease:"none"}},{f(sg["t_in"])});')
+peek_html = []
+for n_, e in enumerate(FX):
+    t = e['t']
+    if e['kind'] == 'flash':      # outgoing blows out, one white frame, incoming lands hot and settles
+        fj += [f'tl.fromTo("#xp",{{opacity:0}},{{opacity:0.52,duration:0.07,ease:"power2.in"}},{f(t - 0.07)});',
+               f'tl.to("#xp",{{opacity:0,duration:0.12,ease:"power2.out"}},{f(t + 0.034)});',
+               f'tl.fromTo("#frame",{{x:14}},{{x:0,duration:0.18,ease:"expo.out"}},{f(t)});']
+    elif e['kind'] == 'pop':      # hard cut, then a one-frame pop that decays
+        fj += [f'tl.fromTo("#xp",{{opacity:0.55}},{{opacity:0,duration:0.1,ease:"power2.out"}},{f(t + 0.034)});',
+               f'tl.fromTo("#frame",{{y:"+=10"}},{{y:"-=10",duration:0.14,ease:"expo.out"}},{f(t)});']
+    elif e['kind'] == 'zoom':     # outgoing rushes in and blows out, incoming lands zoomed and pulls back
+        fj += [f'tl.fromTo("#zoom",{{scale:1,filter:"blur(0px)"}},{{scale:1.24,filter:"blur(6px)",duration:0.13,ease:"power3.in"}},{f(t - 0.13)});',
+               f'tl.fromTo("#zoom",{{scale:1.18,filter:"blur(6px)"}},{{scale:1,filter:"blur(0px)",duration:0.24,ease:"expo.out"}},{f(t)});',
+               f'tl.fromTo("#xp",{{opacity:0}},{{opacity:0.42,duration:0.06,ease:"power2.in"}},{f(t - 0.06)});',
+               f'tl.to("#xp",{{opacity:0,duration:0.18,ease:"power2.out"}},{f(t + 0.034)});']
+    elif e['kind'] == 'mini':     # soft exposure lift on a punch-in
+        fj += [f'tl.fromTo("#xp",{{opacity:0.2}},{{opacity:0,duration:0.09,ease:"power2.out"}},{f(t)});']
+    elif e['kind'] == 'blocks':   # rectangles of the next shot break into this one, then the cut lands
+        pid = f'pk{n_}'; d_ = 0.16
+        peek_html.append(f'<div class="peekw" id="{pid}w"><video id="{pid}" class="clip peek" src="assets/media/plate.mp4" muted playsinline data-start="{f(t - d_)}" data-duration="{f(d_)}" data-media-start="{f(t)}" data-track-index="2"></video></div>')
+        steps = 4; rects = []
+        for st in range(steps):
+            k = 2 + st; cur = []
+            for b in range(5):
+                if b < k:
+                    w = _rng.randint(70, 140) + st * 45; h = _rng.randint(50, 110) + st * 40
+                    x = _rng.randint(40, 1080 - w - 40); y = _rng.randint(260, 1500)
+                    cur.append((w, h, x, y))
+                else: cur.append((0, 0, 0, 0))
+            props = ','.join(f'"--s{b}":"{w}px {h}px","--p{b}":"{x}px {y}px"' for b, (w, h, x, y) in enumerate(cur))
+            fj.append(f'tl.set("#{pid}w",{{{props}}},{f(t - d_ + st * d_ / steps)});')
+        fj += [f'tl.fromTo("#xp",{{opacity:0.4}},{{opacity:0,duration:0.09,ease:"power2.out"}},{f(t)});',
+               f'tl.fromTo("#frame",{{x:-10}},{{x:0,duration:0.16,ease:"expo.out"}},{f(t)});']
 for g in groups:
     if g['power']:
         ps = g['words'][-1]['start']
         segs = [s_ for s_ in E['segments'] if s_['t_in'] <= ps < s_['t_out']]
         if segs and segs[0]['t_out'] - ps > 0.5:
             fj.append(f'tl.to("#frame",{{scale:"+=0.05",duration:0.35,ease:"expo.out"}},{f(ps - 0.02)});')
+TRACK_JSON = open('edit/track.json').read() if os.path.exists('edit/track.json') else '{"fps":10,"x":[0,0],"y":[0,0],"r":[0,0]}'
+footer_unused = None
 footage = f'''<template>
   <style>
     #root {{ position:absolute; inset:0; overflow:hidden; background:{PAL['navy']}; }}
     #frame {{ position:absolute; inset:0; transform-origin:50% 38%; }}
+    #push {{ position:absolute; inset:0; transform-origin:50% 40%; }}
+    #zoom {{ position:absolute; inset:0; transform-origin:50% 42%; }}
+    #track {{ position:absolute; inset:0; transform-origin:50% 40%; }}
     #plate {{ position:absolute; left:0; top:0; width:1080px; height:1920px; object-fit:cover; }}
+    #xp {{ position:absolute; inset:0; background:#fff7ec; mix-blend-mode:plus-lighter; opacity:0; pointer-events:none; }}
+    .peekw {{ position:absolute; inset:0; -webkit-mask-image:{",".join(["linear-gradient(#000,#000)"] * 5)}; mask-image:{",".join(["linear-gradient(#000,#000)"] * 5)};
+      -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
+      -webkit-mask-size:var(--s0,0 0),var(--s1,0 0),var(--s2,0 0),var(--s3,0 0),var(--s4,0 0); mask-size:var(--s0,0 0),var(--s1,0 0),var(--s2,0 0),var(--s3,0 0),var(--s4,0 0);
+      -webkit-mask-position:var(--p0,0 0),var(--p1,0 0),var(--p2,0 0),var(--p3,0 0),var(--p4,0 0); mask-position:var(--p0,0 0),var(--p1,0 0),var(--p2,0 0),var(--p3,0 0),var(--p4,0 0); }}
+    .peek {{ position:absolute; left:0; top:0; width:1080px; height:1920px; object-fit:cover; }}
   </style>
   <div id="root" data-composition-id="footage" data-width="1080" data-height="1920">
-    <div id="frame" data-layout-allow-overflow><video id="plate" class="clip" src="assets/media/plate.mp4" muted playsinline data-start="0" data-duration="{f(D)}" data-track-index="0"></video></div>
+    <div id="frame" data-layout-allow-overflow><div id="zoom"><div id="track"><div id="push"><video id="plate" class="clip" src="assets/media/plate.mp4" muted playsinline data-start="0" data-duration="{f(D)}" data-track-index="0"></video></div></div></div></div>
+    {chr(10).join('    ' + h_ for h_ in peek_html)}
+    <div id="xp"></div>
   </div>
   <script>
     const tl = gsap.timeline({{ paused: true }});
-    tl.set("#frame",{{scale:1,x:0,y:0}},0);
+    tl.set("#frame",{{scale:1,x:0,y:0}},0); tl.set("#xp",{{opacity:0}},0);
     {chr(10).join('    ' + j for j in fj)}
+    // head-tracking camera: follows each speaker's head with a slight lag (edit/track.json, 10 samples/s)
+    const TR = {TRACK_JSON};
+    const cam = {{ t: 0 }};
+    const at = (arr, t) => {{ const k = t * TR.fps, i = Math.max(0, Math.min(arr.length - 2, Math.floor(k))), u = Math.min(1, Math.max(0, k - i)); return arr[i] + (arr[i + 1] - arr[i]) * u; }};
+    tl.fromTo(cam, {{ t: 0 }}, {{ t: {f(D)}, duration: {f(D)}, ease: "none", onUpdate: () => {{
+      gsap.set("#track", {{ x: Math.max(-26, Math.min(26, at(TR.x, cam.t))), y: Math.max(-24, Math.min(24, at(TR.y, cam.t))), rotation: Math.max(-0.5, Math.min(0.5, at(TR.r, cam.t))), scale: 1.06 }});
+    }} }}, 0);
     window.__timelines["footage"] = tl;
   </script>
 </template>'''
@@ -280,9 +359,11 @@ def intro(qk):
     .br {{ position:absolute; width:64px; height:64px; border-color:{PAL['blue_hi']}; border-style:solid; border-width:0; filter: drop-shadow(0 0 10px rgba(0,28,210,.9)); }}
     .crumb {{ position:absolute; font-family:"Space Mono", monospace; font-weight:700; font-size:40px; color:{PAL['sky']}; }}
     #{cid}-dots {{ position:absolute; inset:0; }}
+    .xp {{ position:absolute; inset:0; background:#dfe6ff; mix-blend-mode:plus-lighter; opacity:0; pointer-events:none; z-index:5; }}
   </style>
   <div id="root" data-composition-id="{cid}" data-width="1080" data-height="1920" data-layout-allow-overflow data-layout-allow-overlap>
     <div class="ground" id="{cid}-ground"></div>
+    <div class="xp" id="{cid}-xp"></div>
     <canvas id="{cid}-dots" width="1080" height="1920"></canvas>
     <div id="{cid}-content">
       <div class="lbl" id="{cid}-lbl">{q['label']}</div>
@@ -366,6 +447,8 @@ def intro(qk):
         tl.fromTo("#" + C + "-b" + b, {{ opacity: 0, x: out[b][0], y: out[b][1] }}, {{ opacity: 1, x: 0, y: 0, duration: 0.22, ease: "expo.out" }}, Q.land - 0.02);
       }}
       tl.fromTo("#" + C + "r" + (Q.nw - 1), {{ color: "{PAL['ink']}" }}, {{ color: "#FFFFFF", duration: 0.1 }}, Q.land);
+      tl.fromTo("#" + C + "-xp", {{ opacity: 0.7 }}, {{ opacity: 0, duration: 0.2, ease: "power2.out" }}, Q.land + 0.034);
+      tl.fromTo("#" + C + "-content", {{ y: 14 }}, {{ y: 0, duration: 0.18, ease: "expo.out" }}, Q.land);
       // exit
       if (Q.exit_kind === "whip") {{
         tl.to("#" + C + "-content", {{ x: -1300, filter: "blur(18px)", duration: 0.3, ease: "power3.in" }}, Q.exit);
@@ -415,6 +498,7 @@ def lockup(cid, dur, flood_from, sub=None, exit_=True):
   <div id="root" data-composition-id="{cid}" data-width="1080" data-height="1920" data-layout-allow-overlap>
     <div class="ground" id="{cid}-ground"></div>
     <img id="{cid}-mark" src="assets/logo-mark.svg" alt="Stage Orion logo">
+    <div id="{cid}-xp" style="position:absolute;inset:0;background:#dfe6ff;mix-blend-mode:plus-lighter;opacity:0"></div>
     <div class="word" id="{cid}-word">{letters}</div>
     <div class="badge"><span id="{cid}-badge">COHORT 1.0</span></div>
     {f'<div class="sub" id="{cid}-sub">{sub}</div>' if sub else ''}
@@ -426,6 +510,7 @@ def lockup(cid, dur, flood_from, sub=None, exit_=True):
     tl.fromTo("#{cid}-ground", {{ clipPath: "inset(100% 0% 0% 0%)" }}, {{ clipPath: "inset(0% 0% 0% 0%)", duration: 0.32, ease: "power2.inOut" }}, 0);
     // mark lands heavy: no spin, no overshoot on the lockup
     tl.fromTo("#{cid}-mark", {{ opacity: 0, scale: 0.55, filter: "blur(16px)" }}, {{ opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.55, ease: "expo.out" }}, {flood_from});
+    tl.fromTo("#{cid}-xp", {{ opacity: 0.65 }}, {{ opacity: 0, duration: 0.22, ease: "power2.out" }}, {flood_from} + 0.06);
     for (let i = 0; i < 11; i++) tl.fromTo("#{cid}l" + i, {{ opacity: 0.0, filter: "blur(6px)" }}, {{ opacity: 1, filter: "blur(0px)", duration: 0.12, ease: "power2.out" }}, {flood_from} + 0.22 + i * 0.035);
     tl.fromTo("#{cid}-badge", {{ scaleX: 0, opacity: 0 }}, {{ scaleX: 1, opacity: 1, duration: 0.24, ease: "power4.out" }}, {flood_from} + 0.62);
     {f'tl.fromTo("#{cid}-sub", {{ opacity: 0, filter: "blur(6px)" }}, {{ opacity: 0.8, filter: "blur(0px)", duration: 0.2, ease: "power2.out" }}, {flood_from} + 0.85);' if sub else ''}

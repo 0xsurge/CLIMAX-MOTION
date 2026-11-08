@@ -17,6 +17,7 @@
   <div id="root" data-composition-id="endcard" data-width="1080" data-height="1920" data-layout-allow-overlap>
     <div class="ground" id="endcard-ground"></div>
     <img id="endcard-mark" src="assets/logo-mark.svg" alt="Stage Orion logo">
+    <div id="endcard-xp" style="position:absolute;inset:0;background:#dfe6ff;mix-blend-mode:plus-lighter;opacity:0"></div>
     <div class="word" id="endcard-word"><span class="lt" id="endcardl0">S</span><span class="lt" id="endcardl1">T</span><span class="lt" id="endcardl2">A</span><span class="lt" id="endcardl3">G</span><span class="lt" id="endcardl4">E</span><span class="lt" id="endcardl5">&nbsp;</span><span class="lt" id="endcardl6">O</span><span class="lt" id="endcardl7">R</span><span class="lt" id="endcardl8">I</span><span class="lt" id="endcardl9">O</span><span class="lt" id="endcardl10">N</span></div>
     <div class="badge"><span id="endcard-badge">COHORT 1.0</span></div>
     <div class="sub" id="endcard-sub">CUSTOMER SUPPORT INTERNSHIP</div>
@@ -28,6 +29,7 @@
     tl.fromTo("#endcard-ground", { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.32, ease: "power2.inOut" }, 0);
     // mark lands heavy: no spin, no overshoot on the lockup
     tl.fromTo("#endcard-mark", { opacity: 0, scale: 0.55, filter: "blur(16px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.55, ease: "expo.out" }, 0.35);
+    tl.fromTo("#endcard-xp", { opacity: 0.65 }, { opacity: 0, duration: 0.22, ease: "power2.out" }, 0.35 + 0.06);
     for (let i = 0; i < 11; i++) tl.fromTo("#endcardl" + i, { opacity: 0.0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.12, ease: "power2.out" }, 0.35 + 0.22 + i * 0.035);
     tl.fromTo("#endcard-badge", { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 1, duration: 0.24, ease: "power4.out" }, 0.35 + 0.62);
     tl.fromTo("#endcard-sub", { opacity: 0, filter: "blur(6px)" }, { opacity: 0.8, filter: "blur(0px)", duration: 0.2, ease: "power2.out" }, 0.35 + 0.85);

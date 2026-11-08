@@ -17,6 +17,7 @@
   <div id="root" data-composition-id="logo" data-width="1080" data-height="1920" data-layout-allow-overlap>
     <div class="ground" id="logo-ground"></div>
     <img id="logo-mark" src="assets/logo-mark.svg" alt="Stage Orion logo">
+    <div id="logo-xp" style="position:absolute;inset:0;background:#dfe6ff;mix-blend-mode:plus-lighter;opacity:0"></div>
     <div class="word" id="logo-word"><span class="lt" id="logol0">S</span><span class="lt" id="logol1">T</span><span class="lt" id="logol2">A</span><span class="lt" id="logol3">G</span><span class="lt" id="logol4">E</span><span class="lt" id="logol5">&nbsp;</span><span class="lt" id="logol6">O</span><span class="lt" id="logol7">R</span><span class="lt" id="logol8">I</span><span class="lt" id="logol9">O</span><span class="lt" id="logol10">N</span></div>
     <div class="badge"><span id="logo-badge">COHORT 1.0</span></div>
     
@@ -28,6 +29,7 @@
     tl.fromTo("#logo-ground", { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.32, ease: "power2.inOut" }, 0);
     // mark lands heavy: no spin, no overshoot on the lockup
     tl.fromTo("#logo-mark", { opacity: 0, scale: 0.55, filter: "blur(16px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.55, ease: "expo.out" }, 0.16999999999999998);
+    tl.fromTo("#logo-xp", { opacity: 0.65 }, { opacity: 0, duration: 0.22, ease: "power2.out" }, 0.16999999999999998 + 0.06);
     for (let i = 0; i < 11; i++) tl.fromTo("#logol" + i, { opacity: 0.0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.12, ease: "power2.out" }, 0.16999999999999998 + 0.22 + i * 0.035);
     tl.fromTo("#logo-badge", { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 1, duration: 0.24, ease: "power4.out" }, 0.16999999999999998 + 0.62);
     

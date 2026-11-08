@@ -202,13 +202,62 @@ if os.path.isdir('sfx_user'):
     KT = json.load(open('edit/kinetic_times.json')) if os.path.exists('edit/kinetic_times.json') else []
     for k in KT:
         hit(AIR, k['t'], AIR_PK, 0.18); hit(SPARK, k['words'][1], SPARK_PK, 0.12); hit(pitch(WH2, 1), k['t'] + k['d'], WH2_PK, 0.14)
-    print('user SFX placed: power boxes', len(PT))
+    FXE = json.load(open('edit/fx_events.json')) if os.path.exists('edit/fx_events.json') else []
+    for i, e in enumerate(FXE):
+        if e['kind'] == 'blocks':
+            for st in range(4): hit(pitch(CLICKS[(i + st) % 8], [2, 1, 0, -1][st]), e['t'] - 0.16 + st * 0.04, 0.008, 0.11)
+    print('user SFX placed: power boxes', len(PT), 'transition events', len(FXE))
+
+# ---- supplied music track replaces the synthesized bed (music/tech-house-vibes.mp3) ----
+TRACK = 'music/tech-house-vibes.mp3'
+USE_TRACK = os.path.exists(TRACK)
+if USE_TRACK:
+    import subprocess
+    SRC_BPM = 123.05; ratio = BPM / SRC_BPM                     # stretch to the film's 124 BPM grid (pitch kept)
+    subprocess.run(['ffmpeg', '-loglevel', 'error', '-y', '-i', TRACK, '-af', f'atempo={ratio:.5f}', '-ar', str(SR), '-ac', '2', '.cache/track124.wav'], check=True)
+    T, _ = sf.read('.cache/track124.wav'); b0 = 0.07 / ratio; BAR = 4 * B
+    sbar = lambda k: int(round((b0 + k * BAR) * SR))
+    LOOP = (8, 40)                                                # the full-groove 32 bars
+    def lay(k0, t0, t1, loop=LOOP):
+        out = np.zeros((int(round((t1 - t0) * SR)), 2)); pos = sbar(k0); i = 0; xf = int(0.015 * SR)
+        while i < len(out):
+            end = sbar(loop[1]) if pos < sbar(loop[1]) else len(T)
+            n = min(len(out) - i, end - pos)
+            if n <= 0: pos = sbar(loop[0]); continue
+            chunk = T[pos:pos + n].copy()
+            if i > 0: chunk[:xf] *= np.linspace(0, 1, xf)[:, None]
+            out[i:i + n] += chunk; i += n; pos = sbar(loop[0])
+        r = int(0.012 * SR); out[:r] *= np.linspace(0, 1, r)[:, None]; out[-r:] *= np.linspace(1, 0, r)[:, None]
+        return out
+    music = np.zeros((N, 2))
+    def put_at(x, t): i0 = int(round(t * SR)); music[i0:i0 + len(x)] += x[:max(0, len(music) - i0)]
+    S_ = {s_['kind']: s_ for s_ in E['sections']}
+    put_at(lay(0, 0, S_['logo']['start'], loop=(0, 8)), 0)                                   # soft intro under the hook
+    put_at(lay(8, S_['logo']['start'], S_['intro_Q2']['start']), S_['logo']['start'])         # drop lands on the logo hit
+    put_at(lay(16, S_['intro_Q2']['start'], S_['intro_Q3']['start']), S_['intro_Q2']['start'])
+    outro_len = (len(T) / SR) - (b0 + 40 * BAR)
+    o_start = max(S_['answers_END']['start'] - 2.0, E['duration'] - outro_len)
+    put_at(lay(24, S_['intro_Q3']['start'], o_start), S_['intro_Q3']['start'])
+    tail = T[sbar(40):sbar(40) + int((E['duration'] - o_start) * SR)].copy(); xf = int(0.3 * SR)
+    i0 = int(round(o_start * SR)); music[i0 - xf:i0] *= np.linspace(1, 0, xf)[:, None]; tail[:xf] *= np.linspace(0, 1, xf)[:, None]
+    music[i0:i0 + len(tail)] += tail
+    # section levels: full under the motion design, low bed under the answers
+    g = np.ones(N)
+    def lvl(a, b, v):
+        ia, ib = int(a * SR), int(b * SR); g[ia:ib] = v
+    for s_ in E['sections']:
+        k_ = s_['kind']
+        lvl(s_['start'], s_['end'], 0.2 if k_ == 'answers_HOOK' else 1.0 if k_ in ('logo', 'end') or k_.startswith('intro_') else 0.26 if k_ == 'answers_END' else 0.14)
+    w = int(0.12 * SR); g = np.convolve(g, np.ones(w) / w, 'same')
+    music *= g[:, None] * 0.9
+    print('music: supplied track arranged, outro from', round(o_start, 2))
 
 # ---- glue: room reverb on music, sidechain under dialogue ----
 ir_n = int(1.4 * SR); ir = rng.standard_normal((ir_n, 2)) * np.exp(-np.arange(ir_n) / SR / 0.35)[:, None]
 ir = lp(ir, 5000); ir /= np.sqrt((ir ** 2).sum(0))
-wet = np.stack([fftconvolve(music[:, c], ir[:, c])[:N] for c in range(2)], 1)
-music = music * 0.85 + wet * 0.22
+if not USE_TRACK:
+    wet = np.stack([fftconvolve(music[:, c], ir[:, c])[:N] for c in range(2)], 1)
+    music = music * 0.85 + wet * 0.22
 dlg, _ = sf.read('hf/assets/media/dialogue.wav'); d = np.zeros(N); d[:len(dlg)] = np.abs(dlg).mean(1)
 w = int(0.05 * SR); de = np.convolve(d, np.ones(w) / w, 'same')
 speaking = (de > 10 ** (-38 / 20)).astype(float)

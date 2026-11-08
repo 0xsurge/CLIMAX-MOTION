@@ -22,9 +22,11 @@
     .br { position:absolute; width:64px; height:64px; border-color:#2F4BFF; border-style:solid; border-width:0; filter: drop-shadow(0 0 10px rgba(0,28,210,.9)); }
     .crumb { position:absolute; font-family:"Space Mono", monospace; font-weight:700; font-size:40px; color:#7CC4FF; }
     #q3-dots { position:absolute; inset:0; }
+    .xp { position:absolute; inset:0; background:#dfe6ff; mix-blend-mode:plus-lighter; opacity:0; pointer-events:none; z-index:5; }
   </style>
   <div id="root" data-composition-id="q3" data-width="1080" data-height="1920" data-layout-allow-overflow data-layout-allow-overlap>
     <div class="ground" id="q3-ground"></div>
+    <div class="xp" id="q3-xp"></div>
     <canvas id="q3-dots" width="1080" height="1920"></canvas>
     <div id="q3-content">
       <div class="lbl" id="q3-lbl">QUESTION 03</div>
@@ -108,6 +110,8 @@
         tl.fromTo("#" + C + "-b" + b, { opacity: 0, x: out[b][0], y: out[b][1] }, { opacity: 1, x: 0, y: 0, duration: 0.22, ease: "expo.out" }, Q.land - 0.02);
       }
       tl.fromTo("#" + C + "r" + (Q.nw - 1), { color: "#E0E2E8" }, { color: "#FFFFFF", duration: 0.1 }, Q.land);
+      tl.fromTo("#" + C + "-xp", { opacity: 0.7 }, { opacity: 0, duration: 0.2, ease: "power2.out" }, Q.land + 0.034);
+      tl.fromTo("#" + C + "-content", { y: 14 }, { y: 0, duration: 0.18, ease: "expo.out" }, Q.land);
       // exit
       if (Q.exit_kind === "whip") {
         tl.to("#" + C + "-content", { x: -1300, filter: "blur(18px)", duration: 0.3, ease: "power3.in" }, Q.exit);

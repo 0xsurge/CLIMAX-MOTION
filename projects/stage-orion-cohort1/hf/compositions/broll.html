@@ -14,36 +14,46 @@
     .kw-mid { font-size:190px; }
     .bground { position:absolute; inset:0; overflow:hidden; background:#01042A; }
     .bbg { position:absolute; left:-240px; top:-120px; width:1560px; height:2160px; object-fit:cover; filter:blur(40px) saturate(1.2); opacity:.55; }
+    .bxp { position:absolute; inset:0; background:#fff4e6; opacity:0; z-index:3; mix-blend-mode:plus-lighter; }
     .bshade { position:absolute; inset:0; background:radial-gradient(90% 60% at 50% 42%, rgba(1,4,42,.15) 0%, rgba(1,4,42,.85) 100%); }
     .bcard { position:absolute; border-radius:22px; box-shadow:0 30px 80px rgba(0,0,0,.55), 0 0 0 2px rgba(224,226,232,.12), 0 0 70px rgba(0,28,210,.45); }
   </style>
   <div id="root" data-composition-id="broll" data-width="1080" data-height="1920" data-layout-allow-overflow data-layout-allow-overlap>
     <div id="br0" class="clip bro" data-start="59.726" data-duration="3" data-track-index="1">
       <div class="bground" id="br0g"><img class="bbg" src="assets/posters/poster-1.jpg" alt=""><div class="bshade"></div></div>
+      <div class="bxp" id="br0x"></div>
       <img class="bcard" id="br0c" src="assets/posters/poster-1.jpg" alt="Stage Orion Cohort 1.0 poster" style="width:900px;left:90px;top:410px"></div>
     <div id="br1" class="clip bro" data-start="109.491" data-duration="3" data-track-index="1">
       <div class="bground" id="br1g"><img class="bbg" src="assets/posters/poster-3.jpg" alt=""><div class="bshade"></div></div>
+      <div class="bxp" id="br1x"></div>
       <img class="bcard" id="br1c" src="assets/posters/poster-3.jpg" alt="Stage Orion Cohort 1.0 poster" style="width:900px;left:90px;top:402px"></div>
     <div id="br2" class="clip bro" data-start="126.499" data-duration="3" data-track-index="1">
       <div class="bground" id="br2g"><img class="bbg" src="assets/posters/poster-5.jpg" alt=""><div class="bshade"></div></div>
+      <div class="bxp" id="br2x"></div>
       <img class="bcard" id="br2c" src="assets/posters/poster-5.jpg" alt="Stage Orion Cohort 1.0 poster" style="width:900px;left:90px;top:298px"></div>
     <div id="br3" class="clip bro" data-start="139.261" data-duration="3" data-track-index="1">
       <div class="bground" id="br3g"><img class="bbg" src="assets/posters/poster-9.jpg" alt=""><div class="bshade"></div></div>
+      <div class="bxp" id="br3x"></div>
       <img class="bcard" id="br3c" src="assets/posters/poster-9.jpg" alt="Stage Orion Cohort 1.0 poster" style="width:900px;left:90px;top:402px"></div>
     <div id="br4" class="clip bro" data-start="162.87" data-duration="3" data-track-index="1">
       <div class="bground" id="br4g"><img class="bbg" src="assets/posters/poster-6.jpg" alt=""><div class="bshade"></div></div>
+      <div class="bxp" id="br4x"></div>
       <img class="bcard" id="br4c" src="assets/posters/poster-6.jpg" alt="Stage Orion Cohort 1.0 poster" style="width:900px;left:90px;top:402px"></div>
     <div id="br5" class="clip bro" data-start="172.193" data-duration="2.84" data-track-index="1">
       <div class="bground" id="br5g"><img class="bbg" src="assets/posters/poster-8.jpg" alt=""><div class="bshade"></div></div>
+      <div class="bxp" id="br5x"></div>
       <img class="bcard" id="br5c" src="assets/posters/poster-8.jpg" alt="Stage Orion Cohort 1.0 poster" style="width:900px;left:90px;top:298px"></div>
     <div id="br6" class="clip bro" data-start="183.276" data-duration="3" data-track-index="1">
       <div class="bground" id="br6g"><img class="bbg" src="assets/posters/poster-4.jpg" alt=""><div class="bshade"></div></div>
+      <div class="bxp" id="br6x"></div>
       <img class="bcard" id="br6c" src="assets/posters/poster-4.jpg" alt="Stage Orion Cohort 1.0 poster" style="width:900px;left:90px;top:298px"></div>
     <div id="br7" class="clip bro" data-start="224.043" data-duration="3" data-track-index="1">
       <div class="bground" id="br7g"><img class="bbg" src="assets/posters/poster-2.jpg" alt=""><div class="bshade"></div></div>
+      <div class="bxp" id="br7x"></div>
       <img class="bcard" id="br7c" src="assets/posters/poster-2.jpg" alt="Stage Orion Cohort 1.0 poster" style="width:1000px;left:40px;top:500px;height:720px;object-fit:cover;object-position:46% 40%"></div>
     <div id="br8" class="clip bro" data-start="299.079" data-duration="3" data-track-index="1">
       <div class="bground" id="br8g"><img class="bbg" src="assets/posters/poster-7.jpg" alt=""><div class="bshade"></div></div>
+      <div class="bxp" id="br8x"></div>
       <img class="bcard" id="br8c" src="assets/posters/poster-7.jpg" alt="Stage Orion Cohort 1.0 poster" style="width:900px;left:90px;top:298px"></div>
     <div id="kc0" class="clip bro" data-start="15.76" data-duration="2.027" data-track-index="2">
       <div class="ground kground" id="kc0g"></div><div class="kstack" id="kc0s"><div class="kw kw-small" id="kc0w0">AND</div><div class="kw kw-hero" id="kc0w1">FUN</div><div class="kw kw-mid" id="kc0w2">EXPERIENCE.</div></div></div>
@@ -52,46 +62,55 @@
     const tl = gsap.timeline({ paused: true });
         tl.fromTo("#br0g",{clipPath:"inset(0% 0% 0% 100%)"},{clipPath:"inset(0% 0% 0% 0%)",duration:0.28,ease:"power3.out"},59.726);
     tl.fromTo("#br0c",{opacity:0,scale:1.18,y:70,filter:"blur(12px)"},{opacity:1,scale:1,y:0,filter:"blur(0px)",duration:0.45,ease:"expo.out"},59.776);
+    tl.fromTo("#br0x",{opacity:0.6},{opacity:0,duration:0.18,ease:"power2.out"},59.846);
     tl.to("#br0c",{y:-24,duration:2.2,ease:"none"},60.226);
     tl.to("#br0c",{y:-260,opacity:0,filter:"blur(10px)",duration:0.24,ease:"power3.in"},62.466);
     tl.to("#br0g",{clipPath:"inset(0% 100% 0% 0%)",duration:0.26,ease:"power3.in"},62.456);
     tl.fromTo("#br1g",{clipPath:"inset(0% 0% 0% 100%)"},{clipPath:"inset(0% 0% 0% 0%)",duration:0.28,ease:"power3.out"},109.491);
     tl.fromTo("#br1c",{opacity:0,scale:1.18,y:70,filter:"blur(12px)"},{opacity:1,scale:1,y:0,filter:"blur(0px)",duration:0.45,ease:"expo.out"},109.541);
+    tl.fromTo("#br1x",{opacity:0.6},{opacity:0,duration:0.18,ease:"power2.out"},109.611);
     tl.to("#br1c",{y:-24,duration:2.2,ease:"none"},109.991);
     tl.to("#br1c",{y:-260,opacity:0,filter:"blur(10px)",duration:0.24,ease:"power3.in"},112.231);
     tl.to("#br1g",{clipPath:"inset(0% 100% 0% 0%)",duration:0.26,ease:"power3.in"},112.221);
     tl.fromTo("#br2g",{clipPath:"inset(0% 0% 0% 100%)"},{clipPath:"inset(0% 0% 0% 0%)",duration:0.28,ease:"power3.out"},126.499);
     tl.fromTo("#br2c",{opacity:0,scale:1.18,y:70,filter:"blur(12px)"},{opacity:1,scale:1,y:0,filter:"blur(0px)",duration:0.45,ease:"expo.out"},126.549);
+    tl.fromTo("#br2x",{opacity:0.6},{opacity:0,duration:0.18,ease:"power2.out"},126.619);
     tl.to("#br2c",{y:-24,duration:2.2,ease:"none"},126.999);
     tl.to("#br2c",{y:-260,opacity:0,filter:"blur(10px)",duration:0.24,ease:"power3.in"},129.239);
     tl.to("#br2g",{clipPath:"inset(0% 100% 0% 0%)",duration:0.26,ease:"power3.in"},129.229);
     tl.fromTo("#br3g",{clipPath:"inset(0% 0% 0% 100%)"},{clipPath:"inset(0% 0% 0% 0%)",duration:0.28,ease:"power3.out"},139.261);
     tl.fromTo("#br3c",{opacity:0,scale:1.18,y:70,filter:"blur(12px)"},{opacity:1,scale:1,y:0,filter:"blur(0px)",duration:0.45,ease:"expo.out"},139.311);
+    tl.fromTo("#br3x",{opacity:0.6},{opacity:0,duration:0.18,ease:"power2.out"},139.381);
     tl.to("#br3c",{y:-24,duration:2.2,ease:"none"},139.761);
     tl.to("#br3c",{y:-260,opacity:0,filter:"blur(10px)",duration:0.24,ease:"power3.in"},142.001);
     tl.to("#br3g",{clipPath:"inset(0% 100% 0% 0%)",duration:0.26,ease:"power3.in"},141.991);
     tl.fromTo("#br4g",{clipPath:"inset(0% 0% 0% 100%)"},{clipPath:"inset(0% 0% 0% 0%)",duration:0.28,ease:"power3.out"},162.87);
     tl.fromTo("#br4c",{opacity:0,scale:1.18,y:70,filter:"blur(12px)"},{opacity:1,scale:1,y:0,filter:"blur(0px)",duration:0.45,ease:"expo.out"},162.92);
+    tl.fromTo("#br4x",{opacity:0.6},{opacity:0,duration:0.18,ease:"power2.out"},162.99);
     tl.to("#br4c",{y:-24,duration:2.2,ease:"none"},163.37);
     tl.to("#br4c",{y:-260,opacity:0,filter:"blur(10px)",duration:0.24,ease:"power3.in"},165.61);
     tl.to("#br4g",{clipPath:"inset(0% 100% 0% 0%)",duration:0.26,ease:"power3.in"},165.6);
     tl.fromTo("#br5g",{clipPath:"inset(0% 0% 0% 100%)"},{clipPath:"inset(0% 0% 0% 0%)",duration:0.28,ease:"power3.out"},172.193);
     tl.fromTo("#br5c",{opacity:0,scale:1.18,y:70,filter:"blur(12px)"},{opacity:1,scale:1,y:0,filter:"blur(0px)",duration:0.45,ease:"expo.out"},172.243);
+    tl.fromTo("#br5x",{opacity:0.6},{opacity:0,duration:0.18,ease:"power2.out"},172.313);
     tl.to("#br5c",{y:-24,duration:2.04,ease:"none"},172.693);
     tl.to("#br5c",{y:-260,opacity:0,filter:"blur(10px)",duration:0.24,ease:"power3.in"},174.773);
     tl.to("#br5g",{clipPath:"inset(0% 100% 0% 0%)",duration:0.26,ease:"power3.in"},174.763);
     tl.fromTo("#br6g",{clipPath:"inset(0% 0% 0% 100%)"},{clipPath:"inset(0% 0% 0% 0%)",duration:0.28,ease:"power3.out"},183.276);
     tl.fromTo("#br6c",{opacity:0,scale:1.18,y:70,filter:"blur(12px)"},{opacity:1,scale:1,y:0,filter:"blur(0px)",duration:0.45,ease:"expo.out"},183.326);
+    tl.fromTo("#br6x",{opacity:0.6},{opacity:0,duration:0.18,ease:"power2.out"},183.396);
     tl.to("#br6c",{y:-24,duration:2.2,ease:"none"},183.776);
     tl.to("#br6c",{y:-260,opacity:0,filter:"blur(10px)",duration:0.24,ease:"power3.in"},186.016);
     tl.to("#br6g",{clipPath:"inset(0% 100% 0% 0%)",duration:0.26,ease:"power3.in"},186.006);
     tl.fromTo("#br7g",{clipPath:"inset(0% 0% 0% 100%)"},{clipPath:"inset(0% 0% 0% 0%)",duration:0.28,ease:"power3.out"},224.043);
     tl.fromTo("#br7c",{opacity:0,scale:1.18,y:70,filter:"blur(12px)"},{opacity:1,scale:1,y:0,filter:"blur(0px)",duration:0.45,ease:"expo.out"},224.093);
+    tl.fromTo("#br7x",{opacity:0.6},{opacity:0,duration:0.18,ease:"power2.out"},224.163);
     tl.to("#br7c",{y:-24,duration:2.2,ease:"none"},224.543);
     tl.to("#br7c",{y:-260,opacity:0,filter:"blur(10px)",duration:0.24,ease:"power3.in"},226.783);
     tl.to("#br7g",{clipPath:"inset(0% 100% 0% 0%)",duration:0.26,ease:"power3.in"},226.773);
     tl.fromTo("#br8g",{clipPath:"inset(0% 0% 0% 100%)"},{clipPath:"inset(0% 0% 0% 0%)",duration:0.28,ease:"power3.out"},299.079);
     tl.fromTo("#br8c",{opacity:0,scale:1.18,y:70,filter:"blur(12px)"},{opacity:1,scale:1,y:0,filter:"blur(0px)",duration:0.45,ease:"expo.out"},299.129);
+    tl.fromTo("#br8x",{opacity:0.6},{opacity:0,duration:0.18,ease:"power2.out"},299.199);
     tl.to("#br8c",{y:-24,duration:2.2,ease:"none"},299.579);
     tl.to("#br8c",{y:-260,opacity:0,filter:"blur(10px)",duration:0.24,ease:"power3.in"},301.819);
     tl.to("#br8g",{clipPath:"inset(0% 100% 0% 0%)",duration:0.26,ease:"power3.in"},301.809);
