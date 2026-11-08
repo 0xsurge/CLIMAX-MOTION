@@ -8,10 +8,15 @@ def black(d,i):
 for i,sg in enumerate(E['segments']):
     if sg['t_in']-t>1e-3: items.append(black(sg['t_in']-t,i))
     o=f'{C}/s{i:03d}.mp4'
-    src=f"hq/{sg['clip']}.mov" if os.path.exists(f"hq/{sg['clip']}.mov") else f"footage-cfr/STAGE {sg['clip']}.mp4"
+    HQ=json.load(open('edit/hq_index.json')) if os.path.exists('edit/hq_index.json') else []
+    pc=[h for h in HQ if h['clip']==sg['clip'] and h['start']-0.01<=sg['src_in'] and sg['src_out']<=h['start']+h['dur']+0.01]
+    if pc: src=pc[0]['file']; seek=sg['src_in']-pc[0]['start']
+    else: src=f"footage-cfr/STAGE {sg['clip']}.mp4"; seek=sg['src_in']; print('proxy fallback',i,sg['clip'],sg['src_in'])
     d=sg['t_out']-sg['t_in']
-    run(['-ss',f"{sg['src_in']:.4f}",'-i',src,'-t',f'{d:.4f}','-an','-vf',f'scale={W}:{H}:force_original_aspect_ratio=increase:flags=lanczos,crop={W}:{H},setsar=1,fps={FPS}',
-         '-frames:v',str(round(d*FPS)),'-c:v','libx264','-preset','veryfast','-crf','14','-pix_fmt','yuv420p','-g',str(FPS),o])
+    run(['-ss',f"{max(0,seek):.4f}",'-i',src,'-an','-vf',f'scale={W}:{H}:force_original_aspect_ratio=increase:flags=lanczos,crop={W}:{H},setsar=1,fps={FPS},tpad=stop_mode=clone:stop_duration=1',
+         '-frames:v',str(round(d*FPS)),'-r',str(FPS),'-c:v','libx264','-preset','veryfast','-crf','14','-pix_fmt','yuv420p','-g',str(FPS),o])
+    nf=int(subprocess.run(['ffprobe','-v','error','-count_frames','-select_streams','v:0','-show_entries','stream=nb_read_frames','-of','csv=p=0',o],capture_output=True,text=True).stdout.strip())
+    if nf!=round(d*FPS): print('FRAME MISMATCH',i,sg['clip'],nf,round(d*FPS))
     items.append(o); t=sg['t_out']
 if E['duration']-t>1e-3: items.append(black(E['duration']-t,999))
 open(f'{C}/list.txt','w').write(''.join(f"file '{os.path.abspath(x)}'\n" for x in items))
