@@ -1,0 +1,150 @@
+{
+ "bpm": 124,
+ "beat": 0.4838709677419355,
+ "intro_len": 5.6,
+ "questions": {
+  "Q1": {
+   "label": "QUESTION 01",
+   "text": "How would you describe your experience during the Stage Orion Customer Support Internship?",
+   "key": "experience",
+   "wheel": [
+    "TRANSFORMATIONAL",
+    "EYE-OPENING",
+    "GROWTH",
+    "FAMILY",
+    "INSIGHTFUL",
+    "AMAZING",
+    "EXPERIENCE"
+   ],
+   "exit_kind": "whip",
+   "word_times": [
+    0.28,
+    0.4413,
+    0.6026,
+    0.7639,
+    0.9252,
+    1.0865,
+    1.2477,
+    1.409,
+    1.5703,
+    1.7316,
+    1.8929,
+    2.0542,
+    2.2155
+   ],
+   "push": [
+    2.7655,
+    3.3155
+   ],
+   "wheel_times": [
+    3.241,
+    3.346,
+    3.451,
+    3.556,
+    3.661,
+    3.766,
+    3.871
+   ],
+   "land": 3.871,
+   "exit": 5.0133,
+   "out": 5.4333
+  },
+  "Q2": {
+   "label": "QUESTION 02",
+   "text": "What is the most important thing you learned during the internship that you will carry into your future career?",
+   "key": "learned",
+   "wheel": [
+    "EMPATHY",
+    "OWNERSHIP",
+    "PATIENCE",
+    "LISTENING",
+    "INTENTIONAL",
+    "ACCOUNTABILITY",
+    "LEARNED"
+   ],
+   "exit_kind": "whip",
+   "word_times": [
+    0.28,
+    0.4413,
+    0.6026,
+    0.7639,
+    0.9252,
+    1.0865,
+    1.2477,
+    1.409,
+    1.5703,
+    1.7316,
+    1.8929,
+    2.0542,
+    2.2155,
+    2.3768,
+    2.5381,
+    2.6994,
+    2.8606,
+    3.0219,
+    3.1832
+   ],
+   "push": [
+    3.7332,
+    4.2832
+   ],
+   "wheel_times": [
+    4.2087,
+    4.3137,
+    4.4187,
+    4.5237,
+    4.6287,
+    4.7337,
+    4.8387
+   ],
+   "land": 4.8387,
+   "exit": 5.98,
+   "out": 6.4
+  },
+  "Q3": {
+   "label": "QUESTION 03",
+   "text": "Be honest 😂 What was your biggest challenge or funniest moment during the internship?",
+   "key": "challenge",
+   "wheel": [
+    "NETWORK",
+    "FINAL PROJECT",
+    "GAME NIGHT",
+    "LEADERSHIP",
+    "EMOJIS",
+    "CHALLENGE"
+   ],
+   "exit_kind": "dots",
+   "word_times": [
+    0.28,
+    0.4413,
+    0.6026,
+    0.7639,
+    0.9252,
+    1.0865,
+    1.2477,
+    1.409,
+    1.5703,
+    1.7316,
+    1.8929,
+    2.0542,
+    2.2155,
+    2.3768
+   ],
+   "push": [
+    2.9268,
+    3.4768
+   ],
+   "wheel_times": [
+    3.8298,
+    3.9348,
+    4.0398,
+    4.1448,
+    4.2498,
+    4.3548
+   ],
+   "land": 4.3548,
+   "exit": 5.5133,
+   "out": 5.9333
+  }
+ }
+}

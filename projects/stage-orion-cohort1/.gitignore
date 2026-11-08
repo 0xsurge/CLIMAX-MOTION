@@ -6,3 +6,11 @@ renders/
 .cache/
 *.mov
 *.wav
+# Build outputs and interview-derived text stay local
+edit/edl.json
+edit/captions_text.json
+edit/beats.json
+hf/compositions/captions.html
+hf/assets/media/
+hf/renders/
+hf/.hyperframes/

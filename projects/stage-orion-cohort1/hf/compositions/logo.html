@@ -1,0 +1,37 @@
+<template>
+  <style>
+    #root { position:absolute; inset:0; overflow:hidden; }
+    
+  .ground { position:absolute; inset:0; background:#01042A;
+    background-image: linear-gradient(rgba(224,226,232,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(224,226,232,.045) 1px, transparent 1px),
+      radial-gradient(120% 70% at 50% 38%, #0E1347 0%, #01042A 70%);
+    background-size: 72px 72px, 72px 72px, 100% 100%; }
+    #logo-mark { position:absolute; left:340px; top:560px; width:400px; height:400px; }
+    .word { position:absolute; left:0; right:0; top:1010px; text-align:center; font-family:Montserrat, sans-serif; font-weight:800; font-size:92px; letter-spacing:.06em; color:#E0E2E8; }
+    .lt { display:inline-block; }
+    .badge { position:absolute; left:0; right:0; top:1150px; display:flex; justify-content:center; }
+    .badge span { font-family:"League Gothic", sans-serif; font-size:84px; letter-spacing:.06em; color:#fff; padding:2px 34px 0; border-radius:999px;
+      background: linear-gradient(90deg, #19D3FF 0%, #6A5CFF 50%, #FF3DCB 100%); }
+    .sub { position:absolute; left:0; right:0; top:1300px; text-align:center; font-family:Montserrat, sans-serif; font-weight:600; font-size:38px; letter-spacing:.12em; color:#E0E2E8; opacity:.8; }
+  </style>
+  <div id="root" data-composition-id="logo" data-width="1080" data-height="1920" data-layout-allow-overlap>
+    <div class="ground" id="logo-ground"></div>
+    <img id="logo-mark" src="assets/logo-mark.svg" alt="Stage Orion logo">
+    <div class="word" id="logo-word"><span class="lt" id="logol0">S</span><span class="lt" id="logol1">T</span><span class="lt" id="logol2">A</span><span class="lt" id="logol3">G</span><span class="lt" id="logol4">E</span><span class="lt" id="logol5">&nbsp;</span><span class="lt" id="logol6">O</span><span class="lt" id="logol7">R</span><span class="lt" id="logol8">I</span><span class="lt" id="logol9">O</span><span class="lt" id="logol10">N</span></div>
+    <div class="badge"><span id="logo-badge">COHORT 1.0</span></div>
+    
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const D = 2.72;
+    // colour flood: the navy ground rises over the footage
+    tl.fromTo("#logo-ground", { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.32, ease: "power2.inOut" }, 0);
+    // mark lands heavy: no spin, no overshoot on the lockup
+    tl.fromTo("#logo-mark", { opacity: 0, scale: 0.55, filter: "blur(16px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.55, ease: "expo.out" }, 0.16999999999999998);
+    for (let i = 0; i < 11; i++) tl.fromTo("#logol" + i, { opacity: 0.0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.12, ease: "power2.out" }, 0.16999999999999998 + 0.22 + i * 0.035);
+    tl.fromTo("#logo-badge", { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 1, duration: 0.24, ease: "power4.out" }, 0.16999999999999998 + 0.62);
+    
+    tl.to(["#logo-mark","#logo-word","#logo-badge"], { opacity: 0, filter: "blur(10px)", duration: 0.16, ease: "power2.in" }, D - 0.18);
+    window.__timelines["logo"] = tl;
+  </script>
+</template>
