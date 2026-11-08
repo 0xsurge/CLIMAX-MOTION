@@ -34,6 +34,53 @@ POWER = {'HOOK': 'unique', '0': 'transformational', '1': 'insightful.', '2': 'ey
          '30': 'cooperate', '31': 'nights.', '32': 'quickly', '33': 'family.', '34': 'best.', '35': 'memorable'}
 PHRASE = {}
 
+# ---------------- B-roll cutaways (client posters while the intern keeps talking) ----------------
+BROLL = [('poster-1', '6', 'because there'), ('poster-3', '13', 'because as'), ('poster-5', '16', 'I learned'), ('poster-9', '17', 'handling'),
+         ('poster-6', '19', 'to stay'), ('poster-8', '20', 'Freshdesk'), ('poster-4', '21', 'is the realization'), ('poster-2', '25', 'connect'),
+         ('poster-7', '31', 'practical')]
+WIDE = {'poster-2'}
+cuts = []
+for img, key, ph in BROLL:
+    ws = [w for w in E['words'] if w['key'] == key]; a = ph.lower().split()
+    i = next(i for i in range(len(ws)) if [x['text'].strip(',.').lower() for x in ws[i:i + len(a)]] == a)
+    pend = max(sg_['t_out'] for sg_ in E['segments'] if sg_['key'] == key)
+    t = round(ws[i]['start'] - 0.08, 3); d = round(min(3.0, pend - 0.7 - t), 3)
+    cuts.append(dict(img=img, key=key, t=t, d=d))
+json.dump([[c['t'], c['d']] for c in cuts], open('edit/broll_times.json', 'w'))
+bh, bj = [], []
+for i, c in enumerate(cuts):
+    bid = f'br{i}'; t, d = c['t'], c['d']; w = 1000 if c['img'] in WIDE else 900
+    from PIL import Image as _I; iw, ih = _I.open(f"references/palette-posters/{c['img']}.jpg").size
+    ch = 720 if c['img'] in WIDE else int(w * ih / iw); ctop = max(200, 860 - ch // 2)
+    extra = ';height:720px;object-fit:cover;object-position:46% 40%' if c['img'] in WIDE else ''
+    bh.append(f'''    <div id="{bid}" class="clip bro" data-start="{f(t)}" data-duration="{f(d)}" data-track-index="1">
+      <div class="bground" id="{bid}g"><img class="bbg" src="assets/posters/{c['img']}.jpg" alt=""><div class="bshade"></div></div>
+      <img class="bcard" id="{bid}c" src="assets/posters/{c['img']}.jpg" alt="Stage Orion Cohort 1.0 poster" style="width:{w}px;left:{(1080 - w) // 2}px;top:{ctop}px{extra}"></div>''')
+    bj += [f'tl.fromTo("#{bid}g",{{clipPath:"inset(0% 0% 0% 100%)"}},{{clipPath:"inset(0% 0% 0% 0%)",duration:0.28,ease:"power3.out"}},{f(t)});',
+           f'tl.fromTo("#{bid}c",{{opacity:0,scale:1.18,y:70,filter:"blur(12px)"}},{{opacity:1,scale:1,y:0,filter:"blur(0px)",duration:0.45,ease:"expo.out"}},{f(t + 0.05)});',
+           f'tl.to("#{bid}c",{{y:-24,duration:{f(d - 0.8)},ease:"none"}},{f(t + 0.5)});',
+           f'tl.to("#{bid}c",{{y:-260,opacity:0,filter:"blur(10px)",duration:0.24,ease:"power3.in"}},{f(t + d - 0.26)});',
+           f'tl.to("#{bid}g",{{clipPath:"inset(0% 100% 0% 0%)",duration:0.26,ease:"power3.in"}},{f(t + d - 0.27)});']
+broll = f'''<template>
+  <style>
+    #root {{ position:absolute; inset:0; pointer-events:none; }}
+    .bro {{ position:absolute; inset:0; }}
+    .bground {{ position:absolute; inset:0; overflow:hidden; background:{PAL['navy']}; }}
+    .bbg {{ position:absolute; left:-240px; top:-120px; width:1560px; height:2160px; object-fit:cover; filter:blur(40px) saturate(1.2); opacity:.55; }}
+    .bshade {{ position:absolute; inset:0; background:radial-gradient(90% 60% at 50% 42%, rgba(1,4,42,.15) 0%, rgba(1,4,42,.85) 100%); }}
+    .bcard {{ position:absolute; border-radius:22px; box-shadow:0 30px 80px rgba(0,0,0,.55), 0 0 0 2px rgba(224,226,232,.12), 0 0 70px rgba(0,28,210,.45); }}
+  </style>
+  <div id="root" data-composition-id="broll" data-width="1080" data-height="1920" data-layout-allow-overflow data-layout-allow-overlap>
+{chr(10).join(bh)}
+  </div>
+  <script>
+    const tl = gsap.timeline({{ paused: true }});
+    {chr(10).join('    ' + j for j in bj)}
+    window.__timelines["broll"] = tl;
+  </script>
+</template>'''
+open(f'{OUT}/compositions/broll.html', 'w').write(broll)
+
 # ---------------- caption groups ----------------
 words = E['words']
 groups = []
@@ -79,6 +126,8 @@ def seg_at(t):
     return None
 def cap_top(t, h):
     """Default: caption bottom at y=1330. If the speaker's chin would be covered, drop the caption just below the chin."""
+    for c_ in cuts:                                             # during a poster cutaway: sit under the card
+        if c_['t'] - 0.1 <= t < c_['t'] + c_['d']: return int(min(1790 - h, 1500))
     i_ = seg_at(t); top = 1330 - h
     if i_ is None or not FACES[i_]: return top
     sc = SEG_SCALE[i_]; oy = 0.38 * 1920; ty = (sc - 1) * 120
@@ -362,7 +411,7 @@ open(f'{OUT}/compositions/endcard.html', 'w').write(lockup('endcard', round(sec[
 # ---------------- root ----------------
 def host(cid, start, dur, z, kind='graphics'):
     return f'      <div id="{cid}" data-composition-id="{cid}" data-composition-src="compositions/{cid}.html" data-start="{f(start)}" data-duration="{f(dur)}" data-track-index="{z}" data-track-kind="{kind}" data-width="1080" data-height="1920" style="z-index:{z}"></div>'
-hosts = [host('footage', 0, D, 1), host('captions', 0, D, 2, 'captions'),
+hosts = [host('footage', 0, D, 1), host('broll', 0, D, 2), host('captions', 0, D, 3, 'captions'),
          host('logo', sec['logo']['start'] - LOGO_LEAD, sec['logo']['end'] - sec['logo']['start'] + LOGO_LEAD, 5)]
 for qk in ('Q1', 'Q2', 'Q3'):
     s0 = sec[f'intro_{qk}']['start']; hosts.append(host(qk.lower(), s0, min(intros[qk], D - s0), 6))
@@ -391,4 +440,5 @@ index = f'''<!doctype html>
   </body>
 </html>'''
 open(f'{OUT}/index.html', 'w').write(index)
+json.dump([round(g['words'][-1]['start'], 3) for g in groups if g['power']], open('edit/power_times.json', 'w'))
 print('groups', len(groups), 'power groups', sum(1 for g in groups if g['power']), 'footage cues', len(fj), 'intro lengths', intros)

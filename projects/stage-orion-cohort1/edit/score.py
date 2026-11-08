@@ -152,6 +152,55 @@ for i, sg in enumerate(E['segments']):
         put(sfx, whoosh(i, 0.28, 0.12), sg['t_in'] - 0.14)
     prev = sg['key']
 
+# ---- user-supplied SFX replace the synthesized ones (sfx_user/*.wav) ----
+import os
+from scipy.signal import resample_poly
+if os.path.isdir('sfx_user'):
+    def load(n, a=None, b=None):
+        y, _ = sf.read(f'sfx_user/SFX_{n}.wav'); y = y[int((a or 0) * SR): int(b * SR) if b else None]
+        return y / (np.max(np.abs(y)) + 1e-9)
+    def pitch(y, semis):              # rotate takes: tiny resample pitch shift
+        if semis == 0: return y
+        up, down = {1: (100, 106), -1: (106, 100), 2: (100, 112), -2: (112, 100)}[semis]
+        return resample_poly(y, up, down, axis=0)
+    def fade(y, ms=6):
+        r = int(ms / 1000 * SR); y = y.copy(); y[:r] *= np.linspace(0, 1, r)[:, None]; y[-r:] *= np.linspace(1, 0, r)[:, None]; return y
+    IMPACT = load(14); IMPACT_PK = 0.46                       # boom
+    SWISH = load(3); SWISH_PK = 0.42                          # heavy whip with sub drop
+    AIR = load(8, 0.30); AIR_PK = 0.28                        # soft whoosh
+    SPARK = fade(load(6, 0.93, 1.45)); SPARK_PK = 0.02        # bright click
+    CHIME = load(10); CHIME_PK = 0.54                         # tonal sting
+    c11, _ = sf.read('sfx_user/SFX_11.wav')
+    xw, _ = sf.read('sfx_user/x_whoosh.wav'); WH2 = xw[int(0.02 * SR):int(0.5 * SR)] / (np.max(np.abs(xw)) + 1e-9); WH2_PK = 0.14
+    xc, _ = sf.read('sfx_user/x_click.wav'); CLK2 = fade(xc[int(0.03 * SR):int(0.2 * SR)] / (np.max(np.abs(xc)) + 1e-9), 3)
+    CLICKS = [fade(c11[int((t - 0.008) * SR): int((t + 0.045) * SR)] / (np.max(np.abs(c11)) + 1e-9), 3) for t in (0.16, 0.23, 0.29, 0.36, 0.76, 0.83, 0.89, 0.96)]
+    sfx = np.zeros((N, 2)); F1 = 1 / 30                       # peak lands one frame after the picture
+    def hit(x, t, pk, g): put(sfx, x, t + F1 - pk, g)
+    PT = json.load(open('edit/power_times.json')) if os.path.exists('edit/power_times.json') else []
+    for s in E['sections']:
+        k, t0 = s['kind'], s['start']
+        if k == 'logo':
+            hit(IMPACT, t0 + 0.05, IMPACT_PK, 0.7); hit(CHIME, t0 + 0.67, CHIME_PK, 0.22)
+        elif k.startswith('intro_'):
+            q = IT['questions'][k[-2:]]
+            for i, wt in enumerate(q['word_times']):
+                hit(CLICKS[i % 8], t0 + wt, 0.008, 0.2) if i % 3 else hit(pitch(CLK2, [0, 1, -1][(i // 3) % 3]), t0 + wt, 0.02, 0.32)
+            for i, wt in enumerate(q['wheel_times'][:-1]): hit(pitch(CLICKS[(i * 3) % 8], 2), t0 + wt, 0.008, 0.26)
+            hit(pitch(IMPACT, [0, -1, 1][int(k[-1]) - 1]), t0 + q['land'], IMPACT_PK, 0.75)
+            hit(pitch(SWISH, [0, 1, -1][int(k[-1]) - 1]), t0 + q['exit'] + 0.12, SWISH_PK, 0.42)
+        elif k == 'end':
+            hit(IMPACT, t0 + 0.05, IMPACT_PK, 0.5); hit(CHIME, t0 + 0.67, CHIME_PK, 0.25)
+    prev = None
+    for i, sg in enumerate(E['segments']):
+        if sg['key'] != prev and prev is not None and sg['q'] == E['segments'][i - 1]['q']:
+            if i % 2: hit(pitch(AIR, [0, 1, -1][i % 3]), sg['t_in'], AIR_PK, 0.16)
+            else: hit(pitch(WH2, [0, -1, 1][i % 3]), sg['t_in'], WH2_PK, 0.11)
+        prev = sg['key']
+    for i, t in enumerate(PT): hit(pitch(SPARK, [0, -1, 1][i % 3]), t, SPARK_PK, 0.07)
+    BR = json.load(open('edit/broll_times.json')) if os.path.exists('edit/broll_times.json') else []
+    for i, (t, d) in enumerate(BR): hit(pitch(WH2 if i % 2 else AIR, [1, 0, -1][i % 3]), t + 0.05, WH2_PK if i % 2 else AIR_PK, 0.15)
+    print('user SFX placed: power boxes', len(PT))
+
 # ---- glue: room reverb on music, sidechain under dialogue ----
 ir_n = int(1.4 * SR); ir = rng.standard_normal((ir_n, 2)) * np.exp(-np.arange(ir_n) / SR / 0.35)[:, None]
 ir = lp(ir, 5000); ir /= np.sqrt((ir ** 2).sum(0))
