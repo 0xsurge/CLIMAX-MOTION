@@ -199,6 +199,9 @@ if os.path.isdir('sfx_user'):
     for i, t in enumerate(PT): hit(pitch(SPARK, [0, -1, 1][i % 3]), t, SPARK_PK, 0.07)
     BR = json.load(open('edit/broll_times.json')) if os.path.exists('edit/broll_times.json') else []
     for i, (t, d) in enumerate(BR): hit(pitch(WH2 if i % 2 else AIR, [1, 0, -1][i % 3]), t + 0.05, WH2_PK if i % 2 else AIR_PK, 0.15)
+    KT = json.load(open('edit/kinetic_times.json')) if os.path.exists('edit/kinetic_times.json') else []
+    for k in KT:
+        hit(AIR, k['t'], AIR_PK, 0.18); hit(SPARK, k['words'][1], SPARK_PK, 0.12); hit(pitch(WH2, 1), k['t'] + k['d'], WH2_PK, 0.14)
     print('user SFX placed: power boxes', len(PT))
 
 # ---- glue: room reverb on music, sidechain under dialogue ----

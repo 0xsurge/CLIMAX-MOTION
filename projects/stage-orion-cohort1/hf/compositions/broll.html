@@ -2,6 +2,16 @@
   <style>
     #root { position:absolute; inset:0; pointer-events:none; }
     .bro { position:absolute; inset:0; }
+    
+  .ground { position:absolute; inset:0; background:#01042A;
+    background-image: linear-gradient(rgba(224,226,232,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(224,226,232,.045) 1px, transparent 1px),
+      radial-gradient(120% 70% at 50% 38%, #0E1347 0%, #01042A 70%);
+    background-size: 72px 72px, 72px 72px, 100% 100%; }
+    .kstack { position:absolute; left:0; right:0; top:640px; display:flex; flex-direction:column; align-items:center; gap:6px; }
+    .kw { font-family:"League Gothic", sans-serif; color:#E0E2E8; line-height:.95; letter-spacing:.01em; white-space:nowrap; }
+    .kw-small { font-family:Montserrat, sans-serif; font-weight:800; font-size:78px; letter-spacing:.3em; color:#7CC4FF; }
+    .kw-hero { font-size:430px; background:#001CD2; padding:0 50px; border-radius:10px; box-shadow:0 0 60px rgba(0,28,210,.8), 0 0 140px rgba(55,54,174,.55); }
+    .kw-mid { font-size:190px; }
     .bground { position:absolute; inset:0; overflow:hidden; background:#01042A; }
     .bbg { position:absolute; left:-240px; top:-120px; width:1560px; height:2160px; object-fit:cover; filter:blur(40px) saturate(1.2); opacity:.55; }
     .bshade { position:absolute; inset:0; background:radial-gradient(90% 60% at 50% 42%, rgba(1,4,42,.15) 0%, rgba(1,4,42,.85) 100%); }
@@ -35,6 +45,8 @@
     <div id="br8" class="clip bro" data-start="299.079" data-duration="3" data-track-index="1">
       <div class="bground" id="br8g"><img class="bbg" src="assets/posters/poster-7.jpg" alt=""><div class="bshade"></div></div>
       <img class="bcard" id="br8c" src="assets/posters/poster-7.jpg" alt="Stage Orion Cohort 1.0 poster" style="width:900px;left:90px;top:298px"></div>
+    <div id="kc0" class="clip bro" data-start="15.76" data-duration="2.027" data-track-index="2">
+      <div class="ground kground" id="kc0g"></div><div class="kstack" id="kc0s"><div class="kw kw-small" id="kc0w0">AND</div><div class="kw kw-hero" id="kc0w1">FUN</div><div class="kw kw-mid" id="kc0w2">EXPERIENCE.</div></div></div>
   </div>
   <script>
     const tl = gsap.timeline({ paused: true });
@@ -83,6 +95,12 @@
     tl.to("#br8c",{y:-24,duration:2.2,ease:"none"},299.579);
     tl.to("#br8c",{y:-260,opacity:0,filter:"blur(10px)",duration:0.24,ease:"power3.in"},301.819);
     tl.to("#br8g",{clipPath:"inset(0% 100% 0% 0%)",duration:0.26,ease:"power3.in"},301.809);
+    tl.fromTo("#kc0g",{clipPath:"inset(0% 0% 0% 100%)"},{clipPath:"inset(0% 0% 0% 0%)",duration:0.2,ease:"power3.out"},15.76);
+    tl.fromTo("#kc0w0",{opacity:0,scale:1.25,filter:"blur(14px)"},{opacity:1,scale:1,filter:"blur(0px)",duration:0.14,ease:"expo.out"},15.83);
+    tl.fromTo("#kc0w1",{opacity:0,scale:1.25,filter:"blur(14px)"},{opacity:1,scale:1,filter:"blur(0px)",duration:0.14,ease:"expo.out"},16.051);
+    tl.fromTo("#kc0w2",{opacity:0,scale:1.25,filter:"blur(14px)"},{opacity:1,scale:1,filter:"blur(0px)",duration:0.14,ease:"expo.out"},16.412);
+    tl.to("#kc0s",{x:-1200,filter:"blur(16px)",duration:0.22,ease:"power3.in"},17.347);
+    tl.to("#kc0g",{x:-1180,duration:0.3,ease:"power3.in"},17.467);
     window.__timelines["broll"] = tl;
   </script>
 </template>

@@ -46,7 +46,14 @@ for img, key, ph in BROLL:
     pend = max(sg_['t_out'] for sg_ in E['segments'] if sg_['key'] == key)
     t = round(ws[i]['start'] - 0.08, 3); d = round(min(3.0, pend - 0.7 - t), 3)
     cuts.append(dict(img=img, key=key, t=t, d=d))
+KINETIC = [('0', 'and', [('AND', 'small'), ('FUN', 'hero'), ('EXPERIENCE.', 'mid')])]
+kcards = []
+for key, first, lines in KINETIC:
+    ws = [w for w in E['words'] if w['key'] == key]; i = next(i for i, w in enumerate(ws) if w['text'].strip(',.').lower() == first)
+    pend = max(sg_['t_out'] for sg_ in E['segments'] if sg_['key'] == key)
+    kcards.append(dict(key=key, t=round(ws[i]['start'] - 0.1, 3), end=pend, words=[(txt, kind, ws[i + j]['start']) for j, (txt, kind) in enumerate(lines)]))
 json.dump([[c['t'], c['d']] for c in cuts], open('edit/broll_times.json', 'w'))
+json.dump([dict(t=k['t'], d=round(k['end'] - k['t'], 3), words=[w[2] for w in k['words']]) for k in kcards], open('edit/kinetic_times.json', 'w'))
 bh, bj = [], []
 for i, c in enumerate(cuts):
     bid = f'br{i}'; t, d = c['t'], c['d']; w = 1000 if c['img'] in WIDE else 900
@@ -61,10 +68,26 @@ for i, c in enumerate(cuts):
            f'tl.to("#{bid}c",{{y:-24,duration:{f(d - 0.8)},ease:"none"}},{f(t + 0.5)});',
            f'tl.to("#{bid}c",{{y:-260,opacity:0,filter:"blur(10px)",duration:0.24,ease:"power3.in"}},{f(t + d - 0.26)});',
            f'tl.to("#{bid}g",{{clipPath:"inset(0% 100% 0% 0%)",duration:0.26,ease:"power3.in"}},{f(t + d - 0.27)});']
+for n, k in enumerate(kcards):
+    kid = f'kc{n}'; t, d = k['t'], round(k['end'] - k['t'], 3)
+    spans = ''.join(f'<div class="kw kw-{kind}" id="{kid}w{j}">{html.escape(txt)}</div>' for j, (txt, kind, _) in enumerate(k['words']))
+    bh.append(f'''    <div id="{kid}" class="clip bro" data-start="{f(t)}" data-duration="{f(d + 0.32)}" data-track-index="2">
+      <div class="ground kground" id="{kid}g"></div><div class="kstack" id="{kid}s">{spans}</div></div>''')
+    bj.append(f'tl.fromTo("#{kid}g",{{clipPath:"inset(0% 0% 0% 100%)"}},{{clipPath:"inset(0% 0% 0% 0%)",duration:0.2,ease:"power3.out"}},{f(t)});')
+    for j, (txt, kind, wt) in enumerate(k['words']):
+        bj.append(f'tl.fromTo("#{kid}w{j}",{{opacity:0,scale:1.25,filter:"blur(14px)"}},{{opacity:1,scale:1,filter:"blur(0px)",duration:0.14,ease:"expo.out"}},{f(max(t + 0.05, wt - 0.03))});')
+    bj += [f'tl.to("#{kid}s",{{x:-1200,filter:"blur(16px)",duration:0.22,ease:"power3.in"}},{f(t + d - 0.12)});',
+           f'tl.to("#{kid}g",{{x:-1180,duration:0.3,ease:"power3.in"}},{f(t + d)});']
 broll = f'''<template>
   <style>
     #root {{ position:absolute; inset:0; pointer-events:none; }}
     .bro {{ position:absolute; inset:0; }}
+    {GROUND_CSS}
+    .kstack {{ position:absolute; left:0; right:0; top:640px; display:flex; flex-direction:column; align-items:center; gap:6px; }}
+    .kw {{ font-family:"League Gothic", sans-serif; color:{PAL['ink']}; line-height:.95; letter-spacing:.01em; white-space:nowrap; }}
+    .kw-small {{ font-family:Montserrat, sans-serif; font-weight:800; font-size:78px; letter-spacing:.3em; color:{PAL['sky']}; }}
+    .kw-hero {{ font-size:430px; background:{PAL['blue']}; padding:0 50px; border-radius:10px; box-shadow:0 0 60px rgba(0,28,210,.8), 0 0 140px rgba(55,54,174,.55); }}
+    .kw-mid {{ font-size:190px; }}
     .bground {{ position:absolute; inset:0; overflow:hidden; background:{PAL['navy']}; }}
     .bbg {{ position:absolute; left:-240px; top:-120px; width:1560px; height:2160px; object-fit:cover; filter:blur(40px) saturate(1.2); opacity:.55; }}
     .bshade {{ position:absolute; inset:0; background:radial-gradient(90% 60% at 50% 42%, rgba(1,4,42,.15) 0%, rgba(1,4,42,.85) 100%); }}
@@ -102,6 +125,12 @@ for key in dict.fromkeys(w['key'] for w in words):
         cur.append(w)
     flush()
 # fold a lead-in that was already flushed into the power group so it reads "lead-in + PUNCH"
+groups = [g for g in groups if not any(k['key'] == g['key'] and g['words'][0]['start'] >= k['t'] for k in kcards)]
+for g in groups:
+    for k in kcards:
+        if k['key'] == g['key'] and g['words'][-1]['start'] >= k['t']:
+            g['words'] = [w for w in g['words'] if w['start'] < k['t']]; g['power'] = g['power'] if g['power'] and g['power']['index'] < len(g['words']) else None
+groups = [g for g in groups if g['words']]
 for g in groups: g['start'] = g['words'][0]['start']; g['end'] = g['words'][-1]['end']
 for i, g in enumerate(groups):
     nxt = groups[i + 1]['start'] if i + 1 < len(groups) else D
@@ -109,6 +138,7 @@ for i, g in enumerate(groups):
     g['t1'] = (nxt - 0.02) if nxt - g['end'] < 0.8 else min(max(g['end'] + 0.35, g['t0'] + (1.1 if g['power'] else 0.7)), nxt - 0.02)
     if g['power']: g['t1'] = max(g['t1'], g['words'][-1]['start'] + 0.42)   # box must finish landing before it leaves
     pick_end = max(sg_['t_out'] for sg_ in E['segments'] if sg_['key'] == g['key'])
+    pick_end = min([pick_end] + [k['t'] + 0.06 for k in kcards if k['key'] == g['key']])   # captions leave as a type card arrives
     g['t1'] = min(g['t1'], pick_end - 0.03)
 
 def est_w(txt, px, k=0.6): return len(txt) * px * k
