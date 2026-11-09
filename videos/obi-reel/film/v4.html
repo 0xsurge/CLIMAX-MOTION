@@ -1,0 +1,218 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Obi Igwe reel v2</title>
+<!-- Obi Igwe portfolio reel v2, built with /climax-launch (see ../STORYBOARD.md).
+     Carrier law: one focus frame survives every scene (highlight -> frame -> flood -> slit -> image pill -> screen ->
+     slot -> dot -> ring -> full stop -> link pill). Every transformation takes 3-10 frames and gets a 4-frame
+     punch-zoom; the camera otherwise holds with a slow drift. 1920x1080, 129.2 BPM grid, pure function of t. -->
+<style>
+  @font-face { font-family: 'B'; src: url(../assets/bricolage.woff2) format('woff2'); font-weight: 800; }
+  @font-face { font-family: 'G'; src: url(../assets/geist-400.woff2) format('woff2'); font-weight: 100 900; }
+  @font-face { font-family: 'M'; src: url(../assets/geistmono.woff2) format('woff2'); font-weight: 500; }
+  html, body { margin: 0; background: #0A0C10; overflow: hidden; }
+  #stage { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #0A0C10; color: #EEF2F8; font-family: 'G', sans-serif; }
+  #cam { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 960px 540px; }
+  .abs { position: absolute; left: 0; top: 0; }
+  .line { position: absolute; left: 0; width: 1920px; display: flex; justify-content: center; align-items: center; white-space: nowrap; }
+  .w { display: inline-block; margin: 0 .12em; }
+  .slam { font: 800 150px/1 'B'; letter-spacing: -.045em; }
+  .cap { font: 800 96px/1 'B'; letter-spacing: -.035em; }
+  .label { font: 500 26px/1 'M'; letter-spacing: .16em; text-transform: uppercase; color: #8F98A8; }
+  .blue { color: #3D7BFF; } .lamp { color: #FFB04A; }
+  .frag { position: absolute; white-space: nowrap; font: 500 34px/1 'M'; letter-spacing: .02em; color: #FFB04A; }
+  .shard { position: absolute; border-radius: 14px; border: 2px solid rgba(255,176,74,.55); background: rgba(255,176,74,.07); }
+  .pillimg { display: inline-block; height: 112px; border-radius: 20px; overflow: hidden; vertical-align: middle; margin: 0 .14em; box-shadow: 0 0 0 3px #3D7BFF; }
+  .pillimg canvas { height: 112px; width: 200px; display: block; }
+  #portrait { position: absolute; border-radius: 50%; overflow: hidden; }
+  #portrait img { width: 100%; height: 100%; display: block; object-fit: cover; }
+  .dot { position: absolute; width: 22px; height: 22px; margin: -11px 0 0 -11px; border-radius: 50%; background: #3D7BFF; }
+</style>
+<div id="stage">
+  <svg width="0" height="0" style="position:absolute"><filter id="mb" x="-20%" y="-10%" width="140%" height="120%"><feGaussianBlur id="mbg" stdDeviation="0 0"/></filter></svg>
+  <div id="cam"></div>
+</div>
+<script src="../assets/motion.js"></script>
+<script>
+const M = window.Motion, S = (t, p) => M.spring(t, p), clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x)), lerp = (a, b, u) => a + (b - a) * u;
+const P = 0.46439909, B = n => n * P, DUR = B(96); window.FILM_DUR = DUR;
+const camMove = (t, tc, tau) => t < tc ? 0.5 * Math.exp((t - tc) / tau) : 1 - 0.5 * Math.exp(-(t - tc) / tau);
+const FAST = { k: 1100, c: 60 }, MORPH = { k: 650, c: 46 }, POP = { k: 700, c: 30 }, WORD = { k: 900, c: 50 };
+const $ = id => document.getElementById(id), cam = $('cam');
+const mk = (html, parent = cam) => { const d = document.createElement('div'); d.innerHTML = html.trim(); const e = d.firstChild; parent.appendChild(e); return e; };
+const show = (el, on, d = '') => { el.style.display = on ? d : 'none'; };
+const box = (el, x, y, w, h) => { el.style.left = x + 'px'; el.style.top = y + 'px'; el.style.width = w + 'px'; el.style.height = h + 'px'; };
+const rectLerp = (a, b, u) => a.map((v, i) => lerp(v, b[i], u));
+const pulse = (t, tp, a) => { const u = t - tp; return u <= 0 ? 0 : a * (1 - Math.exp(-u / .025)) * Math.exp(-u / .11); };
+
+const lamp = mk(`<div class="abs" style="border-radius:50%"></div>`), blueL = mk(`<div class="abs" style="border-radius:50%"></div>`);
+const grid = mk(`<div class="abs" style="left:-2000px;top:-2000px;width:9000px;height:6000px"></div>`);
+const rnd = M.mulberry32(11), JARGON = ['inference', 'latency p99', 'embeddings', 'API keys', 'zero-knowledge', 'routing', 'SDK v2', 'webhooks', 'rate limits', 'tokenizer', 'RAG', 'fine-tuning', 'auth flow', 'vector DB', 'edge cache', 'schema', 'OAuth', 'GPU hours'];
+const warm = mk(`<div class="abs" style="width:1920px;height:1080px;filter:blur(6px)"></div>`), cool = mk(`<div class="abs" style="width:1920px;height:1080px"></div>`);
+const FR = [];
+for (let i = 0; i < 30; i++) {
+  const word = i < JARGON.length, w = 120 + rnd() * 240, h = 70 + rnd() * 150;
+  const html = word ? `<div class="frag">${JARGON[i]}</div>` : `<div class="shard" style="width:${w}px;height:${h}px"></div>`;
+  const a = mk(html, warm), b = mk(html, cool); b.style.color = '#CFE0FF'; if (!word) { b.style.borderColor = 'rgba(207,224,255,.75)'; b.style.background = 'rgba(61,123,255,.12)'; }
+  FR.push({ a, b, x: rnd() * 2100 - 90, y: rnd() * 1180 - 50, vx: (rnd() < .5 ? -1 : 1) * (70 + rnd() * 120), vy: (rnd() - .5) * 60, z: .7 + rnd() * .8 });
+}
+const words = (cls, list) => `<div class="line ${cls}">${list.map(([w, c]) => `<span class="w ${c || ''}">${w}</span>`).join('')}</div>`;
+const L = {
+  a1: mk(words('slam', [['Your'], ['product']])),
+  a2: mk(`<div class="line slam"><span class="w">is</span><span class="w" id="edit">brilliant.</span></div>`),
+  story: mk(words('cap', [['Until'], ["it's"], ['a'], ['story.', 'blue']])),
+  name: mk(`<div class="line" style="font:800 190px/1 'B';letter-spacing:-.045em"><span class="w">Obi</span><span class="w">Igwe<span style="color:#0A0C10">.</span></span></div>`),
+  role: mk(`<div class="line" style="gap:18px;font:700 italic 46px/1 'G';color:#FFFFFF"><span class="hl" style="background:#F26A1B;padding:12px 20px;border-radius:10px"></span><span class="hl" style="background:#F26A1B;padding:12px 20px;border-radius:10px"></span></div>`),
+  t1: mk(`<div class="line cap"><span class="w">I</span><span class="w">turn</span><span class="pillimg" id="p1"><canvas width="320" height="180"></canvas></span><span class="w lamp">complex</span><span class="w">products</span></div>`),
+  t2: mk(`<div class="line cap"><span class="w">into</span><span class="w blue">clear</span><span class="pillimg" id="p2"><canvas width="320" height="180"></canvas></span><span class="w blue">stories.</span></div>`),
+  kind: mk(`<div class="abs" style="font:800 110px/1 'B';letter-spacing:-.04em;white-space:nowrap"></div>`),
+  d1: mk(words('cap', [['Your'], ['product'], ['deserves']])),
+  d2: mk(words('cap', [['to'], ['be'], ['understood.', 'blue']])),
+  name2: mk(`<div class="line" style="font:800 170px/1 'B';letter-spacing:-.045em"><span class="w">Obi</span><span class="w">Igwe<span id="stop2" style="display:inline-block;width:.26em;text-align:left"></span></span></div>`),
+  open: mk(`<div class="line label" style="color:#CFE0FF"></div>`),
+};
+const fimg = mk(`<div class="abs" style="overflow:hidden;border-radius:22px"><canvas width="1280" height="720" style="width:100%;height:100%;display:block;object-fit:cover"></canvas></div>`);
+const car = mk(`<div class="abs" style="box-sizing:border-box"></div>`);
+cam.insertBefore(car, L.a1); cam.insertBefore(fimg, car);
+const screen = mk(`<div class="abs" style="border-radius:26px;overflow:hidden;box-shadow:0 0 0 3px #3D7BFF,0 40px 100px rgba(0,0,0,.6);background:#0F1422"><canvas width="1280" height="720" style="width:100%;height:100%;display:block"></canvas></div>`);
+const sctx = screen.firstChild.getContext('2d');
+const chip = mk(`<div class="abs label" style="color:#CFE0FF;white-space:nowrap"></div>`), counter = mk(`<div class="abs label" style="color:#3D7BFF;white-space:nowrap"></div>`);
+const slotTxt = mk(`<div class="line" style="gap:28px"><span id="sn" style="font:500 44px/1 'M';color:#3D7BFF"></span><span id="st" style="display:inline-block;font:800 96px/1 'B';letter-spacing:-.035em"></span></div>`);
+const portrait = mk(`<div id="portrait"><img src="../assets/portrait.jpg"></div>`);
+const dots = Array.from({ length: 22 }, () => mk(`<div class="abs" style="width:256px;height:144px;margin:-72px 0 0 -128px;border-radius:12px;overflow:hidden;box-shadow:0 0 0 2px rgba(61,123,255,.9),0 14px 30px rgba(0,0,0,.5)"><canvas width="256" height="144" style="display:block"></canvas></div>`));
+const pillTxt = mk(`<div class="line" style="font:500 42px/1 'G';color:#EEF2F8"></div>`);
+const FILMS = [['sterling', 'Sterling', 'Launch film'], ['vivox', 'Vivox', 'Product film'], ['nyangu', 'Nyangu', 'Product film'], ['dripverse', 'Drip Verse', 'Brand film'], ['armab', 'Armab Agency', 'Launch film'], ['appleui', 'UI motion', 'Motion study']];
+const IM = {}; FILMS.forEach(([id]) => { IM[id] = []; for (let k = 1; k <= 69; k++) { const im = new Image(); im.src = `../assets/clips/${id}/${String(k).padStart(3, '0')}.jpg`; IM[id].push(im); } });
+const frameOf = (id, u) => IM[id][Math.max(0, Math.min(68, Math.floor(u * 30)))];
+const STEPS = ['Find the truth', 'Pick one idea', 'Build the colour story', 'Storyboard every beat', 'Motion and sound'];
+const KINDS = [['Launch films.', 'sterling'], ['Product videos.', 'vivox'], ['Brand films.', 'dripverse'], ['Motion graphics.', 'appleui']];
+
+function build(node, t, t0, step, y, exit = Infinity) {
+  const ws = [...node.children].filter(c => c.classList.contains('w') || c.classList.contains('pillimg')), vis = t >= t0 - .01 && t < exit + .14; node.style.display = vis ? 'flex' : 'none'; if (!vis) return;
+  const ex = clamp((t - exit) / .13); node.style.top = y + 'px';
+  node.style.transform = `translateX(${-14 * clamp((t - t0) / 2.5) - 60 * ex}px) scale(${1 - .02 * clamp((t - t0) / 2.5)})`; node.style.filter = ex > 0 ? `blur(${14 * ex}px)` : ''; node.style.opacity = 1 - ex;
+  ws.forEach((w, i) => { const s = S(t - (t0 + i * step), WORD); w.style.opacity = clamp(s * 1.5); w.style.filter = `blur(${(1 - clamp(s)) * 14}px)`; w.style.transform = `translateY(${(1 - s) * 40}px)`; });
+}
+const typeOn = (el, txt, t, t0, cps = 40) => { el.textContent = txt.slice(0, Math.max(0, Math.floor((t - t0) * cps))); };
+const pos = el => { let x = 0, y = 0, e = el; while (e && e !== cam) { x += e.offsetLeft; y += e.offsetTop; e = e.offsetParent; } return [x, y, el.offsetWidth, el.offsetHeight]; };
+// ---- the travelling camera: every beat has its own place on one big canvas ----
+const OR = { hook: [0, 0], name: [0, 1250], line: [2000, 1250], screen: [2000, 0], steps: [4000, 0], close: [4000, 1250] };
+const off = (r, o) => [r[0] + o[0], r[1] + o[1], r[2], r[3]];
+const oLerp = (a, b, u) => [lerp(a[0], b[0], u), lerp(a[1], b[1], u)];
+const CK = [{ t: 0, x: 0, y: 0, z: 1 }, { t: B(12), z: 1.12, tau: .45 }, { t: B(16) - .03, y: 1250, z: 1.0, tau: .1 }, { t: B(24.1), x: 2000, tau: .12 }, { t: B(26.5), z: 1.05, tau: .4 },
+  { t: B(31), y: 0, z: 1.0, tau: .12 }, { t: B(40), z: 1.04, tau: .7 }, { t: B(57), x: 4000, z: 1.1, tau: .12 }, { t: B(73), z: 1.3, tau: .3 }, { t: B(75), z: .92, tau: .35 },
+  { t: B(83.3), y: 1250, z: 1.0, tau: .14 }, { t: B(89), z: 1.05, tau: .7 }];
+const camAxis = (t, k) => { let v = CK[0][k], p = v; for (let i = 1; i < CK.length; i++) { const c = CK[i]; if (c[k] === undefined) continue; v += (c[k] - p) * camMove(t, c.t, c.tau); p = c[k]; } return v; };
+const PUNCH = [[B(1.5), .07], [B(10.5), .09], [B(16), .15], [B(24), .07], [B(31), .1], [B(49), .06], [B(57), .08], [B(60.5), .04], [B(63.5), .04], [B(66.5), .04], [B(69.5), .04], [B(75), .1], [B(83), .08], [B(89), .06]];
+
+window.seek = t => {
+  const camX = camAxis(t, 'x') + 6 * Math.sin(t * .47), camY = camAxis(t, 'y') + 4 * Math.sin(t * .36 + 1);
+  let z = camAxis(t, 'z') + .012 * Math.sin(t * .55); PUNCH.forEach(([tp, a]) => { z += pulse(t, tp, a); });
+  cam.style.transform = `scale(${z}) translate(${-camX}px,${-camY}px)`;
+  const pvx = (camX - (camAxis(t - 1 / 30, 'x') + 6 * Math.sin((t - 1 / 30) * .47))) * z, pvy = (camY - (camAxis(t - 1 / 30, 'y') + 4 * Math.sin((t - 1 / 30) * .36 + 1))) * z;
+  const cbx = clamp((Math.abs(pvx) - 12) * .1, 0, 22), cby = clamp((Math.abs(pvy) - 12) * .1, 0, 22);
+  // scene origins: each beat's elements live at their own place
+  const place = (el, o) => { el.style.marginLeft = o[0] + 'px'; el.style.marginTop = o[1] + 'px'; };
+  [L.a1, L.a2, L.story, warm, cool].forEach(e => place(e, OR.hook)); [L.name, L.role].forEach(e => place(e, OR.name)); [L.t1, L.t2].forEach(e => place(e, OR.line));
+  place(L.kind, OR.screen); [slotTxt, L.d1, L.d2].forEach(e => place(e, OR.steps)); [L.name2, L.open, pillTxt].forEach(e => place(e, OR.close));
+  const clear = S(t - B(16), { k: 60, c: 15 });
+  box(lamp, camX - 300 + 160 * Math.sin(t * .5), camY + 260 + 90 * Math.sin(t * .4), 1300, 1300); lamp.style.background = `radial-gradient(closest-side, rgba(255,176,74,${.34 * (1 - .8 * clear)}), rgba(255,176,74,0))`;
+  box(blueL, camX + 900 + 160 * Math.sin(t * .37), camY - 380 + 100 * Math.cos(t * .3), 1500, 1500); blueL.style.background = `radial-gradient(closest-side, rgba(61,123,255,${.06 + .3 * clear}), rgba(61,123,255,0))`;
+  let gx = 0; for (let i = 1; i < 6; i++) gx += 240 * camMove(t, B(31 + 3 * i), .045); for (let i = 1; i < 4; i++) gx += 240 * camMove(t, B(49 + 2 * i), .045);
+  grid.style.background = `repeating-linear-gradient(90deg, rgba(61,123,255,.08) 0 1px, transparent 1px 120px), repeating-linear-gradient(0deg, rgba(61,123,255,.08) 0 1px, transparent 1px 120px)`;
+  grid.style.backgroundPosition = `${-gx}px 0`; grid.style.opacity = clamp(clear);
+  // swarm
+  const swOn = t < B(16.4); warm.style.display = cool.style.display = swOn ? '' : 'none';
+  if (swOn) { const suck = S(t - B(15.6), FAST);
+    FR.forEach(f => { let x = ((f.x + f.vx * t) % 2100 + 2100) % 2100 - 90, y = f.y + f.vy * Math.sin(t * .8 + f.x);
+      x = lerp(x, 960, suck); y = lerp(y, 540, suck);
+      f.a.style.transform = f.b.style.transform = `translate(${x}px,${y}px) scale(${f.z * (1 - .9 * suck)})`; f.a.style.opacity = .5; }); }
+  // hook + text edit
+  build(L.a1, t, .04, P / 2, 340, B(10.5));
+  build(L.a2, t, B(1), P / 2, 520, B(10.5));
+  const ed = $('edit');
+  if (t < B(5.5)) { ed.textContent = 'brilliant.'; ed.style.color = ''; } else { typeOn(ed, 'hard to explain.', t, B(5.6), 34); ed.style.color = '#FFB04A'; }
+  // carrier
+  let C = null, style = '';
+  if (t >= B(5) && t < B(10.5)) { const [x, y, w, h] = pos(ed), g = S(t - B(5), FAST); C = [x - 10, y - 8, (t < B(5.5) ? w * g : Math.max(w, 12)) + 20, h + 16]; style = 'amber'; }
+  else if (t >= B(10.5) && t < B(16)) { const [x, y, w, h] = pos(ed), u = S(t - B(10.5), MORPH); C = rectLerp([x - 10, y - 8, w + 20, h + 16], off([410, 230, 1100, 620], OR.hook), u); style = u > .4 ? 'frame' : 'amber'; }
+  else if (t >= B(16) && t < B(24.2)) { const u = S(t - B(16), FAST), v = S(t - B(24), FAST); const o1 = oLerp(OR.hook, OR.name, u), o2 = oLerp(OR.name, OR.line, v); C = rectLerp(off(rectLerp([410, 230, 1100, 620], [-40, -40, 2000, 1160], u), o1), off([310, 537, 1300, 6], o2), v); style = 'flood'; }
+  else if (t >= B(31) && t < B(57.6)) { const sOpen = S(t - B(31), MORPH), reflow = S(t - B(49), MORPH), toSlot = S(t - B(57), MORPH);
+    const p2 = pos($('p2')); let r = rectLerp(t < B(31.5) && p2[2] > 0 ? p2 : off([960 - 100, 570, 200, 112], OR.line), off([320, 160, 1280, 720], OR.screen), sOpen); r = rectLerp(r, off([110, 200, 1100, 619], OR.screen), reflow); C = rectLerp(r, off([400, 450, 1120, 180], OR.steps), toSlot); style = 'screen'; }
+  show(car, !!C && style !== 'screen');
+  if (C && style !== 'screen') { box(car, ...C); car.style.transform = '';
+    if (style === 'amber') { car.style.background = 'rgba(255,176,74,.30)'; car.style.border = '0'; car.style.borderRadius = '10px'; }
+    if (style === 'frame') { car.style.background = 'transparent'; car.style.border = '4px solid #3D7BFF'; car.style.borderRadius = '26px'; }
+    if (style === 'flood') { car.style.background = '#3D7BFF'; car.style.border = '0'; car.style.borderRadius = t < B(24) ? '26px' : '3px'; } }
+  if (swOn) cool.style.clipPath = (C && t >= B(10.5)) ? `inset(${C[1]}px ${1920 - C[0] - C[2]}px ${1080 - C[1] - C[3]}px ${C[0]}px round 24px)` : 'inset(50%)';
+  const fiOn = t >= B(10.65) && t < B(16.3); show(fimg, fiOn);
+  if (fiOn && C) { box(fimg, C[0] + 4, C[1] + 4, Math.max(0, C[2] - 8), Math.max(0, C[3] - 8)); const fs = S(t - B(10.65), MORPH);
+    const cv = fimg.firstChild, cx2 = cv.getContext('2d'); cx2.drawImage(frameOf('sterling', .9 + (t - B(10.65))), 0, 0, 1280, 720);
+    cv.style.filter = `blur(${(1 - clamp(fs)) * 18}px) saturate(${.4 + .6 * clamp(fs)})`; cv.style.transform = `scale(${1.15 - .15 * fs})`; }
+  build(L.story, t, B(11), P / 2, 905, B(16) - .02);
+  // name on the flood
+  build(L.name, t, B(16) + .03, P / 2, 400, B(24));
+  const roleOn = t >= B(17.5) && t < B(24.1); show(L.role, roleOn, 'flex'); if (roleOn) { L.role.style.top = '640px'; L.role.style.transform = 'translateX(150px)'; L.role.style.opacity = 1 - clamp((t - B(24)) / .1);
+    const hs = L.role.children; typeOn(hs[0], 'Motion Designer', t, B(17.5), 30); typeOn(hs[1], 'Creative Strategist', t, B(17.5) + .55, 30);
+    [...hs].forEach((h, j) => { const s2 = S(t - (B(17.5) + j * .55), POP); h.style.display = s2 > .02 ? 'inline-block' : 'none'; h.style.transform = `scaleX(${.6 + .4 * clamp(s2)})`; h.style.transformOrigin = 'left center'; }); }
+  if (t >= B(16) && t < B(24.2)) L.name.style.transform += ' translateX(150px)';
+  const pA = t >= B(16.5) && t < B(24.1), pB = t >= B(84); show(portrait, pA || pB);
+  if (pA) { const s = S(t - B(16.5), POP), ex = S(t - B(24), FAST); box(portrait, OR.name[0] + 300, OR.name[1] + 400, 230, 230); portrait.style.transform = `scale(${s * (1 - ex)})`; portrait.style.boxShadow = '0 0 0 6px #EAF1FF'; }
+  // images between words
+  build(L.t1, t, B(24.3), P / 2, 420, B(31));
+  build(L.t2, t, B(26.5), P / 2, 570, B(31) + .5);
+  [['p1', B(24.3) + P], ['p2', B(26.5) + P]].forEach(([id, t0], j) => { const el = $(id), o = S(t - t0, POP); el.style.width = (200 * clamp(o)) + 'px';
+    if (id === 'p2' && t >= B(31)) el.style.visibility = 'hidden'; else el.style.visibility = '';
+    const k = Math.floor(Math.max(0, t - t0) * 30 / 4), F = FILMS[(k + j * 3) % 6][0]; el.firstChild.getContext('2d').drawImage(frameOf(F, (Math.max(0, t - t0) % 2.2)), 0, 0, 320, 180); });
+  // the screen
+  const scOn = t >= B(31) && t < B(57.6); show(screen, scOn); show(chip, scOn && t < B(49)); show(counter, scOn && t < B(57));
+  let bx = 0;
+  if (scOn) { box(screen, ...C); screen.style.borderRadius = lerp(20, 26, S(t - B(31), MORPH)) + 'px';
+    let seq, t0s; if (t < B(49)) { seq = FILMS.map(f => f[0]); t0s = seq.map((_, i) => B(31 + 3 * i)); } else { seq = KINDS.map(k => k[1]); t0s = seq.map((_, i) => B(49 + 2 * i)); }
+    let i = 0; for (let k = 0; k < seq.length; k++) if (t >= t0s[k] - .1) i = k;
+    const prev = i > 0 ? seq[i - 1] : (t >= B(49) ? 'appleui' : null), tcw = (i === 0 && t >= B(49)) ? B(49) : t0s[i];
+    const u = prev ? camMove(t, tcw, .045) : 1, W = 1280;
+    const vel = prev ? Math.abs(u - camMove(t - 1 / 30, tcw, .045)) * W : 0; bx = clamp((vel - 12) * .12, 0, 28);
+    sctx.fillStyle = '#0A0C10'; sctx.fillRect(0, 0, 1280, 720);
+    if (prev && u < 1) sctx.drawImage(frameOf(prev, 1.6 + (t - tcw)), -u * W, 0, W, 720);
+    sctx.drawImage(frameOf(seq[i], t - tcw + .25), (1 - u) * W, 0, W, 720);
+    screen.firstChild.style.filter = bx > .3 ? `blur(${(bx / 3).toFixed(1)}px)` : '';
+    screen.firstChild.style.opacity = 1 - S(t - B(57), FAST);
+    if (t < B(49)) { const [, name, kind] = FILMS[i]; chip.style.left = C[0] + 'px'; chip.style.top = C[1] + C[3] + 30 + 'px'; typeOn(chip, `${name} · ${kind}`, t, t0s[i], 60); }
+    counter.style.left = C[0] + 'px'; counter.style.top = C[1] - 50 + 'px'; counter.textContent = t < B(49) ? `0${i + 1} / 06` : 'SELECTED WORK';
+  }
+  // word swap beside the screen
+  const kOn = t >= B(49.2) && t < B(57); show(L.kind, kOn);
+  if (kOn) { const k = clamp(Math.floor((t - B(49.2)) / B(2)), 0, 3), s = S(t - B(49.2 + 2 * k), WORD); L.kind.textContent = KINDS[k][0];
+    L.kind.style.left = '1290px'; L.kind.style.top = '455px'; L.kind.style.transform = `translateY(${(1 - s) * 70}px)`; L.kind.style.filter = `blur(${(1 - clamp(s)) * 14}px)`; L.kind.style.opacity = clamp(s * 1.5) * (1 - S(t - B(56.8), FAST)); }
+  // steps
+  const stOn = t >= B(57.5) && t < B(73); show(slotTxt, stOn, 'flex');
+  if (stOn) { const k = clamp(Math.floor((t - B(57.5)) / B(3)), 0, 4), s = S(t - B(57.5 + 3 * k), WORD); slotTxt.style.top = '492px'; $('sn').textContent = '0' + (k + 1); $('st').textContent = STEPS[k];
+    $('st').style.transform = `translateY(${(1 - s) * 50}px)`; $('st').style.filter = `blur(${(1 - clamp(s)) * 12}px)`; slotTxt.style.opacity = 1 - S(t - B(72.8), FAST); }
+  if (t >= B(57.6) && t < B(75.05)) { show(car, true); car.style.transform = ''; const toDot = S(t - B(73), MORPH), br = 1 + .18 * Math.sin((t - B(73)) * 9) * clamp((t - B(73.4)) / .3);
+    const r = off(rectLerp([400, 450, 1120, 180], [960 - 14 * br, 540 - 14 * br, 28 * br, 28 * br], toDot), OR.steps); box(car, ...r);
+    car.style.background = toDot > .5 ? '#3D7BFF' : '#0F1422'; car.style.border = toDot > .5 ? '0' : '3px solid #3D7BFF'; car.style.borderRadius = toDot > .7 ? '50%' : lerp(18, 40, toDot) + 'px'; }
+  // ring -> full stop
+  const ringOn = t >= B(75) && t < B(85), stop2 = $('stop2');
+  dots.forEach((d, i) => { show(d, ringOn); if (!ringOn) return;
+    const burst = S(t - (B(75) + i * .012), { k: 300, c: 22 }), ang = i / dots.length * Math.PI * 2 + t * .3;
+    const depth = .5 + .5 * Math.sin(ang);                      // lower half closer, upper half further: flat scale only
+    let x = OR.steps[0] + 960 + Math.cos(ang) * 820 * burst, y = OR.steps[1] + 540 + Math.sin(ang) * 380 * burst, sc = (.55 + .45 * depth) * burst, op = .55 + .45 * depth;
+    if (t >= B(83.6)) { const [sx, sy, sw, sh] = pos(stop2), c = S(t - (B(83.6) + (i % 8) * .03), { k: 260, c: 24 }); x = lerp(x, sx + 20, c); y = lerp(y, sy + sh * .74, c); sc = lerp(sc, .08, c); op = lerp(op, 1, c); }
+    d.style.left = x + 'px'; d.style.top = y + 'px'; d.style.transform = `scale(${sc})`; d.style.opacity = op; d.style.zIndex = Math.round(depth * 10);
+    const F = FILMS[i % 6][0]; d.firstChild.getContext('2d').drawImage(frameOf(F, ((i * .37 + (t - B(75))) % 2.2)), 0, 0, 256, 144); });
+  build(L.d1, t, B(75.5), P / 2, 430, B(83.2));
+  build(L.d2, t, B(78), P / 2, 560, B(83.2));
+  build(L.name2, t, B(83.4), P / 2, 520, Infinity);
+  const landed = S(t - B(84.8), POP), stretch = S(t - B(89), MORPH);
+  stop2.innerHTML = `<span style="display:inline-block;width:.22em;height:.22em;border-radius:50%;background:#3D7BFF;transform:scale(${clamp(landed) * (1 - clamp(stretch * 3))})"></span>`;
+  if (pB) { const s = S(t - B(84), POP); box(portrait, OR.close[0] + 960 - 125, OR.close[1] + 170, 250, 250); portrait.style.transform = `scale(${s}) translateY(${4 * Math.sin(t * 1.3)}px)`; portrait.style.boxShadow = '0 0 0 5px #3D7BFF'; }
+  const opOn = t >= B(86); show(L.open, opOn, 'flex'); if (opOn) { L.open.style.top = '730px'; typeOn(L.open, 'OPEN TO NEW PROJECTS', t, B(86), 50); }
+  const plOn = t >= B(89); show(pillTxt, plOn, 'flex');
+  if (plOn) { const [sx, sy, sw, sh] = pos(stop2), d0 = sh * .22; const r = rectLerp([sx + 4, sy + sh * .62, d0, d0], off([580, 830, 760, 100], OR.close), stretch); show(car, true); box(car, ...r);
+    car.style.background = '#0F1422'; car.style.border = '3px solid #3D7BFF'; car.style.borderRadius = '999px'; pillTxt.style.top = '880px'; pillTxt.style.transform = 'translateY(-50%)'; pillTxt.style.opacity = clamp((stretch - .7) / .3);
+    pillTxt.textContent = 'Full portfolio · link in post'; car.style.transform = `translateY(${3 * Math.sin(t * 1.4)}px)`; }
+  $('mbg').setAttribute('stdDeviation', `${(cbx + bx * .5).toFixed(1)} ${cby.toFixed(1)}`); cam.style.filter = (cbx + cby + bx) > .4 ? 'url(#mb)' : '';
+};
+const loads = Object.values(IM).flat().map(im => im.decode().catch(() => {}));
+Promise.all([...loads, document.fonts.load("800 80px 'B'"), document.fonts.load("500 30px 'M'"), document.fonts.load("400 30px 'G'"), portrait.firstChild.decode().catch(() => {})]).then(() => { window.seek(0); window.__ready = true; });
+</script>

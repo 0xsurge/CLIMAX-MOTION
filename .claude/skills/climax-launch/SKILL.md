@@ -61,13 +61,6 @@ The skill has two companion files, read alongside this one:
 
 ### A2. The quality bar (fixed craft rules)
 - **Hook:** within 3 s, muted, there is text on screen, a striking visual and a bold statement.
-- **Readable speed (the user's rule):** fast moves, but never faster than people read. Every line stays fully
-  visible after its last word lands for at least max(1.0 s, characters ÷ 17) (subtitle reading rate about 17
-  characters per second, minimum about 1 s per line). Words arrive at most about 4 per second. A label or step needs at
-  least about 1.2 s. Transitions stay fast (3–10 frames); only the holds get longer. Check every line in the timeline
-  against this before rendering.
-- **Small labels must read:** never dim small type on a busy or coloured ground. Use bold or bold italic, white, and
-  put a bright contrasting highlight behind it if needed (Obi reel: white bold italic on orange #F26A1B).
 - **Pace:** something new every 0.5–1 s in type sections, never 2 s without change. Bursts against calm stretches,
   and a quieter close.
 - **Type:** one display face and one UI face (the brand's own). Two sizes, caption and slam, with a big jump between
