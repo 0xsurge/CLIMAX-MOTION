@@ -238,11 +238,11 @@ const seekInner = t => {
   const landed = S(t - B(55.8), POP), stretch = S(t - B(60), MORPH);
   stop2.innerHTML = `<span style="display:inline-block;width:.22em;height:.22em;border-radius:50%;background:#3D7BFF;transform:scale(${clamp(landed) * (1 - clamp(stretch * 3))})"></span>`;
   if (pB) { const s = S(t - B(55), POP); box(portrait, OR.close[0] + 960 - 125, OR.close[1] + 170, 250, 250); portrait.style.transform = `scale(${s}) translateY(${4 * Math.sin(t * 1.3)}px)`; portrait.style.boxShadow = '0 0 0 5px #3D7BFF'; }
-  const opOn = t >= B(57); show(L.open, opOn, 'flex'); if (opOn) { L.open.style.top = '730px'; typeOn(L.open, 'Open to new projects', t, B(57), 40); }
+  const opOn = t >= B(57); show(L.open, opOn, 'flex'); if (opOn) { L.open.style.top = '730px'; typeOn(L.open, 'Work with me', t, B(57), 30); }
   const plOn = t >= B(60); show(pillTxt, plOn, 'flex');
-  if (plOn) { const [sx, sy, sw, sh] = pos(stop2), d0 = sh * .22; const r = rectLerp([sx + 4, sy + sh * .62, d0, d0], off([680, 822, 560, 120], OR.close), stretch); show(car, true); box(car, ...r);
+  if (plOn) { const [sx, sy, sw, sh] = pos(stop2), d0 = sh * .22; const r = rectLerp([sx + 4, sy + sh * .62, d0, d0], off([600, 822, 720, 120], OR.close), stretch); show(car, true); box(car, ...r);
     car.style.background = '#3D7BFF'; car.style.border = '0'; car.style.borderRadius = '999px'; pillTxt.style.top = '882px'; pillTxt.style.transform = 'translateY(-50%)'; pillTxt.style.opacity = clamp((stretch - .7) / .3);
-    pillTxt.textContent = 'Book a call'; car.style.transform = `translateY(${3 * Math.sin(t * 1.4)}px)`; }
+    pillTxt.textContent = 'Book a call today'; car.style.transform = `translateY(${3 * Math.sin(t * 1.4)}px)`; }
   $('mbg').setAttribute('stdDeviation', `${(cbx + bx * .5).toFixed(1)} ${cby.toFixed(1)}`); cam.style.filter = (cbx + cby + bx) > .4 ? 'url(#mb)' : '';
 };
 const loads = Object.values(IM).flat().map(im => im.decode().catch(() => {}));
