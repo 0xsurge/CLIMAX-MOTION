@@ -2,7 +2,7 @@
 # physical SFX: a lens-focus ratchet when the frame locks, a thump under the name and the close, a soft click as
 # each film opens, a tick per process step. No whooshes, no tonal notes.
 import numpy as np, wave, subprocess, json
-SR = 44100; G = json.load(open('grid.json')); P = G['P']; B = lambda n: n * P; DUR = B(67)
+SR = 44100; G = json.load(open('grid.json')); P = G['P']; B = lambda n: n * P; DUR = B(96); G['start'] = G['lift'] - B(16)
 T = dict(frame=B(6), turn=B(10), say=B(15), work=B(20), how=B(44), deserve=B(54), end=B(60))
 rng = np.random.default_rng(3); fx = np.zeros((int((DUR + 1) * SR), 2))
 def put(t, s, g, pan=0.):
@@ -15,18 +15,19 @@ def ratchet(k=5, gap=.028):
     for i in range(k): c = click(3200 - i * 150, .004); s = int(i * gap * SR); out[s:s + len(c)] += c * (.5 + .1 * i)
     return out
 def tap(): n = int(.02 * SR); t = np.arange(n) / SR; return hp(rng.standard_normal(n)) * np.exp(-t / .002) * .5
-put(B(3), thump(), .4)                                           # "brilliant." lands
+put(B(1.5), thump(), .4)                                         # "brilliant." lands
 for k in range(0, 16, 2): put(B(5.6) + k / 34, tap(), .08)       # retyping "hard to explain."
-put(B(7) + .05, ratchet(), .32, .2)                              # the highlight becomes the focus frame
-put(B(10), thump(), .55)                                         # the flood and the name, on the lift
-put(B(14), click(1800), .2)                                      # the flood collapses into a slit
-put(B(18), thump(), .3)                                          # the pill grows into the screen
-for n in (20, 22, 24, 26, 28, 32, 34, 36): put(B(n), click(2100), .18, (-.3, .3)[n % 4 == 0])   # each whip
-for k in range(5): put(B(38.5 + k), click(2800, .004), .16)      # each step
-put(B(44), click(1500), .15)                                     # slot collapses to a dot
-put(B(46), thump(), .3)                                          # the dot bursts into the ring
-put(B(55.8), click(2400), .22)                                   # the ring lands as the full stop
-put(B(60), click(2000), .2)                                      # the full stop becomes the pill
+put(B(10.5) + .05, ratchet(), .32, .2)                           # the highlight becomes the focus frame
+put(B(16), thump(), .55)                                         # the flood and the name, on the lift
+for k in range(0, 34, 3): put(B(17.5) + k / 30, tap(), .06)      # the role types
+put(B(24), click(1800), .2)                                      # the flood collapses into a slit
+put(B(31), thump(), .3)                                          # the pill grows into the screen
+for n in [31 + 3 * i for i in range(1, 6)] + [51, 53, 55]: put(B(n), click(2100), .18, (-.3, .3)[n % 2])   # each whip
+for k in range(5): put(B(57.5 + 3 * k), click(2800, .004), .16)  # each step
+put(B(73), click(1500), .15)                                     # slot collapses to a dot
+put(B(75), thump(), .3)                                          # the dot bursts into the ring
+put(B(84.8), click(2400), .22)                                   # the ring lands as the full stop
+put(B(89), click(2000), .2)                                      # the full stop becomes the pill
 subprocess.run(['ffmpeg', '-y', '-v', 'error', '-ss', str(G['start']), '-t', str(DUR + .5), '-i', 'cand/371.mp3', '-af', f'afade=t=out:st={DUR - 1.8}:d=1.8', '-ar', '44100', '-ac', '2', 'music.wav'], check=True)
 w = wave.open('music.wav'); m = np.frombuffer(w.readframes(w.getnframes()), '<i2').reshape(-1, 2) / 32768
 n = min(len(m), len(fx)); mix = m[:n] * .8 + fx[:n]; mix /= max(1e-9, np.abs(mix).max()) / .9
