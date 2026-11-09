@@ -193,3 +193,32 @@ Sources:
 - **F2. Recurring motif:** one small element returns across chapters (a binary string, a chip, a dart, a caret).
 - **F3. One palette, many grounds:** each chapter gets its own ground, but all are built from the same 5–6 brand
   colours.
+
+## G. Devices from the Resend concept ad (videos/reference/music-ref/STUDY.md)
+- **G1. The problem shown as the product's own failure states.**
+  - **Says:** "this is what happens to you now".
+  - **Use when:** the product fixes a measurable failure.
+  - **Make it:** show the real UI failing (0 opens, a Spam badge, an error, a red metric) before the fix. Then show the
+    same UI succeeding (Delivered, 98%).
+- **G2. Light into caret.**
+  - **Says:** something is about to be written.
+  - **Use when:** the first frame of a film that starts by typing.
+  - **Make it:** a blurred light bar flares, then sharpens and shrinks into the caret, about 0.4 s, and the typing
+    starts.
+- **G3. Button glow on press.**
+  - **Make it:** the button lights in the accent with a few edge sparks, then presses down. Only the pressed element
+    glows (motivated light).
+- **G4. Pull-out to consequence.**
+  - **Says:** zoom out, look what happened.
+  - **Make it:** after an action, a fast pull-out (about ×0.5 in under 1 s) reveals the result in a wider context,
+    such as an inbox row or a dashboard.
+- **G5. Button into orb into status (carrier).**
+  - **Make it:** the pressed button collapses into a glowing sphere. The sphere becomes a loader dot ("Sending…"),
+    then lands as the status of the next element.
+- **G6. Burst then assemble.**
+  - **Make it:** many items fly out in depth, then assemble into one final card with status chips orbiting it.
+- **G7. A traveling accent.**
+  - **Make it:** while a line builds, the accent colour moves along the words. It lands on the key word last.
+- **G8. A keyword CTA.**
+  - **Make it:** close on a question ("Want this for your launch?") and a pill with a comment keyword
+    ("DM me · LAUNCH"). This works with LinkedIn comment-to-DM funnels.

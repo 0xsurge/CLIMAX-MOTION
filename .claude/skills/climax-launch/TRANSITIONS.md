@@ -85,3 +85,13 @@ Both work together. Use the travelling flat camera (camMove, holds, zoom dives) 
 ## Storyboard rule (add to every storyboard)
 For each cut between beats, write the **carrier, transformation and arrival**. If a transition has no carrier, it's a
 plain cut: allowed at most two or three times per film, and only on big beats.
+
+## More carriers (from the Resend concept ad)
+| # | pattern | carrier |
+|---|---|---|
+| T19 | **Light flare into caret:** a blurred light bar sharpens into the typing caret (0.4 s) | light |
+| T20 | **Click into pull-out:** the press is followed by a fast ×0.5 pull-out, and the composer becomes one inbox row | the UI element |
+| T21 | **Button into orb into loader dot:** a pressed button collapses into a glowing sphere, which becomes the "Sending…" dot | the button |
+| T22 | **Burst into assembled card:** items fly out, then assemble into one card with orbiting status chips | the items |
+| T23 | **Number into light pool into caption:** a huge number lands on a glow, shrinks and lifts, and the caption builds beneath | the number |
+Note: Resend's camera rolls and tilts its planes in 3D. The user's flat-camera rule (camera-style) still applies by default.
