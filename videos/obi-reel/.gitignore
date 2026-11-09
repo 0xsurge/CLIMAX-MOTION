@@ -1,0 +1,8 @@
+assets/*.woff2
+assets/*.jpg
+assets/*.mp4
+sound/*.mp3
+sound/*.wav
+renders/
+boards/*.png
+review/
