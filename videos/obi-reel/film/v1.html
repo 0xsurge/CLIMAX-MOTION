@@ -1,0 +1,201 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Obi Igwe reel</title>
+<!-- Obi Igwe portfolio film. 1920x1080, ~31 s, cut to "Deep Urban" (Mixkit, 129.2 BPM, lift at 4.64 s).
+     Idea (climax-launch): complex -> clear. Hero object: a blue focus frame; inside it the warm, blurred
+     fragments of a complex product turn sharp and cool. The frame is the carrier: it floods into the name,
+     contracts into an underline, opens into each film, collapses into the step slot and finally into the link pill.
+     window.seek(t) paints frame t; springs from motion.js for elements, camMove for the camera; flat 2D only. -->
+<style>
+  @font-face { font-family: 'B'; src: url(../assets/bricolage.woff2) format('woff2'); font-weight: 800; }
+  @font-face { font-family: 'G'; src: url(../assets/geist-400.woff2) format('woff2'); font-weight: 100 900; }
+  @font-face { font-family: 'M'; src: url(../assets/geistmono.woff2) format('woff2'); font-weight: 500; }
+  html, body { margin: 0; background: #0A0C10; overflow: hidden; }
+  #stage { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #0A0C10; color: #EEF2F8; font-family: 'G', sans-serif; }
+  .abs { position: absolute; left: 0; top: 0; }
+  #world { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; }
+  .glow { position: absolute; border-radius: 50%; pointer-events: none; }
+  .frag { position: absolute; white-space: nowrap; font: 500 34px/1 'M'; letter-spacing: .02em; color: #FFB04A; }
+  .shard { position: absolute; border-radius: 14px; border: 2px solid rgba(255,176,74,.55); background: rgba(255,176,74,.08); }
+  .line { position: absolute; left: 0; width: 1920px; display: flex; justify-content: center; align-items: baseline; white-space: nowrap; }
+  .w { display: inline-block; margin: 0 .12em; }
+  .cap { font: 800 84px/1 'B'; letter-spacing: -.03em; }
+  .big { font: 800 200px/1 'B'; letter-spacing: -.045em; }
+  .label { font: 500 26px/1 'M'; letter-spacing: .16em; text-transform: uppercase; color: #8F98A8; }
+  .blue { color: #3D7BFF; } .lamp { color: #FFB04A; }
+  .frame { position: absolute; border-radius: 26px; border: 3px solid #3D7BFF; box-shadow: 0 0 0 1px rgba(61,123,255,.25), 0 30px 80px rgba(0,0,0,.55); overflow: hidden; background: #0A0C10; }
+  .tick { position: absolute; width: 22px; height: 22px; border-color: #CFE0FF; border-style: solid; border-width: 0; }
+  .chip { position: absolute; display: flex; align-items: center; gap: 18px; font: 500 28px/1 'M'; letter-spacing: .12em; text-transform: uppercase; color: #CFE0FF; white-space: nowrap; }
+  .chip i { font-style: normal; color: #3D7BFF; }
+  .pill { position: absolute; border-radius: 999px; border: 3px solid #3D7BFF; display: flex; align-items: center; justify-content: center; font: 500 40px/1 'G'; color: #EEF2F8; white-space: nowrap; background: #0F1422; }
+  #portrait { position: absolute; border-radius: 50%; overflow: hidden; box-shadow: 0 0 0 4px #3D7BFF, 0 30px 80px rgba(0,0,0,.6); }
+  #portrait img { width: 100%; height: 100%; display: block; object-fit: cover; }
+</style>
+<div id="stage">
+  <svg width="0" height="0" style="position:absolute"><filter id="mb" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur id="mbg" stdDeviation="0 0"/></filter></svg>
+  <div class="glow" id="lampGlow"></div><div class="glow" id="blueGlow"></div>
+  <div id="world"></div>
+  <div id="ui"></div>
+</div>
+<script src="../assets/motion.js"></script>
+<script>
+const M = window.Motion, S = (t, p) => M.spring(t, p), clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x)), lerp = (a, b, u) => a + (b - a) * u;
+const P = 0.46439909, B = n => n * P;
+const T = { hook: 0, frame: B(6), turn: B(10), say: B(15), work: B(20), how: B(44), deserve: B(54), end: B(60), out: B(67) };
+window.FILM_DUR = T.out;
+const camMove = (t, tc, tau) => t < tc ? 0.5 * Math.exp((t - tc) / tau) : 1 - 0.5 * Math.exp(-(t - tc) / tau);
+const $ = id => document.getElementById(id), world = $('world'), ui = $('ui');
+const mk = (parent, html) => { const d = document.createElement('div'); d.innerHTML = html.trim(); const e = d.firstChild; parent.appendChild(e); return e; };
+const words = (cls, list) => `<div class="line ${cls}">${list.map(([w, c]) => `<span class="w ${c || ''}">${w}</span>`).join('')}</div>`;
+
+// ---------- world layout: each beat has its own place; the camera travels between them ----------
+const PL = { hook: [0, 0], work0: [2200, -700], step: 1300 };   // films sit on a diagonal staircase from work0
+const FILMS = [['sterling', 'Sterling', 'Launch film'], ['vivox', 'Vivox', 'Product film'], ['nyangu', 'Nyangu', 'Product film'], ['dripverse', 'Drip Verse', 'Brand film'], ['armab', 'Armab Agency', 'Launch film'], ['appleui', 'UI motion', 'Motion study']];
+const filmPos = i => [PL.work0[0] + i * PL.step, PL.work0[1] + (i % 2 ? 380 : 0)];
+
+// ---------- fragments: the complex product, warm and out of focus ----------
+const rnd = M.mulberry32(7);
+const JARGON = ['inference', 'latency p99', 'embeddings', 'API keys', 'zero-knowledge', 'routing', 'SDK v2', 'webhooks', 'rate limits', 'tokenizer', 'RAG', 'fine-tuning', 'auth flow', 'vector DB', 'edge cache', 'schema'];
+const fragsWarm = [], fragsCool = [];
+const coolLayer = mk(world, `<div class="abs" style="width:1920px;height:1080px"></div>`);
+const warmLayer = mk(world, `<div class="abs" style="width:1920px;height:1080px"></div>`);
+world.insertBefore(warmLayer, coolLayer);
+for (let i = 0; i < 26; i++) {
+  const word = i < JARGON.length, x = 80 + rnd() * 1760, y = 60 + rnd() * 960, z = .7 + rnd() * .9, sp = .4 + rnd() * .8, ph = rnd() * 6;
+  const w = 120 + rnd() * 260, h = 70 + rnd() * 160;
+  const html = word ? `<div class="frag">${JARGON[i]}</div>` : `<div class="shard" style="width:${w}px;height:${h}px"></div>`;
+  const a = mk(warmLayer, html), b = mk(coolLayer, html);
+  b.style.color = '#CFE0FF'; if (!word) { b.style.borderColor = 'rgba(207,224,255,.7)'; b.style.background = 'rgba(61,123,255,.10)'; }
+  fragsWarm.push({ el: a, x, y, z, sp, ph }); fragsCool.push({ el: b, x, y, z, sp, ph });
+}
+// ---------- the focus frame (the carrier) ----------
+const focus = mk(world, `<div class="frame" style="background:transparent;overflow:visible"></div>`);
+['top:-12px;left:-12px;border-top-width:4px;border-left-width:4px', 'top:-12px;right:-12px;border-top-width:4px;border-right-width:4px', 'bottom:-12px;left:-12px;border-bottom-width:4px;border-left-width:4px', 'bottom:-12px;right:-12px;border-bottom-width:4px;border-right-width:4px'].forEach(s => mk(focus, `<div class="tick" style="${s}"></div>`));
+// ---------- type ----------
+const L = {
+  h1: mk(world, words('cap', [['Your'], ['product'], ['is'], ['brilliant.']])),
+  h2: mk(world, words('cap', [['Explaining'], ['it'], ['is'], ['hard.', 'lamp']])),
+  story: mk(world, words('cap', [['Until'], ["it's"], ['a'], ['story.', 'blue']])),
+  name: mk(ui, words('big', [['Obi'], ['Igwe<span class="blue">.</span>']])),
+  role: mk(ui, `<div class="line label">Motion designer <span class="blue" style="margin:0 .6em">/</span> creative strategist</div>`),
+  s1: mk(ui, words('cap', [['I'], ['turn'], ['complex', 'lamp'], ['products']])),
+  s2: mk(ui, words('cap', [['into'], ['clear', 'blue'], ['stories.', 'blue']])),
+  work: mk(ui, `<div class="line label">Selected work</div>`),
+  how: mk(ui, `<div class="line label">How I work</div>`),
+  d1: mk(ui, words('cap', [['Your'], ['product'], ['deserves']])),
+  d2: mk(ui, words('cap', [['to'], ['be'], ['understood.', 'blue']])),
+  open: mk(ui, `<div class="line label" style="color:#CFE0FF">Open to new projects</div>`),
+};
+const flood = mk(ui, `<div class="abs" style="background:#3D7BFF"></div>`); ui.insertBefore(flood, ui.firstChild);
+const underline = mk(ui, `<div class="abs" style="height:8px;border-radius:4px;background:#3D7BFF"></div>`);
+// films in world space
+const films = FILMS.map(([id, name, kind], i) => {
+  const f = mk(world, `<div class="frame" style="width:1280px;height:720px"><canvas width="960" height="540" style="width:100%;height:100%;display:block"></canvas></div>`);
+  const c = mk(world, `<div class="chip"><i>0${i + 1}</i>${name}<span style="color:#8F98A8">· ${kind}</span></div>`);
+  return { id, f, c, ctx: f.firstChild.getContext('2d'), imgs: [] };
+});
+// steps: a living slot
+const STEPS = ['Find the truth', 'Pick one idea', 'Build the colour story', 'Storyboard every beat', 'Motion and sound'];
+const slot = mk(ui, `<div class="frame" style="background:#0F1422;display:flex;align-items:center;justify-content:center;gap:28px;overflow:hidden"><span id="sn" style="font:500 40px/1 'M';color:#3D7BFF"></span><span id="st" style="font:800 84px/1 'B';letter-spacing:-.03em;white-space:nowrap"></span></div>`);
+const portrait = mk(ui, `<div id="portrait"><img src="../assets/portrait.jpg"></div>`);
+const pill = mk(ui, `<div class="pill"><span id="pt">Full portfolio · link in post</span></div>`);
+
+// ---------- helpers ----------
+function build(node, t, t0, step, y, exit = Infinity, { creep = .03, x = 0 } = {}) {
+  const ws = node.children, vis = t >= t0 - .01 && t < exit + .14; node.style.display = vis ? 'flex' : 'none'; if (!vis) return;
+  const life = t - t0, ex = clamp((t - exit) / .12);
+  node.style.top = y + 'px'; node.style.transform = `translateX(${x - 16 * clamp(life / 2.5) - 40 * ex}px) scale(${1 - creep * clamp(life / 2.5)})`;
+  node.style.filter = ex > 0 ? `blur(${10 * ex}px)` : ''; node.style.opacity = 1 - ex;
+  for (let i = 0; i < ws.length; i++) { const s = S(t - (t0 + i * step), { k: 900, c: 50 }); ws[i].style.opacity = clamp(s * 1.4); ws[i].style.filter = `blur(${(1 - clamp(s)) * 12}px)`; ws[i].style.transform = `translateX(${(1 - s) * 34}px)`; }
+}
+const show = (el, on, d = '') => { el.style.display = on ? d : 'none'; };
+const box = (el, x, y, w, h) => { el.style.left = x + 'px'; el.style.top = y + 'px'; el.style.width = w + 'px'; el.style.height = h + 'px'; };
+
+// ---------- camera (world space): flat, camMove moves, holds between ----------
+const CK = [{ t: 0, x: 0, y: 0, z: 1 }, { t: T.frame + .2, z: 1.06, tau: .4 }, { t: T.turn - .1, z: 1.0, tau: .12 }];
+FILMS.forEach((_, i) => { const [fx, fy] = filmPos(i); CK.push({ t: T.work + i * B(4) - .1, x: fx, y: fy, z: i === 0 ? 1.05 : 1.0, tau: i === 0 ? .14 : .12 }); });
+CK.push({ t: T.how - .1, x: filmPos(5)[0] + 900, y: filmPos(5)[1] + 1200, z: 1, tau: .13 });
+const camAxis = (t, k) => { let v = CK[0][k], p = v; for (let i = 1; i < CK.length; i++) { const c = CK[i]; if (c[k] === undefined) continue; v += (c[k] - p) * camMove(t, c.t, c.tau); p = c[k]; } return v; };
+const cam = t => [camAxis(t, 'x') + 5 * Math.sin(t * .5), camAxis(t, 'y') + 4 * Math.sin(t * .37 + 1), camAxis(t, 'z')];
+
+window.seek = t => {
+  const C = cam(t), Cp = cam(t - 1 / 30), z = C[2], vx = (C[0] - Cp[0]) * z, vy = (C[1] - Cp[1]) * z;
+  const bx = clamp((Math.abs(vx) - 10) * .12, 0, 24), by = clamp((Math.abs(vy) - 10) * .12, 0, 24);
+  world.style.transform = `translate(960px,540px) scale(${z}) translate(${-960 - C[0]}px,${-540 - C[1]}px)`;
+  $('mbg').setAttribute('stdDeviation', `${bx.toFixed(2)} ${by.toFixed(2)}`); world.style.filter = (bx > .3 || by > .3) ? 'url(#mb)' : '';
+  // room light: warm lamp in the complex half, blue once clear
+  const clear = S(t - T.turn, { k: 30, c: 11 });
+  const lg = $('lampGlow'), bg = $('blueGlow');
+  box(lg, -300 + 120 * Math.sin(t * .4), 300 + 80 * Math.sin(t * .3), 1300, 1300); lg.style.background = `radial-gradient(closest-side, rgba(255,176,74,${.32 * (1 - clear * .75)}), rgba(255,176,74,0))`;
+  box(bg, 900 + 140 * Math.sin(t * .33), -400 + 90 * Math.cos(t * .27), 1500, 1500); bg.style.background = `radial-gradient(closest-side, rgba(61,123,255,${.08 + .3 * clear}), rgba(61,123,255,0))`;
+
+  // ---- hook + focus frame (world space at hook place) ----
+  const fragOn = t < T.turn + .5; warmLayer.style.display = coolLayer.style.display = fragOn ? '' : 'none';
+  if (fragOn) {
+    const out = S(t - (T.turn - .15), { k: 120, c: 22 });
+    fragsWarm.forEach((f, i) => { const g = fragsCool[i], dx = 30 * Math.sin(t * f.sp + f.ph), dy = 22 * Math.cos(t * f.sp * .8 + f.ph), sc = f.z * (1 + out * 1.6);
+      const tr = `translate(${960 + (f.x - 960) * (1 + out * 1.4) + dx}px,${540 + (f.y - 540) * (1 + out * 1.4) + dy}px) scale(${sc})`;
+      f.el.style.transform = g.el.style.transform = tr; f.el.style.opacity = .55 * (1 - out); g.el.style.opacity = 1 - out; });
+    warmLayer.style.filter = 'blur(7px)';
+  }
+  // the frame slides in and focuses whatever is inside it
+  const fIn = S(t - T.frame, { k: 260, c: 28 }), fExp = S(t - (T.turn - .12), { k: 300, c: 34 });
+  const fw = lerp(980, 1920 * 1.2, fExp), fh = lerp(560, 1080 * 1.2, fExp), fx = lerp(lerp(2100, 470, fIn), 960 - fw / 2, fExp), fy = 540 - fh / 2;
+  const fOn = t >= T.frame - .05 && t < T.turn + .2; show(focus, fOn);
+  if (fOn) { box(focus, fx, fy, fw, fh); }
+  coolLayer.style.clipPath = fOn ? `inset(${fy}px ${1920 - fx - fw}px ${1080 - fy - fh}px ${fx}px round 26px)` : (t < T.frame ? 'inset(50%)' : 'none');
+  build(L.h1, t, .05, P / 2, 380, T.frame - .02);
+  build(L.h2, t, B(3), P / 2, 520, T.frame - .02);
+  build(L.story, t, B(7), P / 2, 498, T.turn - .1, { x: 0 });
+  // ---- turn: the frame floods into the name ----
+  const flOn = t >= T.turn - .1 && t < T.say + .5; show(flood, flOn);
+  if (flOn) { const shrink = S(t - (T.say - .1), { k: 200, c: 28 }); const h = lerp(1080, 8, shrink), w = lerp(1920, 900, shrink), y = lerp(0, 726, shrink);
+    box(flood, 960 - w / 2, y, w, h); flood.style.borderRadius = shrink > .5 ? '4px' : '0';
+    flood.style.opacity = t < T.turn ? clamp((t - (T.turn - .1)) / .1) : 1; }
+  const nameOn = t >= T.turn && t < T.say;
+  build(L.name, t, T.turn + .05, P / 2, 400, T.say - .15, { creep: .025, x: t < T.end ? 130 : 0 });
+  const dot = L.name.querySelector('.blue'); dot.style.color = t < T.end ? '#0A0C10' : '#3D7BFF';
+  L.role.style.color = t < T.end ? 'rgba(234,241,255,.85)' : '';
+  build(L.role, t, T.turn + B(2), P / 4, 660, T.say - .15, { x: 130 });
+  portrait.style.boxShadow = t < T.end ? '0 0 0 5px #EAF1FF, 0 30px 80px rgba(0,0,0,.35)' : '';
+  show(portrait, (t >= T.turn + B(1) && t < T.say) || t >= T.end);
+  // ---- statement; the flood has contracted into the underline under "clear stories." ----
+  build(L.s1, t, T.say + .05, P / 2, 420, T.work - .05);
+  build(L.s2, t, T.say + B(2), P / 2, 560, T.work - .05);
+  const ulOn = t >= T.say + .4 && t < T.work + .3; show(underline, ulOn);
+  if (ulOn) { const sc = S(t - (T.say + .4), { k: 300, c: 30 }), op = S(t - (T.work - .25), { k: 260, c: 30 }); const w = lerp(900, 560, sc), x = lerp(510, 1010, sc);
+    box(underline, lerp(x, 320, op), lerp(668, 180, op), lerp(w, 1280, op), lerp(8, 720, op)); underline.style.borderRadius = lerp(4, 26, op) + 'px'; underline.style.opacity = 1 - clamp((op - .85) / .15); }
+  // ---- the work: films open in frames along the staircase ----
+  films.forEach((F, i) => { const t0 = T.work + i * B(4), on = t >= t0 - .35 && t < T.how + .3; show(F.f, on); show(F.c, on, 'flex'); if (!on) return;
+    const [x, y] = filmPos(i), e = S(t - (t0 - .3), { k: 220, c: 26 });
+    box(F.f, x + 320 + (1 - e) * 60, y + 180 + (1 - e) * 40, 1280, 720); F.f.style.transform = `scale(${.92 + .08 * e})`;
+    F.f.style.opacity = clamp(e * 1.6); F.f.style.filter = `blur(${(1 - clamp(e)) * 14}px)`;
+    F.c.style.left = x + 320 + 'px'; F.c.style.top = y + 180 + 720 + 34 + 'px'; F.c.style.opacity = clamp(S(t - t0, 'snappy'));
+    const k = Math.min(F.imgs.length - 1, Math.max(0, Math.floor((t - (t0 - .3)) * 30))); if (F.imgs[k]) F.ctx.drawImage(F.imgs[k], 0, 0, 960, 540); });
+  build(L.work, t, T.work + .1, P / 4, 110, T.how - .1);
+  // ---- how I work: the frame collapses into a living slot ----
+  const sOn = t >= T.how && t < T.deserve; show(slot, sOn, 'flex');
+  if (sOn) { const e = S(t - T.how, { k: 260, c: 30 }), w = lerp(1280, 1340, e), h = lerp(720, 200, e); box(slot, 960 - w / 2, 540 - h / 2, w, h);
+    const k = clamp(Math.floor((t - T.how - B(1)) / B(2)), 0, 4), u = t - (T.how + B(1) + k * B(2)), s = S(u, { k: 700, c: 42 });
+    $('sn').textContent = '0' + (k + 1); const st = $('st'); st.textContent = STEPS[k]; st.style.transform = `translateY(${(1 - s) * 60}px)`; st.style.filter = `blur(${(1 - clamp(s)) * 10}px)`;
+    const ex = S(t - (T.deserve - .2), { k: 300, c: 30 }); slot.style.transform = `translateY(${6 * Math.sin(t * 2.1)}px) scale(${(1 - ex * .1) * (1 + .012 * Math.sin(t * 1.3))})`; slot.style.opacity = 1 - ex; }
+  build(L.how, t, T.how + .1, P / 4, 330, T.deserve - .1);
+  // ---- the line that matters ----
+  build(L.d1, t, T.deserve, P / 2, 420, T.end - .05);
+  build(L.d2, t, T.deserve + B(2), P / 2, 560, T.end - .05);
+  // ---- close: portrait, name, and the pill the frame becomes ----
+  if (t >= T.turn + B(1) && t < T.say) { const s = S(t - (T.turn + B(1)), { k: 260, c: 26 }), sz = 220; box(portrait, 395, 390 + (1 - s) * 60, sz, sz); portrait.style.opacity = clamp(s * 1.5); portrait.style.transform = `scale(${.8 + .2 * s})`; }
+  if (t >= T.end) {
+    const s = S(t - T.end, { k: 220, c: 26 }), sz = 260; box(portrait, 960 - sz / 2, 150 + (1 - s) * 60 + 4 * Math.sin(t * 1.2), sz, sz); portrait.style.opacity = clamp(s * 1.5); portrait.style.transform = `scale(${.85 + .15 * s})`;
+  }
+  if (t >= T.end) build(L.name, t, T.end + B(1), P / 2, 470, Infinity, { creep: .01 });
+  build(L.open, t, T.end + B(3), P / 4, 700);
+  const pOn = t >= T.end + B(4); show(pill, pOn, 'flex');
+  if (pOn) { const s = S(t - (T.end + B(4)), { k: 220, c: 24 }); const w = lerp(120, 720, s); box(pill, 960 - w / 2, 790, w, 96); $('pt').style.opacity = clamp((s - .6) / .4); pill.style.opacity = clamp(s * 2); }
+};
+
+// ---------- load the film frames, then ready ----------
+const loads = [];
+films.forEach(F => { for (let k = 1; k <= 69; k++) { const im = new Image(); im.src = `../assets/clips/${F.id}/${String(k).padStart(3, '0')}.jpg`; F.imgs.push(im); loads.push(im.decode().catch(() => {})); } });
+Promise.all([...loads, document.fonts.load("800 80px 'B'"), document.fonts.load("500 30px 'M'"), document.fonts.load("400 30px 'G'"), portrait.firstChild.decode().catch(() => {})]).then(() => { window.seek(0); window.__ready = true; });
+</script>
