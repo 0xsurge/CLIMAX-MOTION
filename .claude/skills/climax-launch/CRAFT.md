@@ -65,6 +65,18 @@ The user's words: quick bounces, "a sudden increase in scale and a tiny reduce i
 - **Starting presets:** FAST {k 300, c 35}, MORPH {k 160, c 26}, POP {k 400, c 40}, WORD {k 300, c 35}. Before using a
   spring, check that c ≥ 2·√k.
 - **Scale changes stay small.** An element arriving grows from about 0.9–0.96, not from 0.5 with a kick.
+- **Nothing sudden (second user law).** "Smooth and buttery, smooth and calm." Nothing appears in a split second.
+  - **Enters:** every text, image, card or chip arrives as a soft fade-up over 0.5–0.9 s, combining opacity, blur and a
+    small 15–25 px drift. Nothing pops in at full opacity, and nothing grows from scale 0.
+  - **Exits:** they fade and blur out over about 0.4 s and finish before the camera leaves.
+  - **Swaps:** a swapped word, step, film or product crossfades. The old one leaves before the new one lands. A hard
+    change of text or image is never allowed.
+  - **No pulses:** no breathing or wobble on landed objects.
+  - **Camera moves:** tau is at least 0.3 s, so no whips. Anything riding the camera (a carrier, a card) follows the
+    camera's own progress so it never lags behind or jumps.
+  - **Starting presets:** FAST {k 150, c 25}, MORPH {k 90, c 19}, POP {k 160, c 26}, WORD {k 110, c 21},
+    SOFT {k 60, c 16}.
+  - **Punch-zooms:** none, unless the user asks for one.
 - **Punch-zooms are soft.** Each has a peak of about 2–5%, a rise of about 0.1 s and a decay of about 0.35 s. This
   replaces the 4-frame ±8–15% kick in TRANSITIONS.md.
 
