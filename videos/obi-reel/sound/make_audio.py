@@ -52,6 +52,24 @@ def soft(p):
 wh = soft('sfxpack/sweep/sweep_18_mixkit2636.wav'); wpk = int(np.argmax(np.abs(wh)))
 for tc, pan in [(B(10) - .03, 0), (B(14.1), .35), (B(18), 0), (B(38), .35), (B(54.3), 0)]:   # down, right, up, right, down
     put(max(0, tc - wpk / SR), wh, .16, pan)
+# ---- SaaS motion layer (studied from the Notion concept ad): a soft pop on every word that lands, a soft air
+# pass on every carrier transition, a quiet sub-thump on every landing. All low, felt more than heard. ----
+def pop(f0=900):
+    n = int(.05 * SR); t = np.arange(n) / SR
+    return (np.sin(2 * np.pi * np.cumsum(f0 * np.exp(-t * 30) + f0 * .45) / SR) * np.exp(-t / .012) * (1 - np.exp(-t / .001))) * .8 + hp(rng.standard_normal(n)) * np.exp(-t / .003) * .15
+def sub():
+    n = int(.35 * SR); t = np.arange(n) / SR; return np.sin(2 * np.pi * np.cumsum(55 + 40 * np.exp(-t * 25)) / SR) * np.exp(-t / .09) * (1 - np.exp(-t / .002))
+def air(rate=1.0):
+    x = wh[::1] if rate == 1 else np.interp(np.arange(0, len(wh), rate), np.arange(len(wh)), wh); return x
+LINES = [(0.04, 2, .5, False), (2.5, 2, .5, True), (7.8, 4, .5, True), (10.03, 2, .5, True), (14.3, 5, .5, True), (16, 4, .5, True), (46.5, 3, .5, True), (49, 3, .5, True), (54.4, 2, .5, True)]
+for n0, k, step, warped in LINES:
+    for i in range(k): put(B(n0 + i * step) if warped else n0 + i * P * step, pop(820 + 60 * (i % 3)), .07, ((i % 3) - 1) * .2)
+for k in range(4): put(B(30.2 + 2 * k), pop(700), .08)                      # the word swap beside the screen
+for k in range(5): put(B(38.5 + k), sub(), .12)                             # each step lands
+for n0, rate, g in [(7, 1.0, .1), (14, 1.15, .09), (18, .9, .11), (38, 1.0, .1), (44, 1.2, .08), (46, .85, .1), (54.6, 1.1, .09), (60, 1.0, .09)]:   # carrier transitions
+    x = air(rate); put(max(0, B(n0) - np.argmax(np.abs(x)) / SR), x, g, (-.3, .3)[int(n0) % 2])
+for n in (20, 22, 24, 26, 28, 32, 34, 36): x = air(1.3); put(max(0, B(n) - np.argmax(np.abs(x)) / SR), x, .06, .4)   # whips inside the screen
+for n in (3, 7, 14, 18, 24, 30, 38, 46, 55.8, 60): put(B(n), sub(), .1)       # quiet landings
 subprocess.run(['ffmpeg', '-y', '-v', 'error', '-ss', str(G['start']), '-t', str(DUR + .5), '-i', 'cand/371.mp3', '-af', f'afade=t=out:st={DUR - 1.8}:d=1.8', '-ar', '44100', '-ac', '2', 'music.wav'], check=True)
 w = wave.open('music.wav'); m = np.frombuffer(w.readframes(w.getnframes()), '<i2').reshape(-1, 2) / 32768
 n = min(len(m), len(fx)); mix = m[:n] * .8 + fx[:n]; mix /= max(1e-9, np.abs(mix).max()) / .9

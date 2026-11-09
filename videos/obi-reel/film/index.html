@@ -191,7 +191,7 @@ const seekInner = t => {
     if (id === 'p2' && t >= B(18)) el.style.visibility = 'hidden'; else el.style.visibility = '';
     const k = Math.floor(Math.max(0, t - t0) * 30 / 4), F = FILMS[(k + j * 3) % 6][0]; el.firstChild.getContext('2d').drawImage(frameOf(F, (Math.max(0, t - t0) % 2.2)), 0, 0, 320, 180); });
   // the screen
-  const scOn = t >= B(18) && t < B(38.6); show(screen, scOn); show(chip, scOn && t < B(30)); show(counter, scOn && t < B(38));
+  const scOn = t >= B(18) && t < B(38.6); show(screen, scOn); show(chip, false); show(counter, false);   // no small captions or counters: they read as filler
   let bx = 0;
   if (scOn) { box(screen, ...C); screen.style.borderRadius = lerp(20, 26, S(t - B(18), MORPH)) + 'px';
     let seq, t0s; if (t < B(30)) { seq = FILMS.map(f => f[0]); t0s = seq.map((_, i) => B(18 + 2 * i)); } else { seq = KINDS.map(k => k[1]); t0s = seq.map((_, i) => B(30 + 2 * i)); }
