@@ -1,0 +1,270 @@
+<title>Obi Igwe Motion</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a dark screening room. The hero states the promise (complex to clear), the reel plays at once,
+   the work is a grid of films with real timecodes, then the method, the services, and a single way to reach him.
+   Colour comes from his own banner: a dark room, warm lamp light (the complexity), and electric blue (the clarity). */
+:root {
+  --room: #0A0C10;        /* the dark room the films are screened in */
+  --panel: #12151B;       /* cards and players */
+  --line: #232833;        /* hairlines */
+  --ink: #EEF2F8;         /* type */
+  --muted: #8F98A8;       /* support type */
+  --clear: #3D7BFF;       /* clarity: the blue of "visual stories" */
+  --ice: #CFE0FF;         /* the light behind his portrait */
+  --lamp: #FFB04A;        /* the warm lamp light: ideas before they are clear */
+  --display: 'Bricolage Grotesque', 'Arial Narrow', system-ui, sans-serif;
+  --body: 'Geist', system-ui, -apple-system, sans-serif;
+  --mono: 'Geist Mono', ui-monospace, 'SFMono-Regular', monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, main { overflow-x: clip; }
+body { margin: 0; background: var(--room); color: var(--ink); font: 400 16px/1.6 var(--body); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 0 80px; overflow-x: hidden; }
+a { color: inherit; }
+.wrap { max-width: 1200px; margin: 0 auto; }
+.label { font: 500 12px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.label b { color: var(--clear); font-weight: 500; }
+h1, h2, h3 { font-family: var(--display); margin: 0; text-wrap: balance; }
+:focus-visible { outline: 2px solid var(--clear); outline-offset: 3px; border-radius: 6px; }
+
+/* ---------- top bar ---------- */
+nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: color-mix(in srgb, var(--room) 82%, transparent); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px))); padding: 14px max(16px, env(safe-area-inset-left, 0px)); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 21; background: var(--room); }
+nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+nav .me { font: 800 18px/1 var(--display); letter-spacing: -.02em; text-decoration: none; }
+nav .me span { color: var(--clear); }
+nav ul { display: flex; gap: 22px; list-style: none; margin: 0; padding: 0; font: 500 14px/1 var(--body); }
+nav ul a { text-decoration: none; color: var(--muted); }
+nav ul a:hover { color: var(--ink); }
+@media (max-width: 640px) { nav ul li:not(:last-child) { display: none; } }
+
+/* ---------- hero ---------- */
+.hero { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 48px; align-items: center; padding-block: 72px 56px; }
+@media (max-width: 860px) { .hero { grid-template-columns: 1fr; gap: 36px; padding-block: 44px 36px; } }
+.hero h1 { font-weight: 800; font-size: clamp(44px, 7.2vw, 96px); line-height: .96; letter-spacing: -.035em; }
+.hero h1 .w { display: inline-block; }
+.hero h1 .cl { color: var(--clear); }
+.hero h1 .mess { color: var(--lamp); }
+.hero p.lead { margin: 24px 0 0; font-size: clamp(17px, 2vw, 20px); line-height: 1.55; color: var(--muted); max-width: 54ch; }
+.hero p.lead strong { color: var(--ink); font-weight: 500; }
+.cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+.btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border-radius: 999px; font: 600 15px/1 var(--body); text-decoration: none; border: 1px solid var(--line); background: transparent; color: var(--ink); cursor: pointer; }
+.btn.primary { background: var(--clear); border-color: var(--clear); color: #fff; }
+.btn:hover { border-color: var(--ice); }
+.btn.primary:hover { background: #5A8EFF; }
+/* the clarity motif: every headline word resolves from blur to sharp on load */
+@keyframes focusIn { from { filter: blur(14px); opacity: .25; transform: translateY(10px); } to { filter: blur(0); opacity: 1; transform: none; } }
+.hero h1 .w { animation: focusIn .9s cubic-bezier(.16, 1, .3, 1) both; }
+.portrait { position: relative; justify-self: center; width: min(100%, 400px); aspect-ratio: 1; }
+.portrait img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block; position: relative; z-index: 1; }
+.portrait::before { content: ""; position: absolute; inset: -8%; border-radius: 50%; background: radial-gradient(closest-side, rgba(61,123,255,.35), rgba(61,123,255,0)); }
+.portrait .tag { position: absolute; z-index: 2; left: 0; bottom: 10%; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 10px 14px; font: 500 13px/1.35 var(--body); }
+.portrait .tag span { display: block; font: 500 11px/1 var(--mono); color: var(--clear); letter-spacing: .12em; margin-bottom: 4px; }
+.facts { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 28px; font: 500 13px/1 var(--mono); color: var(--muted); }
+.facts span::before { content: "● "; color: var(--clear); }
+
+/* ---------- reel ---------- */
+.reel { border-radius: 22px; overflow: hidden; background: #000; position: relative; border: 1px solid var(--line); }
+.reel video { display: block; width: 100%; aspect-ratio: 16 / 9; max-width: 100%; }
+.reel .bar { position: absolute; left: 0; right: 0; bottom: 0; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 16px 20px; background: linear-gradient(transparent, rgba(0,0,0,.75)); }
+.reel .bar .title { font: 600 15px/1.3 var(--body); }
+.reel .bar .title small { display: block; font: 400 12px/1 var(--mono); color: var(--muted); margin-top: 4px; letter-spacing: .06em; }
+@media (max-width: 560px) { .reel .bar .title small { display: none; } .reel .bar .title { font-size: 13px; } }
+.portrait { max-width: 340px; }
+.reel .sound { background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2); color: #fff; padding: 10px 16px; border-radius: 999px; font: 600 13px/1 var(--body); cursor: pointer; white-space: nowrap; }
+
+/* ---------- sections ---------- */
+section { padding-block: 88px 0; }
+.head { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: 32px; }
+.head h2 { font-weight: 800; font-size: clamp(32px, 4.6vw, 56px); line-height: 1; letter-spacing: -.03em; margin-top: 12px; }
+.head p { margin: 0; max-width: 46ch; color: var(--muted); }
+
+/* work grid */
+.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+@media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
+.work { display: grid; gap: 14px; cursor: pointer; text-align: left; background: none; border: 0; padding: 0; color: inherit; font: inherit; }
+.work .frame { position: relative; border-radius: 16px; overflow: hidden; background: var(--panel); border: 1px solid var(--line); aspect-ratio: 16 / 9; }
+.work .frame img, .work .frame video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .6s cubic-bezier(.16, 1, .3, 1); }
+.work .frame video { opacity: 0; transition: opacity .25s; }
+.work:hover .frame video, .work:focus-visible .frame video { opacity: 1; }
+.work:hover .frame img { transform: scale(1.03); }
+.work .play { position: absolute; right: 14px; bottom: 14px; width: 44px; height: 44px; border-radius: 50%; background: rgba(10,12,16,.7); border: 1px solid rgba(255,255,255,.25); display: grid; place-items: center; }
+.work .play::before { content: ""; border-left: 12px solid #fff; border-top: 7px solid transparent; border-bottom: 7px solid transparent; margin-left: 3px; }
+.work .meta { display: flex; justify-content: space-between; gap: 16px; align-items: baseline; }
+.work h3 { font-weight: 600; font-size: 22px; line-height: 1.2; letter-spacing: -.01em; }
+.work .tc { font: 400 12px/1 var(--mono); color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.work p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.5; }
+.work.feature { grid-column: 1 / -1; }
+.work.feature h3 { font-size: clamp(24px, 3vw, 34px); }
+
+/* method */
+.steps { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; list-style: none; padding: 0; margin: 0; counter-reset: s; }
+@media (max-width: 980px) { .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .steps { grid-template-columns: 1fr; } }
+.steps li { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 22px; display: grid; gap: 10px; align-content: start; min-width: 0; counter-increment: s; }
+.steps li::before { content: "0" counter(s); font: 500 12px/1 var(--mono); color: var(--clear); letter-spacing: .1em; }
+.steps h3 { font-size: 20px; font-weight: 600; line-height: 1.2; }
+.steps p { margin: 0; color: var(--muted); font-size: 14.5px; line-height: 1.55; }
+
+/* services */
+.services { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: start; }
+@media (max-width: 860px) { .services { grid-template-columns: 1fr; gap: 28px; } }
+.svc { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.svc li { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 20px 0; border-bottom: 1px solid var(--line); }
+.svc li strong { font: 600 clamp(20px, 2.4vw, 26px)/1.2 var(--display); letter-spacing: -.01em; }
+.svc li span { color: var(--muted); font-size: 14px; text-align: right; max-width: 30ch; }
+.about p { margin: 0 0 16px; color: var(--muted); font-size: 17px; line-height: 1.65; max-width: 60ch; }
+.about p:first-child { color: var(--ink); font-size: 20px; line-height: 1.5; }
+.who { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.who span { border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px; font-size: 14px; }
+
+/* contact */
+.contact { margin-top: 88px; border-radius: 28px; padding: clamp(32px, 6vw, 72px); background: radial-gradient(120% 140% at 85% 0%, rgba(61,123,255,.35), rgba(61,123,255,0) 60%), radial-gradient(80% 120% at 0% 100%, rgba(255,176,74,.16), rgba(255,176,74,0) 60%), var(--panel); border: 1px solid var(--line); display: grid; gap: 22px; }
+.contact h2 { font-weight: 800; font-size: clamp(36px, 6vw, 76px); line-height: .98; letter-spacing: -.035em; }
+.contact h2 .cl { color: var(--clear); }
+.contact p { margin: 0; color: var(--muted); max-width: 52ch; font-size: 17px; }
+footer { margin-top: 40px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; color: var(--muted); font: 400 13px/1.4 var(--mono); }
+
+/* lightbox */
+.lb[hidden] { display: none; }
+.lb { position: fixed; inset: 0; z-index: 50; background: rgba(5,6,9,.92); display: grid; place-items: center; padding: calc(16px + env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) calc(16px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
+.lb .box { width: min(1200px, 100%); display: grid; gap: 14px; }
+.lb video { width: 100%; max-width: 100%; aspect-ratio: 16 / 9; background: #000; border-radius: 14px; display: block; }
+.lb .row { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.lb .row h3 { font-size: 20px; font-weight: 600; }
+.lb .close { background: none; border: 1px solid var(--line); color: var(--ink); border-radius: 999px; padding: 10px 16px; font: 600 14px/1 var(--body); cursor: pointer; }
+
+@media (prefers-reduced-motion: reduce) { .hero h1 .w { animation: none; } .work .frame img { transition: none; } }
+</style>
+
+<nav><div class="wrap">
+  <a class="me" href="#top">Obi Igwe<span>.</span></a>
+  <ul><li><a href="#work">Work</a></li><li><a href="#method">Method</a></li><li><a href="#services">Services</a></li><li><a href="#contact">Contact</a></li></ul>
+</div></nav>
+
+<main class="wrap" id="top">
+  <header class="hero">
+    <div>
+      <div class="label">Motion designer <b>/</b> creative strategist</div>
+      <h1 style="margin-top:18px" id="h1">
+        <span class="w mess" style="animation-delay:.05s">Complex</span>
+        <span class="w" style="animation-delay:.13s">products,</span>
+        <span class="w" style="animation-delay:.21s">turned</span>
+        <span class="w" style="animation-delay:.29s">into</span>
+        <span class="w cl" style="animation-delay:.37s">clear</span>
+        <span class="w cl" style="animation-delay:.45s">stories.</span>
+      </h1>
+      <p class="lead">I'm Obi, a motion designer and visual storyteller for <strong>SaaS, AI and technology products</strong>. I articulate your ideas and turn them into a story, so your audience understands what you built and why it matters.</p>
+      <div class="cta">
+        <a class="btn primary" href="#work">Watch the work</a>
+        <a class="btn" href="https://www.linkedin.com/in/obi-igwe-b809b319a" target="_blank" rel="noopener">Work with me on LinkedIn ↗</a>
+      </div>
+      <div class="facts"><span>Launch films</span><span>Product videos</span><span>Explainers</span><span>Motion graphics</span></div>
+    </div>
+    <div class="portrait">
+      <img src="portrait.jpg" alt="Portrait of Obi Igwe">
+      <div class="tag"><span>NOW</span>Open to new projects</div>
+    </div>
+  </header>
+
+  <div class="reel">
+    <video id="reel" src="sterling.mp4" poster="sterling.jpg" autoplay muted loop playsinline preload="auto"></video>
+    <div class="bar">
+      <div class="title">Sterling: The claim and the check<small>LAUNCH FILM · 00:30 · 1920×1080 · 30 FPS</small></div>
+      <button class="sound" id="snd" type="button">Play with sound</button>
+    </div>
+  </div>
+
+  <section id="work">
+    <div class="head">
+      <div><div class="label">Selected work <b>/</b> 6 more films</div><h2>The work</h2></div>
+      <p>Each film starts from one idea about the product, gets its own colour story, and is cut to its music. Hover to preview, click to watch.</p>
+    </div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <section id="method">
+    <div class="head">
+      <div><div class="label">How I work <b>/</b> five steps</div><h2>From idea to frame</h2></div>
+      <p>Every brand gets a film of its own. The look is never reused; the process that finds it is.</p>
+    </div>
+    <ol class="steps">
+      <li><h3>Find the truth</h3><p>One sentence for what the product does and for whom, and the tension it resolves.</p></li>
+      <li><h3>Pick one idea</h3><p>A single visual idea from the product's own world that can carry the story's turn.</p></li>
+      <li><h3>Build the colour story</h3><p>Colours chosen for what they mean in this film, tuned with colour theory and shown as moving light.</p></li>
+      <li><h3>Storyboard every beat</h3><p>Each line gets the device that says what the line says. You approve the boards before anything is built.</p></li>
+      <li><h3>Animate, score, refine</h3><p>A travelling camera, type that lands on the beat, sound designed around the visuals, and a frame-by-frame check.</p></li>
+    </ol>
+  </section>
+
+  <section id="services">
+    <div class="services">
+      <div>
+        <div class="label">What I make</div>
+        <ul class="svc" style="margin-top:20px">
+          <li><strong>Launch films</strong><span>The moment a product goes public</span></li>
+          <li><strong>Product videos</strong><span>What it does, shown in the real product</span></li>
+          <li><strong>Explainers</strong><span>Technical ideas made easy to follow</span></li>
+          <li><strong>Motion graphics</strong><span>Type, UI and brand systems in motion</span></li>
+          <li><strong>Promotional content</strong><span>Cut-downs and social formats</span></li>
+        </ul>
+      </div>
+      <div class="about">
+        <div class="label" style="margin-bottom:20px">About</div>
+        <p>I specialise in turning complex product ideas into visual experiences that help people understand what a product does, why it matters and what makes it different.</p>
+        <p>I combine visual storytelling, motion design and sound to make technical ideas easier to understand and product experiences more engaging. I bring creative thinking and hands-on execution together.</p>
+        <p style="color:var(--ink);font-size:15px;margin-bottom:10px">I work best with</p>
+        <div class="who"><span>Founders</span><span>Product teams</span><span>Marketing teams</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact" style="padding-block:clamp(32px, 6vw, 72px)">
+    <div class="label">Let's build clarity</div>
+    <h2>Your product deserves to be <span class="cl">understood.</span></h2>
+    <p>Tell me what you're building. I'll come back with the one idea your film should be about.</p>
+    <div class="cta" style="margin-top:6px"><a class="btn primary" href="https://www.linkedin.com/in/obi-igwe-b809b319a" target="_blank" rel="noopener">Message me on LinkedIn ↗</a></div>
+  </section>
+
+  <footer><span>© Obi Igwe · Motion design</span><span>Video · Design · Brand communication</span></footer>
+</main>
+
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-labelledby="lbt">
+  <div class="box">
+    <div class="row"><h3 id="lbt"></h3><button class="close" id="lbx" type="button">Close</button></div>
+    <video id="lbv" controls playsinline></video>
+  </div>
+</div>
+
+<script>
+const WORK = [
+  { id: 'vivox', title: 'Vivox: Meet Rachel', kind: 'Product film', dur: '00:32', text: 'Kinetic type and real UI cards stacked in depth, built around one line at a time.' },
+  { id: 'nyangu', title: 'Nyangu: Find your perfect space', kind: 'Product film', dur: '00:31', text: 'A property search told in six steps, with big counting type and real interiors.' },
+  { id: 'dripverse', title: 'Drip Verse: One order', kind: 'Brand film', dur: '01:11', text: 'A sneaker drop in one continuous take, with the product floating over its own light pool.' },
+  { id: 'armab', title: 'Armab Agency: New agency, not new to this', kind: 'Launch film', dur: '00:30', text: 'An agency launch built from its own site, type and brand mark.' },
+  { id: 'pixel', title: 'Drip Verse: Pixel wipe', kind: 'Motion study', dur: '00:40', text: 'Editorial serif type revealed through pixel wipes on a warm gold ground.' },
+  { id: 'appleui', title: 'Controls that feel alive', kind: 'UI motion study', dur: '00:30', text: 'Toggles, sliders and tiles, each moved by springs so every control feels physical.' },
+];
+const grid = document.getElementById('grid');
+WORK.forEach(w => {
+  const b = document.createElement('button'); b.type = 'button'; b.className = 'work' + (w.feature ? ' feature' : '');
+  b.innerHTML = `<div class="frame"><img src="${w.id}.jpg" alt="" loading="lazy"><video src="${w.id}.mp4" muted loop playsinline preload="none"></video><span class="play" aria-hidden="true"></span></div>
+    <div class="meta"><h3>${w.title}</h3><span class="tc">${w.kind.toUpperCase()} · ${w.dur}</span></div><p>${w.text}</p>`;
+  const v = b.querySelector('video');
+  b.addEventListener('mouseenter', () => { v.play().catch(() => {}); });
+  b.addEventListener('mouseleave', () => { v.pause(); });
+  b.addEventListener('click', () => open(w));
+  grid.appendChild(b);
+});
+const lb = document.getElementById('lb'), lbv = document.getElementById('lbv'), reel = document.getElementById('reel');
+function open(w) { document.getElementById('lbt').textContent = w.title; lbv.src = w.id + '.mp4'; lb.hidden = false; reel.pause(); lbv.play().catch(() => {}); document.getElementById('lbx').focus(); }
+function close() { lbv.pause(); lbv.removeAttribute('src'); lbv.load(); lb.hidden = true; reel.play().catch(() => {}); }
+document.getElementById('lbx').addEventListener('click', close);
+lb.addEventListener('click', e => { if (e.target === lb) close(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && !lb.hidden) close(); });
+const snd = document.getElementById('snd');
+snd.addEventListener('click', () => { reel.muted = !reel.muted; if (!reel.muted) { reel.currentTime = 0; reel.play().catch(() => {}); } snd.textContent = reel.muted ? 'Play with sound' : 'Mute'; });
+</script>
