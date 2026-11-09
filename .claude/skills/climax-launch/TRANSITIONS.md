@@ -79,7 +79,7 @@ Use T1–T18 as the menu. For a new brand, invent new carriers from the brand's 
 Both work together. Use the travelling flat camera (camMove, holds, zoom dives) for the **film's spine**, and use
 **carrier transitions** for the scene changes.
 - When the camera arrives somewhere, something there transforms into the next thing.
-- Add a 4-frame punch-zoom (±8–15%) on the exact frame of a morph or burst to give it weight.
+- Add a soft punch-zoom (2–5%, rising about 0.1 s, decaying about 0.35 s) on a morph or burst. The 4-frame ±8–15% kick reads as AI bounce (see CRAFT.md, Motion feel).
 - When the camera holds, the objects should be doing the work.
 
 ## Storyboard rule (add to every storyboard)

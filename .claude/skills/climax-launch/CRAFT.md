@@ -56,6 +56,18 @@ out of the feedback. Apply them as principles for every brand, not as a template
 - **The camera ride must keep moving:** with a time warp, the swarm and the sway run on real time, so the world never
   freezes during an inserted hold.
 
+## Motion feel: subtle and intentional, never bouncy (user law, from the Resend study)
+The user's words: quick bounces, "a sudden increase in scale and a tiny reduce in scale", make a film "look AI generated".
+- **Slow, fast, slow.** Every move eases in, speeds through the middle and settles slowly. Moves last 0.5–1.2 s (Resend
+  measured 0.5–1.6 s), not 0.1–0.3 s.
+- **No pop-and-settle.** Springs are critically damped (c = 2·√k, zeta ≥ 1). Overshoot is at most about 3%, and none on
+  type, images or cards. Never a scale that jumps past its size and snaps back.
+- **Starting presets:** FAST {k 300, c 35}, MORPH {k 160, c 26}, POP {k 400, c 40}, WORD {k 300, c 35}. Before using a
+  spring, check that c ≥ 2·√k.
+- **Scale changes stay small.** An element arriving grows from about 0.9–0.96, not from 0.5 with a kick.
+- **Punch-zooms are soft.** Each has a peak of about 2–5%, a rise of about 0.1 s and a decay of about 0.35 s. This
+  replaces the 4-frame ±8–15% kick in TRANSITIONS.md.
+
 ## Close
 - Portrait, name, a short line ("Work with me"), and a big solid CTA pill ("Book a call today"), with the voice saying
   the CTA.
