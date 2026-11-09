@@ -23,6 +23,10 @@ The skill has two companion files, read alongside this one:
 - `TRANSITIONS.md`: the carrier law (the last element of a scene becomes the first of the next), 18 frame-by-frame
   transition patterns, how hierarchy reads, and the measured motion logic (camera holds, objects transform, 4-frame
   punch-zooms on morphs).
+- `SOUND.md`: the full sound design: music rules (royalty-free only; the user picks), drone bed, the SaaS motion layer (word pops,
+  air passes, camera-whip whooshes, landing sub-thumps), hits, female voiceover rules, and the SFX pack.
+- `CRAFT.md`: the craft rules approved on the Obi Igwe reel: pace, no tiny text or filler captions, Satoshi labels, highlight
+  boxes, light grounds and the live meadow, real imagery in every frame, the split-second product swap, the CTA close.
 - `STORYBOARD.md`: how to read a reference (frames, devices, measurements), how to build a storyboard for a new brand
   by giving each line the device whose meaning matches it, the uniqueness test, and what the storyboard and mood board
   page must show.
@@ -49,7 +53,7 @@ The skill has two companion files, read alongside this one:
   - anything tilted or bent in 3D (type and UI stay square to the lens)
   - crossfade ghosting
   - garbled text transitions
-  - whoosh or "shh" swishes on movement
+  - loud "shh" swishes on every movement (soft low-passed air passes on whips and transitions are wanted: SOUND.md)
   - chime, piano or melodic notes that follow motion or light
 - **How they work:**
   - They send references and expect them measured, not eyeballed.
@@ -241,7 +245,7 @@ The skill has two companion files, read alongside this one:
     the shape, not just the averages), then offer variants on top of the actual music and let the user pick by ear.
   - **Small physical hits.** A thump under slams, a click under presses, quiet taps under typing, a tick per checked
     item.
-  - **Never** whooshes on movement, never melodic or tonal notes following motion.
+  - **Never** loud swishes or melodic/tonal notes following motion; soft air passes, word pops and sub-thumps are the motion layer (SOUND.md).
 - **Test:** mute the music. Do the SFX only mark real events? With the music, are they felt more than heard?
 
 ### B12. Study, prove, then build

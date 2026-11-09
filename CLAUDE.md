@@ -77,10 +77,13 @@ built in HyperFrames. Run its CLI through .claude/skills/motion-reel/scripts/hyp
 no light leaks, glitches or film grain, real brand assets only.
 
 ## Launch style
-For any launch, promo or product film, read .claude/skills/launch-style/SKILL.md first (the look reverse-engineered from the six reference launches the user chose; study in videos/reference/launch-study/STUDY.md). Never use whoosh/swish sounds on movement or tonal/melodic SFX that follow motion.
+For any launch, promo or product film, read .claude/skills/launch-style/SKILL.md first (the look reverse-engineered from the six reference launches the user chose; study in videos/reference/launch-study/STUDY.md). Never use loud whoosh/swish sounds on every movement or tonal/melodic SFX that follow motion; soft low-passed air passes on camera whips and transitions, word pops and landing sub-thumps are wanted (climax-launch/SOUND.md).
 
 ## Camera
 For every film camera, follow .claude/skills/camera-style/SKILL.md (measured from the user's favourite camera reference, study in videos/reference/camera-study/STUDY.md): flat 2D camera with no roll and no perspective on type or UI, exponential ease-in-out moves (camMove), holds between moves, zoom dives. Camera moves are the one exception to springs-only.
 
 ## The proven method
 For every launch, promo or product film, start with .claude/skills/climax-launch/SKILL.md: the formula (fixed taste and quality bar, then idea, colour theory, world, light, transitions, type, camera, pace and sound derived fresh from each brand's meaning) behind the Sterling film the user called perfect. Each film must be unique to its brand: never reuse Sterling's palette, world or structure by default; Sterling (videos/sterling-v3) is only a worked example.
+
+## Latest approved rules
+climax-launch/CRAFT.md and climax-launch/SOUND.md hold the rules approved on the Obi Igwe reel (videos/obi-reel): read them with SKILL.md before any film. Voiceover: Kokoro female voice (install_kokoro.sh, tts_kokoro.py), narrator speaks to the viewer, never about the client. Save new rules to the skills only after the user approves them.

@@ -169,7 +169,8 @@ Open on the problem or a provocation ("Designing buildings has always been hard"
 - Voiceover is optional (V3, V6 use one; V1, V5 do not). Without one, the type carries everything.
 - SFX are few and physical: a soft tick for a cursor click, a key tap under big typing, a low thump under a
   slam word, a short riser into the logo. Keep them under the music.
-- **Never** (the user hates these): whoosh / "shh" swish sounds on movement; tonal chimes, piano-like notes
+- **Never** (the user hates these): loud "shh" swish sounds on every movement (soft low-passed air passes on camera whips and
+  transitions are wanted, see climax-launch/SOUND.md); tonal chimes, piano-like notes
   or melodic SFX that follow motion (e.g. a note per light move). No sound for things that only move.
 - Loudness: -14 LUFS for delivery (the references sit at -15 to -16; quiet pastel films like V5 at -24 are
   the exception).
