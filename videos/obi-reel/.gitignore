@@ -17,3 +17,5 @@ sound/vo_*.wav
 sound/sfxpack/raw/
 sound/sfxpack/*.html
 sound/sfxpack/*/*.wav
+sound/piano/
+sound/mix_*.wav

@@ -70,8 +70,11 @@ for n0, rate, g in [(7, 1.0, .1), (14, 1.15, .09), (18, .9, .11), (38, 1.0, .1),
     x = air(rate); put(max(0, B(n0) - np.argmax(np.abs(x)) / SR), x, g, (-.3, .3)[int(n0) % 2])
 for n in (20, 22, 24, 26, 28, 32, 34, 36): x = air(1.3); put(max(0, B(n) - np.argmax(np.abs(x)) / SR), x, .06, .4)   # whips inside the screen
 for n in (3, 7, 14, 18, 24, 30, 38, 46, 55.8, 60): put(B(n), sub(), .1)       # quiet landings
-subprocess.run(['ffmpeg', '-y', '-v', 'error', '-ss', str(G['start']), '-t', str(DUR + .5), '-i', 'cand/371.mp3', '-af', f'afade=t=out:st={DUR - 1.8}:d=1.8', '-ar', '44100', '-ac', '2', 'music.wav'], check=True)
+import os
+MUSIC = os.environ.get('MUSIC')   # a ready cut (e.g. piano/cut_614.wav), else the Deep Urban cut
+if MUSIC: subprocess.run(['ffmpeg', '-y', '-v', 'error', '-i', MUSIC, '-ar', '44100', '-ac', '2', 'music.wav'], check=True)
+else: subprocess.run(['ffmpeg', '-y', '-v', 'error', '-ss', str(G['start']), '-t', str(DUR + .5), '-i', 'cand/371.mp3', '-af', f'afade=t=out:st={DUR - 1.8}:d=1.8', '-ar', '44100', '-ac', '2', 'music.wav'], check=True)
 w = wave.open('music.wav'); m = np.frombuffer(w.readframes(w.getnframes()), '<i2').reshape(-1, 2) / 32768
 n = min(len(m), len(fx)); mix = m[:n] * .8 + fx[:n]; mix /= max(1e-9, np.abs(mix).max()) / .9
-with wave.open('mix.wav', 'wb') as o: o.setnchannels(2); o.setsampwidth(2); o.setframerate(SR); o.writeframes((mix * 32767).astype('<i2').tobytes())
+with wave.open(os.environ.get('OUT', 'mix.wav'), 'wb') as o: o.setnchannels(2); o.setsampwidth(2); o.setframerate(SR); o.writeframes((mix * 32767).astype('<i2').tobytes())
 print('mix', round(DUR, 2))
