@@ -8,6 +8,8 @@
 <style>
   @font-face { font-family: 'B'; src: url(../assets/bricolage.woff2) format('woff2'); font-weight: 800; }
   @font-face { font-family: 'G'; src: url(../assets/geist-400.woff2) format('woff2'); font-weight: 100 900; }
+  @font-face { font-family: 'S'; src: url(../assets/satoshi-700.woff2) format('woff2'); font-weight: 700; }
+  @font-face { font-family: 'S'; src: url(../assets/satoshi-900.woff2) format('woff2'); font-weight: 900; }
   @font-face { font-family: 'M'; src: url(../assets/geistmono.woff2) format('woff2'); font-weight: 500; }
   html, body { margin: 0; background: #0A0C10; overflow: hidden; }
   #stage { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #0A0C10; color: #EEF2F8; font-family: 'G', sans-serif; }
@@ -17,7 +19,7 @@
   .w { display: inline-block; margin: 0 .12em; }
   .slam { font: 800 150px/1 'B'; letter-spacing: -.045em; }
   .cap { font: 800 96px/1 'B'; letter-spacing: -.035em; }
-  .label { font: 500 26px/1 'M'; letter-spacing: .16em; text-transform: uppercase; color: #8F98A8; }
+  .label { font: 700 38px/1 'S'; letter-spacing: -.005em; color: #DCE6F7; }
   .blue { color: #3D7BFF; } .lamp { color: #FFB04A; }
   .frag { position: absolute; white-space: nowrap; font: 500 34px/1 'M'; letter-spacing: .02em; color: #FFB04A; }
   .shard { position: absolute; border-radius: 14px; border: 2px solid rgba(255,176,74,.55); background: rgba(255,176,74,.07); }
@@ -68,7 +70,7 @@ const L = {
   a2: mk(`<div class="line slam"><span class="w">is</span><span class="w" id="edit">brilliant.</span></div>`),
   story: mk(words('cap', [['Until'], ["it's"], ['a'], ['story.', 'blue']])),
   name: mk(`<div class="line" style="font:800 190px/1 'B';letter-spacing:-.045em"><span class="w">Obi</span><span class="w">Igwe<span style="color:#0A0C10">.</span></span></div>`),
-  role: mk(`<div class="line" style="gap:18px;font:700 italic 46px/1 'G';color:#FFFFFF"><span class="hl" style="background:#F26A1B;padding:12px 20px;border-radius:10px"></span><span class="hl" style="background:#F26A1B;padding:12px 20px;border-radius:10px"></span></div>`),
+  role: mk(`<div class="line" style="gap:18px;font:900 italic 48px/1 'S';color:#FFFFFF"><span class="hl" style="background:#F26A1B;padding:12px 20px;border-radius:10px"></span><span class="hl" style="background:#F26A1B;padding:12px 20px;border-radius:10px"></span></div>`),
   t1: mk(`<div class="line cap"><span class="w">I</span><span class="w">turn</span><span class="pillimg" id="p1"><canvas width="320" height="180"></canvas></span><span class="w lamp">complex</span><span class="w">products</span></div>`),
   t2: mk(`<div class="line cap"><span class="w">into</span><span class="w blue">clear</span><span class="pillimg" id="p2"><canvas width="320" height="180"></canvas></span><span class="w blue">stories.</span></div>`),
   kind: mk(`<div class="abs" style="font:800 110px/1 'B';letter-spacing:-.04em;white-space:nowrap"></div>`),
@@ -83,6 +85,8 @@ cam.insertBefore(car, L.a1); cam.insertBefore(fimg, car);
 const screen = mk(`<div class="abs" style="border-radius:26px;overflow:hidden;box-shadow:0 0 0 3px #3D7BFF,0 40px 100px rgba(0,0,0,.6);background:#0F1422"><canvas width="1280" height="720" style="width:100%;height:100%;display:block"></canvas></div>`);
 const sctx = screen.firstChild.getContext('2d');
 const chip = mk(`<div class="abs label" style="color:#CFE0FF;white-space:nowrap"></div>`), counter = mk(`<div class="abs label" style="color:#3D7BFF;white-space:nowrap"></div>`);
+const stepBg = mk(`<div class="abs" style="border-radius:40px;overflow:hidden"><canvas width="960" height="540" style="width:100%;height:100%;display:block;filter:blur(26px) saturate(1.15)"></canvas></div>`);
+cam.insertBefore(stepBg, car);
 const slotTxt = mk(`<div class="line" style="gap:0"><span id="sn" style="display:none"></span><span id="st" style="display:inline-block;font:800 96px/1 'B';letter-spacing:-.035em"></span></div>`);
 const portrait = mk(`<div id="portrait"><img src="../assets/portrait.jpg"></div>`);
 // the product swap: real product photos (cut out) and flat brand logos, each on a light card, 6 frames each
@@ -93,7 +97,7 @@ const BOT = Array.from({ length: 11 }, (_, f) => { const im = new Image(); im.sr
 const pimgs = PROD.map(([k, src]) => { const im = mk(`<img src="../assets/${k === 'l' ? 'logos' : 'products'}/${src}" style="position:absolute;left:50%;top:50%;transform-origin:50% 50%;filter:drop-shadow(0 18px 18px rgba(10,20,40,.35))">`, swap); return im; });
 swap.appendChild(sweep);
 const dots = Array.from({ length: 22 }, () => mk(`<div class="abs" style="width:256px;height:144px;margin:-72px 0 0 -128px;border-radius:12px;overflow:hidden;box-shadow:0 0 0 2px rgba(61,123,255,.9),0 14px 30px rgba(0,0,0,.5)"><canvas width="256" height="144" style="display:block"></canvas></div>`));
-const pillTxt = mk(`<div class="line" style="font:500 42px/1 'G';color:#EEF2F8"></div>`);
+const pillTxt = mk(`<div class="line" style="font:900 52px/1 'S';letter-spacing:-.01em;color:#FFFFFF"></div>`);
 const FILMS = [['sterling', 'Sterling', 'Launch film'], ['vivox', 'Vivox', 'Product film'], ['nyangu', 'Nyangu', 'Product film'], ['dripverse', 'Drip Verse', 'Brand film'], ['armab', 'Armab Agency', 'Launch film'], ['appleui', 'UI motion', 'Motion study']];
 const IM = {}; FILMS.forEach(([id]) => { IM[id] = []; for (let k = 1; k <= 69; k++) { const im = new Image(); im.src = `../assets/clips/${id}/${String(k).padStart(3, '0')}.jpg`; IM[id].push(im); } });
 const frameOf = (id, u) => IM[id][Math.max(0, Math.min(68, Math.floor(u * 30)))];
@@ -200,14 +204,19 @@ const seekInner = t => {
     sctx.drawImage(frameOf(seq[i], t - tcw + .25), (1 - u) * W, 0, W, 720);
     screen.firstChild.style.filter = bx > .3 ? `blur(${(bx / 3).toFixed(1)}px)` : '';
     screen.firstChild.style.opacity = 1 - S(t - B(38), FAST);
-    if (t < B(30)) { const [, name, kind] = FILMS[i]; chip.style.left = C[0] + 'px'; chip.style.top = C[1] + C[3] + 30 + 'px'; typeOn(chip, `${name} · ${kind}`, t, t0s[i], 60); }
-    counter.style.left = C[0] + 'px'; counter.style.top = C[1] - 50 + 'px'; counter.textContent = t < B(30) ? `0${i + 1} / 06` : 'SELECTED WORK';
+    if (t < B(30)) { const [, name, kind] = FILMS[i]; chip.style.left = C[0] + 'px'; chip.style.top = C[1] + C[3] + 34 + 'px'; typeOn(chip, `${name} · ${kind}`, t, t0s[i], 60); }
+    counter.style.left = C[0] + 'px'; counter.style.top = C[1] - 60 + 'px'; counter.textContent = t < B(30) ? `${i + 1} of 6` : 'Selected work';
   }
   // word swap beside the screen
   const kOn = t >= B(30.2) && t < B(38); show(L.kind, kOn);
   if (kOn) { const k = clamp(Math.floor((t - B(30.2)) / B(2)), 0, 3), s = S(t - B(30.2 + 2 * k), WORD); L.kind.textContent = KINDS[k][0];
     L.kind.style.left = '1290px'; L.kind.style.top = '455px'; L.kind.style.transform = `translateY(${(1 - s) * 70}px)`; L.kind.style.filter = `blur(${(1 - clamp(s)) * 14}px)`; L.kind.style.opacity = clamp(s * 1.5) * (1 - S(t - B(37.8), FAST)); }
   // steps
+  const STEPFILM = ['sterling', 'vivox', 'dripverse', 'armab', 'appleui'];
+  const sbOn = t >= B(38.5) && t < B(44.6); show(stepBg, sbOn);
+  if (sbOn) { const k = clamp(Math.floor((t - B(38.5)) / B(1)), 0, 4), e = S(t - B(38.5 + k), POP), ex = S(t - B(44), FAST);
+    box(stepBg, OR.steps[0] + 260, OR.steps[1] + 240, 1400, 600); stepBg.style.opacity = .9 * (1 - ex);
+    stepBg.style.transform = `scale(${(1.06 - .06 * e) * (1 - .2 * ex)})`; stepBg.firstChild.getContext('2d').drawImage(frameOf(STEPFILM[k], 1.2 + (t - B(38.5 + k))), 0, 0, 960, 540); }
   const stOn = t >= B(38.5) && t < B(44); show(slotTxt, stOn, 'flex');
   if (stOn) { const k = clamp(Math.floor((t - B(38.5)) / B(1)), 0, 4), s = S(t - B(38.5 + k), WORD); slotTxt.style.top = '492px'; slotTxt.style.color = '#0B1B3F'; $('sn').textContent = '0' + (k + 1); $('st').textContent = STEPS[k];
     $('st').style.transform = `translateY(${(1 - s) * 50}px)`; $('st').style.filter = `blur(${(1 - clamp(s)) * 12}px)`; slotTxt.style.opacity = 1 - S(t - B(43.8), FAST); }
@@ -229,11 +238,11 @@ const seekInner = t => {
   const landed = S(t - B(55.8), POP), stretch = S(t - B(60), MORPH);
   stop2.innerHTML = `<span style="display:inline-block;width:.22em;height:.22em;border-radius:50%;background:#3D7BFF;transform:scale(${clamp(landed) * (1 - clamp(stretch * 3))})"></span>`;
   if (pB) { const s = S(t - B(55), POP); box(portrait, OR.close[0] + 960 - 125, OR.close[1] + 170, 250, 250); portrait.style.transform = `scale(${s}) translateY(${4 * Math.sin(t * 1.3)}px)`; portrait.style.boxShadow = '0 0 0 5px #3D7BFF'; }
-  const opOn = t >= B(57); show(L.open, opOn, 'flex'); if (opOn) { L.open.style.top = '730px'; typeOn(L.open, 'OPEN TO NEW PROJECTS', t, B(57), 50); }
+  const opOn = t >= B(57); show(L.open, opOn, 'flex'); if (opOn) { L.open.style.top = '730px'; typeOn(L.open, 'Open to new projects', t, B(57), 40); }
   const plOn = t >= B(60); show(pillTxt, plOn, 'flex');
-  if (plOn) { const [sx, sy, sw, sh] = pos(stop2), d0 = sh * .22; const r = rectLerp([sx + 4, sy + sh * .62, d0, d0], off([580, 830, 760, 100], OR.close), stretch); show(car, true); box(car, ...r);
-    car.style.background = '#0F1422'; car.style.border = '3px solid #3D7BFF'; car.style.borderRadius = '999px'; pillTxt.style.top = '880px'; pillTxt.style.transform = 'translateY(-50%)'; pillTxt.style.opacity = clamp((stretch - .7) / .3);
-    pillTxt.textContent = 'Full portfolio · link in post'; car.style.transform = `translateY(${3 * Math.sin(t * 1.4)}px)`; }
+  if (plOn) { const [sx, sy, sw, sh] = pos(stop2), d0 = sh * .22; const r = rectLerp([sx + 4, sy + sh * .62, d0, d0], off([500, 822, 920, 120], OR.close), stretch); show(car, true); box(car, ...r);
+    car.style.background = '#3D7BFF'; car.style.border = '0'; car.style.borderRadius = '999px'; pillTxt.style.top = '882px'; pillTxt.style.transform = 'translateY(-50%)'; pillTxt.style.opacity = clamp((stretch - .7) / .3);
+    pillTxt.textContent = 'Full portfolio: link in post'; car.style.transform = `translateY(${3 * Math.sin(t * 1.4)}px)`; }
   $('mbg').setAttribute('stdDeviation', `${(cbx + bx * .5).toFixed(1)} ${cby.toFixed(1)}`); cam.style.filter = (cbx + cby + bx) > .4 ? 'url(#mb)' : '';
 };
 const loads = Object.values(IM).flat().map(im => im.decode().catch(() => {}));
@@ -254,5 +263,5 @@ window.seek = tr => {
       im.style.transform = `translateY(${(1 - e) * 26}px) rotate(${(i % 2 ? -1 : 1) * 6 * (1 - e)}deg) scale(${(.82 + .18 * e) * (sz / 300) * turn}, ${(.82 + .18 * e) * (sz / 300)}) skewY(${(1 - turn) * 18}deg)`; });
     const sw = clamp(v / DURS[k]); sweep.style.background = `linear-gradient(110deg, transparent ${sw * 140 - 40}%, rgba(255,255,255,.55) ${sw * 140 - 20}%, transparent ${sw * 140}%)`; }
 };
-Promise.all([...loads, document.fonts.load("800 80px 'B'"), document.fonts.load("500 30px 'M'"), document.fonts.load("400 30px 'G'"), portrait.firstChild.decode().catch(() => {})]).then(() => { window.seek(0); window.__ready = true; });
+Promise.all([...loads, document.fonts.load("800 80px 'B'"), document.fonts.load("500 30px 'M'"), document.fonts.load("700 30px 'S'"), document.fonts.load("900 30px 'S'"), document.fonts.load("400 30px 'G'"), portrait.firstChild.decode().catch(() => {})]).then(() => { window.seek(0); window.__ready = true; });
 </script>
