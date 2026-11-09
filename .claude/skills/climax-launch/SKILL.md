@@ -16,6 +16,14 @@ How this file is laid out:
   test.
 - **Part C:** the Sterling film walked through the formula, as an illustration only.
 
+The skill has two companion files, read alongside this one:
+- `DEVICES.md`: the device library. Reusable visual grammar (images between words, live captions, swarm to form,
+  ring orbits, living slots, lens portals, colour-block frames…), each with what it says, when to use it, how to make
+  it, measured numbers, and how to make it unique to the brand.
+- `STORYBOARD.md`: how to read a reference (frames, devices, measurements), how to build a storyboard for a new brand
+  by giving each line the device whose meaning matches it, the uniqueness test, and what the storyboard and mood board
+  page must show.
+
 ---
 
 ## Part A: the constants (same in every film)
@@ -145,6 +153,16 @@ How this file is laid out:
 - Choose the ones that fit the material: reflections suit chrome, translucency and caustics suit glass, soft
   diffusion suits fabric and fog.
 - **Test:** is every light move motivated by something in the story or the material?
+
+### B5a. Choose the devices
+- **Principle:** each line gets the device that *says* what the line says (see DEVICES.md and STORYBOARD.md §2).
+- **Do:**
+  - Use 5–8 devices per film, each once or twice. Pick one signature device for the turn.
+  - Alternate type-led and image-led moments.
+  - If there's a voiceover, it becomes live captions and sets the timing.
+- **Test:**
+  - Can you say for every beat why that device fits that line?
+  - Would that beat make sense for another brand? If yes, make it specific.
 
 ### B6. Design the transitions
 - **Principle:** each change of scene is caused by something on screen, and the biggest one is the story's turn.
