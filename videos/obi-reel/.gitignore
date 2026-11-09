@@ -12,3 +12,5 @@ products/
 bg/
 assets/satoshi-*
 sound/vo/
+sound/vo_*/
+sound/vo_*.wav
