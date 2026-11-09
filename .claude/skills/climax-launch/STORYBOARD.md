@@ -43,6 +43,8 @@ DEVICES.md. The storyboard is where the film is decided. Building is execution.
 7. **Time it to the music or voiceover.** Cuts and device starts land on phrase starts (with a voiceover) or on
    beats (without).
 8. **Recurring motifs (F2) and a reprise (F1)** stitch the film together.
+8a. **Write each transition as carrier, transformation and arrival** (TRANSITIONS.md). A beat change with no carrier is
+    a plain cut: two or three per film at most.
 9. **The uniqueness test.** For every beat, ask: would this beat make sense for a different brand? If yes, it's
    generic. Change the image, the object or the words until it only fits this brand.
 

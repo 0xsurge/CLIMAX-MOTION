@@ -113,3 +113,10 @@ In both films, almost every line on screen is **the narration itself, appearing 
    it together. The ending reprises the opening line.
 8. **A ground per chapter, all from one palette.** D1 runs several worlds (white, plum pixel, orange grid, warm photo)
    but they all share one brand palette (orange, plum, lilac, peach, black, white). D2 keeps blue sky against white.
+
+## Second pass: transitions, hierarchy and the camera (full frame rate)
+Every transition was stepped through at 9–16 fps (`tr/`), and both cameras were measured with `camflow.py`
+(`flow_D1.json`, `flow_D2.json`, `graphs_D.png`).
+- **Camera:** nearly still 57% (D1) and 72% (D2) of frames, with almost no roll. D1 uses 4-frame punch-zoom pulses
+  (±5–30%) on transitions; D2 uses a few smooth zooms (0.5–0.8 s).
+- The 18 carrier transitions and the hierarchy rules are written up in `.claude/skills/climax-launch/TRANSITIONS.md`.

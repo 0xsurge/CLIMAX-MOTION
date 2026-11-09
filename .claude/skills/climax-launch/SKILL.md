@@ -20,6 +20,9 @@ The skill has two companion files, read alongside this one:
 - `DEVICES.md`: the device library. Reusable visual grammar (images between words, live captions, swarm to form,
   ring orbits, living slots, lens portals, colour-block frames…), each with what it says, when to use it, how to make
   it, measured numbers, and how to make it unique to the brand.
+- `TRANSITIONS.md`: the carrier law (the last element of a scene becomes the first of the next), 18 frame-by-frame
+  transition patterns, how hierarchy reads, and the measured motion logic (camera holds, objects transform, 4-frame
+  punch-zooms on morphs).
 - `STORYBOARD.md`: how to read a reference (frames, devices, measurements), how to build a storyboard for a new brand
   by giving each line the device whose meaning matches it, the uniqueness test, and what the storyboard and mood board
   page must show.
@@ -166,6 +169,7 @@ The skill has two companion files, read alongside this one:
 
 ### B6. Design the transitions
 - **Principle:** each change of scene is caused by something on screen, and the biggest one is the story's turn.
+  Use carrier transitions (TRANSITIONS.md): plan each one as carrier, transformation and arrival.
 - **Do:** choose 3–5 transition kinds for the film.
   - The **signature transition** carries the main turn, and its form should express the turn itself. A colour turn
     suits a colour flood or a brightness-keyed sweep. A reveal suits an object opening or a dive into it. A
