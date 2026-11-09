@@ -51,6 +51,8 @@ const pulse = (t, tp, a) => { const u = t - tp; return u <= 0 ? 0 : a * (1 - Mat
 
 const lamp = mk(`<div class="abs" style="border-radius:50%"></div>`), blueL = mk(`<div class="abs" style="border-radius:50%"></div>`);
 const grid = mk(`<div class="abs" style="left:-2000px;top:-2000px;width:9000px;height:6000px"></div>`);
+const lightG = mk(`<div class="abs" style="background:radial-gradient(120% 110% at 50% 40%, #FFFFFF 0%, #EAF2FF 45%, #B9D1F3 100%)"></div>`);
+const meadow = mk(`<div class="abs" style="overflow:hidden"><img src="../assets/bg/m1.jpg" style="position:absolute;left:50%;top:50%;width:2400px;transform-origin:50% 50%"></div>`);
 const rnd = M.mulberry32(11), JARGON = ['inference', 'latency p99', 'embeddings', 'API keys', 'zero-knowledge', 'routing', 'SDK v2', 'webhooks', 'rate limits', 'tokenizer', 'RAG', 'fine-tuning', 'auth flow', 'vector DB', 'edge cache', 'schema', 'OAuth', 'GPU hours'];
 const warm = mk(`<div class="abs" style="width:1920px;height:1080px;filter:blur(6px)"></div>`), cool = mk(`<div class="abs" style="width:1920px;height:1080px"></div>`);
 const FR = [];
@@ -81,7 +83,7 @@ cam.insertBefore(car, L.a1); cam.insertBefore(fimg, car);
 const screen = mk(`<div class="abs" style="border-radius:26px;overflow:hidden;box-shadow:0 0 0 3px #3D7BFF,0 40px 100px rgba(0,0,0,.6);background:#0F1422"><canvas width="1280" height="720" style="width:100%;height:100%;display:block"></canvas></div>`);
 const sctx = screen.firstChild.getContext('2d');
 const chip = mk(`<div class="abs label" style="color:#CFE0FF;white-space:nowrap"></div>`), counter = mk(`<div class="abs label" style="color:#3D7BFF;white-space:nowrap"></div>`);
-const slotTxt = mk(`<div class="line" style="gap:28px"><span id="sn" style="font:500 44px/1 'M';color:#3D7BFF"></span><span id="st" style="display:inline-block;font:800 96px/1 'B';letter-spacing:-.035em"></span></div>`);
+const slotTxt = mk(`<div class="line" style="gap:0"><span id="sn" style="display:none"></span><span id="st" style="display:inline-block;font:800 96px/1 'B';letter-spacing:-.035em"></span></div>`);
 const portrait = mk(`<div id="portrait"><img src="../assets/portrait.jpg"></div>`);
 // the product swap: real product photos (cut out) and flat brand logos, each on a light card, 6 frames each
 const PROD = [['b', 'b3d_0.png'], ['p', 'p_bike.png'], ['l', 'google.svg'], ['l', 'claude-c.svg'], ['l', 'notion.svg'], ['l', 'slack.svg'], ['p', 'p_sneaker_wo.png'], ['p', 'p_phone.png']];
@@ -126,6 +128,15 @@ const seekInner = t => {
   const place = (el, o) => { el.style.marginLeft = o[0] + 'px'; el.style.marginTop = o[1] + 'px'; };
   [L.a1, L.a2, L.story, warm, cool].forEach(e => place(e, OR.hook)); [L.name, L.role].forEach(e => place(e, OR.name)); [L.t1, L.t2].forEach(e => place(e, OR.line));
   place(L.kind, OR.screen); [slotTxt, L.d1, L.d2].forEach(e => place(e, OR.steps)); [L.name2, L.open, pillTxt].forEach(e => place(e, OR.close));
+  // ---- grounds by section (screen-filling, under the content) ----
+  const vw = 1920 / z + 240, vh = 1080 / z + 240, vx = camX + 960 - vw / 2, vy = camY + 540 - vh / 2;
+  const lOn = t >= B(38) && t < B(46.6), mOn = t >= B(45.95) && t < B(54.6);
+  show(lightG, lOn); show(meadow, mOn);
+  if (lOn) { box(lightG, vx, vy, vw, vh); const r0 = S(t - B(38), MORPH) * 1.5, r1 = S(t - B(46), FAST);
+    lightG.style.clipPath = `circle(${(r0 * 100).toFixed(1)}% at 50% 50%)`; lightG.style.opacity = 1 - r1; }
+  if (mOn) { box(meadow, vx, vy, vw, vh); const r = S(t - B(46), { k: 240, c: 26 }), out = S(t - B(54.3), FAST);
+    meadow.style.clipPath = `circle(${(r * 75).toFixed(1)}% at 50% 50%)`; meadow.style.opacity = 1 - out;
+    const im = meadow.firstChild; im.style.transform = `translate(-50%,-50%) scale(${1.05 + .05 * clamp((t - B(46)) / 4)})`; }
   const clear = S(t - B(10), { k: 60, c: 15 });
   box(lamp, camX - 300 + 160 * Math.sin(t * .5), camY + 260 + 90 * Math.sin(t * .4), 1300, 1300); lamp.style.background = `radial-gradient(closest-side, rgba(255,176,74,${.34 * (1 - .8 * clear)}), rgba(255,176,74,0))`;
   box(blueL, camX + 900 + 160 * Math.sin(t * .37), camY - 380 + 100 * Math.cos(t * .3), 1500, 1500); blueL.style.background = `radial-gradient(closest-side, rgba(61,123,255,${.06 + .3 * clear}), rgba(61,123,255,0))`;
@@ -154,7 +165,7 @@ const seekInner = t => {
   if (C && style !== 'screen') { box(car, ...C); car.style.transform = '';
     if (style === 'amber') { car.style.background = 'rgba(255,176,74,.30)'; car.style.border = '0'; car.style.borderRadius = '10px'; }
     if (style === 'frame') { car.style.background = 'transparent'; car.style.border = '4px solid #3D7BFF'; car.style.borderRadius = '26px'; }
-    if (style === 'flood') { car.style.background = '#3D7BFF'; car.style.border = '0'; car.style.borderRadius = t < B(14) ? '26px' : '3px'; } }
+    if (style === 'flood') { car.style.background = 'radial-gradient(110% 120% at 50% 45%, #FFFFFF 0%, #E4EEFF 40%, #A9C6F0 100%)'; car.style.border = '0'; car.style.borderRadius = t < B(14) ? '26px' : '3px'; } }
   if (swOn) cool.style.clipPath = (C && t >= B(7)) ? `inset(${C[1]}px ${1920 - C[0] - C[2]}px ${1080 - C[1] - C[3]}px ${C[0]}px round 24px)` : 'inset(50%)';
   const fiOn = t >= B(7.15) && t < B(10.3); show(fimg, fiOn);
   if (fiOn && C) { box(fimg, C[0] + 4, C[1] + 4, Math.max(0, C[2] - 8), Math.max(0, C[3] - 8)); const fs = S(t - B(7.15), MORPH);
@@ -162,7 +173,7 @@ const seekInner = t => {
     cv.style.filter = `blur(${(1 - clamp(fs)) * 18}px) saturate(${.4 + .6 * clamp(fs)})`; cv.style.transform = `scale(${1.15 - .15 * fs})`; }
   build(L.story, t, B(7.8), P / 2, 905, B(10) - .02);
   // name on the flood
-  build(L.name, t, B(10) + .03, P / 2, 400, B(14));
+  build(L.name, t, B(10) + .03, P / 2, 400, B(14)); L.name.style.color = '#0B1B3F';
   const roleOn = t >= B(11.5) && t < B(14.1); show(L.role, roleOn, 'flex'); if (roleOn) { L.role.style.top = '640px'; L.role.style.transform = 'translateX(150px)'; L.role.style.opacity = 1 - clamp((t - B(14)) / .1);
     const hs = L.role.children; typeOn(hs[0], 'Motion Designer', t, B(11.5), 30); typeOn(hs[1], 'Creative Strategist', t, B(11.5) + .55, 30);
     [...hs].forEach((h, j) => { const s2 = S(t - (B(11.5) + j * .55), POP); h.style.display = s2 > .02 ? 'inline-block' : 'none'; h.style.transform = `scaleX(${.6 + .4 * clamp(s2)})`; h.style.transformOrigin = 'left center'; }); }
@@ -198,11 +209,11 @@ const seekInner = t => {
     L.kind.style.left = '1290px'; L.kind.style.top = '455px'; L.kind.style.transform = `translateY(${(1 - s) * 70}px)`; L.kind.style.filter = `blur(${(1 - clamp(s)) * 14}px)`; L.kind.style.opacity = clamp(s * 1.5) * (1 - S(t - B(37.8), FAST)); }
   // steps
   const stOn = t >= B(38.5) && t < B(44); show(slotTxt, stOn, 'flex');
-  if (stOn) { const k = clamp(Math.floor((t - B(38.5)) / B(1)), 0, 4), s = S(t - B(38.5 + k), WORD); slotTxt.style.top = '492px'; $('sn').textContent = '0' + (k + 1); $('st').textContent = STEPS[k];
+  if (stOn) { const k = clamp(Math.floor((t - B(38.5)) / B(1)), 0, 4), s = S(t - B(38.5 + k), WORD); slotTxt.style.top = '492px'; slotTxt.style.color = '#0B1B3F'; $('sn').textContent = '0' + (k + 1); $('st').textContent = STEPS[k];
     $('st').style.transform = `translateY(${(1 - s) * 50}px)`; $('st').style.filter = `blur(${(1 - clamp(s)) * 12}px)`; slotTxt.style.opacity = 1 - S(t - B(43.8), FAST); }
   if (t >= B(38.6) && t < B(46.05)) { show(car, true); car.style.transform = ''; const toDot = S(t - B(44), MORPH), br = 1 + .18 * Math.sin((t - B(44)) * 9) * clamp((t - B(44.4)) / .3);
     const r = off(rectLerp([400, 450, 1120, 180], [960 - 14 * br, 540 - 14 * br, 28 * br, 28 * br], toDot), OR.steps); box(car, ...r);
-    car.style.background = toDot > .5 ? '#3D7BFF' : '#0F1422'; car.style.border = toDot > .5 ? '0' : '3px solid #3D7BFF'; car.style.borderRadius = toDot > .7 ? '50%' : lerp(18, 40, toDot) + 'px'; }
+    car.style.background = toDot > .5 ? '#3D7BFF' : '#FFFFFF'; car.style.boxShadow = toDot > .5 ? '' : '0 24px 60px rgba(11,27,63,.18)'; car.style.border = toDot > .5 ? '0' : '3px solid #3D7BFF'; car.style.borderRadius = toDot > .7 ? '50%' : lerp(18, 40, toDot) + 'px'; }
   // ring -> full stop
   const ringOn = t >= B(46) && t < B(56), stop2 = $('stop2');
   dots.forEach((d, i) => { show(d, ringOn); if (!ringOn) return;
@@ -212,7 +223,7 @@ const seekInner = t => {
     if (t >= B(54.6)) { const [sx, sy, sw, sh] = pos(stop2), c = S(t - (B(54.6) + (i % 8) * .03), { k: 260, c: 24 }); x = lerp(x, sx + 20, c); y = lerp(y, sy + sh * .74, c); sc = lerp(sc, .08, c); op = lerp(op, 1, c); }
     d.style.left = x + 'px'; d.style.top = y + 'px'; d.style.transform = `scale(${sc})`; d.style.opacity = op; d.style.zIndex = Math.round(depth * 10);
     const F = FILMS[i % 6][0]; d.firstChild.getContext('2d').drawImage(frameOf(F, ((i * .37 + (t - B(46))) % 2.2)), 0, 0, 256, 144); });
-  build(L.d1, t, B(46.5), P / 2, 430, B(54.2));
+  build(L.d1, t, B(46.5), P / 2, 430, B(54.2)); [L.d1, L.d2].forEach(n => { n.style.color = '#0B1B3F'; n.style.textShadow = '0 0 40px rgba(255,255,255,.95), 0 0 80px rgba(255,255,255,.8)'; }); [...L.d2.children].forEach(w => { if (w.classList.contains('blue')) w.style.color = '#1F4FD8'; });
   build(L.d2, t, B(49), P / 2, 560, B(54.2));
   build(L.name2, t, B(54.4), P / 2, 520, Infinity);
   const landed = S(t - B(55.8), POP), stretch = S(t - B(60), MORPH);
