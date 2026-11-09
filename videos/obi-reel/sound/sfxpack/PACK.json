@@ -1,0 +1,558 @@
+{
+ "drone": [
+  {
+   "file": "drone/drone_01_mixkit1088.wav",
+   "src": "https://mixkit.co (sfx 1088)",
+   "dur": 4.39,
+   "brightness_hz": 1474
+  },
+  {
+   "file": "drone/drone_02_mixkit1144.wav",
+   "src": "https://mixkit.co (sfx 1144)",
+   "dur": 6.54,
+   "brightness_hz": 588
+  },
+  {
+   "file": "drone/drone_03_mixkit1177.wav",
+   "src": "https://mixkit.co (sfx 1177)",
+   "dur": 54.0,
+   "brightness_hz": 88
+  },
+  {
+   "file": "drone/drone_04_mixkit1721.wav",
+   "src": "https://mixkit.co (sfx 1721)",
+   "dur": 10.72,
+   "brightness_hz": 758
+  },
+  {
+   "file": "drone/drone_05_mixkit2133.wav",
+   "src": "https://mixkit.co (sfx 2133)",
+   "dur": 6.0,
+   "brightness_hz": 1218
+  },
+  {
+   "file": "drone/drone_06_mixkit2135.wav",
+   "src": "https://mixkit.co (sfx 2135)",
+   "dur": 13.62,
+   "brightness_hz": 215
+  },
+  {
+   "file": "drone/drone_07_mixkit2282.wav",
+   "src": "https://mixkit.co (sfx 2282)",
+   "dur": 20.88,
+   "brightness_hz": 922
+  },
+  {
+   "file": "drone/drone_08_mixkit2297.wav",
+   "src": "https://mixkit.co (sfx 2297)",
+   "dur": 7.0,
+   "brightness_hz": 415
+  },
+  {
+   "file": "drone/drone_09_mixkit2408.wav",
+   "src": "https://mixkit.co (sfx 2408)",
+   "dur": 4.12,
+   "brightness_hz": 751
+  },
+  {
+   "file": "drone/drone_10_mixkit2504.wav",
+   "src": "https://mixkit.co (sfx 2504)",
+   "dur": 50.0,
+   "brightness_hz": 253
+  },
+  {
+   "file": "drone/drone_11_mixkit2741.wav",
+   "src": "https://mixkit.co (sfx 2741)",
+   "dur": 70.51,
+   "brightness_hz": 375
+  },
+  {
+   "file": "drone/drone_12_mixkit2744.wav",
+   "src": "https://mixkit.co (sfx 2744)",
+   "dur": 54.11,
+   "brightness_hz": 333
+  },
+  {
+   "file": "drone/drone_13_mixkit2745.wav",
+   "src": "https://mixkit.co (sfx 2745)",
+   "dur": 88.4,
+   "brightness_hz": 265
+  },
+  {
+   "file": "drone/drone_14_mixkit2746.wav",
+   "src": "https://mixkit.co (sfx 2746)",
+   "dur": 95.38,
+   "brightness_hz": 522
+  },
+  {
+   "file": "drone/drone_15_mixkit2749.wav",
+   "src": "https://mixkit.co (sfx 2749)",
+   "dur": 89.84,
+   "brightness_hz": 97
+  },
+  {
+   "file": "drone/drone_16_mixkit2750.wav",
+   "src": "https://mixkit.co (sfx 2750)",
+   "dur": 56.69,
+   "brightness_hz": 271
+  },
+  {
+   "file": "drone/drone_17_mixkit2751.wav",
+   "src": "https://mixkit.co (sfx 2751)",
+   "dur": 7.31,
+   "brightness_hz": 824
+  },
+  {
+   "file": "drone/drone_18_mixkit2782.wav",
+   "src": "https://mixkit.co (sfx 2782)",
+   "dur": 4.53,
+   "brightness_hz": 625
+  },
+  {
+   "file": "drone/drone_19_mixkit489.wav",
+   "src": "https://mixkit.co (sfx 489)",
+   "dur": 50.99,
+   "brightness_hz": 106
+  },
+  {
+   "file": "drone/drone_20_mixkit492.wav",
+   "src": "https://mixkit.co (sfx 492)",
+   "dur": 67.27,
+   "brightness_hz": 693
+  }
+ ],
+ "impact": [
+  {
+   "file": "impact/impact_01_mixkit1093.wav",
+   "src": "https://mixkit.co (sfx 1093)",
+   "dur": 3.7,
+   "brightness_hz": 1822
+  },
+  {
+   "file": "impact/impact_02_mixkit1486.wav",
+   "src": "https://mixkit.co (sfx 1486)",
+   "dur": 6.75,
+   "brightness_hz": 337
+  },
+  {
+   "file": "impact/impact_03_mixkit1687.wav",
+   "src": "https://mixkit.co (sfx 1687)",
+   "dur": 4.0,
+   "brightness_hz": 859
+  },
+  {
+   "file": "impact/impact_04_mixkit2198.wav",
+   "src": "https://mixkit.co (sfx 2198)",
+   "dur": 3.03,
+   "brightness_hz": 1370
+  },
+  {
+   "file": "impact/impact_05_mixkit2573.wav",
+   "src": "https://mixkit.co (sfx 2573)",
+   "dur": 1.55,
+   "brightness_hz": 2498
+  },
+  {
+   "file": "impact/impact_06_mixkit2748.wav",
+   "src": "https://mixkit.co (sfx 2748)",
+   "dur": 2.15,
+   "brightness_hz": 727
+  },
+  {
+   "file": "impact/impact_07_mixkit2779.wav",
+   "src": "https://mixkit.co (sfx 2779)",
+   "dur": 2.04,
+   "brightness_hz": 2505
+  },
+  {
+   "file": "impact/impact_08_mixkit2860.wav",
+   "src": "https://mixkit.co (sfx 2860)",
+   "dur": 1.84,
+   "brightness_hz": 2133
+  },
+  {
+   "file": "impact/impact_09_mixkit3024.wav",
+   "src": "https://mixkit.co (sfx 3024)",
+   "dur": 4.35,
+   "brightness_hz": 703
+  },
+  {
+   "file": "impact/impact_10_mixkit3120.wav",
+   "src": "https://mixkit.co (sfx 3120)",
+   "dur": 1.65,
+   "brightness_hz": 1541
+  },
+  {
+   "file": "impact/impact_11_mixkit3124.wav",
+   "src": "https://mixkit.co (sfx 3124)",
+   "dur": 0.5,
+   "brightness_hz": 863
+  },
+  {
+   "file": "impact/impact_12_mixkit498.wav",
+   "src": "https://mixkit.co (sfx 498)",
+   "dur": 3.47,
+   "brightness_hz": 1695
+  },
+  {
+   "file": "impact/impact_13_mixkit546.wav",
+   "src": "https://mixkit.co (sfx 546)",
+   "dur": 5.63,
+   "brightness_hz": 218
+  },
+  {
+   "file": "impact/impact_14_mixkit563.wav",
+   "src": "https://mixkit.co (sfx 563)",
+   "dur": 5.5,
+   "brightness_hz": 832
+  },
+  {
+   "file": "impact/impact_15_mixkit565.wav",
+   "src": "https://mixkit.co (sfx 565)",
+   "dur": 4.14,
+   "brightness_hz": 446
+  },
+  {
+   "file": "impact/impact_16_mixkit677.wav",
+   "src": "https://mixkit.co (sfx 677)",
+   "dur": 4.72,
+   "brightness_hz": 1498
+  },
+  {
+   "file": "impact/impact_17_mixkit773.wav",
+   "src": "https://mixkit.co (sfx 773)",
+   "dur": 2.62,
+   "brightness_hz": 1745
+  },
+  {
+   "file": "impact/impact_18_mixkit774.wav",
+   "src": "https://mixkit.co (sfx 774)",
+   "dur": 4.95,
+   "brightness_hz": 1820
+  }
+ ],
+ "riser": [
+  {
+   "file": "riser/riser_01_mixkit1465.wav",
+   "src": "https://mixkit.co (sfx 1465)",
+   "dur": 2.26,
+   "brightness_hz": 900
+  },
+  {
+   "file": "riser/riser_02_mixkit1492.wav",
+   "src": "https://mixkit.co (sfx 1492)",
+   "dur": 1.33,
+   "brightness_hz": 3784
+  },
+  {
+   "file": "riser/riser_03_mixkit1493.wav",
+   "src": "https://mixkit.co (sfx 1493)",
+   "dur": 2.49,
+   "brightness_hz": 3401
+  },
+  {
+   "file": "riser/riser_04_mixkit175.wav",
+   "src": "https://mixkit.co (sfx 175)",
+   "dur": 0.61,
+   "brightness_hz": 4988
+  },
+  {
+   "file": "riser/riser_05_mixkit2199.wav",
+   "src": "https://mixkit.co (sfx 2199)",
+   "dur": 4.46,
+   "brightness_hz": 3639
+  },
+  {
+   "file": "riser/riser_06_mixkit2521.wav",
+   "src": "https://mixkit.co (sfx 2521)",
+   "dur": 0.69,
+   "brightness_hz": 6128
+  },
+  {
+   "file": "riser/riser_07_mixkit2529.wav",
+   "src": "https://mixkit.co (sfx 2529)",
+   "dur": 2.63,
+   "brightness_hz": 6622
+  },
+  {
+   "file": "riser/riser_08_mixkit2599.wav",
+   "src": "https://mixkit.co (sfx 2599)",
+   "dur": 6.65,
+   "brightness_hz": 1855
+  },
+  {
+   "file": "riser/riser_09_mixkit2623.wav",
+   "src": "https://mixkit.co (sfx 2623)",
+   "dur": 3.76,
+   "brightness_hz": 618
+  },
+  {
+   "file": "riser/riser_10_mixkit2634.wav",
+   "src": "https://mixkit.co (sfx 2634)",
+   "dur": 2.34,
+   "brightness_hz": 1611
+  },
+  {
+   "file": "riser/riser_11_mixkit2742.wav",
+   "src": "https://mixkit.co (sfx 2742)",
+   "dur": 2.15,
+   "brightness_hz": 1036
+  },
+  {
+   "file": "riser/riser_12_mixkit2743.wav",
+   "src": "https://mixkit.co (sfx 2743)",
+   "dur": 2.15,
+   "brightness_hz": 1036
+  },
+  {
+   "file": "riser/riser_13_mixkit2919.wav",
+   "src": "https://mixkit.co (sfx 2919)",
+   "dur": 4.53,
+   "brightness_hz": 1436
+  },
+  {
+   "file": "riser/riser_14_mixkit787.wav",
+   "src": "https://mixkit.co (sfx 787)",
+   "dur": 2.52,
+   "brightness_hz": 1582
+  },
+  {
+   "file": "riser/riser_15_mixkit790.wav",
+   "src": "https://mixkit.co (sfx 790)",
+   "dur": 2.58,
+   "brightness_hz": 1247
+  },
+  {
+   "file": "riser/riser_16_mixkit916.wav",
+   "src": "https://mixkit.co (sfx 916)",
+   "dur": 5.0,
+   "brightness_hz": 538
+  }
+ ],
+ "sweep": [
+  {
+   "file": "sweep/sweep_01_mixkit1469.wav",
+   "src": "https://mixkit.co (sfx 1469)",
+   "dur": 1.63,
+   "brightness_hz": 2775
+  },
+  {
+   "file": "sweep/sweep_02_mixkit1474.wav",
+   "src": "https://mixkit.co (sfx 1474)",
+   "dur": 3.2,
+   "brightness_hz": 3631
+  },
+  {
+   "file": "sweep/sweep_03_mixkit1490.wav",
+   "src": "https://mixkit.co (sfx 1490)",
+   "dur": 1.76,
+   "brightness_hz": 5279
+  },
+  {
+   "file": "sweep/sweep_04_mixkit1491.wav",
+   "src": "https://mixkit.co (sfx 1491)",
+   "dur": 1.1,
+   "brightness_hz": 4063
+  },
+  {
+   "file": "sweep/sweep_05_mixkit2152.wav",
+   "src": "https://mixkit.co (sfx 2152)",
+   "dur": 1.56,
+   "brightness_hz": 3418
+  },
+  {
+   "file": "sweep/sweep_06_mixkit2180.wav",
+   "src": "https://mixkit.co (sfx 2180)",
+   "dur": 2.0,
+   "brightness_hz": 2950
+  },
+  {
+   "file": "sweep/sweep_07_mixkit2350.wav",
+   "src": "https://mixkit.co (sfx 2350)",
+   "dur": 3.5,
+   "brightness_hz": 4247
+  },
+  {
+   "file": "sweep/sweep_08_mixkit2577.wav",
+   "src": "https://mixkit.co (sfx 2577)",
+   "dur": 1.05,
+   "brightness_hz": 6394
+  },
+  {
+   "file": "sweep/sweep_09_mixkit2594.wav",
+   "src": "https://mixkit.co (sfx 2594)",
+   "dur": 1.02,
+   "brightness_hz": 6417
+  },
+  {
+   "file": "sweep/sweep_10_mixkit2596.wav",
+   "src": "https://mixkit.co (sfx 2596)",
+   "dur": 3.11,
+   "brightness_hz": 4022
+  },
+  {
+   "file": "sweep/sweep_11_mixkit2600.wav",
+   "src": "https://mixkit.co (sfx 2600)",
+   "dur": 2.81,
+   "brightness_hz": 4437
+  },
+  {
+   "file": "sweep/sweep_12_mixkit2608.wav",
+   "src": "https://mixkit.co (sfx 2608)",
+   "dur": 1.27,
+   "brightness_hz": 4970
+  },
+  {
+   "file": "sweep/sweep_13_mixkit2619.wav",
+   "src": "https://mixkit.co (sfx 2619)",
+   "dur": 1.15,
+   "brightness_hz": 8297
+  },
+  {
+   "file": "sweep/sweep_14_mixkit2621.wav",
+   "src": "https://mixkit.co (sfx 2621)",
+   "dur": 1.15,
+   "brightness_hz": 8685
+  },
+  {
+   "file": "sweep/sweep_15_mixkit2622.wav",
+   "src": "https://mixkit.co (sfx 2622)",
+   "dur": 1.25,
+   "brightness_hz": 5662
+  },
+  {
+   "file": "sweep/sweep_16_mixkit263.wav",
+   "src": "https://mixkit.co (sfx 263)",
+   "dur": 1.5,
+   "brightness_hz": 4640
+  },
+  {
+   "file": "sweep/sweep_17_mixkit2635.wav",
+   "src": "https://mixkit.co (sfx 2635)",
+   "dur": 1.29,
+   "brightness_hz": 3513
+  },
+  {
+   "file": "sweep/sweep_18_mixkit2636.wav",
+   "src": "https://mixkit.co (sfx 2636)",
+   "dur": 0.95,
+   "brightness_hz": 2867
+  },
+  {
+   "file": "sweep/sweep_19_mixkit2639.wav",
+   "src": "https://mixkit.co (sfx 2639)",
+   "dur": 1.72,
+   "brightness_hz": 2353
+  },
+  {
+   "file": "sweep/sweep_20_mixkit2651.wav",
+   "src": "https://mixkit.co (sfx 2651)",
+   "dur": 2.52,
+   "brightness_hz": 3262
+  },
+  {
+   "file": "sweep/sweep_21_mixkit2783.wav",
+   "src": "https://mixkit.co (sfx 2783)",
+   "dur": 2.61,
+   "brightness_hz": 2763
+  },
+  {
+   "file": "sweep/sweep_22_mixkit3114.wav",
+   "src": "https://mixkit.co (sfx 3114)",
+   "dur": 1.21,
+   "brightness_hz": 4082
+  },
+  {
+   "file": "sweep/sweep_23_mixkit3116.wav",
+   "src": "https://mixkit.co (sfx 3116)",
+   "dur": 2.12,
+   "brightness_hz": 3303
+  },
+  {
+   "file": "sweep/sweep_24_mixkit3117.wav",
+   "src": "https://mixkit.co (sfx 3117)",
+   "dur": 2.5,
+   "brightness_hz": 3943
+  },
+  {
+   "file": "sweep/sweep_25_mixkit3118.wav",
+   "src": "https://mixkit.co (sfx 3118)",
+   "dur": 0.88,
+   "brightness_hz": 3372
+  },
+  {
+   "file": "sweep/sweep_26_mixkit3205.wav",
+   "src": "https://mixkit.co (sfx 3205)",
+   "dur": 1.5,
+   "brightness_hz": 3997
+  }
+ ],
+ "ui": [
+  {
+   "file": "ui/ui_01_mixkit1485.wav",
+   "src": "https://mixkit.co (sfx 1485)",
+   "dur": 0.48,
+   "brightness_hz": 3448
+  },
+  {
+   "file": "ui/ui_02_mixkit166.wav",
+   "src": "https://mixkit.co (sfx 166)",
+   "dur": 0.78,
+   "brightness_hz": 3499
+  },
+  {
+   "file": "ui/ui_03_mixkit2150.wav",
+   "src": "https://mixkit.co (sfx 2150)",
+   "dur": 0.59,
+   "brightness_hz": 2165
+  },
+  {
+   "file": "ui/ui_04_mixkit2182.wav",
+   "src": "https://mixkit.co (sfx 2182)",
+   "dur": 0.42,
+   "brightness_hz": 1962
+  },
+  {
+   "file": "ui/ui_05_mixkit2183.wav",
+   "src": "https://mixkit.co (sfx 2183)",
+   "dur": 0.56,
+   "brightness_hz": 3841
+  },
+  {
+   "file": "ui/ui_06_mixkit2519.wav",
+   "src": "https://mixkit.co (sfx 2519)",
+   "dur": 0.56,
+   "brightness_hz": 5065
+  },
+  {
+   "file": "ui/ui_07_mixkit2520.wav",
+   "src": "https://mixkit.co (sfx 2520)",
+   "dur": 0.61,
+   "brightness_hz": 4521
+  },
+  {
+   "file": "ui/ui_08_mixkit2618.wav",
+   "src": "https://mixkit.co (sfx 2618)",
+   "dur": 0.66,
+   "brightness_hz": 8264
+  },
+  {
+   "file": "ui/ui_09_mixkit3005.wav",
+   "src": "https://mixkit.co (sfx 3005)",
+   "dur": 0.18,
+   "brightness_hz": 3585
+  },
+  {
+   "file": "ui/ui_10_mixkit3115.wav",
+   "src": "https://mixkit.co (sfx 3115)",
+   "dur": 0.57,
+   "brightness_hz": 4870
+  },
+  {
+   "file": "ui/ui_11_mixkit833.wav",
+   "src": "https://mixkit.co (sfx 833)",
+   "dur": 0.77,
+   "brightness_hz": 2205
+  }
+ ]
+}

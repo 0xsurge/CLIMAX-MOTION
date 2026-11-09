@@ -1,11 +1,37 @@
-[["l01", 0.15, "Your product is brilliant."],
- ["l02", 3.55, "But explaining it is hard."],
- ["l03", 5.3, "Until it's a story."],
- ["l04", 6.6, "Meet Obi Igwe."],
- ["l05", 8.6, "He turns complex products into clear stories."],
- ["l06", 11.6, "A few recent films."],
- ["l07", 16.9, "Launch films. Product videos. Brand films. Motion graphics."],
- ["l08", 20.9, "One process, built around your story."],
- ["l09", 24.4, "Because your product deserves to be understood."],
- ["l10", 28.3, "Obi Igwe. Open to new projects."],
- ["l11", 30.9, "Full portfolio, link in the post."]]
+[
+ [
+  "l01",
+  0.15,
+  "Your product is brilliant."
+ ],
+ [
+  "l02",
+  3.55,
+  "But explaining it is hard."
+ ],
+ [
+  "l03",
+  5.3,
+  "Until it's a story."
+ ],
+ [
+  "l06",
+  11.6,
+  "A few recent films."
+ ],
+ [
+  "l07",
+  16.9,
+  "Launch films. Product videos. Brand films. Motion graphics."
+ ],
+ [
+  "l08",
+  20.9,
+  "One process, built around your story."
+ ],
+ [
+  "l09",
+  24.4,
+  "Because your product deserves to be understood."
+ ]
+]

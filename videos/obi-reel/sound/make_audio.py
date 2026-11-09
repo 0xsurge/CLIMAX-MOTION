@@ -35,6 +35,16 @@ put(B(44), click(1500), .15)
 put(B(46), thump(), .3)
 put(B(55.8), click(2400), .22)
 put(B(60), click(2000), .2)
+# ---- the SFX pack (Mixkit): a low drone bed, subtle impacts on the landings, risers into the reveals ----
+def load(p):
+    subprocess.run(['ffmpeg', '-y', '-v', 'error', '-i', p, '-ar', '44100', '-ac', '1', '/tmp/claude-0/-home-user-CLIMAX-MOTION/ebd3c3d1-b9fc-58c3-8e73-03b9f49be28b/scratchpad/sfx.wav'], check=True)
+    w = wave.open('/tmp/claude-0/-home-user-CLIMAX-MOTION/ebd3c3d1-b9fc-58c3-8e73-03b9f49be28b/scratchpad/sfx.wav'); return np.frombuffer(w.readframes(w.getnframes()), '<i2') / 32768
+dr = load('sfxpack/drone/drone_10_mixkit2504.wav')[:int((DUR + 1) * SR)]; env = np.minimum(1, np.arange(len(dr)) / (2.5 * SR)) * np.minimum(1, (len(dr) - np.arange(len(dr))) / (2.0 * SR))
+put(0, dr * env, .22)
+for tt, fn, g in [(B(10), 'impact/impact_13_mixkit546.wav', .45), (B(18), 'impact/impact_15_mixkit565.wav', .3), (B(46), 'impact/impact_09_mixkit3024.wav', .32), (B(54.4), 'impact/impact_13_mixkit546.wav', .38)]:
+    put(tt, load('sfxpack/' + fn), g)
+for target, fn, g in [(B(10), 'riser/riser_09_mixkit2623.wav', .3), (B(54.4), 'riser/riser_01_mixkit1465.wav', .28)]:
+    x = load('sfxpack/' + fn); pk = int(np.argmax(np.abs(x))); put(max(0, target - pk / SR), x, g)
 subprocess.run(['ffmpeg', '-y', '-v', 'error', '-ss', str(G['start']), '-t', str(DUR + .5), '-i', 'cand/371.mp3', '-af', f'afade=t=out:st={DUR - 1.8}:d=1.8', '-ar', '44100', '-ac', '2', 'music.wav'], check=True)
 w = wave.open('music.wav'); m = np.frombuffer(w.readframes(w.getnframes()), '<i2').reshape(-1, 2) / 32768
 n = min(len(m), len(fx)); mix = m[:n] * .8 + fx[:n]; mix /= max(1e-9, np.abs(mix).max()) / .9
