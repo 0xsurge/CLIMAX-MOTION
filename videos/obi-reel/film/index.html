@@ -34,7 +34,7 @@
 <script src="../assets/motion.js"></script>
 <script>
 const M = window.Motion, S = (t, p) => M.spring(t, p), clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x)), lerp = (a, b, u) => a + (b - a) * u;
-const P = 0.46439909, PACE = 1.25, B = n => n * P * PACE, DUR = B(67); window.FILM_DUR = DUR;
+const P = 0.46439909, PACE = 1, B = n => n * P * PACE, DUR = B(67); window.FILM_DUR = DUR;
 const camMove = (t, tc, tau) => t < tc ? 0.5 * Math.exp((t - tc) / tau) : 1 - 0.5 * Math.exp(-(t - tc) / tau);
 const FAST = { k: 1100, c: 60 }, MORPH = { k: 650, c: 46 }, POP = { k: 700, c: 30 }, WORD = { k: 900, c: 50 };
 const $ = id => document.getElementById(id), cam = $('cam');
