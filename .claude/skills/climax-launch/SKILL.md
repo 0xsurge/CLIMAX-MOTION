@@ -311,6 +311,14 @@ Another brand would come out entirely different through the same steps.
     seam.
   - Mix with `mix.py` (−14 LUFS). Check with `flow_check.py --fps 30`; the measured whips read as jerks by design.
 - **Traps:**
+  - Never drop the travelling camera. "The camera holds while objects transform" (TRANSITIONS.md) applies **inside**
+    a place. Between places the camera must still travel. Lay every beat at its own place on a big canvas, with whips,
+    tilts, dives and pull-outs, and let the carrier move with the camera. A film with handovers but a fixed camera
+    reads as "static in the middle" (Obi reel v2).
+  - Every frame, box, pill or ring item should hold **real imagery** (scenes, product, UI), never an empty outline
+    or plain dots (Obi reel v2 feedback).
+  - Load the skill files and write the storyboard before building. Working "from memory" produced slow, basic,
+    fade-based transitions (Obi reel v1).
   - Brightness sweeps done in WebGL render targets lose tone mapping and go muddy. Do them in 2D on the finished
     frames.
   - Resetting `style.display = ''` wipes inline flex centring. Restore the stored mode.
