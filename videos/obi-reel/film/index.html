@@ -43,17 +43,13 @@ const DUR = B(67) + INS + (SLOW1 - SLOW0) * (SLOWK - 1); window.FILM_DUR = DUR;
 const warp = t => { if (t < INS_T) return t; if (t < INS_T + INS) return INS_T; let u = t - INS; if (u < SLOW0) return u; const L = (SLOW1 - SLOW0) * SLOWK; return u < SLOW0 + L ? SLOW0 + (u - SLOW0) / SLOWK : u - L + (SLOW1 - SLOW0); };
 let RT = 0;
 const camMove = (t, tc, tau) => t < tc ? 0.5 * Math.exp((t - tc) / tau) : 1 - 0.5 * Math.exp(-(t - tc) / tau);
-// Motion law (Resend study + user): slow-fast-slow, no overshoot. Every spring is critically damped (c = 2*sqrt(k)),
-// moves settle in 0.35-0.7 s, scale changes stay subtle. No quick scale pop-and-settle.
-// User law 2: nothing sudden. Every enter is a soft fade-up (opacity + blur + small drift) over 0.5-0.9 s; every swap crossfades.
-const FAST = { k: 150, c: 25 }, MORPH = { k: 90, c: 19 }, POP = { k: 160, c: 26 }, WORD = { k: 110, c: 21 }, SOFT = { k: 60, c: 16 };
-const sm = x => { x = clamp(x); return x * x * (3 - 2 * x); };
+const FAST = { k: 1100, c: 60 }, MORPH = { k: 650, c: 46 }, POP = { k: 700, c: 30 }, WORD = { k: 900, c: 50 };
 const $ = id => document.getElementById(id), cam = $('cam');
 const mk = (html, parent = cam) => { const d = document.createElement('div'); d.innerHTML = html.trim(); const e = d.firstChild; parent.appendChild(e); return e; };
 const show = (el, on, d = '') => { el.style.display = on ? d : 'none'; };
 const box = (el, x, y, w, h) => { el.style.left = x + 'px'; el.style.top = y + 'px'; el.style.width = w + 'px'; el.style.height = h + 'px'; };
 const rectLerp = (a, b, u) => a.map((v, i) => lerp(v, b[i], u));
-const pulse = (t, tp, a) => { const u = t - tp; return u <= 0 ? 0 : a * .45 * (1 - Math.exp(-u / .09)) * Math.exp(-u / .35); };
+const pulse = (t, tp, a) => { const u = t - tp; return u <= 0 ? 0 : a * (1 - Math.exp(-u / .025)) * Math.exp(-u / .11); };
 
 const lamp = mk(`<div class="abs" style="border-radius:50%"></div>`), blueL = mk(`<div class="abs" style="border-radius:50%"></div>`);
 const grid = mk(`<div class="abs" style="left:-2000px;top:-2000px;width:9000px;height:6000px"></div>`);
@@ -77,7 +73,7 @@ const L = {
   role: mk(`<div class="line" style="gap:18px;font:900 italic 48px/1 'S';color:#FFFFFF"><span class="hl" style="background:#F26A1B;padding:12px 20px;border-radius:10px"></span><span class="hl" style="background:#F26A1B;padding:12px 20px;border-radius:10px"></span></div>`),
   t1: mk(`<div class="line cap"><span class="w">I</span><span class="w">turn</span><span class="pillimg" id="p1"><canvas width="320" height="180"></canvas></span><span class="w lamp">complex</span><span class="w">products</span></div>`),
   t2: mk(`<div class="line cap"><span class="w">into</span><span class="w blue">clear</span><span class="pillimg" id="p2"><canvas width="320" height="180"></canvas></span><span class="w blue">stories.</span></div>`),
-  kind: mk(`<div class="abs" style="font:800 84px/1 'B';letter-spacing:-.04em;white-space:nowrap"></div>`),
+  kind: mk(`<div class="abs" style="font:800 110px/1 'B';letter-spacing:-.04em;white-space:nowrap"></div>`),
   d1: mk(words('cap', [['Your'], ['product'], ['deserves']])),
   d2: mk(words('cap', [['to'], ['be'], ['understood.', 'blue']])),
   name2: mk(`<div class="line" style="font:800 170px/1 'B';letter-spacing:-.045em"><span class="w">Obi</span><span class="w">Igwe<span id="stop2" style="display:inline-block;width:.26em;text-align:left"></span></span></div>`),
@@ -109,10 +105,10 @@ const STEPS = ['Find the truth', 'Pick one idea', 'Build the colour story', 'Sto
 const KINDS = [['Launch films.', 'sterling'], ['Product videos.', 'vivox'], ['Brand films.', 'dripverse'], ['Motion graphics.', 'appleui']];
 
 function build(node, t, t0, step, y, exit = Infinity) {
-  const ws = [...node.children].filter(c => c.classList.contains('w') || c.classList.contains('pillimg')), vis = t >= t0 - .01 && t < exit + .4; node.style.display = vis ? 'flex' : 'none'; if (!vis) return;
-  const ex = sm((t - exit) / .38); node.style.top = y + 'px';
+  const ws = [...node.children].filter(c => c.classList.contains('w') || c.classList.contains('pillimg')), vis = t >= t0 - .01 && t < exit + .14; node.style.display = vis ? 'flex' : 'none'; if (!vis) return;
+  const ex = clamp((t - exit) / .13); node.style.top = y + 'px';
   node.style.transform = `translateX(${-14 * clamp((t - t0) / 2.5) - 60 * ex}px) scale(${1 - .02 * clamp((t - t0) / 2.5)})`; node.style.filter = ex > 0 ? `blur(${14 * ex}px)` : ''; node.style.opacity = 1 - ex;
-  ws.forEach((w, i) => { const s = S(t - (t0 + i * step), WORD); w.style.opacity = sm(s * 1.15); w.style.filter = `blur(${(1 - clamp(s)) * 10}px)`; w.style.transform = `translateY(${(1 - s) * 22}px)`; });
+  ws.forEach((w, i) => { const s = S(t - (t0 + i * step), WORD); w.style.opacity = clamp(s * 1.5); w.style.filter = `blur(${(1 - clamp(s)) * 14}px)`; w.style.transform = `translateY(${(1 - s) * 40}px)`; });
 }
 const typeOn = (el, txt, t, t0, cps = 40) => { el.textContent = txt.slice(0, Math.max(0, Math.floor((t - t0) * cps))); };
 const pos = el => { let x = 0, y = 0, e = el; while (e && e !== cam) { x += e.offsetLeft; y += e.offsetTop; e = e.offsetParent; } return [x, y, el.offsetWidth, el.offsetHeight]; };
@@ -120,15 +116,15 @@ const pos = el => { let x = 0, y = 0, e = el; while (e && e !== cam) { x += e.of
 const OR = { hook: [0, 0], name: [0, 1250], line: [2000, 1250], screen: [2000, 0], steps: [4000, 0], close: [4000, 1250] };
 const off = (r, o) => [r[0] + o[0], r[1] + o[1], r[2], r[3]];
 const oLerp = (a, b, u) => [lerp(a[0], b[0], u), lerp(a[1], b[1], u)];
-const CK = [{ t: 0, x: 0, y: 0, z: 1 }, { t: B(8), z: 1.12, tau: .45 }, { t: B(10) - .03, y: 1250, z: 1.0, tau: .3 }, { t: B(14.1), x: 2000, tau: .32 }, { t: B(16), z: 1.05, tau: .4 },
-  { t: B(18.4), y: 0, z: 1.0, tau: .32 }, { t: B(24), z: 1.04, tau: .7 }, { t: B(38), x: 4000, z: 1.1, tau: .32 }, { t: B(44), z: 1.3, tau: .3 }, { t: B(46), z: .92, tau: .35 },
-  { t: B(54.3), y: 1250, z: 1.0, tau: .32 }, { t: B(60), z: 1.05, tau: .7 }];
+const CK = [{ t: 0, x: 0, y: 0, z: 1 }, { t: B(8), z: 1.12, tau: .45 }, { t: B(10) - .03, y: 1250, z: 1.0, tau: .1 }, { t: B(14.1), x: 2000, tau: .12 }, { t: B(16), z: 1.05, tau: .4 },
+  { t: B(18), y: 0, z: 1.0, tau: .12 }, { t: B(24), z: 1.04, tau: .7 }, { t: B(38), x: 4000, z: 1.1, tau: .12 }, { t: B(44), z: 1.3, tau: .3 }, { t: B(46), z: .92, tau: .35 },
+  { t: B(54.3), y: 1250, z: 1.0, tau: .14 }, { t: B(60), z: 1.05, tau: .7 }];
 const camAxis = (t, k) => { let v = CK[0][k], p = v; for (let i = 1; i < CK.length; i++) { const c = CK[i]; if (c[k] === undefined) continue; v += (c[k] - p) * camMove(t, c.t, c.tau); p = c[k]; } return v; };
 const PUNCH = [[B(3), .07], [B(7), .09], [B(10), .15], [B(14), .07], [B(18), .1], [B(30), .06], [B(38), .08], [B(39.5), .04], [B(40.5), .04], [B(41.5), .04], [B(42.5), .04], [B(46), .1], [B(54), .08], [B(60), .06]];
 
 const seekInner = t => {
   const camX = camAxis(t, 'x') + 6 * Math.sin(RT * .47), camY = camAxis(t, 'y') + 4 * Math.sin(RT * .36 + 1);
-  let z = camAxis(t, 'z') + .012 * Math.sin(t * .55); 
+  let z = camAxis(t, 'z') + .012 * Math.sin(t * .55); PUNCH.forEach(([tp, a]) => { z += pulse(t, tp, a); });
   cam.style.transform = `scale(${z}) translate(${-camX}px,${-camY}px)`;
   const pvx = (camX - (camAxis(t - 1 / 30, 'x') + 6 * Math.sin((t - 1 / 30) * .47))) * z, pvy = (camY - (camAxis(t - 1 / 30, 'y') + 4 * Math.sin((t - 1 / 30) * .36 + 1))) * z;
   const cbx = clamp((Math.abs(pvx) - 12) * .1, 0, 22), cby = clamp((Math.abs(pvy) - 12) * .1, 0, 22);
@@ -142,13 +138,13 @@ const seekInner = t => {
   show(lightG, lOn); show(meadow, mOn);
   if (lOn) { box(lightG, vx, vy, vw, vh); const r0 = S(t - B(38), MORPH) * 1.5, r1 = S(t - B(46), FAST);
     lightG.style.clipPath = `circle(${(r0 * 100).toFixed(1)}% at 50% 50%)`; lightG.style.opacity = 1 - r1; }
-  if (mOn) { box(meadow, vx, vy, vw, vh); const r = S(t - B(46), { k: 240, c: 31 }), out = S(t - B(54.3), FAST);
+  if (mOn) { box(meadow, vx, vy, vw, vh); const r = S(t - B(46), { k: 240, c: 26 }), out = S(t - B(54.3), FAST);
     meadow.style.clipPath = `circle(${(r * 75).toFixed(1)}% at 50% 50%)`; meadow.style.opacity = 1 - out;
     const im = meadow.firstChild; im.style.transform = `translate(-50%,-50%) scale(${1.05 + .05 * clamp((t - B(46)) / 4)})`; }
-  const clear = S(t - B(10), { k: 60, c: 15.0 });
+  const clear = S(t - B(10), { k: 60, c: 15 });
   box(lamp, camX - 300 + 160 * Math.sin(t * .5), camY + 260 + 90 * Math.sin(t * .4), 1300, 1300); lamp.style.background = `radial-gradient(closest-side, rgba(255,176,74,${.34 * (1 - .8 * clear)}), rgba(255,176,74,0))`;
   box(blueL, camX + 900 + 160 * Math.sin(t * .37), camY - 380 + 100 * Math.cos(t * .3), 1500, 1500); blueL.style.background = `radial-gradient(closest-side, rgba(61,123,255,${.06 + .3 * clear}), rgba(61,123,255,0))`;
-  let gx = 0; for (let i = 1; i < 6; i++) gx += 240 * camMove(t, B(18 + 2 * i), .16); for (let i = 1; i < 4; i++) gx += 240 * camMove(t, B(30 + 2 * i), .16);
+  let gx = 0; for (let i = 1; i < 6; i++) gx += 240 * camMove(t, B(18 + 2 * i), .045); for (let i = 1; i < 4; i++) gx += 240 * camMove(t, B(30 + 2 * i), .045);
   grid.style.background = `repeating-linear-gradient(90deg, rgba(61,123,255,.08) 0 1px, transparent 1px 120px), repeating-linear-gradient(0deg, rgba(61,123,255,.08) 0 1px, transparent 1px 120px)`;
   grid.style.backgroundPosition = `${-gx}px 0`; grid.style.opacity = clamp(clear);
   // swarm
@@ -165,11 +161,10 @@ const seekInner = t => {
   // carrier
   let C = null, style = '';
   if (t >= B(5) && t < B(7)) { const [x, y, w, h] = pos(ed), g = S(t - B(5), FAST); C = [x - 10, y - 8, (t < B(5.5) ? w * g : Math.max(w, 12)) + 20, h + 16]; style = 'amber'; }
-  else if (t >= B(7) && t < B(10)) { const [x, y, w, h] = pos(ed), u = S(t - B(7), MORPH); C = rectLerp([x - 10, y - 8, w + 20, h + 16], off([410, 230, 1100, 620], oLerp(OR.hook, OR.name, camMove(t, B(10) - .03, .3))), u); style = u > .4 ? 'frame' : 'amber'; }
-  else if (t >= B(10) && t < B(14.2)) { const u = S(t - B(10), FAST), v = S(t - B(14), FAST); const o1 = oLerp(OR.hook, OR.name, camMove(t, B(10) - .03, .3)), o2 = oLerp(OR.name, OR.line, camMove(t, B(14.1), .32)); C = rectLerp(off(rectLerp([410, 230, 1100, 620], [-40, -40, 2000, 1160], u), o1), off([310, 537, 1300, 6], o2), v); style = 'flood'; }
-  else if (t >= B(17.2) && t < B(38.6)) { const TS = B(17.2), sOpen = S(t - TS, MORPH), reflow = S(t - B(30), MORPH), toSlot = S(t - B(38), MORPH);
-    const p2 = pos($('p2')), p0 = p2[2] > 0 ? p2 : off([960 - 100, 570, 200, 112], OR.line), dx = camAxis(t, 'x') - camAxis(TS, 'x'), dy = camAxis(t, 'y') - camAxis(TS, 'y');   // the pill rides with the camera, then glides open
-    let r = rectLerp([p0[0] + dx, p0[1] + dy, p0[2], p0[3]], off([320, 160, 1280, 720], OR.screen), sOpen); r = rectLerp(r, off([110, 200, 1100, 619], OR.screen), reflow); C = rectLerp(r, off([400, 450, 1120, 180], OR.steps), toSlot); style = 'screen'; }
+  else if (t >= B(7) && t < B(10)) { const [x, y, w, h] = pos(ed), u = S(t - B(7), MORPH); C = rectLerp([x - 10, y - 8, w + 20, h + 16], off([410, 230, 1100, 620], OR.hook), u); style = u > .4 ? 'frame' : 'amber'; }
+  else if (t >= B(10) && t < B(14.2)) { const u = S(t - B(10), FAST), v = S(t - B(14), FAST); const o1 = oLerp(OR.hook, OR.name, u), o2 = oLerp(OR.name, OR.line, v); C = rectLerp(off(rectLerp([410, 230, 1100, 620], [-40, -40, 2000, 1160], u), o1), off([310, 537, 1300, 6], o2), v); style = 'flood'; }
+  else if (t >= B(18) && t < B(38.6)) { const sOpen = S(t - B(18), MORPH), reflow = S(t - B(30), MORPH), toSlot = S(t - B(38), MORPH);
+    const p2 = pos($('p2')); let r = rectLerp(t < B(18.5) && p2[2] > 0 ? p2 : off([960 - 100, 570, 200, 112], OR.line), off([320, 160, 1280, 720], OR.screen), sOpen); r = rectLerp(r, off([110, 200, 1100, 619], OR.screen), reflow); C = rectLerp(r, off([400, 450, 1120, 180], OR.steps), toSlot); style = 'screen'; }
   show(car, !!C && style !== 'screen');
   if (C && style !== 'screen') { box(car, ...C); car.style.transform = '';
     if (style === 'amber') { car.style.background = 'rgba(255,176,74,.30)'; car.style.border = '0'; car.style.borderRadius = '10px'; }
@@ -180,30 +175,30 @@ const seekInner = t => {
   if (fiOn && C) { box(fimg, C[0] + 4, C[1] + 4, Math.max(0, C[2] - 8), Math.max(0, C[3] - 8)); const fs = S(t - B(7.15), MORPH);
     const cv = fimg.firstChild, cx2 = cv.getContext('2d'); cx2.drawImage(frameOf('sterling', .9 + (t - B(7.15))), 0, 0, 1280, 720);
     cv.style.filter = `blur(${(1 - clamp(fs)) * 18}px) saturate(${.4 + .6 * clamp(fs)})`; cv.style.transform = `scale(${1.15 - .15 * fs})`; }
-  build(L.story, t, B(7.8), P / 2, 905, B(9.4));
+  build(L.story, t, B(7.8), P / 2, 905, B(10) - .02);
   // name on the flood
   build(L.name, t, B(10) + .03, P / 2, 400, B(14)); L.name.style.color = '#0B1B3F';
-  const roleOn = t >= B(11.5) && t < B(14.1); show(L.role, roleOn, 'flex'); if (roleOn) { L.role.style.top = '640px'; L.role.style.transform = 'translateX(150px)'; L.role.style.opacity = 1 - sm((t - B(13.4)) / .35);
+  const roleOn = t >= B(11.5) && t < B(14.1); show(L.role, roleOn, 'flex'); if (roleOn) { L.role.style.top = '640px'; L.role.style.transform = 'translateX(150px)'; L.role.style.opacity = 1 - clamp((t - B(14)) / .1);
     const hs = L.role.children; typeOn(hs[0], 'Motion Designer', t, B(11.5), 30); typeOn(hs[1], 'Creative Strategist', t, B(11.5) + .55, 30);
-    [...hs].forEach((h, j) => { const s2 = S(t - (B(11.5) + j * .55), POP); h.style.display = s2 > .005 ? 'inline-block' : 'none'; h.style.opacity = sm(s2 * 1.2); h.style.transform = `scaleX(${.9 + .1 * clamp(s2)})`; h.style.transformOrigin = 'left center'; }); }
+    [...hs].forEach((h, j) => { const s2 = S(t - (B(11.5) + j * .55), POP); h.style.display = s2 > .02 ? 'inline-block' : 'none'; h.style.transform = `scaleX(${.6 + .4 * clamp(s2)})`; h.style.transformOrigin = 'left center'; }); }
   if (t >= B(10) && t < B(14.2)) L.name.style.transform += ' translateX(150px)';
   const pA = t >= B(10.5) && t < B(14.1), pB = t >= B(55); show(portrait, pA || pB);
-  if (pA) { const s = S(t - B(10.5), SOFT), ex = S(t - B(13.4), FAST); box(portrait, OR.name[0] + 300, OR.name[1] + 400, 230, 230); portrait.style.transform = `scale(${.92 + .08 * s})`; portrait.style.opacity = sm(s * 1.1) * (1 - sm(ex * 1.2)); portrait.style.boxShadow = '0 0 0 6px #EAF1FF'; }
+  if (pA) { const s = S(t - B(10.5), POP), ex = S(t - B(14), FAST); box(portrait, OR.name[0] + 300, OR.name[1] + 400, 230, 230); portrait.style.transform = `scale(${s * (1 - ex)})`; portrait.style.boxShadow = '0 0 0 6px #EAF1FF'; }
   // images between words
-  build(L.t1, t, B(14.3), P / 2, 420, B(17.1));
-  build(L.t2, t, B(16), P / 2, 570, B(17.3));
-  [['p1', B(14.3) + P], ['p2', B(16) + P]].forEach(([id, t0], j) => { const el = $(id), o = S(t - t0, MORPH); el.style.opacity = sm(o * 1.3); el.style.width = (200 * clamp(o)) + 'px';
-    if (id === 'p2' && t >= B(17.2)) el.style.visibility = 'hidden'; else el.style.visibility = '';
+  build(L.t1, t, B(14.3), P / 2, 420, B(18));
+  build(L.t2, t, B(16), P / 2, 570, B(18) + .5);
+  [['p1', B(14.3) + P], ['p2', B(16) + P]].forEach(([id, t0], j) => { const el = $(id), o = S(t - t0, POP); el.style.width = (200 * clamp(o)) + 'px';
+    if (id === 'p2' && t >= B(18)) el.style.visibility = 'hidden'; else el.style.visibility = '';
     const k = Math.floor(Math.max(0, t - t0) * 30 / 4), F = FILMS[(k + j * 3) % 6][0]; el.firstChild.getContext('2d').drawImage(frameOf(F, (Math.max(0, t - t0) % 2.2)), 0, 0, 320, 180); });
   // the screen
-  const scOn = t >= B(17.2) && t < B(38.6); show(screen, scOn); show(chip, false); show(counter, false);   // no small captions or counters: they read as filler
+  const scOn = t >= B(18) && t < B(38.6); show(screen, scOn); show(chip, false); show(counter, false);   // no small captions or counters: they read as filler
   let bx = 0;
   if (scOn) { box(screen, ...C); screen.style.borderRadius = lerp(20, 26, S(t - B(18), MORPH)) + 'px';
     let seq, t0s; if (t < B(30)) { seq = FILMS.map(f => f[0]); t0s = seq.map((_, i) => B(18 + 2 * i)); } else { seq = KINDS.map(k => k[1]); t0s = seq.map((_, i) => B(30 + 2 * i)); }
     let i = 0; for (let k = 0; k < seq.length; k++) if (t >= t0s[k] - .1) i = k;
     const prev = i > 0 ? seq[i - 1] : (t >= B(30) ? 'appleui' : null), tcw = (i === 0 && t >= B(30)) ? B(30) : t0s[i];
-    const u = prev ? camMove(t, tcw, .14) : 1, W = 1280;
-    const vel = prev ? Math.abs(u - camMove(t - 1 / 30, tcw, .14)) * W : 0; bx = clamp((vel - 12) * .12, 0, 28);
+    const u = prev ? camMove(t, tcw, .045) : 1, W = 1280;
+    const vel = prev ? Math.abs(u - camMove(t - 1 / 30, tcw, .045)) * W : 0; bx = clamp((vel - 12) * .12, 0, 28);
     sctx.fillStyle = '#0A0C10'; sctx.fillRect(0, 0, 1280, 720);
     if (prev && u < 1) sctx.drawImage(frameOf(prev, 1.6 + (t - tcw)), -u * W, 0, W, 720);
     sctx.drawImage(frameOf(seq[i], t - tcw + .25), (1 - u) * W, 0, W, 720);
@@ -215,38 +210,38 @@ const seekInner = t => {
   // word swap beside the screen
   const kOn = t >= B(30.2) && t < B(38); show(L.kind, kOn);
   if (kOn) { const k = clamp(Math.floor((t - B(30.2)) / B(2)), 0, 3), s = S(t - B(30.2 + 2 * k), WORD); L.kind.textContent = KINDS[k][0];
-    L.kind.style.left = '1260px'; L.kind.style.top = '468px'; L.kind.style.transform = `translateY(${(1 - s) * 28}px)`; L.kind.style.filter = `blur(${(1 - clamp(s)) * 10}px)`; const lv = k < 3 ? sm((t - B(30.2 + 2 * k + 1.2)) / .3) : 0; L.kind.style.opacity = sm(s * 1.15) * (1 - lv) * (1 - S(t - B(37.4), FAST)); }
+    L.kind.style.left = '1290px'; L.kind.style.top = '455px'; L.kind.style.transform = `translateY(${(1 - s) * 70}px)`; L.kind.style.filter = `blur(${(1 - clamp(s)) * 14}px)`; L.kind.style.opacity = clamp(s * 1.5) * (1 - S(t - B(37.8), FAST)); }
   // steps
   const STEPFILM = ['sterling', 'vivox', 'dripverse', 'armab', 'appleui'];
   const sbOn = t >= B(38.5) && t < B(44.6); show(stepBg, sbOn);
-  if (sbOn) { const k = clamp(Math.floor((t - B(38.5)) / B(1)), 0, 4), e = S(t - B(38.5 + k), MORPH), ex = S(t - B(44), FAST);
-    box(stepBg, OR.steps[0] + 260, OR.steps[1] + 240, 1400, 600); stepBg.style.opacity = .9 * (1 - ex) * sm((t - B(38.5)) / .5);
-    stepBg.style.transform = `scale(${(1.03 - .03 * e) * (1 - .06 * ex)})`; const bg = stepBg.firstChild.getContext('2d'); if (k > 0) { bg.globalAlpha = 1; bg.drawImage(frameOf(STEPFILM[k - 1], 1.2 + (t - B(38.5 + k - 1))), 0, 0, 960, 540); } bg.globalAlpha = k > 0 ? sm((t - B(38.5 + k)) / .35) : 1; bg.drawImage(frameOf(STEPFILM[k], 1.2 + (t - B(38.5 + k))), 0, 0, 960, 540); bg.globalAlpha = 1; }
+  if (sbOn) { const k = clamp(Math.floor((t - B(38.5)) / B(1)), 0, 4), e = S(t - B(38.5 + k), POP), ex = S(t - B(44), FAST);
+    box(stepBg, OR.steps[0] + 260, OR.steps[1] + 240, 1400, 600); stepBg.style.opacity = .9 * (1 - ex);
+    stepBg.style.transform = `scale(${(1.06 - .06 * e) * (1 - .2 * ex)})`; stepBg.firstChild.getContext('2d').drawImage(frameOf(STEPFILM[k], 1.2 + (t - B(38.5 + k))), 0, 0, 960, 540); }
   const stOn = t >= B(38.5) && t < B(44); show(slotTxt, stOn, 'flex');
   if (stOn) { const k = clamp(Math.floor((t - B(38.5)) / B(1)), 0, 4), s = S(t - B(38.5 + k), WORD); slotTxt.style.top = '492px'; slotTxt.style.color = '#0B1B3F'; $('sn').textContent = '0' + (k + 1); $('st').textContent = STEPS[k];
-    const lv = k < 4 ? sm((t - B(38.5 + k + .72)) / .12) : 0; $('st').style.transform = `translateY(${(1 - s) * 16}px)`; $('st').style.filter = `blur(${(1 - clamp(s)) * 8 + 6 * lv}px)`; $('st').style.opacity = sm(s * 1.4) * (1 - lv); slotTxt.style.opacity = 1 - S(t - B(43.6), FAST); }
-  if (t >= B(38.6) && t < B(46.05)) { show(car, true); car.style.transform = ''; const toDot = S(t - B(44), MORPH), br = 1 + .04 * Math.sin((t - B(44)) * 2.4) * sm((t - B(44.4)) / .6);
+    $('st').style.transform = `translateY(${(1 - s) * 50}px)`; $('st').style.filter = `blur(${(1 - clamp(s)) * 12}px)`; slotTxt.style.opacity = 1 - S(t - B(43.8), FAST); }
+  if (t >= B(38.6) && t < B(46.05)) { show(car, true); car.style.transform = ''; const toDot = S(t - B(44), MORPH), br = 1 + .18 * Math.sin((t - B(44)) * 9) * clamp((t - B(44.4)) / .3);
     const r = off(rectLerp([400, 450, 1120, 180], [960 - 14 * br, 540 - 14 * br, 28 * br, 28 * br], toDot), OR.steps); box(car, ...r);
     car.style.background = toDot > .5 ? '#3D7BFF' : '#FFFFFF'; car.style.boxShadow = toDot > .5 ? '' : '0 24px 60px rgba(11,27,63,.18)'; car.style.border = toDot > .5 ? '0' : '3px solid #3D7BFF'; car.style.borderRadius = toDot > .7 ? '50%' : lerp(18, 40, toDot) + 'px'; }
   // ring -> full stop
   const ringOn = t >= B(46) && t < B(56), stop2 = $('stop2');
   dots.forEach((d, i) => { show(d, ringOn); if (!ringOn) return;
-    const burst = S(t - (B(46) + i * .02), { k: 70, c: 17 }), ang = i / dots.length * Math.PI * 2 + t * .3;
+    const burst = S(t - (B(46) + i * .012), { k: 300, c: 22 }), ang = i / dots.length * Math.PI * 2 + t * .3;
     const depth = .5 + .5 * Math.sin(ang);                      // lower half closer, upper half further: flat scale only
-    let x = OR.steps[0] + 960 + Math.cos(ang) * 820 * burst, y = OR.steps[1] + 540 + Math.sin(ang) * 380 * burst, sc = (.55 + .45 * depth) * burst, op = (.55 + .45 * depth) * sm(burst * 1.6);
-    if (t >= B(54.6)) { const [sx, sy, sw, sh] = pos(stop2), c = S(t - (B(54.6) + (i % 8) * .03), { k: 260, c: 32 }); x = lerp(x, sx + 20, c); y = lerp(y, sy + sh * .74, c); sc = lerp(sc, .08, c); op = lerp(op, 1, c); }
+    let x = OR.steps[0] + 960 + Math.cos(ang) * 820 * burst, y = OR.steps[1] + 540 + Math.sin(ang) * 380 * burst, sc = (.55 + .45 * depth) * burst, op = .55 + .45 * depth;
+    if (t >= B(54.6)) { const [sx, sy, sw, sh] = pos(stop2), c = S(t - (B(54.6) + (i % 8) * .03), { k: 260, c: 24 }); x = lerp(x, sx + 20, c); y = lerp(y, sy + sh * .74, c); sc = lerp(sc, .08, c); op = lerp(op, 1, c); }
     d.style.left = x + 'px'; d.style.top = y + 'px'; d.style.transform = `scale(${sc})`; d.style.opacity = op; d.style.zIndex = Math.round(depth * 10);
     const F = FILMS[i % 6][0]; d.firstChild.getContext('2d').drawImage(frameOf(F, ((i * .37 + (t - B(46))) % 2.2)), 0, 0, 256, 144); });
   build(L.d1, t, B(46.5), P / 2, 430, B(54.2)); [L.d1, L.d2].forEach(n => { n.style.color = '#0B1B3F'; n.style.textShadow = '0 0 40px rgba(255,255,255,.95), 0 0 80px rgba(255,255,255,.8)'; }); [...L.d2.children].forEach(w => { if (w.classList.contains('blue')) w.style.color = '#1F4FD8'; });
   build(L.d2, t, B(49), P / 2, 560, B(54.2));
   build(L.name2, t, B(54.4), P / 2, 520, Infinity);
-  const landed = S(t - B(55.8), SOFT), stretch = S(t - B(60), MORPH);
+  const landed = S(t - B(55.8), POP), stretch = S(t - B(60), MORPH);
   stop2.innerHTML = `<span style="display:inline-block;width:.22em;height:.22em;border-radius:50%;background:#3D7BFF;transform:scale(${clamp(landed) * (1 - clamp(stretch * 3))})"></span>`;
-  if (pB) { const s = S(t - B(55), SOFT); portrait.style.opacity = sm(s * 1.1); box(portrait, OR.close[0] + 960 - 125, OR.close[1] + 170, 250, 250); portrait.style.transform = `scale(${.92 + .08 * s}) translateY(${4 * Math.sin(t * 1.3)}px)`; portrait.style.boxShadow = '0 0 0 5px #3D7BFF'; }
-  const opOn = t >= B(57); show(L.open, opOn, 'flex'); if (opOn) { const o = S(t - B(57), SOFT); L.open.style.top = '730px'; L.open.textContent = 'Work with me'; L.open.style.opacity = sm(o * 1.1); L.open.style.filter = `blur(${(1 - clamp(o)) * 8}px)`; L.open.style.transform = `translateY(${(1 - o) * 14}px)`; }
+  if (pB) { const s = S(t - B(55), POP); box(portrait, OR.close[0] + 960 - 125, OR.close[1] + 170, 250, 250); portrait.style.transform = `scale(${s}) translateY(${4 * Math.sin(t * 1.3)}px)`; portrait.style.boxShadow = '0 0 0 5px #3D7BFF'; }
+  const opOn = t >= B(57); show(L.open, opOn, 'flex'); if (opOn) { L.open.style.top = '730px'; typeOn(L.open, 'Work with me', t, B(57), 30); }
   const plOn = t >= B(60); show(pillTxt, plOn, 'flex');
   if (plOn) { const [sx, sy, sw, sh] = pos(stop2), d0 = sh * .22; const r = rectLerp([sx + 4, sy + sh * .62, d0, d0], off([600, 822, 720, 120], OR.close), stretch); show(car, true); box(car, ...r);
-    car.style.background = '#3D7BFF'; car.style.border = '0'; car.style.borderRadius = '999px'; pillTxt.style.top = '882px'; pillTxt.style.transform = 'translateY(-50%)'; pillTxt.style.opacity = sm((stretch - .55) / .45);
+    car.style.background = '#3D7BFF'; car.style.border = '0'; car.style.borderRadius = '999px'; pillTxt.style.top = '882px'; pillTxt.style.transform = 'translateY(-50%)'; pillTxt.style.opacity = clamp((stretch - .7) / .3);
     pillTxt.textContent = 'Book a call today'; car.style.transform = `translateY(${3 * Math.sin(t * 1.4)}px)`; }
   $('mbg').setAttribute('stdDeviation', `${(cbx + bx * .5).toFixed(1)} ${cby.toFixed(1)}`); cam.style.filter = (cbx + cby + bx) > .4 ? 'url(#mb)' : '';
 };
@@ -257,15 +252,15 @@ window.seek = tr => {
   const on = tr >= INS_T - .04 && tr < INS_T + INS + .1, w2 = L.a1.children[1];
   show(swap, on); w2.style.visibility = on && tr < INS_T + INS ? 'hidden' : '';
   if (on) { const [x, y, w, h] = pos(w2), u = tr - INS_T; let k = 0; STARTS.forEach((st, i) => { if (u >= st) k = i; }); const v = u - STARTS[k];
-    const pin = S(u + .12, { k: 200, c: 29 }), pout = S(u - (INS - .38), { k: 200, c: 29 });
+    const pin = S(u + .04, { k: 900, c: 45 }), pout = S(u - (INS - .12), { k: 900, c: 45 });
     const sz = 300 * (pin - pout * .0) * (1 - pout); box(swap, x + w / 2 - sz / 2, y + h / 2 - sz / 2, Math.max(1, sz), Math.max(1, sz)); swap.style.borderRadius = (44 * sz / 300) + 'px';
-    swap.style.transform = ''; swap.style.opacity = sm(pin * 1.3) * (1 - sm(pout));
-    pimgs.forEach((im, i) => { const vis = i === k || (k > 1 && i === k - 1 && v < .1); im.style.display = vis ? '' : 'none'; if (!vis) return; im.style.opacity = i === k ? (k > 1 ? sm(v / .1) : 1) : 1 - sm(v / .1); im.style.zIndex = i === k ? 2 : 1;
+    swap.style.transform = k < 2 ? '' : `rotate(${(k % 2 ? 1 : -1) * 3 * (1 - S(v, POP))}deg) scale(${1 + .06 * (1 - S(v, POP))})`;
+    pimgs.forEach((im, i) => { const vis = i === k; im.style.display = vis ? '' : 'none'; if (!vis) return;
       const isLogo = PROD[i][0] === 'l', ar = (im.naturalWidth || 1) / (im.naturalHeight || 1), box2 = isLogo ? .52 : (i === 0 ? 1.0 : .86), iw = ar >= 1 ? 300 * box2 : 300 * box2 * ar, ih = ar >= 1 ? 300 * box2 / ar : 300 * box2;
       if (i === 0) im.src = BOT[Math.max(0, Math.min(10, Math.round(v * 30)))].src;   // the bottle turns 45 degrees in 3D
-      let e = i === k ? S(v, { k: 400, c: 40 }) : 1, turn = 1; if (i === 0) e = 1; if (i === 1) { e = 1; turn = .62 + .38 * S(v, { k: 260, c: 32 }); }   // the bike picks up the turn where the bottle stops
+      let e = S(v, POP), turn = 1; if (i === 0) e = 1; if (i === 1) { e = 1; turn = .62 + .38 * S(v, { k: 260, c: 26 }); }   // the bike picks up the turn where the bottle stops
       im.style.width = iw + 'px'; im.style.height = ih + 'px'; im.style.marginLeft = (-iw / 2) + 'px'; im.style.marginTop = (-ih / 2) + 'px';
-      im.style.transform = `translateY(${(1 - e) * 8}px) scale(${(.95 + .05 * e) * (sz / 300) * turn}, ${(.95 + .05 * e) * (sz / 300)}) skewY(${(1 - turn) * 18}deg)`; });
+      im.style.transform = `translateY(${(1 - e) * 26}px) rotate(${(i % 2 ? -1 : 1) * 6 * (1 - e)}deg) scale(${(.82 + .18 * e) * (sz / 300) * turn}, ${(.82 + .18 * e) * (sz / 300)}) skewY(${(1 - turn) * 18}deg)`; });
     const sw = clamp(v / DURS[k]); sweep.style.background = `linear-gradient(110deg, transparent ${sw * 140 - 40}%, rgba(255,255,255,.55) ${sw * 140 - 20}%, transparent ${sw * 140}%)`; }
 };
 Promise.all([...loads, document.fonts.load("800 80px 'B'"), document.fonts.load("500 30px 'M'"), document.fonts.load("700 30px 'S'"), document.fonts.load("900 30px 'S'"), document.fonts.load("400 30px 'G'"), portrait.firstChild.decode().catch(() => {})]).then(() => { window.seek(0); window.__ready = true; });
