@@ -34,7 +34,12 @@
 <script src="../assets/motion.js"></script>
 <script>
 const M = window.Motion, S = (t, p) => M.spring(t, p), clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x)), lerp = (a, b, u) => a + (b - a) * u;
-const P = 0.46439909, PACE = 1, B = n => n * P * PACE, DUR = B(67); window.FILM_DUR = DUR;
+const P = 0.46439909, PACE = 1, B = n => n * P * PACE;
+const INS_T = 0.62, DURS = [10, 7, 6, 6, 6, 6, 6, 6].map(f => f / 30), STARTS = DURS.map((_, i) => DURS.slice(0, i).reduce((a, b) => a + b, 0)), ITEMS = 8, INS = DURS.reduce((a, b) => a + b, 0) + .12;      // product swap after "Your product"
+const SLOW0 = B(14.3), SLOW1 = B(18), SLOWK = 1.6;                           // the "clear stories" line runs 1.6x slower
+const DUR = B(67) + INS + (SLOW1 - SLOW0) * (SLOWK - 1); window.FILM_DUR = DUR;
+const warp = t => { if (t < INS_T) return t; if (t < INS_T + INS) return INS_T; let u = t - INS; if (u < SLOW0) return u; const L = (SLOW1 - SLOW0) * SLOWK; return u < SLOW0 + L ? SLOW0 + (u - SLOW0) / SLOWK : u - L + (SLOW1 - SLOW0); };
+let RT = 0;
 const camMove = (t, tc, tau) => t < tc ? 0.5 * Math.exp((t - tc) / tau) : 1 - 0.5 * Math.exp(-(t - tc) / tau);
 const FAST = { k: 1100, c: 60 }, MORPH = { k: 650, c: 46 }, POP = { k: 700, c: 30 }, WORD = { k: 900, c: 50 };
 const $ = id => document.getElementById(id), cam = $('cam');
@@ -78,6 +83,13 @@ const sctx = screen.firstChild.getContext('2d');
 const chip = mk(`<div class="abs label" style="color:#CFE0FF;white-space:nowrap"></div>`), counter = mk(`<div class="abs label" style="color:#3D7BFF;white-space:nowrap"></div>`);
 const slotTxt = mk(`<div class="line" style="gap:28px"><span id="sn" style="font:500 44px/1 'M';color:#3D7BFF"></span><span id="st" style="display:inline-block;font:800 96px/1 'B';letter-spacing:-.035em"></span></div>`);
 const portrait = mk(`<div id="portrait"><img src="../assets/portrait.jpg"></div>`);
+// the product swap: real product photos (cut out) and flat brand logos, each on a light card, 6 frames each
+const PROD = [['b', 'b3d_0.png'], ['p', 'p_bike.png'], ['l', 'google.svg'], ['l', 'claude-c.svg'], ['l', 'notion.svg'], ['l', 'slack.svg'], ['p', 'p_sneaker_wo.png'], ['p', 'p_phone.png']];
+const swap = mk(`<div class="abs" style="width:300px;height:300px;border-radius:44px;background:linear-gradient(160deg,#FFFFFF,#E3E9F3);box-shadow:0 30px 60px rgba(0,0,0,.55),0 0 0 3px #3D7BFF;overflow:hidden"></div>`);
+const sweep = mk(`<div class="abs" style="width:300px;height:300px;pointer-events:none"></div>`, swap);
+const BOT = Array.from({ length: 11 }, (_, f) => { const im = new Image(); im.src = `../assets/products/b3d_${f}.png`; return im; });
+const pimgs = PROD.map(([k, src]) => { const im = mk(`<img src="../assets/${k === 'l' ? 'logos' : 'products'}/${src}" style="position:absolute;left:50%;top:50%;transform-origin:50% 50%;filter:drop-shadow(0 18px 18px rgba(10,20,40,.35))">`, swap); return im; });
+swap.appendChild(sweep);
 const dots = Array.from({ length: 22 }, () => mk(`<div class="abs" style="width:256px;height:144px;margin:-72px 0 0 -128px;border-radius:12px;overflow:hidden;box-shadow:0 0 0 2px rgba(61,123,255,.9),0 14px 30px rgba(0,0,0,.5)"><canvas width="256" height="144" style="display:block"></canvas></div>`));
 const pillTxt = mk(`<div class="line" style="font:500 42px/1 'G';color:#EEF2F8"></div>`);
 const FILMS = [['sterling', 'Sterling', 'Launch film'], ['vivox', 'Vivox', 'Product film'], ['nyangu', 'Nyangu', 'Product film'], ['dripverse', 'Drip Verse', 'Brand film'], ['armab', 'Armab Agency', 'Launch film'], ['appleui', 'UI motion', 'Motion study']];
@@ -104,8 +116,8 @@ const CK = [{ t: 0, x: 0, y: 0, z: 1 }, { t: B(8), z: 1.12, tau: .45 }, { t: B(1
 const camAxis = (t, k) => { let v = CK[0][k], p = v; for (let i = 1; i < CK.length; i++) { const c = CK[i]; if (c[k] === undefined) continue; v += (c[k] - p) * camMove(t, c.t, c.tau); p = c[k]; } return v; };
 const PUNCH = [[B(3), .07], [B(7), .09], [B(10), .15], [B(14), .07], [B(18), .1], [B(30), .06], [B(38), .08], [B(39.5), .04], [B(40.5), .04], [B(41.5), .04], [B(42.5), .04], [B(46), .1], [B(54), .08], [B(60), .06]];
 
-window.seek = t => {
-  const camX = camAxis(t, 'x') + 6 * Math.sin(t * .47), camY = camAxis(t, 'y') + 4 * Math.sin(t * .36 + 1);
+const seekInner = t => {
+  const camX = camAxis(t, 'x') + 6 * Math.sin(RT * .47), camY = camAxis(t, 'y') + 4 * Math.sin(RT * .36 + 1);
   let z = camAxis(t, 'z') + .012 * Math.sin(t * .55); PUNCH.forEach(([tp, a]) => { z += pulse(t, tp, a); });
   cam.style.transform = `scale(${z}) translate(${-camX}px,${-camY}px)`;
   const pvx = (camX - (camAxis(t - 1 / 30, 'x') + 6 * Math.sin((t - 1 / 30) * .47))) * z, pvy = (camY - (camAxis(t - 1 / 30, 'y') + 4 * Math.sin((t - 1 / 30) * .36 + 1))) * z;
@@ -123,7 +135,7 @@ window.seek = t => {
   // swarm
   const swOn = t < B(10.4); warm.style.display = cool.style.display = swOn ? '' : 'none';
   if (swOn) { const suck = S(t - B(9.6), FAST);
-    FR.forEach(f => { let x = ((f.x + f.vx * t) % 2100 + 2100) % 2100 - 90, y = f.y + f.vy * Math.sin(t * .8 + f.x);
+    FR.forEach(f => { let x = ((f.x + f.vx * RT) % 2100 + 2100) % 2100 - 90, y = f.y + f.vy * Math.sin(RT * .8 + f.x);
       x = lerp(x, 960, suck); y = lerp(y, 540, suck);
       f.a.style.transform = f.b.style.transform = `translate(${x}px,${y}px) scale(${f.z * (1 - .9 * suck)})`; f.a.style.opacity = .5; }); }
   // hook + text edit
@@ -214,5 +226,22 @@ window.seek = t => {
   $('mbg').setAttribute('stdDeviation', `${(cbx + bx * .5).toFixed(1)} ${cby.toFixed(1)}`); cam.style.filter = (cbx + cby + bx) > .4 ? 'url(#mb)' : '';
 };
 const loads = Object.values(IM).flat().map(im => im.decode().catch(() => {}));
+window.seek = tr => {
+  RT = tr; const t = warp(tr); seekInner(t);
+  // product swap (real time)
+  const on = tr >= INS_T - .04 && tr < INS_T + INS + .1, w2 = L.a1.children[1];
+  show(swap, on); w2.style.visibility = on && tr < INS_T + INS ? 'hidden' : '';
+  if (on) { const [x, y, w, h] = pos(w2), u = tr - INS_T; let k = 0; STARTS.forEach((st, i) => { if (u >= st) k = i; }); const v = u - STARTS[k];
+    const pin = S(u + .04, { k: 900, c: 45 }), pout = S(u - (INS - .12), { k: 900, c: 45 });
+    const sz = 300 * (pin - pout * .0) * (1 - pout); box(swap, x + w / 2 - sz / 2, y + h / 2 - sz / 2, Math.max(1, sz), Math.max(1, sz)); swap.style.borderRadius = (44 * sz / 300) + 'px';
+    swap.style.transform = k < 2 ? '' : `rotate(${(k % 2 ? 1 : -1) * 3 * (1 - S(v, POP))}deg) scale(${1 + .06 * (1 - S(v, POP))})`;
+    pimgs.forEach((im, i) => { const vis = i === k; im.style.display = vis ? '' : 'none'; if (!vis) return;
+      const isLogo = PROD[i][0] === 'l', ar = (im.naturalWidth || 1) / (im.naturalHeight || 1), box2 = isLogo ? .52 : (i === 0 ? 1.0 : .86), iw = ar >= 1 ? 300 * box2 : 300 * box2 * ar, ih = ar >= 1 ? 300 * box2 / ar : 300 * box2;
+      if (i === 0) im.src = BOT[Math.max(0, Math.min(10, Math.round(v * 30)))].src;   // the bottle turns 45 degrees in 3D
+      let e = S(v, POP), turn = 1; if (i === 0) e = 1; if (i === 1) { e = 1; turn = .62 + .38 * S(v, { k: 260, c: 26 }); }   // the bike picks up the turn where the bottle stops
+      im.style.width = iw + 'px'; im.style.height = ih + 'px'; im.style.marginLeft = (-iw / 2) + 'px'; im.style.marginTop = (-ih / 2) + 'px';
+      im.style.transform = `translateY(${(1 - e) * 26}px) rotate(${(i % 2 ? -1 : 1) * 6 * (1 - e)}deg) scale(${(.82 + .18 * e) * (sz / 300) * turn}, ${(.82 + .18 * e) * (sz / 300)}) skewY(${(1 - turn) * 18}deg)`; });
+    const sw = clamp(v / DURS[k]); sweep.style.background = `linear-gradient(110deg, transparent ${sw * 140 - 40}%, rgba(255,255,255,.55) ${sw * 140 - 20}%, transparent ${sw * 140}%)`; }
+};
 Promise.all([...loads, document.fonts.load("800 80px 'B'"), document.fonts.load("500 30px 'M'"), document.fonts.load("400 30px 'G'"), portrait.firstChild.decode().catch(() => {})]).then(() => { window.seek(0); window.__ready = true; });
 </script>
