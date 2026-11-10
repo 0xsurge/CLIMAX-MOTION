@@ -38,9 +38,9 @@
 const M = window.Motion, S = (t, p) => M.spring(t, p), clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x)), lerp = (a, b, u) => a + (b - a) * u;
 const P = 0.46439909, PACE = 1, B = n => n * P * PACE;
 const INS_T = 0.62, DURS = [10, 7, 6, 6, 6, 6, 6, 6].map(f => f / 30), STARTS = DURS.map((_, i) => DURS.slice(0, i).reduce((a, b) => a + b, 0)), ITEMS = 8, INS = DURS.reduce((a, b) => a + b, 0) + .12;      // product swap after "Your product"
-const SLOW0 = B(14.3), SLOW1 = B(18), SLOWK = 1.6;                           // the "clear stories" line runs 1.6x slower
-const DUR = B(67) + INS + (SLOW1 - SLOW0) * (SLOWK - 1); window.FILM_DUR = DUR;
-const warp = t => { if (t < INS_T) return t; if (t < INS_T + INS) return INS_T; let u = t - INS; if (u < SLOW0) return u; const L = (SLOW1 - SLOW0) * SLOWK; return u < SLOW0 + L ? SLOW0 + (u - SLOW0) / SLOWK : u - L + (SLOW1 - SLOW0); };
+const SLOWS = [[B(12.8), B(13.9), 3.2], [B(14.3), B(18), 1.6]];   // the name scene holds longer so both roles can be read; the "clear stories" line runs 1.6x slower
+const DUR = B(67) + INS + SLOWS.reduce((a, [p, q, k]) => a + (q - p) * (k - 1), 0); window.FILM_DUR = DUR;
+const warp = t => { if (t < INS_T) return t; if (t < INS_T + INS) return INS_T; let u = t - INS; for (const [p, q, k] of SLOWS) { if (u < p) return u; const L = (q - p) * k; if (u < p + L) return p + (u - p) / k; u -= L - (q - p); } return u; };
 let RT = 0;
 // Camera flow (measured from the Bolt 'Matrixedit' reference, videos/reference/align-cam/STUDY.md): the move builds up
 // gradually (velocity doubles about every 0.14 s), peaks, then settles a little faster; value and velocity stay continuous.
@@ -187,9 +187,9 @@ const seekInner = t => {
   build(L.story, t, B(7.8), P / 2, 905, B(10) - .02);
   // name on the flood
   build(L.name, t, B(10) + .03, P / 2, 400, B(14)); L.name.style.color = '#0B1B3F';
-  const roleOn = t >= B(11.5) && t < B(14.1); show(L.role, roleOn, 'flex'); if (roleOn) { L.role.style.top = '640px'; L.role.style.transform = 'translateX(150px)'; L.role.style.opacity = 1 - clamp((t - B(14)) / .1);
-    const hs = L.role.children; typeOn(hs[0], 'Motion Designer', t, B(11.5), 30); typeOn(hs[1], 'Creative Strategist', t, B(11.5) + .55, 30);
-    [...hs].forEach((h, j) => { const s2 = S(t - (B(11.5) + j * .55), POP); h.style.display = s2 > .02 ? 'inline-block' : 'none'; h.style.transform = `scaleX(${.6 + .4 * clamp(s2)})`; h.style.transformOrigin = 'left center'; }); }
+  const roleOn = t >= B(11) && t < B(14.1); show(L.role, roleOn, 'flex'); if (roleOn) { L.role.style.top = '640px'; L.role.style.transform = 'translateX(150px)'; L.role.style.opacity = 1 - clamp((t - B(14)) / .1);
+    const hs = L.role.children; typeOn(hs[0], 'Motion Designer', t, B(11), 36); typeOn(hs[1], 'Creative Strategist', t, B(11) + .45, 36);
+    [...hs].forEach((h, j) => { const s2 = S(t - (B(11) + j * .45), POP); h.style.display = s2 > .02 ? 'inline-block' : 'none'; h.style.transform = `scaleX(${.6 + .4 * clamp(s2)})`; h.style.transformOrigin = 'left center'; }); }
   if (t >= B(10) && t < B(14.2)) L.name.style.transform += ' translateX(150px)';
   const pA = t >= B(10.5) && t < B(14.1), pB = t >= B(55); show(portrait, pA || pB);
   if (pA) { const s = S(t - B(10.5), POP), ex = S(t - B(14), FAST); box(portrait, OR.name[0] + 300, OR.name[1] + 400, 230, 230); portrait.style.transform = `scale(${s * (1 - ex)})`; portrait.style.boxShadow = '0 0 0 6px #EAF1FF'; }
