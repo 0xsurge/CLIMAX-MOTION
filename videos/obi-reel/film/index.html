@@ -42,6 +42,9 @@ const SLOW0 = B(14.3), SLOW1 = B(18), SLOWK = 1.6;                           // 
 const DUR = B(67) + INS + (SLOW1 - SLOW0) * (SLOWK - 1); window.FILM_DUR = DUR;
 const warp = t => { if (t < INS_T) return t; if (t < INS_T + INS) return INS_T; let u = t - INS; if (u < SLOW0) return u; const L = (SLOW1 - SLOW0) * SLOWK; return u < SLOW0 + L ? SLOW0 + (u - SLOW0) / SLOWK : u - L + (SLOW1 - SLOW0); };
 let RT = 0;
+// Camera flow (measured from the Bolt 'Matrixedit' reference, videos/reference/align-cam/STUDY.md): the move builds up
+// gradually (velocity doubles about every 0.14 s), peaks, then settles a little faster; value and velocity stay continuous.
+const camFlow = (t, tc, ti, to) => { const v0 = ti / (ti + to); return t < tc ? v0 * Math.exp((t - tc) / ti) : 1 - (1 - v0) * Math.exp(-(t - tc) / to); };
 const camMove = (t, tc, tau) => t < tc ? 0.5 * Math.exp((t - tc) / tau) : 1 - 0.5 * Math.exp(-(t - tc) / tau);
 const FAST = { k: 1100, c: 60 }, MORPH = { k: 650, c: 46 }, POP = { k: 700, c: 30 }, WORD = { k: 900, c: 50 };
 const $ = id => document.getElementById(id), cam = $('cam');
@@ -73,7 +76,7 @@ const L = {
   role: mk(`<div class="line" style="gap:18px;font:900 italic 48px/1 'S';color:#FFFFFF"><span class="hl" style="background:#F26A1B;padding:12px 20px;border-radius:10px"></span><span class="hl" style="background:#F26A1B;padding:12px 20px;border-radius:10px"></span></div>`),
   t1: mk(`<div class="line cap"><span class="w">I</span><span class="w">turn</span><span class="pillimg" id="p1"><canvas width="320" height="180"></canvas></span><span class="w lamp">complex</span><span class="w">products</span></div>`),
   t2: mk(`<div class="line cap"><span class="w">into</span><span class="w blue">clear</span><span class="pillimg" id="p2"><canvas width="320" height="180"></canvas></span><span class="w blue">stories.</span></div>`),
-  kind: mk(`<div class="abs" style="font:800 110px/1 'B';letter-spacing:-.04em;white-space:nowrap"></div>`),
+  kind: mk(`<div class="abs" style="font:800 96px/1 'B';letter-spacing:-.04em;white-space:nowrap"></div>`),
   d1: mk(words('cap', [['Your'], ['product'], ['deserves']])),
   d2: mk(words('cap', [['to'], ['be'], ['understood.', 'blue']])),
   name2: mk(`<div class="line" style="font:800 170px/1 'B';letter-spacing:-.045em"><span class="w">Obi</span><span class="w">Igwe<span id="stop2" style="display:inline-block;width:.26em;text-align:left"></span></span></div>`),
@@ -119,14 +122,20 @@ const oLerp = (a, b, u) => [lerp(a[0], b[0], u), lerp(a[1], b[1], u)];
 const CK = [{ t: 0, x: 0, y: 0, z: 1 }, { t: B(8), z: 1.12, tau: .45 }, { t: B(10) - .03, y: 1250, z: 1.0, tau: .1 }, { t: B(14.1), x: 2000, tau: .12 }, { t: B(16), z: 1.05, tau: .4 },
   { t: B(18), y: 0, z: 1.0, tau: .12 }, { t: B(24), z: 1.04, tau: .7 }, { t: B(38), x: 4000, z: 1.1, tau: .12 }, { t: B(44), z: 1.3, tau: .3 }, { t: B(46), z: .92, tau: .35 },
   { t: B(54.3), y: 1250, z: 1.0, tau: .14 }, { t: B(60), z: 1.05, tau: .7 }];
-const camAxis = (t, k) => { let v = CK[0][k], p = v; for (let i = 1; i < CK.length; i++) { const c = CK[i]; if (c[k] === undefined) continue; v += (c[k] - p) * camMove(t, c.t, c.tau); p = c[k]; } return v; };
-const PUNCH = [[B(3), .07], [B(7), .09], [B(10), .15], [B(14), .07], [B(18), .1], [B(30), .06], [B(38), .08], [B(39.5), .04], [B(40.5), .04], [B(41.5), .04], [B(42.5), .04], [B(46), .1], [B(54), .08], [B(60), .06]];
+const camAxis = (t, k) => { let v = CK[0][k], p = v; for (let i = 1; i < CK.length; i++) { const c = CK[i]; if (c[k] === undefined) continue; const ti = c.tau <= .15 ? .2 : c.tau, to = c.tau <= .15 ? .14 : c.tau * 1.25; v += (c[k] - p) * camFlow(t, c.t, ti, to); p = c[k]; } return v; };
+// between scene moves the camera never stops: a slow push-in and a drift that alternates direction, handed over by the move itself
+const SEG = [0, B(10) - .03, B(14.1), B(18), B(38), B(54.3), 1e9], SDIR = [[-1, .3], [1, -.3], [-1, -.4], [1, .3], [-1, .35], [1, -.3]];
+const segW = (t, i) => (i === 0 ? 1 : camFlow(t, SEG[i], .2, .14)) - (SEG[i + 1] > 1e8 ? 0 : camFlow(t, SEG[i + 1], .2, .14));
+const creep = t => { let x = 0, y = 0, z = 0; for (let i = 0; i < 6; i++) { const w = segW(t, i); if (w < 1e-4) continue; const u = Math.max(0, t - SEG[i]), e = 2.5 * (1 - Math.exp(-u / 2.5)); x += w * SDIR[i][0] * 18 * e; y += w * SDIR[i][1] * 18 * e; z += w * .015 * e; } return [x, y, z]; };
+const PUNCH = [[B(3), .04], [B(7), .05], [B(30), .035], [B(39.5), .025], [B(40.5), .025], [B(41.5), .025], [B(42.5), .025], [B(46), .06], [B(60), .035]];
+const SWELL = [B(10) - .03, B(14.1), B(18), B(38), B(54.3)];   // zoom swells with the speed of each scene move, like the reference
+const swell = t => SWELL.reduce((a, tc) => { const v0 = .2 / .34, d = t - tc, vel = d < 0 ? v0 / .2 * Math.exp(d / .2) : (1 - v0) / .14 * Math.exp(-d / .14); return a + .05 * vel / (v0 / .2); }, 0);
 
 const seekInner = t => {
-  const camX = camAxis(t, 'x') + 6 * Math.sin(RT * .47), camY = camAxis(t, 'y') + 4 * Math.sin(RT * .36 + 1);
-  let z = camAxis(t, 'z') + .012 * Math.sin(t * .55); PUNCH.forEach(([tp, a]) => { z += pulse(t, tp, a); });
+  const OPEN = 1 - camFlow(RT, 1.5, .55, .75), CR = creep(t); CR[1] -= 150 * OPEN; const camX = camAxis(t, 'x') + CR[0] + 6 * Math.sin(RT * .47), camY = camAxis(t, 'y') + CR[1] + 4 * Math.sin(RT * .36 + 1);
+  let z = (camAxis(t, 'z') + .012 * Math.sin(t * .55)) * (1 + CR[2]); PUNCH.forEach(([tp, a]) => { z += pulse(t, tp, a); }); z *= 1 + swell(t); z *= 1 + .32 * OPEN;   // opening: starts close on 'Your', slowly pulls out as the line lands (real time, so it keeps moving through the product swap)
   cam.style.transform = `scale(${z}) translate(${-camX}px,${-camY}px)`;
-  const pvx = (camX - (camAxis(t - 1 / 30, 'x') + 6 * Math.sin((t - 1 / 30) * .47))) * z, pvy = (camY - (camAxis(t - 1 / 30, 'y') + 4 * Math.sin((t - 1 / 30) * .36 + 1))) * z;
+  const CRp = creep(t - 1 / 30); CRp[1] -= 150 * (1 - camFlow(RT - 1 / 30, 1.5, .55, .75)); const pvx = (camX - (camAxis(t - 1 / 30, 'x') + CRp[0] + 6 * Math.sin((RT - 1 / 30) * .47))) * z, pvy = (camY - (camAxis(t - 1 / 30, 'y') + CRp[1] + 4 * Math.sin((RT - 1 / 30) * .36 + 1))) * z;
   const cbx = clamp((Math.abs(pvx) - 12) * .1, 0, 22), cby = clamp((Math.abs(pvy) - 12) * .1, 0, 22);
   // scene origins: each beat's elements live at their own place
   const place = (el, o) => { el.style.marginLeft = o[0] + 'px'; el.style.marginTop = o[1] + 'px'; };
@@ -210,7 +219,7 @@ const seekInner = t => {
   // word swap beside the screen
   const kOn = t >= B(30.2) && t < B(38); show(L.kind, kOn);
   if (kOn) { const k = clamp(Math.floor((t - B(30.2)) / B(2)), 0, 3), s = S(t - B(30.2 + 2 * k), WORD); L.kind.textContent = KINDS[k][0];
-    L.kind.style.left = '1290px'; L.kind.style.top = '455px'; L.kind.style.transform = `translateY(${(1 - s) * 70}px)`; L.kind.style.filter = `blur(${(1 - clamp(s)) * 14}px)`; L.kind.style.opacity = clamp(s * 1.5) * (1 - S(t - B(37.8), FAST)); }
+    L.kind.style.left = '1262px'; L.kind.style.top = '462px'; L.kind.style.transform = `translateY(${(1 - s) * 70}px)`; L.kind.style.filter = `blur(${(1 - clamp(s)) * 14}px)`; L.kind.style.opacity = clamp(s * 1.5) * (1 - S(t - B(37.8), FAST)); }
   // steps
   const STEPFILM = ['sterling', 'vivox', 'dripverse', 'armab', 'appleui'];
   const sbOn = t >= B(38.5) && t < B(44.6); show(stepBg, sbOn);
