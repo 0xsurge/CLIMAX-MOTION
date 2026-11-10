@@ -3,7 +3,7 @@
 # each film opens, a tick per process step. No whooshes, no tonal notes.
 import numpy as np, wave, subprocess, json
 SR = 44100; G = json.load(open('grid.json')); P = G['P']; Bo = lambda n: n * P
-INS_T, INS = 0.62, 53 / 30 + .12; SLOWS = [(Bo(12.8), Bo(13.9), 3.2), (Bo(14.3), Bo(18), 1.6)]
+INS_T, INS = 0.62, 53 / 30 + .12; SLOWS = [(Bo(12.8), Bo(13.9), 3.2), (Bo(14.3), Bo(17.7), 1.6), (Bo(17.7), Bo(18), 4)]
 def B(n):  # original beat time -> real film time (inverse of the film's warp)
     u = Bo(n); r = u if u < INS_T else u + INS
     for p, q, k in SLOWS:
