@@ -18,3 +18,8 @@ Worst problems and fixes:
 ## Round 2 (re-render; the two fixed scenes checked at six times)
 Both crops are gone: "And that's just the start." and "Save it. Earn up to 20% a year." stay fully in frame.
 Readability moves from 7 to 8. Sound sync stays at 7 until the mix has been listened to; the music is still a placeholder.
+
+## Round 3 (16:9 re-block, `film3`; one frame per second of the finished video)
+Every scene was laid out again for 1920×1080. Fixed before the full render: four reframes that cropped words, the model's
+head cut off by the card panel, the closing capitals running into the model, and the close-up missing the "Successful" chip.
+Scores unchanged from round 2 (8 on all but sound sync at 7, which waits on the music pick and a listen).
