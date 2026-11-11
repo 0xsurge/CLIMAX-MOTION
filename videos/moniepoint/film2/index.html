@@ -61,9 +61,10 @@ svg.l{position:absolute;left:0;top:0;overflow:visible}img{display:block}.abs{pos
       <div class="pill" data-pop="4.2" style="left:330px;top:360px;background:#FFF1CC;color:#021B4A">“Not yet o”</div>
       <div class="pill" data-pop="4.9" style="left:620px;top:240px;background:#FFF1CC;color:#021B4A">Failed transfer</div>
       <div id="pool" class="abs" style="left:170px;top:630px;width:700px;height:700px;border-radius:50%"></div>
+      <svg id="spin2" class="abs" style="left:420px;top:880px" width="200" height="200" viewBox="0 0 320 320"><circle cx="160" cy="160" r="120" fill="none" stroke="rgba(245,178,26,.22)" stroke-width="40"/><path d="M160 40 A120 120 0 0 1 280 160" fill="none" stroke="#F5B21A" stroke-width="40" stroke-linecap="round"/></svg>
       <img id="icon2" src="../assets/icon.png" class="abs" style="left:410px;top:870px;width:220px;border-radius:52px;box-shadow:0 30px 70px rgba(4,96,239,.35)">
       <div class="pill blue" data-pop="8.25" style="left:160px;top:1440px">Sent</div>
-      <div class="pill blue" data-pop="8.2" style="left:410px;top:1440px">Received</div>
+      <div class="pill blue" data-pop="8.2" data-glow="8.5" style="left:410px;top:1440px">Received</div>
       <div class="pill blue" data-pop="8.3" style="left:690px;top:1440px">In seconds</div>
       <div class="h" data-words="8.05,.17" style="left:0;width:1040px;text-align:center;top:1610px;font-size:92px">Not with <b class="bl">Moniepoint.</b></div>
       <div id="band" class="abs" style="left:-400px;top:-400px;width:500px;height:3000px"></div>
@@ -119,14 +120,14 @@ svg.l{position:absolute;left:0;top:0;overflow:visible}img{display:block}.abs{pos
       <div class="h" data-words="31.25,.18" style="left:56px;top:190px;font-size:110px"><b>Pay with it.</b></div><div class="h" data-words="31.95,.2" style="left:56px;top:330px;font-size:72px">Bills. Airtime. Data. <b class="bl">In seconds.</b></div>
       <svg class="l" width="1040" height="1880"><g fill="none" stroke="#0460EF" stroke-width="6" stroke-linecap="round"><path data-draw="31.3,.45" d="M240 760 C330 760 330 640 420 640"/><path data-draw="31.4,.4" d="M240 760 L420 760"/><path data-draw="31.5,.45" d="M240 760 C330 760 330 880 420 880"/><path data-draw="31.6,.5" d="M240 760 C330 760 330 1000 420 1000"/></g></svg>
       <div class="pill blue" data-pop="31.1" style="left:56px;top:716px">Pay</div>
-      <div class="pill" data-pop="31.7" style="left:420px;top:596px">Cable TV</div><div class="pill" data-pop="31.8" style="left:420px;top:716px">Electricity</div><div class="pill" data-pop="31.9" style="left:420px;top:836px">Airtime</div><div class="pill" data-pop="32.0" style="left:420px;top:956px">Data</div>
+      <div class="pill" data-pop="31.7" style="left:420px;top:596px">Cable TV</div><div class="pill" data-pop="31.8" style="left:420px;top:716px">Electricity</div><div class="pill" data-pop="31.9" data-glow="32.05" style="left:420px;top:836px">Airtime</div><div class="pill" data-pop="32.0" style="left:420px;top:956px">Data</div>
       <img data-card="32.3,-300" src="../assets/ui_bills.png" class="abs" style="left:56px;top:1150px;width:520px;border-radius:28px;box-shadow:0 30px 80px rgba(2,27,74,.14)">
       <img data-card="32.75,300" src="../assets/ui_airtime.png" class="abs" style="left:480px;top:1250px;width:500px;border-radius:28px;box-shadow:0 30px 80px rgba(2,27,74,.2)">
     </div>
   </div>
   <!-- 10 cashback -->
   <div class="scene" data-o="cash">
-    <div class="p navy" data-in="34.22" style="left:20px;top:20px;width:1040px;height:1100px"><svg class="wm par" style="left:330px;top:260px" width="1000" height="1200" viewBox="0 0 100 120"><use href="#dart" fill="rgba(255,255,255,.05)"/></svg><div class="tag am">Rewards</div><div data-card="34.9,0" class="abs" style="left:50px;top:400px;width:940px;border-radius:30px;overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,.5)"><img src="../assets/ui_rewards.png" style="width:940px"><div class="glint" data-glint="35.7"></div></div></div>
+    <div class="p navy" data-in="34.22" style="left:20px;top:20px;width:1040px;height:1100px"><svg class="wm par" style="left:330px;top:260px" width="1000" height="1200" viewBox="0 0 100 120"><use href="#dart" fill="rgba(255,255,255,.05)"/></svg><div class="tag am">Rewards</div><div data-card="34.9,0" data-glow="35.45" class="abs" style="left:50px;top:400px;width:940px;border-radius:30px;overflow:hidden"><img src="../assets/ui_rewards.png" style="width:940px"><div class="glint" data-glint="35.7"></div></div></div>
     <div class="p" data-in="34.36" style="left:20px;top:1140px;width:1040px;height:760px"><div class="h" data-words="34.75,.18" style="left:56px;top:150px;font-size:110px"><b>Get more back.</b></div><div class="h" data-words="35.4,.18" style="left:56px;top:300px;font-size:72px"><b class="bl">Daily cashback.</b><br>Weekly rewards.</div></div>
   </div>
   <!-- 11 close -->
@@ -158,13 +159,16 @@ const WORD = { k: 320, c: 36 }, PANEL = { k: 170, c: 26 }, POPS = { k: 420, c: 4
 const OR = { hook: [0, 0], turn: [0, 2000], send: [1200, 2000], land: [1200, 4000], proof: [2400, 4000], bridge: [2400, 2000], card: [3600, 2000], save: [3600, 4000], bills: [4800, 4000], cash: [4800, 2000], close: [6000, 2000] };
 document.querySelectorAll('.scene').forEach(s => { const o = OR[s.dataset.o]; s.style.left = o[0] + 'px'; s.style.top = o[1] + 'px'; });
 const camFlow = (t, tc, ti, to) => { const v0 = ti / (ti + to); return t < tc ? v0 * Math.exp((t - tc) / ti) : 1 - (1 - v0) * Math.exp(-(t - tc) / to); };
-const CK = [{ t: 0, x: 0, y: 0, z: 1 }, { t: 3.0, y: 2000, w: 1 }, { t: 4.6, y: 1780, z: 1.12, tau: .8 }, { t: 7.7, y: 2190, z: 1.1, tau: .42 }, { t: 9.0, y: 2000, z: 1, tau: .4 }, { t: 9.9, x: 1200, w: 1 }, { t: 11.6, y: 2090, z: 1.05, tau: .7 }, { t: 13.9, y: 4000, z: 1, w: 1 },
-  { t: 16.35, x: 1070, y: 3610, z: 2.7, tau: .36 }, { t: 18.4, x: 2400, y: 4000, z: 1, w: 1 }, { t: 20.9, y: 2000, w: 1 }, { t: 22.9, x: 3600, w: 1 }, { t: 24.6, y: 1900, z: 1.08, tau: .9 }, { t: 26.9, y: 4000, z: 1, w: 1 },
-  { t: 30.9, x: 4800, w: 1 }, { t: 32.4, y: 4160, z: 1.06, tau: .6 }, { t: 34.4, y: 2000, z: 1, w: 1 }, { t: 37.4, x: 6000, w: 1 }, { t: 39.6, z: 1.06, tau: 1.3 }];
+const CK = [{ t: 0, x: 0, y: 0, z: 1 }, { t: 2.25, y: 300, z: 1.05, tau: .45 }, { t: 3.0, x: 0, y: 2000, z: 1, w: 1 }, { t: 4.3, y: 1620, z: 1.42, tau: .7 }, { t: 6.4, y: 1900, z: 1.22, tau: .6 }, { t: 7.7, y: 2190, z: 1.1, tau: .42 }, { t: 9.0, y: 2000, z: 1, tau: .4 },
+  { t: 9.9, x: 1200, y: 2000, z: 1, w: 1 }, { t: 10.65, x: 1465, y: 1380, z: 1.5, tau: .3 }, { t: 11.6, x: 1200, y: 2000, z: 1.15, tau: .4 }, { t: 12.6, x: 1200, y: 2620, z: 1.12, tau: .35 },
+  { t: 13.9, x: 1200, y: 4000, z: 1, w: 1 }, { t: 16.35, x: 1070, y: 3610, z: 2.7, tau: .36 }, { t: 18.4, x: 2400, y: 4000, z: 1, w: 1 }, { t: 19.4, y: 4220, z: 1.08, tau: .5 },
+  { t: 20.9, x: 2400, y: 2000, z: 1, w: 1 }, { t: 21.7, y: 2075, z: 1.25, tau: .4 }, { t: 22.9, x: 3600, y: 2000, z: 1, w: 1 }, { t: 23.6, x: 3480, y: 2600, z: 1.2, tau: .35 }, { t: 24.9, x: 3360, y: 1660, z: 1.45, tau: .45 },
+  { t: 26.9, x: 3600, y: 4000, z: 1, w: 1 }, { t: 27.5, x: 3460, y: 3340, z: 1.25, tau: .35 }, { t: 28.6, x: 3620, y: 4240, z: 1.05, tau: .5 }, { t: 30.9, x: 4800, y: 4000, z: 1, w: 1 }, { t: 31.6, x: 4680, y: 3660, z: 1.2, tau: .35 }, { t: 32.7, x: 4800, y: 4540, z: 1.12, tau: .45 },
+  { t: 34.4, x: 4800, y: 2000, z: 1, w: 1 }, { t: 35.2, y: 1600, z: 1.08, tau: .4 }, { t: 36.2, x: 4710, y: 2540, z: 1.1, tau: .5 }, { t: 37.4, x: 6000, y: 2000, z: 1, w: 1 }, { t: 39.6, z: 1.06, tau: 1.3 }];
 const WHIPS = CK.filter(c => c.w).map(c => c.t), TI = .24, TO = .18;
 const camAxis = (t, k) => { let v = CK[0][k], p = v; for (let i = 1; i < CK.length; i++) { const c = CK[i]; if (c[k] === undefined) continue; v += (c[k] - p) * camFlow(t, c.t, c.w ? TI : c.tau, c.w ? TO : c.tau * 1.25); p = c[k]; } return v; };
 const SEG = [0, ...WHIPS, 1e9];
-const creep = t => { let x = 0, y = 0, z = 0; for (let i = 0; i < SEG.length - 1; i++) { const w = (i === 0 ? 1 : camFlow(t, SEG[i], TI, TO)) - (SEG[i + 1] > 1e8 ? 0 : camFlow(t, SEG[i + 1], TI, TO)); if (w < 1e-4) continue; const u = Math.max(0, t - SEG[i]), e = 2.5 * (1 - Math.exp(-u / 2.5)), d = i % 2 ? 1 : -1; x += w * d * 7 * e; y += w * -d * 10 * e; z += w * .014 * e; } return [x, y, z]; };
+const creep = t => { let x = 0, y = 0, z = 0; for (let i = 0; i < SEG.length - 1; i++) { const w = (i === 0 ? 1 : camFlow(t, SEG[i], TI, TO)) - (SEG[i + 1] > 1e8 ? 0 : camFlow(t, SEG[i + 1], TI, TO)); if (w < 1e-4) continue; const u = Math.max(0, t - SEG[i]), e = 2.5 * (1 - Math.exp(-u / 2.5)), d = i % 2 ? 1 : -1; x += w * d * 7 * e; y += w * -d * 10 * e; z += w * .026 * e; } return [x, y, z]; };
 const swell = t => WHIPS.reduce((a, tc) => { const d = t - tc; return a + .045 * (d < 0 ? Math.exp(d / TI) : Math.exp(-d / TO)); }, 0);
 const camAt = t => { const c = creep(t), open = 1 - camFlow(t, 1.25, .5, .7); return [camAxis(t, 'x') + c[0] - 150 * open, camAxis(t, 'y') + c[1] - 330 * open, camAxis(t, 'z') * (1 + c[2]) * (1 + swell(t)) * (1 + .55 * open)]; };
 
@@ -176,18 +180,18 @@ const PPS = [...document.querySelectorAll('[data-pop]')].map(el => ({ el, t0: +e
 const DRS = [...document.querySelectorAll('[data-draw]')].map(el => { const [t0, d] = el.dataset.draw.split(',').map(Number), len = el.getTotalLength(); el.style.strokeDasharray = `${len} ${len}`; return { el, t0, d, len }; });
 const CDS = [...document.querySelectorAll('[data-card]')].map(el => { const [t0, dx] = el.dataset.card.split(',').map(Number); return { el, t0, dx }; });
 const GLS = [...document.querySelectorAll('[data-glint]')].map(el => ({ el, t0: +el.dataset.glint }));
-const PARS = [...document.querySelectorAll('.par')];
+const PARS = [...document.querySelectorAll('.par')], GWS = [...document.querySelectorAll('[data-glow]')].map(el => ({ el, t0: +el.dataset.glow }));
 const MQ = (id, items, sep) => { $(id).innerHTML = Array.from({ length: 6 }, () => items.map(i => `<span>${i}</span>${sep}`).join('')).join(''); };
 MQ('mq1', ['Spend it', 'Save it', 'Pay with it', 'Get more back'], '<svg width="50" height="60" viewBox="0 0 100 120" style="transform:rotate(90deg);flex:none"><use href="#dart" fill="#0460EF"/></svg>');
 MQ('mq2', ['Moniepoint'], '<img src="../assets/icon.png" style="width:74px;border-radius:18px;flex:none">');
 
 // ---- the dart ----
 const Pw = (o, x, y) => [OR[o][0] + x, OR[o][1] + y];
-const DW = [[0, Pw('turn', 540, 1010)], [7.72, Pw('turn', 540, 1400), GLIDE], [9.55, Pw('send', 110, 830), FLY], [11.1, Pw('send', 970, 1080), { k: 30, c: 11 }], [13.3, Pw('send', 760, 2300), FLY], [13.75, Pw('land', 540, 180), FLY],
+const DW = [[0, Pw('turn', 540, 1010)], [7.72, Pw('turn', 540, 1330), GLIDE], [9.55, Pw('send', 110, 830), FLY], [11.1, Pw('send', 970, 1080), 'route'], [13.3, Pw('send', 760, 2300), FLY], [13.75, Pw('land', 540, 180), FLY],
   [20.3, Pw('proof', 900, 240)], [20.75, Pw('bridge', 200, 1260), FLY], [21.5, Pw('bridge', 880, 1240), GLIDE], [22.65, Pw('card', 930, 1400), FLY], [26.55, Pw('save', 950, 330), FLY], [30.6, Pw('bills', 150, 640), FLY], [31.45, Pw('bills', 660, 880), GLIDE],
   [32.6, Pw('bills', 930, 620), GLIDE], [34.1, Pw('cash', 930, 1300), FLY], [37.1, Pw('close', 930, 480), FLY]];
-const DVIS = [[7.72, 14.2], [20.3, 99]];
-const dartPos = t => { let x = DW[0][1][0], y = DW[0][1][1]; for (let i = 1; i < DW.length; i++) { const [ti, p, sp] = DW[i], q = DW[i - 1][1]; if (!sp) { if (t >= ti) { x += p[0] - q[0]; y += p[1] - q[1]; } continue; } const s = S(t - ti, sp), dx = p[0] - q[0], dy = p[1] - q[1], bow = Math.sin(Math.PI * clamp(s)) * .16 * (i % 2 ? 1 : -1); x += dx * s - dy * bow; y += dy * s + dx * bow; } return [x, y]; };
+const DVIS = [[7.72, 14.2], [20.3, 99]], RLEN = $('route').getTotalLength();
+const dartPos = t => { let x = DW[0][1][0], y = DW[0][1][1]; for (let i = 1; i < DW.length; i++) { const [ti, p, sp] = DW[i], q = DW[i - 1][1]; if (!sp) { if (t >= ti) { x += p[0] - q[0]; y += p[1] - q[1]; } continue; } if (sp === 'route') { const rp = $('route'), a = rp.getPointAtLength(0), b = rp.getPointAtLength(RLEN * S(t - ti, { k: 30, c: 11 })); x += b.x - a.x; y += b.y - a.y; continue; } const s = S(t - ti, sp), dx = p[0] - q[0], dy = p[1] - q[1], bow = Math.sin(Math.PI * clamp(s)) * .16 * (i % 2 ? 1 : -1); x += dx * s - dy * bow; y += dy * s + dx * bow; } return [x, y]; };
 
 // ---- the 3D phone (orthographic, so it sits on the flat board) ----
 const R = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true }); R.setPixelRatio(1); R.setSize(1080, 1920, false); R.setClearColor(0, 0); R.outputColorSpace = THREE.SRGBColorSpace; R.toneMapping = THREE.ACESFilmicToneMapping; R.toneMappingExposure = 1; $('gl').appendChild(R.domElement);
@@ -215,7 +219,7 @@ const sh = new THREE.Mesh(new THREE.PlaneGeometry(900, 1500), new THREE.MeshBasi
 // phone keys: world anchor, scale, rotation; one spring per change
 const TR = (t, keys) => { let v = keys[0][1]; for (let i = 1; i < keys.length; i++) v += (keys[i][1] - keys[i - 1][1]) * S(t - keys[i][0], keys[i][2] || FLY); return v; };
 const PHX = [[0, Pw('land', 540, 0)[0]], [18.25, Pw('proof', 610, 0)[0], GLIDE], [26.0, Pw('save', 560, 0)[0]]];
-const PHY = [[0, Pw('land', 0, 2900)[1]], [13.85, Pw('land', 0, 800)[1], { k: 70, c: 16.8 }], [18.25, Pw('proof', 0, 1640)[1], GLIDE], [20.75, Pw('proof', 0, 3600)[1], FLY], [26.0, Pw('save', 0, 3600)[1]], [26.85, Pw('save', 0, 1540)[1], { k: 70, c: 16.8 }], [30.7, Pw('save', 0, 3900)[1], FLY]];
+const PHY = [[0, Pw('land', 0, 2900)[1]], [13.85, Pw('land', 0, 800)[1], { k: 70, c: 16.8 }], [18.25, Pw('proof', 0, 1760)[1], GLIDE], [20.75, Pw('proof', 0, 3600)[1], FLY], [26.0, Pw('save', 0, 3600)[1]], [26.85, Pw('save', 0, 1540)[1], { k: 70, c: 16.8 }], [30.7, Pw('save', 0, 3900)[1], FLY]];
 const PHS = [[0, .9], [13.85, 1.22, GLIDE], [18.25, 1.38, GLIDE], [26.0, 1.7]];
 const PRY = [[0, -Math.PI * 2 - .5], [13.85, .32, SPIN], [15.2, 0, TILT], [16.3, .42, TILT], [18.25, -.5, TILT], [19.2, -.2, { k: 8, c: 5.7 }], [26.0, Math.PI * 2 + .75], [26.85, .5 + Math.PI * 2 - Math.PI * 2, SPIN], [28.6, .12, TILT]];
 const PRX = [[0, .5], [13.85, 0, TILT], [16.3, -.3, TILT], [18.25, .3, TILT], [26.0, .5], [26.85, .28, TILT], [28.6, .12, TILT]];
@@ -234,6 +238,7 @@ window.seek = t => {
   DRS.forEach(({ el, t0, d, len }) => { el.style.strokeDashoffset = len * (1 - sm((t - t0) / d)); });
   CDS.forEach(({ el, t0, dx }) => { const s = S(t - t0, PANEL); el.style.opacity = clamp(s * 1.6); el.style.transform = `translate(${(1 - s) * dx}px, ${(1 - s) * (dx ? 0 : 120) + 4 * Math.sin(t * 1.1 + t0)}px) scale(${.94 + .06 * s})`; el.style.filter = s < .98 ? `blur(${(1 - clamp(s)) * 12}px)` : ''; });
   GLS.forEach(({ el, t0 }) => { const u = clamp((t - t0) / .9); el.style.background = u > 0 && u < 1 ? `linear-gradient(112deg, transparent ${u * 150 - 45}%, rgba(255,255,255,${.5 * Math.sin(Math.PI * u)}) ${u * 150 - 22}%, transparent ${u * 150}%)` : ''; });
+  GWS.forEach(({ el, t0 }) => { const g = S(t - t0, { k: 120, c: 22 }) * (.8 + .2 * Math.sin((t - t0) * 3)); el.style.boxShadow = `0 0 0 ${(6 * g).toFixed(1)}px rgba(79,209,255,${(.9 * g).toFixed(2)}), 0 0 ${(70 * g).toFixed(0)}px rgba(79,209,255,${(.7 * g).toFixed(2)}), 0 30px 80px rgba(2,27,74,.25)`; });
   PARS.forEach((el, i) => { el.style.transform = `translate(${(6 * Math.sin(t * .5 + i)).toFixed(1)}px, ${(10 * Math.sin(t * .4 + i * 2)).toFixed(1)}px) rotate(${(1.2 * Math.sin(t * .3 + i)).toFixed(2)}deg)`; });
   // 1 hook: the spinner and the ring behind the line
   $('spin').style.transform = `rotate(${t * 300}deg)`; $('ringwm').style.transform = `rotate(${t * 40}deg)`;
@@ -241,12 +246,12 @@ window.seek = t => {
   const sw = sm((t - 7.45) / .95), edge = -30 + sw * 190;
   $('dark').style.clipPath = `polygon(${edge}% 0, 130% 0, 130% 100%, ${edge - 42}% 100%)`;
   const band = $('band'); band.style.display = sw > 0 && sw < 1 ? '' : 'none'; band.style.transform = `translateX(${-200 + sw * 1976 - 250}px) rotate(12.5deg)`; band.style.background = `linear-gradient(90deg, rgba(79,209,255,0), rgba(79,209,255,.75) 30%, rgba(255,255,255,.95) 50%, rgba(245,178,26,.8) 70%, rgba(245,178,26,0))`; band.style.filter = 'blur(26px)'; band.style.opacity = Math.sin(Math.PI * sw);
-  $('tag2').style.opacity = 1 - clamp((t - 7.5) / .2);
+  $('tag2').style.opacity = 1 - clamp((t - 7.5) / .2); { const a = S(t - 5.6, POPS), g = S(t - 7.5, FLY); $('spin2').style.opacity = clamp(a * 2) * (1 - g); $('spin2').style.transform = `rotate(${t * 300}deg) scale(${(.7 + .3 * a) * (1 + .4 * g)})`; }
   const ic = S(t - 7.55, { k: 150, c: 24.5 }); $('icon2').style.opacity = clamp(ic * 2); $('icon2').style.transform = `scale(${.6 + .4 * ic}) translateY(${4 * Math.sin(t * 1.3)}px)`; $('icon2').style.filter = ic < .98 ? `blur(${(1 - ic) * 14}px)` : '';
   const pl = clamp((t - 7.5) / 1.6); $('pool').style.background = `radial-gradient(closest-side, rgba(4,96,239,${.34 * Math.sin(Math.PI * Math.sqrt(pl))}), rgba(4,96,239,0))`; $('pool').style.transform = `scale(${.5 + .8 * ease(pl)})`;
   // 3 the send: the amount counts; the gold route draws under the dart
   const am = S(t - 10.55, WORD); $('amt').textContent = '₦' + Math.round(10000 * ease((t - 10.6) / .9)).toLocaleString('en-US'); $('amt').style.opacity = sm(am * 1.25); $('amt').style.transform = `translateY(${(1 - am) * 34}px)`; $('amt').style.filter = am < .98 ? `blur(${(1 - am) * 12}px)` : '';
-  const rt = $('route'), rl = 1120; rt.style.strokeDasharray = `${rl} ${rl}`; rt.style.strokeDashoffset = rl * (1 - S(t - 11.1, { k: 30, c: 11 }));
+  const rt = $('route'); rt.style.strokeDasharray = `${RLEN} ${RLEN}`; rt.style.strokeDashoffset = RLEN * (1 - S(t - 11.1, { k: 30, c: 11 }));
   // 4 the landing: a light pool under the phone
   const p4 = clamp((t - 13.9) / 2.2); $('pool4').style.background = `radial-gradient(closest-side, rgba(4,96,239,${.22 * Math.sin(Math.PI * Math.sqrt(p4))}), rgba(4,96,239,0))`;
   // 5 proof, 8 savings: numbers count
