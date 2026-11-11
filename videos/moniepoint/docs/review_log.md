@@ -14,3 +14,7 @@ Worst problems and fixes:
 1. Bridge: the zoom on "And that's just the start." cropped the first letter. Zoom reduced from 1.25 to 1.1.
 2. Savings: the second reframe pushed "Earn up to 20% a year." off the top edge. Reframe now keeps the text panel in view.
 3. Readability re-check after the re-render (round 2).
+
+## Round 2 (re-render; the two fixed scenes checked at six times)
+Both crops are gone: "And that's just the start." and "Save it. Earn up to 20% a year." stay fully in frame.
+Readability moves from 7 to 8. Sound sync stays at 7 until the mix has been listened to; the music is still a placeholder.
