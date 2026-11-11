@@ -1,3 +1,7 @@
 brand/play.html
 sound/cand/
+sound/*.wav
+sound/vo/
 private/
+renders/
+review/

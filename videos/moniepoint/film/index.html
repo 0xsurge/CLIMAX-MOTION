@@ -1,0 +1,185 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Moniepoint: Sent means received</title>
+<!-- Concept ad, 1080x1920, 42 s, pure function of t (window.seek). Built with /climax-launch.
+     Carrier: Moniepoint's paper-plane dart and its gold trail. It breaks out of the spinner, lands as the receipt,
+     then carries the film through the card, savings, bills and cashback. One travelling flat camera (camFlow). -->
+<style>
+  @font-face { font-family: 'S'; src: url(../assets/satoshi-500.woff2) format('woff2'); font-weight: 500; }
+  @font-face { font-family: 'S'; src: url(../assets/satoshi-700.woff2) format('woff2'); font-weight: 700; }
+  @font-face { font-family: 'S'; src: url(../assets/satoshi-900.woff2) format('woff2'); font-weight: 900; }
+  html, body { margin: 0; background: #010E2B; overflow: hidden; }
+  #stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: #010E2B; font-family: 'S', 'Inter', sans-serif; }
+  .ground { position: absolute; inset: 0; }
+  #cam { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; transform-origin: 540px 960px; }
+  .abs { position: absolute; }
+  .line { position: absolute; left: 0; width: 1080px; display: flex; justify-content: center; gap: .26em; white-space: nowrap; }
+  .slam { font-weight: 900; font-size: 128px; line-height: 1; letter-spacing: -.035em; }
+  .cap { font-weight: 700; font-size: 76px; line-height: 1; letter-spacing: -.025em; }
+  .w { display: inline-block; }
+  .bub { position: absolute; font: 700 54px/1.15 'S'; padding: 28px 40px; border-radius: 44px; white-space: nowrap; }
+  .bub.in { background: #12357F; color: #fff; border-bottom-left-radius: 10px; left: 70px; transform-origin: 0 100%; }
+  .bub.out { background: #F5B21A; color: #021B4A; border-bottom-right-radius: 10px; right: 70px; transform-origin: 100% 100%; }
+  img { display: block; }
+</style>
+<div id="stage">
+  <svg width="0" height="0" style="position:absolute"><filter id="mb" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur id="mbg" stdDeviation="0 0"/></filter></svg>
+  <div id="grounds"></div>
+  <div id="cam"></div>
+</div>
+<script src="../assets/motion.js"></script>
+<script>
+const M = window.Motion, S = (t, p) => M.spring(t, p), clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x)), lerp = (a, b, u) => a + (b - a) * u;
+const DUR = 42; window.FILM_DUR = DUR;
+const FAST = { k: 1100, c: 60 }, MORPH = { k: 650, c: 46 }, POP = { k: 700, c: 34 }, WORD = { k: 900, c: 50 }, FLY = { k: 420, c: 36 }, GLIDE = { k: 160, c: 24 };
+const camFlow = (t, tc, ti, to) => { const v0 = ti / (ti + to); return t < tc ? v0 * Math.exp((t - tc) / ti) : 1 - (1 - v0) * Math.exp(-(t - tc) / to); };
+const ease = x => { x = clamp(x); return 1 - Math.pow(1 - x, 3); };
+const $ = id => document.getElementById(id), cam = $('cam'), grounds = $('grounds');
+const mk = (html, parent = cam) => { const d = document.createElement('div'); d.innerHTML = html.trim(); const e = d.firstChild; parent.appendChild(e); return e; };
+const show = (el, on, d = '') => { el.style.display = on ? d : 'none'; };
+const NAVY = '#021B4A', BLUE = '#0460EF', GOLD = '#F5B21A', CY = '#4FD1FF';
+// ---- places on one big canvas (each beat has its own) ----
+const OR = { hook: [0, 0], wait: [0, 2100], send: [1400, 2100], land: [1400, 4200], proof: [2800, 4200], bridge: [2800, 2100], card: [4200, 2100], save: [4200, 4200], bills: [5600, 4200], cash: [5600, 2100], close: [7000, 2100] };
+// camera keys: x, y are the frame's top-left in the world; whips ease in over .2 and out over .14
+const CK = [{ t: 0, x: 0, y: 0, z: 1 }, { t: 3.0, y: 2100, w: 1 }, { t: 5.2, z: 1.05, tau: .9 }, { t: 9.9, x: 1400, z: 1, w: 1 }, { t: 13.9, y: 4200, w: 1 },
+  { t: 16.5, x: 1160, y: 4387, z: 2.05, tau: .32 }, { t: 18.4, x: 2800, y: 4200, z: 1, w: 1 }, { t: 20.9, y: 2100, w: 1 }, { t: 22.9, x: 4200, w: 1 }, { t: 26.9, y: 4200, w: 1 },
+  { t: 28.7, y: 4420, z: 1.12, tau: .5 }, { t: 30.9, x: 5600, y: 4200, z: 1, w: 1 }, { t: 34.4, y: 2100, w: 1 }, { t: 37.4, x: 7000, w: 1 }, { t: 39.5, z: 1.06, tau: 1.2 }];
+const WHIPS = CK.filter(c => c.w).map(c => c.t);
+const camAxis = (t, k) => { let v = CK[0][k], p = v; for (let i = 1; i < CK.length; i++) { const c = CK[i]; if (c[k] === undefined) continue; const ti = c.w ? .2 : c.tau, to = c.w ? .14 : c.tau * 1.25; v += (c[k] - p) * camFlow(t, c.t, ti, to); p = c[k]; } return v; };
+const SEG = [0, ...WHIPS, 1e9];
+const creep = t => { let x = 0, y = 0, z = 0; for (let i = 0; i < SEG.length - 1; i++) { const w = (i === 0 ? 1 : camFlow(t, SEG[i], .2, .14)) - (SEG[i + 1] > 1e8 ? 0 : camFlow(t, SEG[i + 1], .2, .14)); if (w < 1e-4) continue;
+  const u = Math.max(0, t - SEG[i]), e = 2.5 * (1 - Math.exp(-u / 2.5)), d = i % 2 ? 1 : -1; x += w * d * 9 * e; y += w * -d * 14 * e; z += w * .016 * e; } return [x, y, z]; };
+const swell = t => WHIPS.reduce((a, tc) => { const d = t - tc; return a + .05 * (d < 0 ? Math.exp(d / .2) : Math.exp(-d / .14)); }, 0);
+const camAt = t => { const c = creep(t), open = 1 - camFlow(t, 1.3, .5, .7); return [camAxis(t, 'x') + c[0], camAxis(t, 'y') + c[1] - 60 * open, camAxis(t, 'z') * (1 + c[2]) * (1 + swell(t)) * (1 + .3 * open)]; };
+
+// ---- grounds: each new ground opens as a circle from the frame centre when the dart arrives ----
+const GR = [[0, 'radial-gradient(90% 60% at 50% 38%, #0A2F7A 0%, #021B4A 55%, #010E2B 100%)'], [7.62, 'radial-gradient(100% 70% at 50% 40%, #FFFFFF 0%, #D5F1FE 55%, #A9DCFA 100%)'], [13.9, BLUE],
+  [18.4, 'radial-gradient(100% 70% at 50% 40%, #FFFFFF 0%, #D5F1FE 55%, #A9DCFA 100%)'], [22.9, '#D5F1FE'], [26.9, 'radial-gradient(90% 60% at 50% 70%, #0A2F7A 0%, #021B4A 55%, #010E2B 100%)'],
+  [30.9, 'radial-gradient(100% 70% at 50% 40%, #FFFFFF 0%, #D5F1FE 55%, #A9DCFA 100%)'], [34.4, 'radial-gradient(90% 60% at 50% 45%, #0A2F7A 0%, #021B4A 55%, #010E2B 100%)'], [37.4, '#D5F1FE']];
+const GEL = GR.map(([, bg]) => mk(`<div class="ground" style="background:${bg}"></div>`, grounds));
+
+// ---- helpers for type ----
+const words = (cls, list, color) => mk(`<div class="line ${cls}" style="color:${color}">${list.map(([w, c]) => `<span class="w" style="${c ? 'color:' + c : ''}">${w}</span>`).join('')}</div>`);
+function build(node, o, t, t0, step, y, exit = Infinity) {
+  const vis = t >= t0 - .01 && t < exit + .16; node.style.display = vis ? 'flex' : 'none'; if (!vis) return;
+  const ex = clamp((t - exit) / .14); node.style.left = o[0] + 'px'; node.style.top = (o[1] + y) + 'px'; node.style.opacity = 1 - ex; node.style.filter = ex > 0 ? `blur(${14 * ex}px)` : '';
+  node.style.transform = `translateY(${-40 * ex}px) scale(${1 + .02 * clamp((t - t0) / 3)})`;
+  [...node.children].forEach((w, i) => { const s = S(t - (t0 + i * step), WORD); w.style.opacity = clamp(s * 1.5); w.style.filter = `blur(${(1 - clamp(s)) * 14}px)`; w.style.transform = `translateY(${(1 - s) * 44}px)`; });
+}
+const place = (el, o, x, y) => { el.style.left = (o[0] + x) + 'px'; el.style.top = (o[1] + y) + 'px'; };
+// an image or card that springs in (from a small offset, with blur) and leaves fast
+function card(el, o, x, y, t, t0, exit, dx = 0, dy = 120, sp = MORPH) {
+  const vis = t >= t0 - .01 && t < exit + .2; show(el, vis); if (!vis) return 0; const s = S(t - t0, sp), ex = clamp((t - exit) / .16);
+  place(el, o, x, y); el.style.opacity = clamp(s * 1.6) * (1 - ex); el.style.filter = `blur(${(1 - clamp(s)) * 16 + 14 * ex}px)`;
+  el.style.transform = `translate(${(1 - s) * dx}px, ${(1 - s) * dy + 4 * Math.sin(t * 1.2 + x)}px) scale(${.92 + .08 * s})`; return s;
+}
+
+// ---- 1 hook ----
+const L = {
+  h1: words('slam', [['You'], ['sent'], ['it.']], '#fff'), h2: words('cap', [['They'], ["haven't", GOLD], ['seen', GOLD], ['it.']], '#fff'),
+  not: words('slam', [['Not'], ['with']], NAVY), not2: words('slam', [['Moniepoint.', BLUE]], NAVY),
+  send: words('cap', [['You'], ['send']], NAVY), amt: mk(`<div class="line slam" style="font-size:156px;color:${BLUE};font-family:'Inter','S';font-weight:900"></div>`),
+  land1: words('slam', [['Sent'], ['means']], '#fff'), land2: words('slam', [['received.']], '#fff'),
+  pct: mk(`<div class="line slam" style="font-size:290px;color:${BLUE}"></div>`), rel: words('cap', [['reliable'], ['transfers']], NAVY),
+  br1: words('slam', [['And'], ["that's"]], NAVY), br2: words('slam', [['just'], ['the', BLUE], ['start.', BLUE]], NAVY),
+  c1: words('slam', [['Spend'], ['it.', BLUE]], NAVY), c2: words('cap', [['A'], ['card'], ['at'], ['your'], ['door']], NAVY), c3: words('cap', [['in'], ['48', BLUE], ['hours', BLUE]], NAVY),
+  s1: words('slam', [['Save'], ['it.', CY]], '#fff'), s2: words('cap', [['Earn'], ['up'], ['to']], '#fff'), s3: mk(`<div class="line slam" style="font-size:250px;color:${CY}"></div>`), s4: words('cap', [['interest'], ['a'], ['year']], '#fff'),
+  b1: words('slam', [['Pay'], ['with'], ['it.', BLUE]], NAVY), b2: words('cap', [['Bills.'], ['Airtime.'], ['Data.']], NAVY), b3: words('cap', [['In'], ['seconds.']], BLUE),
+  k1: words('slam', [['Get'], ['more'], ['back.', CY]], '#fff'), k2: words('cap', [['Daily'], ['cashback.']], CY), k3: words('cap', [['Weekly'], ['rewards.']], '#fff'),
+  e1: words('slam', [['Banking'], ['that']], NAVY), e2: mk(`<div class="line slam" style="color:${BLUE}"><span class="w">simply</span><span class="w">works<span id="stop" style="display:inline-block;width:.3em"></span></span></div>`),
+};
+L.s4.style.fontSize = '54px'; L.not.style.fontSize = L.not2.style.fontSize = '120px'; L.s3.style.fontSize = '215px'; L.land1.style.fontSize = L.land2.style.fontSize = '120px'; L.br1.style.fontSize = L.br2.style.fontSize = '118px'; L.e1.style.fontSize = L.e2.style.fontSize = '112px';
+const spin = mk(`<svg class="abs" width="320" height="320" viewBox="0 0 320 320" style="margin:-160px 0 0 -160px"><circle cx="160" cy="160" r="130" fill="none" stroke="rgba(245,178,26,.18)" stroke-width="34"/><circle id="arc" cx="160" cy="160" r="130" fill="none" stroke="${GOLD}" stroke-width="34" stroke-linecap="round"/></svg>`);
+const chip = mk(`<div class="abs" style="font:900 52px/1 'S';padding:20px 44px;border-radius:999px;background:rgba(245,178,26,.16);color:${GOLD};white-space:nowrap;transform-origin:50% 50%">Pending…</div>`);
+const BUB = [['in', 'Have you seen the alert?', 3.25, 300], ['out', 'Not yet o', 3.95, 480], ['in', 'Check again 🙏', 4.65, 660], ['out', 'Still nothing', 5.35, 840], ['in', "I've sent it since…", 6.05, 1020]].map(([c, txt, t0, y]) => ({ el: mk(`<div class="bub ${c}">${txt}</div>`), t0, y, c }));
+// ---- real assets ----
+const img = (src, w, extra = '') => mk(`<img class="abs" src="../assets/${src}" style="width:${w}px;${extra}">`);
+const pS = img('p_sender.png', 240, 'border-radius:28%;box-shadow:0 24px 60px rgba(2,27,74,.25)'), pR = img('p_receiver.png', 270, 'border-radius:28%;box-shadow:0 24px 60px rgba(2,27,74,.25)');
+const ribbon = mk(`<svg class="abs" width="1080" height="1920" style="overflow:visible"><path id="rib1" d="M-200 820 C200 640 80 520 -200 470" stroke="#E5A50A" stroke-width="64" fill="none"/><path id="rib2" d="M1280 860 C800 1100 300 1500 -200 1900" stroke="#E5A50A" stroke-width="64" fill="none"/></svg>`);
+const receipt = img('receipt_card.png', 900, 'border-radius:40px;box-shadow:0 50px 120px rgba(1,14,43,.45)');
+const stat = mk(`<div class="abs" style="width:760px;height:236px;overflow:hidden;border-radius:28px;box-shadow:0 30px 70px rgba(2,27,74,.18)"><img src="../assets/receipt_card.png" style="position:absolute;width:1500px;left:-118px;top:-925px"></div>`);
+const flat1 = mk(`<div class="abs" style="width:3400px;height:5200px;background:#D5F1FE"></div>`), pCard = img('p_card.png', 1080);
+const uiSave = img('ui_save.png', 780, 'border-radius:0 0 70px 70px;box-shadow:0 40px 100px rgba(0,0,0,.5)');
+const uiBills = img('ui_bills.png', 640, 'border-radius:28px;box-shadow:0 30px 80px rgba(2,27,74,.22)'), uiAir = img('ui_airtime.png', 620, 'border-radius:28px;box-shadow:0 30px 80px rgba(2,27,74,.28)');
+const uiRew = mk(`<div class="abs" style="width:960px;border-radius:30px;overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,.5)"><img src="../assets/ui_rewards.png" style="width:960px"><div id="sweep" style="position:absolute;inset:0"></div></div>`);
+const flat2 = mk(`<div class="abs" style="width:3400px;height:5200px;background:#D5F1FE"></div>`), pPhone = img('p_phone.png', 1080), icon = img('icon.png', 176, 'border-radius:42px;box-shadow:0 24px 60px rgba(1,14,43,.3)');
+[L.c1, L.c2, L.c3, L.e1, L.e2].forEach(n => cam.appendChild(n)); cam.appendChild(icon);
+// ---- the dart and its gold trail ----
+const trail = mk(`<svg class="abs" width="1" height="1" style="left:0;top:0;overflow:visible"><path id="tr" fill="none" stroke="${GOLD}" stroke-width="42" stroke-linecap="round" stroke-linejoin="round"/></svg>`);
+const dart = mk(`<svg class="abs" width="150" height="180" viewBox="0 0 100 120" style="margin:-90px 0 0 -75px;overflow:visible"><path id="dp" d="M0 120 L42 98 Q50 94 58 98 L100 120 L60 16 Q50 -2 40 16 Z" fill="${BLUE}"/></svg>`);
+const P = (o, x, y) => [OR[o][0] + x, OR[o][1] + y];
+// waypoints: [time, world point, spring]. One spring per leg, each starting at its own time.
+const DW = [[0, P('wait', 540, 1400)], [7.5, P('wait', 540, 760), FLY], [8.9, P('wait', 1500, 620), FLY], [9.7, P('send', 470, 470), FLY], [11.7, P('send', 900, 1080), GLIDE], [12.25, P('send', 610, 1560), FLY],
+  [13.3, P('send', 420, 2500), FLY], [13.75, P('land', 540, 470), FLY], [20.3, P('proof', 880, 760)], [20.45, P('proof', 700, 300), FLY], [20.8, P('bridge', 260, 1400), FLY], [21.6, P('bridge', 820, 1340), GLIDE],
+  [22.6, P('bridge', 1700, 1100), FLY], [23.0, P('card', 150, 640), FLY], [23.9, P('card', 170, 960), FLY], [26.4, P('card', 420, 2300), FLY], [26.9, P('save', 990, 1330), FLY], [30.5, P('save', 1700, 1300), FLY],
+  [30.9, P('bills', 880, 480), FLY], [32.9, P('bills', 900, 830), GLIDE], [34.0, P('bills', 700, -400), FLY], [34.4, P('cash', 180, 660), FLY], [35.6, P('cash', 930, 700), FLY], [37.0, P('cash', 1700, 700), FLY], [37.4, P('close', 860, 250), FLY]];
+const DVIS = [[7.5, 14.25], [20.3, 99]];      // the dart is on screen in these spans (it becomes the receipt in between)
+const dartPos = t => { let x = DW[0][1][0], y = DW[0][1][1]; for (let i = 1; i < DW.length; i++) { const [ti, p, sp] = DW[i], q = DW[i - 1][1]; if (!sp) { if (t >= ti) { x += p[0] - q[0]; y += p[1] - q[1]; } continue; } const s = S(t - ti, sp), dx = p[0] - q[0], dy = p[1] - q[1], bow = Math.sin(Math.PI * clamp(s)) * .22 * (i % 2 ? 1 : -1); x += dx * s - dy * bow; y += dy * s + dx * bow; } return [x, y]; };
+
+const loads = [...document.images].map(im => im.decode().catch(() => {}));
+window.seek = t => {
+  const [cx, cy, z] = camAt(t), [px, py] = camAt(t - 1 / 30);
+  cam.style.transform = `scale(${z}) translate(${-cx}px,${-cy}px)`;
+  const bx = clamp((Math.abs(cx - px) * z - 10) * .1, 0, 24), by = clamp((Math.abs(cy - py) * z - 10) * .1, 0, 24);
+  $('mbg').setAttribute('stdDeviation', `${bx.toFixed(1)} ${by.toFixed(1)}`); cam.style.filter = bx + by > .4 ? 'url(#mb)' : '';
+  // grounds
+  GR.forEach(([t0], i) => { const next = GR[i + 1], on = t >= t0 && (!next || t < next[0] + .9) ; show(GEL[i], on); if (!on) return; const r = i === 0 ? 2 : S(t - t0, { k: 150, c: 25 }); GEL[i].style.clipPath = i === 0 ? '' : `circle(${(r * 125).toFixed(1)}% at 50% 50%)`; });
+  // 1 hook + 2 wait: spinner, lines, chat
+  const sp = camFlow(t, 3.0, .2, .14), sx = OR.hook[0] + 540, sy = lerp(OR.hook[1] + 600, OR.wait[1] + 1400, sp), gone = S(t - 7.5, FAST);
+  show(spin, t < 7.9); spin.style.left = sx + 'px'; spin.style.top = sy + 'px'; spin.style.transform = `rotate(${t * 300}deg) scale(${(lerp(1, .72, sp)) * (1 + .5 * gone)})`; spin.style.opacity = 1 - gone;
+  const C = 2 * Math.PI * 130; $('arc').setAttribute('stroke-dasharray', `${(C * (.3 + .25 * Math.sin(t * 2.2) * .5 + .2) * (1 - gone)).toFixed(1)} ${C}`);
+  build(L.h1, OR.hook, t, .12, .22, 900, 2.86); build(L.h2, OR.hook, t, 1.5, .2, 1090, 2.86);
+  BUB.forEach(b => { const vis = t >= b.t0 && t < 7.75; show(b.el, vis); if (!vis) return; const s = S(t - b.t0, POP), ex = S(t - 7.5, FAST); b.el.style.top = (OR.wait[1] + b.y) + 'px'; b.el.style.marginLeft = b.el.style.marginRight = OR.wait[0] + 'px';
+    b.el.style.transform = `translate(${(b.c === 'in' ? -1 : 1) * 500 * ex}px, ${(1 - s) * 60}px) scale(${.7 + .3 * s})`; b.el.style.opacity = clamp(s * 2) * (1 - ex); b.el.style.filter = `blur(${(1 - clamp(s)) * 10 + 12 * ex}px)`; });
+  const chOn = t >= 3.5 && t < 7.8; show(chip, chOn); if (chOn) { const s = S(t - 3.5, POP), ex = S(t - 7.5, FAST); chip.style.left = (OR.wait[0] + 540) + 'px'; chip.style.top = (OR.wait[1] + 1610) + 'px'; chip.style.transform = `translate(-50%,0) scale(${(.7 + .3 * s) * (1 - ex)})`; chip.style.opacity = clamp(s * 2) * (.75 + .25 * Math.sin(t * 5)); }
+  // 3 turn
+  build(L.not, OR.wait, t, 8.0, .2, 1010, 9.55); build(L.not2, OR.wait, t, 8.4, .2, 1150, 9.55);
+  // 4 send
+  card(pS, OR.send, 130, 350, t, 9.95, 13.6, -80, 0, POP); build(L.send, OR.send, t, 10.25, .2, 700, 13.6);
+  const aOn = t >= 10.55 && t < 13.76; show(L.amt, aOn, 'flex'); if (aOn) { const s = S(t - 10.55, WORD), ex = clamp((t - 13.6) / .14); place(L.amt, OR.send, 0, 800); L.amt.textContent = '₦' + Math.round(10000 * ease((t - 10.6) / .9)).toLocaleString('en-US');
+    L.amt.style.opacity = clamp(s * 1.5) * (1 - ex); L.amt.style.filter = `blur(${(1 - clamp(s)) * 14 + 14 * ex}px)`; L.amt.style.transform = `translateY(${(1 - s) * 44 - 40 * ex}px)`; }
+  card(pR, OR.send, 500, 1590, t, 11.85, 13.6, 80, 0, POP);
+  // 5 landing
+  const lOn = t >= 13.6 && t < 18.75; show(ribbon, lOn); if (lOn) { place(ribbon, OR.land, 0, 0); const d = S(t - 13.95, GLIDE); ['rib1', 'rib2'].forEach(id => { const p = $(id), len = 2400; p.setAttribute('stroke-dasharray', `${len * d} ${len}`); }); }
+  card(receipt, OR.land, 90, 520, t, 14.02, 18.6, 0, 500, MORPH); build(L.land1, OR.land, t, 14.35, .2, 150, 18.5); build(L.land2, OR.land, t, 14.75, .2, 282, 18.5);
+  // 6 proof
+  card(stat, OR.proof, 160, 300, t, 18.5, 20.75, -300, 0, MORPH);
+  const pOn = t >= 18.7 && t < 20.92; show(L.pct, pOn, 'flex'); if (pOn) { const s = S(t - 18.7, WORD), ex = clamp((t - 20.75) / .14); place(L.pct, OR.proof, 0, 800); L.pct.textContent = (90 + 9.9 * ease((t - 18.75) / .8)).toFixed(1) + '%';
+    L.pct.style.opacity = clamp(s * 1.5) * (1 - ex); L.pct.style.filter = `blur(${(1 - clamp(s)) * 14 + 14 * ex}px)`; L.pct.style.transform = `translateY(${(1 - s) * 60}px)`; }
+  build(L.rel, OR.proof, t, 19.5, .2, 1120, 20.75);
+  // 7 bridge
+  build(L.br1, OR.bridge, t, 21.15, .2, 640, 22.75); build(L.br2, OR.bridge, t, 21.55, .2, 770, 22.75);
+  // 8 card
+  const f1 = t >= 22.6 && t < 27.4; show(flat1, f1); if (f1) place(flat1, OR.card, -1160, -1640);
+  card(pCard, OR.card, 0, 487, t, 23.0, 27.3, 0, 260, MORPH); pCard.style.transform += ` scale(${1 + .03 * clamp((t - 23) / 4)})`; pCard.style.transformOrigin = '50% 100%';
+  build(L.c1, OR.card, t, 23.3, .22, 120, 26.75); build(L.c2, OR.card, t, 24.0, .13, 268, 26.75); build(L.c3, OR.card, t, 24.7, .16, 356, 26.75);
+  // 9 savings
+  const sv = card(uiSave, OR.save, 150, 150, t, 27.0, 30.75, 0, 300, MORPH); if (sv) uiSave.style.transform += ` translateY(${-210 * ease((t - 27.5) / 2.2)}px)`;
+  build(L.s1, OR.save, t, 27.3, .22, 1400, 30.7); build(L.s2, OR.save, t, 28.1, .16, 1545, 30.7); build(L.s4, OR.save, t, 29.3, .14, 1828, 30.7);
+  const s3 = t >= 28.5 && t < 30.86; show(L.s3, s3, 'flex'); if (s3) { const s = S(t - 28.5, WORD), ex = clamp((t - 30.7) / .14); place(L.s3, OR.save, 0, 1610); L.s3.textContent = Math.round(20 * ease((t - 28.55) / .7)) + '%';
+    L.s3.style.opacity = clamp(s * 1.5) * (1 - ex); L.s3.style.filter = `blur(${(1 - clamp(s)) * 14 + 14 * ex}px)`; L.s3.style.transform = `translateY(${(1 - s) * 50}px)`; }
+  // 10 bills and airtime
+  build(L.b1, OR.bills, t, 31.25, .2, 130, 34.25); build(L.b2, OR.bills, t, 31.95, .28, 290, 34.25); build(L.b3, OR.bills, t, 32.95, .2, 390, 34.25);
+  card(uiBills, OR.bills, 70, 560, t, 31.4, 34.25, -400, 0, MORPH); card(uiAir, OR.bills, 400, 980, t, 32.2, 34.25, 400, 0, MORPH);
+  // 11 cashback
+  build(L.k1, OR.cash, t, 34.75, .2, 300, 37.25); build(L.k2, OR.cash, t, 35.4, .2, 470, 37.25); build(L.k3, OR.cash, t, 35.85, .2, 562, 37.25);
+  const rw = card(uiRew, OR.cash, 60, 780, t, 34.95, 37.25, 0, 300, MORPH); if (rw) { const u = clamp((t - 35.7) / .7); $('sweep').style.background = `linear-gradient(110deg, transparent ${u * 140 - 40}%, rgba(255,255,255,.6) ${u * 140 - 20}%, transparent ${u * 140}%)`; }
+  // 12 close
+  const f2 = t >= 37.1; show(flat2, f2); if (f2) place(flat2, OR.close, -1160, -1640);
+  card(pPhone, OR.close, 0, 544, t, 37.5, 99, 0, 260, MORPH); card(icon, OR.close, 452, 120, t, 37.9, 99, 0, 60, POP);
+  build(L.e1, OR.close, t, 38.2, .2, 335, 99); build(L.e2, OR.close, t, 38.6, .2, 452, 99);
+  // dart + trail (after layout, so the full stop can be measured)
+  const dOn = DVIS.some(([a, b]) => t >= a && t < b); show(dart, dOn); show(trail, dOn);
+  if (dOn) { const [x, y] = dartPos(t), [qx, qy] = dartPos(t - .05), sp2 = Math.hypot(x - qx, y - qy), va = Math.atan2(y - qy, x - qx) * 180 / Math.PI + 90, k = clamp(sp2 / 30);
+    const born = S(t - (t < 15 ? 7.5 : 20.3), POP), into = t < 15 ? S(t - 14.0, FAST) : 0, dot = S(t - 39.25, MORPH);
+    dart.style.left = x + 'px'; dart.style.top = y + 'px'; dart.style.transform = `rotate(${(va * k).toFixed(1)}deg) scale(${(born * (1 - into) * lerp(1, .26, dot) * (1 + .04 * Math.sin(t * 6))).toFixed(3)})`;
+    $('dp').setAttribute('d', dot > .5 ? 'M50 20 A40 40 0 1 1 49.9 20 Z' : 'M0 120 L42 98 Q50 94 58 98 L100 120 L60 16 Q50 -2 40 16 Z');
+    let d = ''; for (let i = 0; i <= 30; i++) { const [a, b] = dartPos(t - i * .017); d += (i ? 'L' : 'M') + a.toFixed(1) + ' ' + b.toFixed(1); } $('tr').setAttribute('d', d); $('tr').setAttribute('stroke-width', (42 * born * (1 - into) * (1 - dot)).toFixed(1)); }
+};
+Promise.all([...loads, document.fonts.load("900 80px 'S'"), document.fonts.load("700 80px 'S'"), document.fonts.load("500 80px 'S'")]).then(() => {
+  // the dart's last waypoint is the full stop after "works": measured once, before any frame is painted
+  L.e2.style.display = 'flex'; L.e2.style.left = OR.close[0] + 'px'; L.e2.style.top = (OR.close[1] + 452) + 'px'; [...L.e2.children].forEach(w => { w.style.transform = ''; });
+  let x = 0, y = 0, e = $('stop'); while (e && e !== cam) { x += e.offsetLeft; y += e.offsetTop; e = e.offsetParent; }
+  DW.push([39.0, [x + 22, y - 18], FLY]);
+  window.seek(0); window.__ready = true; });
+</script>
