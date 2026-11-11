@@ -1,0 +1,279 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Moniepoint: Sent means received (v2, bento board)</title>
+<!-- 1080x1920, 42 s, pure function of t. Look from the Fynora study (videos/reference/fynora/STUDY.md): one big bento board,
+     a flat camera that travels across it (camFlow, from the Bolt study), the dart as carrier along thin lines, a real 3D phone
+     (three.js, orthographic, so it sits on the 2D board) that spins 360 and tilts for macro shots, a colour sweep at the turn,
+     light passes on landings. Declarative: data-in (panel enters), data-words (word build), data-pop, data-draw (line draws). -->
+<style>
+@font-face{font-family:S;font-weight:500;src:url(../assets/satoshi-500.woff2)}
+@font-face{font-family:S;font-weight:700;src:url(../assets/satoshi-700.woff2)}
+@font-face{font-family:S;font-weight:900;src:url(../assets/satoshi-900.woff2)}
+*{box-sizing:border-box;margin:0}
+html,body{background:#ECEFF4;overflow:hidden}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:#ECEFF4;font-family:S,Inter,sans-serif;color:#0B1B3F}
+#cam{position:absolute;left:0;top:0;width:1080px;height:1920px;transform-origin:540px 960px}
+#gl{position:absolute;left:0;top:0;pointer-events:none}
+.scene{position:absolute;width:1080px;height:1920px}
+.p{position:absolute;border-radius:46px;background:#F7F8FB;overflow:hidden}
+.navy{background:radial-gradient(120% 90% at 30% 20%,#0B3A8F 0%,#021B4A 60%,#010E2B 100%);color:#fff}
+.grad{background:linear-gradient(165deg,#FFFFFF 0%,#BFE3FF 22%,#4D96FF 55%,#0460EF 100%)}
+.blue{background:#0460EF;color:#fff}
+.tag{position:absolute;left:34px;top:34px;font:700 30px/1 S;padding:14px 26px;border-radius:999px;background:#0460EF;color:#fff}
+.tag.am{background:#F5B21A;color:#021B4A}
+.h{position:absolute;font-weight:500;font-size:74px;line-height:1.1;letter-spacing:-.03em}
+.h b{font-weight:900}.sub{position:absolute;font-weight:500;font-size:34px;line-height:1.3;color:#6B7A99}
+.caps{position:absolute;font-weight:900;letter-spacing:-.04em;line-height:.92;text-transform:uppercase}
+.wm{position:absolute}.pill{font:700 38px/1 S;padding:24px 34px;border-radius:999px;background:#fff;box-shadow:0 10px 30px rgba(2,27,74,.08);position:absolute;white-space:nowrap}
+.pill.blue{background:#0460EF;color:#fff}.bl{color:#0460EF}.w{display:inline-block}
+svg.l{position:absolute;left:0;top:0;overflow:visible}img{display:block}.abs{position:absolute}
+.glint{position:absolute;inset:0;pointer-events:none}
+</style>
+<div id="stage">
+  <svg width="0" height="0" style="position:absolute"><defs><path id="dart" d="M0 120 L42 98 Q50 94 58 98 L100 120 L60 16 Q50 -2 40 16 Z"/><filter id="mb" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur id="mbg" stdDeviation="0 0"/></filter></defs></svg>
+  <div id="cam">
+  <!-- 1 hook -->
+  <div class="scene" data-o="hook">
+    <div class="p navy" data-in="-1" style="left:20px;top:20px;width:1040px;height:1180px">
+      <svg class="wm" id="ringwm" style="left:420px;top:560px" width="900" height="900" viewBox="0 0 320 320"><circle cx="160" cy="160" r="120" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="56"/></svg>
+      <div class="tag am" data-pop=".5">Pending…</div>
+      <div class="h" data-words=".1,.16" style="left:60px;top:420px;font-size:128px;color:#fff"><b>You sent it.</b><br>They haven't<br>seen it.</div>
+      <div class="glint" data-glint="1.9"></div>
+    </div>
+    <div class="p" data-in=".9" style="left:20px;top:1220px;width:510px;height:680px;background:#FFF6DF">
+      <svg id="spin" style="position:absolute;left:105px;top:190px" width="300" height="300" viewBox="0 0 320 320"><circle cx="160" cy="160" r="120" fill="none" stroke="rgba(245,178,26,.25)" stroke-width="40"/><path d="M160 40 A120 120 0 0 1 280 160" fill="none" stroke="#F5B21A" stroke-width="40" stroke-linecap="round"/></svg>
+    </div>
+    <div class="p" data-in="1.05" style="left:550px;top:1220px;width:510px;height:680px">
+      <div class="pill" data-pop="1.45" style="left:34px;top:150px;font-size:34px">Have you seen the alert?</div>
+      <div class="pill" data-pop="1.95" style="right:34px;top:290px;background:#F5B21A;font-size:34px">Not yet o</div>
+      <div class="pill" data-pop="2.4" style="left:34px;top:430px;font-size:34px">Check again 🙏</div>
+    </div>
+  </div>
+  <!-- 2 the wait, then the turn -->
+  <div class="scene" data-o="turn">
+    <div class="p" data-in="2.9" style="left:20px;top:20px;width:1040px;height:1880px">
+      <div id="dark" class="abs navy" style="inset:0"></div>
+      <svg class="wm" style="left:-260px;top:940px" width="1400" height="1680" viewBox="0 0 100 120"><use href="#dart" fill="rgba(160,175,205,.14)"/></svg>
+      <div class="tag am" id="tag2">Still waiting</div>
+      <svg class="l" width="1040" height="1880"><g fill="none" stroke="#9FB0CF" stroke-width="5" stroke-linecap="round"><path data-draw="3.9,1.4" d="M330 330 C330 700 520 700 520 880"/><path data-draw="4.6,1.2" d="M520 430 L520 880"/><path data-draw="5.3,1.4" d="M720 330 C720 700 520 700 520 880"/></g>
+        <g fill="none" stroke="#0460EF" stroke-width="7" stroke-linecap="round"><path data-draw="7.85,.5" d="M520 1080 C520 1300 250 1260 250 1440"/><path data-draw="7.8,.45" d="M520 1080 L520 1440"/><path data-draw="7.85,.5" d="M520 1080 C520 1300 790 1260 790 1440"/></g></svg>
+      <div class="pill" data-pop="3.4" style="left:110px;top:240px;background:#FFF1CC;color:#021B4A">Pending…</div>
+      <div class="pill" data-pop="4.2" style="left:330px;top:360px;background:#FFF1CC;color:#021B4A">“Not yet o”</div>
+      <div class="pill" data-pop="4.9" style="left:620px;top:240px;background:#FFF1CC;color:#021B4A">Failed transfer</div>
+      <div id="pool" class="abs" style="left:170px;top:630px;width:700px;height:700px;border-radius:50%"></div>
+      <img id="icon2" src="../assets/icon.png" class="abs" style="left:410px;top:870px;width:220px;border-radius:52px;box-shadow:0 30px 70px rgba(4,96,239,.35)">
+      <div class="pill blue" data-pop="8.25" style="left:160px;top:1440px">Sent</div>
+      <div class="pill blue" data-pop="8.2" style="left:410px;top:1440px">Received</div>
+      <div class="pill blue" data-pop="8.3" style="left:690px;top:1440px">In seconds</div>
+      <div class="h" data-words="8.05,.17" style="left:0;width:1040px;text-align:center;top:1610px;font-size:92px">Not with <b class="bl">Moniepoint.</b></div>
+      <div id="band" class="abs" style="left:-400px;top:-400px;width:500px;height:3000px"></div>
+    </div>
+  </div>
+  <!-- 3 the send -->
+  <div class="scene" data-o="send">
+    <div class="p grad" data-in="9.7" style="left:20px;top:20px;width:510px;height:640px"><svg class="wm par" style="left:60px;top:40px" width="420" height="504" viewBox="0 0 100 120"><use href="#dart" fill="#fff"/></svg><img src="../assets/p_sender.png" class="abs" style="left:105px;top:110px;width:300px;border-radius:28%"><div class="abs" style="left:34px;bottom:34px;color:#fff;font:700 36px/1.2 S">Tunde<br><span style="font-weight:500;opacity:.85">sends</span></div></div>
+    <div class="p" data-in="9.82" style="left:550px;top:20px;width:510px;height:640px"><div class="tag">Transfers</div><div class="h" data-words="10.2,.18" style="left:44px;top:250px;font-size:66px">You send</div><div class="h bl" id="amt" style="left:44px;top:340px;font-size:104px;font-family:Inter,S;font-weight:900"></div></div>
+    <div class="p" data-in="9.94" style="left:20px;top:680px;width:1040px;height:560px"><svg class="l" width="1040" height="560"><path d="M90 150 C380 60 600 520 950 400" fill="none" stroke="rgba(245,178,26,.5)" stroke-width="12" stroke-linecap="round" stroke-dasharray="1 30"/><path id="route" d="M90 150 C380 60 600 520 950 400" fill="none" stroke="#F5B21A" stroke-width="12" stroke-linecap="round"/></svg></div>
+    <div class="p" data-in="12.1" style="left:20px;top:1260px;width:510px;height:640px"><div class="h" data-words="12.45,.16" style="left:44px;top:230px;font-size:66px">and Ada<br>has it.</div><div class="sub" data-words="13.0,.07" style="left:44px;top:410px">Before you put<br>your phone down.</div></div>
+    <div class="p grad" data-in="12.0" style="left:550px;top:1260px;width:510px;height:640px"><svg class="wm par" style="left:60px;top:40px" width="420" height="504" viewBox="0 0 100 120"><use href="#dart" fill="#fff"/></svg><img src="../assets/p_receiver.png" class="abs" style="left:105px;top:110px;width:300px;border-radius:28%"><div class="abs" style="left:34px;bottom:34px;color:#fff;font:700 36px/1.2 S">Ada<br><span style="font-weight:500;opacity:.85">receives</span></div><div class="glint" data-glint="12.75"></div></div>
+  </div>
+  <!-- 4 the landing -->
+  <div class="scene" data-o="land">
+    <div class="p" data-in="13.72" style="left:20px;top:20px;width:1040px;height:1530px">
+      <svg class="wm par" style="left:380px;top:300px" width="1100" height="1320" viewBox="0 0 100 120"><use href="#dart" fill="#EEF1F6"/></svg>
+      <div class="tag">Receipt</div>
+      <div id="pool4" class="abs" style="left:120px;top:330px;width:800px;height:800px;border-radius:50%"></div>
+    </div>
+    <div class="p blue" data-in="13.86" style="left:20px;top:1570px;width:1040px;height:330px"><div class="h" data-words="14.4,.17" style="left:0;width:1040px;text-align:center;top:106px;font-size:98px;color:#fff"><b>Sent means received.</b></div><div class="glint" data-glint="15.1"></div></div>
+  </div>
+  <!-- 5 proof -->
+  <div class="scene" data-o="proof">
+    <div class="p" data-in="18.22" style="left:20px;top:20px;width:1040px;height:1880px">
+      <div class="tag">Reliability</div>
+      <div class="caps bl" id="pct" style="left:50px;top:300px;font-size:290px"></div>
+      <div class="caps" data-words="19.35,.2" style="left:56px;top:640px;font-size:150px">Reliable<br>transfers</div>
+    </div>
+  </div>
+  <!-- 6 bridge -->
+  <div class="scene" data-o="bridge">
+    <div class="p" data-in="20.72" style="left:20px;top:20px;width:1040px;height:1880px">
+      <svg class="wm par" style="left:120px;top:900px" width="1300" height="1560" viewBox="0 0 100 120"><use href="#dart" fill="#EEF1F6"/></svg>
+      <div class="h" data-words="21.1,.17" style="left:0;width:1040px;text-align:center;top:520px;font-size:120px">And that's<br><b class="bl">just the start.</b></div>
+      <div class="abs" style="left:0;top:960px;width:1040px;height:150px;background:#E6EAF2;overflow:hidden"><div id="mq1" class="abs" style="left:0;top:0;height:150px;display:flex;align-items:center;gap:36px;white-space:nowrap;font:500 70px/1 S"></div></div>
+    </div>
+  </div>
+  <!-- 7 card -->
+  <div class="scene" data-o="card">
+    <div class="p grad" data-in="22.72" style="left:20px;top:20px;width:1040px;height:1240px"><svg class="wm par" style="left:150px;top:-60px" width="900" height="1080" viewBox="0 0 100 120"><use href="#dart" fill="#fff"/></svg><img id="model1" src="../assets/p_card_cut.png" class="abs" style="left:-30px;bottom:0;width:1100px;transform-origin:50% 100%"><div class="tag" style="background:#fff;color:#0460EF">Card</div><div class="glint" data-glint="24.6"></div></div>
+    <div class="p" data-in="22.86" style="left:20px;top:1280px;width:1040px;height:620px"><div class="h" data-words="23.3,.2" style="left:56px;top:110px;font-size:110px"><b>Spend it.</b></div><div class="h" data-words="24.0,.12" style="left:56px;top:260px;font-size:72px">A card at your door<br>in <b class="bl">48 hours.</b></div></div>
+  </div>
+  <!-- 8 savings -->
+  <div class="scene" data-o="save">
+    <div class="p" data-in="26.72" style="left:20px;top:20px;width:1040px;height:560px"><div class="tag">Savings</div><div class="h" data-words="27.3,.2" style="left:56px;top:170px;font-size:110px"><b>Save it.</b></div><div class="h" style="left:56px;top:310px;font-size:72px"><span data-words="28.1,.14">Earn up to</span> <b class="bl" id="pc20"></b> <span data-words="29.0,.14">a year.</span></div></div>
+    <div class="p" data-in="26.86" style="left:20px;top:600px;width:1040px;height:1300px"><svg class="wm par" style="left:-300px;top:200px" width="1100" height="1320" viewBox="0 0 100 120"><use href="#dart" fill="#EEF1F6"/></svg></div>
+  </div>
+  <!-- 9 bills -->
+  <div class="scene" data-o="bills">
+    <div class="p" data-in="30.72" style="left:20px;top:20px;width:1040px;height:1880px">
+      <div class="tag">Bills</div>
+      <div class="h" data-words="31.25,.18" style="left:56px;top:190px;font-size:110px"><b>Pay with it.</b></div><div class="h" data-words="31.95,.2" style="left:56px;top:330px;font-size:72px">Bills. Airtime. Data. <b class="bl">In seconds.</b></div>
+      <svg class="l" width="1040" height="1880"><g fill="none" stroke="#0460EF" stroke-width="6" stroke-linecap="round"><path data-draw="31.3,.45" d="M240 760 C330 760 330 640 420 640"/><path data-draw="31.4,.4" d="M240 760 L420 760"/><path data-draw="31.5,.45" d="M240 760 C330 760 330 880 420 880"/><path data-draw="31.6,.5" d="M240 760 C330 760 330 1000 420 1000"/></g></svg>
+      <div class="pill blue" data-pop="31.1" style="left:56px;top:716px">Pay</div>
+      <div class="pill" data-pop="31.7" style="left:420px;top:596px">Cable TV</div><div class="pill" data-pop="31.8" style="left:420px;top:716px">Electricity</div><div class="pill" data-pop="31.9" style="left:420px;top:836px">Airtime</div><div class="pill" data-pop="32.0" style="left:420px;top:956px">Data</div>
+      <img data-card="32.3,-300" src="../assets/ui_bills.png" class="abs" style="left:56px;top:1150px;width:520px;border-radius:28px;box-shadow:0 30px 80px rgba(2,27,74,.14)">
+      <img data-card="32.75,300" src="../assets/ui_airtime.png" class="abs" style="left:480px;top:1250px;width:500px;border-radius:28px;box-shadow:0 30px 80px rgba(2,27,74,.2)">
+    </div>
+  </div>
+  <!-- 10 cashback -->
+  <div class="scene" data-o="cash">
+    <div class="p navy" data-in="34.22" style="left:20px;top:20px;width:1040px;height:1100px"><svg class="wm par" style="left:330px;top:260px" width="1000" height="1200" viewBox="0 0 100 120"><use href="#dart" fill="rgba(255,255,255,.05)"/></svg><div class="tag am">Rewards</div><div data-card="34.9,0" class="abs" style="left:50px;top:400px;width:940px;border-radius:30px;overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,.5)"><img src="../assets/ui_rewards.png" style="width:940px"><div class="glint" data-glint="35.7"></div></div></div>
+    <div class="p" data-in="34.36" style="left:20px;top:1140px;width:1040px;height:760px"><div class="h" data-words="34.75,.18" style="left:56px;top:150px;font-size:110px"><b>Get more back.</b></div><div class="h" data-words="35.4,.18" style="left:56px;top:300px;font-size:72px"><b class="bl">Daily cashback.</b><br>Weekly rewards.</div></div>
+  </div>
+  <!-- 11 close -->
+  <div class="scene" data-o="close">
+    <div class="p" data-in="37.22" style="left:20px;top:20px;width:1040px;height:150px;background:#E6EAF2"><div id="mq2" class="abs" style="left:0;top:0;height:150px;display:flex;align-items:center;gap:30px;white-space:nowrap;font:500 62px/1 S"></div></div>
+    <div class="p" data-in="37.34" style="left:20px;top:190px;width:1040px;height:1710px">
+      <svg class="wm par" style="left:-200px;top:500px" width="1200" height="1440" viewBox="0 0 100 120"><use href="#dart" fill="#EEF1F6"/></svg>
+      <div class="caps" data-words="38.2,.2" style="left:56px;top:120px;font-size:168px">Banking<br>that <span class="bl">simply<br>works<span id="stop" style="display:inline-block;width:.3em"></span></span></div>
+      <img id="model2" src="../assets/p_phone_cut.png" class="abs" style="left:230px;bottom:0;width:800px;transform-origin:50% 100%">
+    </div>
+  </div>
+  <svg id="trail" class="abs" width="1" height="1" style="left:0;top:0;overflow:visible"><path id="tr" fill="none" stroke="#F5B21A" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <svg id="dartEl" class="abs" width="110" height="132" viewBox="0 0 100 120" style="margin:-66px 0 0 -55px;overflow:visible"><path id="dp" d="M0 120 L42 98 Q50 94 58 98 L100 120 L60 16 Q50 -2 40 16 Z" fill="#0460EF"/></svg>
+  </div>
+  <div id="gl"></div>
+</div>
+<script type="importmap">{ "imports": { "three": "../../../.claude/skills/motion-reel/engine/lib/three/three.module.js", "three/addons/": "../../../.claude/skills/motion-reel/engine/lib/three/addons/" } }</script>
+<script src="../assets/motion.js"></script>
+<script type="module">
+import * as THREE from 'three';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
+const S = (t, p) => Motion.spring(t, p), clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x)), lerp = (a, b, u) => a + (b - a) * u, $ = id => document.getElementById(id), cam = $('cam');
+const ease = x => { x = clamp(x); return 1 - Math.pow(1 - x, 3); }, sm = x => { x = clamp(x); return x * x * (3 - 2 * x); };
+window.FILM_DUR = 42;
+// Springs: all critically damped (no pop-and-settle), quick but soft.
+const WORD = { k: 320, c: 36 }, PANEL = { k: 170, c: 26 }, POPS = { k: 420, c: 41 }, FLY = { k: 300, c: 35 }, GLIDE = { k: 110, c: 21 }, SPIN = { k: 22, c: 9.4 }, TILT = { k: 46, c: 13.6 };
+// ---- places and camera ----
+const OR = { hook: [0, 0], turn: [0, 2000], send: [1200, 2000], land: [1200, 4000], proof: [2400, 4000], bridge: [2400, 2000], card: [3600, 2000], save: [3600, 4000], bills: [4800, 4000], cash: [4800, 2000], close: [6000, 2000] };
+document.querySelectorAll('.scene').forEach(s => { const o = OR[s.dataset.o]; s.style.left = o[0] + 'px'; s.style.top = o[1] + 'px'; });
+const camFlow = (t, tc, ti, to) => { const v0 = ti / (ti + to); return t < tc ? v0 * Math.exp((t - tc) / ti) : 1 - (1 - v0) * Math.exp(-(t - tc) / to); };
+const CK = [{ t: 0, x: 0, y: 0, z: 1 }, { t: 3.0, y: 2000, w: 1 }, { t: 4.6, y: 1780, z: 1.12, tau: .8 }, { t: 7.7, y: 2190, z: 1.1, tau: .42 }, { t: 9.0, y: 2000, z: 1, tau: .4 }, { t: 9.9, x: 1200, w: 1 }, { t: 11.6, y: 2090, z: 1.05, tau: .7 }, { t: 13.9, y: 4000, z: 1, w: 1 },
+  { t: 16.35, x: 1070, y: 3610, z: 2.7, tau: .36 }, { t: 18.4, x: 2400, y: 4000, z: 1, w: 1 }, { t: 20.9, y: 2000, w: 1 }, { t: 22.9, x: 3600, w: 1 }, { t: 24.6, y: 1900, z: 1.08, tau: .9 }, { t: 26.9, y: 4000, z: 1, w: 1 },
+  { t: 30.9, x: 4800, w: 1 }, { t: 32.4, y: 4160, z: 1.06, tau: .6 }, { t: 34.4, y: 2000, z: 1, w: 1 }, { t: 37.4, x: 6000, w: 1 }, { t: 39.6, z: 1.06, tau: 1.3 }];
+const WHIPS = CK.filter(c => c.w).map(c => c.t), TI = .24, TO = .18;
+const camAxis = (t, k) => { let v = CK[0][k], p = v; for (let i = 1; i < CK.length; i++) { const c = CK[i]; if (c[k] === undefined) continue; v += (c[k] - p) * camFlow(t, c.t, c.w ? TI : c.tau, c.w ? TO : c.tau * 1.25); p = c[k]; } return v; };
+const SEG = [0, ...WHIPS, 1e9];
+const creep = t => { let x = 0, y = 0, z = 0; for (let i = 0; i < SEG.length - 1; i++) { const w = (i === 0 ? 1 : camFlow(t, SEG[i], TI, TO)) - (SEG[i + 1] > 1e8 ? 0 : camFlow(t, SEG[i + 1], TI, TO)); if (w < 1e-4) continue; const u = Math.max(0, t - SEG[i]), e = 2.5 * (1 - Math.exp(-u / 2.5)), d = i % 2 ? 1 : -1; x += w * d * 7 * e; y += w * -d * 10 * e; z += w * .014 * e; } return [x, y, z]; };
+const swell = t => WHIPS.reduce((a, tc) => { const d = t - tc; return a + .045 * (d < 0 ? Math.exp(d / TI) : Math.exp(-d / TO)); }, 0);
+const camAt = t => { const c = creep(t), open = 1 - camFlow(t, 1.25, .5, .7); return [camAxis(t, 'x') + c[0] - 150 * open, camAxis(t, 'y') + c[1] - 330 * open, camAxis(t, 'z') * (1 + c[2]) * (1 + swell(t)) * (1 + .55 * open)]; };
+
+// ---- declarative motion ----
+const wrapWords = el => { const walk = n => { [...n.childNodes].forEach(c => { if (c.nodeType === 3) { const f = document.createDocumentFragment(); c.textContent.split(/(\s+)/).forEach(tok => { if (!tok) return; if (/^\s+$/.test(tok)) f.appendChild(document.createTextNode(' ')); else { const s = document.createElement('span'); s.className = 'w'; s.textContent = tok; f.appendChild(s); } }); n.replaceChild(f, c); } else if (c.nodeType === 1 && c.tagName !== 'BR' && c.id !== 'stop') walk(c); }); }; walk(el); return [...el.querySelectorAll('.w')]; };
+const INS = [...document.querySelectorAll('[data-in]')].map(el => ({ el, t0: +el.dataset.in }));
+const WDS = [...document.querySelectorAll('[data-words]')].map(el => { const [t0, st] = el.dataset.words.split(',').map(Number); return { ws: wrapWords(el), t0, st }; });
+const PPS = [...document.querySelectorAll('[data-pop]')].map(el => ({ el, t0: +el.dataset.pop }));
+const DRS = [...document.querySelectorAll('[data-draw]')].map(el => { const [t0, d] = el.dataset.draw.split(',').map(Number), len = el.getTotalLength(); el.style.strokeDasharray = `${len} ${len}`; return { el, t0, d, len }; });
+const CDS = [...document.querySelectorAll('[data-card]')].map(el => { const [t0, dx] = el.dataset.card.split(',').map(Number); return { el, t0, dx }; });
+const GLS = [...document.querySelectorAll('[data-glint]')].map(el => ({ el, t0: +el.dataset.glint }));
+const PARS = [...document.querySelectorAll('.par')];
+const MQ = (id, items, sep) => { $(id).innerHTML = Array.from({ length: 6 }, () => items.map(i => `<span>${i}</span>${sep}`).join('')).join(''); };
+MQ('mq1', ['Spend it', 'Save it', 'Pay with it', 'Get more back'], '<svg width="50" height="60" viewBox="0 0 100 120" style="transform:rotate(90deg);flex:none"><use href="#dart" fill="#0460EF"/></svg>');
+MQ('mq2', ['Moniepoint'], '<img src="../assets/icon.png" style="width:74px;border-radius:18px;flex:none">');
+
+// ---- the dart ----
+const Pw = (o, x, y) => [OR[o][0] + x, OR[o][1] + y];
+const DW = [[0, Pw('turn', 540, 1010)], [7.72, Pw('turn', 540, 1400), GLIDE], [9.55, Pw('send', 110, 830), FLY], [11.1, Pw('send', 970, 1080), { k: 30, c: 11 }], [13.3, Pw('send', 760, 2300), FLY], [13.75, Pw('land', 540, 180), FLY],
+  [20.3, Pw('proof', 900, 240)], [20.75, Pw('bridge', 200, 1260), FLY], [21.5, Pw('bridge', 880, 1240), GLIDE], [22.65, Pw('card', 930, 1400), FLY], [26.55, Pw('save', 950, 330), FLY], [30.6, Pw('bills', 150, 640), FLY], [31.45, Pw('bills', 660, 880), GLIDE],
+  [32.6, Pw('bills', 930, 620), GLIDE], [34.1, Pw('cash', 930, 1300), FLY], [37.1, Pw('close', 930, 480), FLY]];
+const DVIS = [[7.72, 14.2], [20.3, 99]];
+const dartPos = t => { let x = DW[0][1][0], y = DW[0][1][1]; for (let i = 1; i < DW.length; i++) { const [ti, p, sp] = DW[i], q = DW[i - 1][1]; if (!sp) { if (t >= ti) { x += p[0] - q[0]; y += p[1] - q[1]; } continue; } const s = S(t - ti, sp), dx = p[0] - q[0], dy = p[1] - q[1], bow = Math.sin(Math.PI * clamp(s)) * .16 * (i % 2 ? 1 : -1); x += dx * s - dy * bow; y += dy * s + dx * bow; } return [x, y]; };
+
+// ---- the 3D phone (orthographic, so it sits on the flat board) ----
+const R = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true }); R.setPixelRatio(1); R.setSize(1080, 1920, false); R.setClearColor(0, 0); R.outputColorSpace = THREE.SRGBColorSpace; R.toneMapping = THREE.ACESFilmicToneMapping; R.toneMappingExposure = 1; $('gl').appendChild(R.domElement);
+const scene = new THREE.Scene(), ocam = new THREE.OrthographicCamera(-540, 540, 960, -960, -4000, 4000); ocam.position.z = 1000;
+scene.environment = new THREE.PMREMGenerator(R).fromScene(new RoomEnvironment(), .04).texture; scene.environmentIntensity = .7;
+const key = new THREE.DirectionalLight('#FFFFFF', 2.2); key.position.set(-400, 700, 900); scene.add(key); const rim = new THREE.DirectionalLight('#7FC4FF', 2.4); rim.position.set(600, -200, -500); scene.add(rim);
+const phone = new THREE.Group(); scene.add(phone);
+const BW = 432, BH = 1034, BD = 46, SW = 400, SH = 998;
+phone.add(new THREE.Mesh(new RoundedBoxGeometry(BW, BH, BD, 8, 23), new THREE.MeshPhysicalMaterial({ color: '#14171F', metalness: .85, roughness: .32, clearcoat: .6 })));
+const rr = (w, h, r) => { const s = new THREE.Shape(), x = -w / 2, y = -h / 2; s.moveTo(x + r, y); s.lineTo(x + w - r, y); s.quadraticCurveTo(x + w, y, x + w, y + r); s.lineTo(x + w, y + h - r); s.quadraticCurveTo(x + w, y + h, x + w - r, y + h); s.lineTo(x + r, y + h); s.quadraticCurveTo(x, y + h, x, y + h - r); s.lineTo(x, y + r); s.quadraticCurveTo(x, y, x + r, y); const g = new THREE.ShapeGeometry(s, 24), p = g.attributes.position, uv = g.attributes.uv; for (let i = 0; i < p.count; i++) uv.setXY(i, p.getX(i) / w + .5, p.getY(i) / h + .5); return g; };
+const texOf = draw => { const c = document.createElement('canvas'); c.width = 1024; c.height = 2556; draw(c.getContext('2d'), c); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; return t; };
+const load = src => new Promise(r => { const im = new Image(); im.onload = () => r(im); im.src = src; });
+const [imR, imS, imI] = await Promise.all([load('../assets/receipt.png'), load('../assets/ui_save.png'), load('../assets/icon.png')]);
+const TEX = { receipt: texOf((x, c) => { x.drawImage(imR, 0, 0, c.width, c.height); }), save: texOf((x, c) => { x.fillStyle = '#F3F5F9'; x.fillRect(0, 0, c.width, c.height); x.drawImage(imS, 0, 150, c.width, c.width * imS.height / imS.width); }) };
+const screenMat = new THREE.MeshBasicMaterial({ map: TEX.receipt, toneMapped: false }), screen = new THREE.Mesh(rr(SW, SH, 58), screenMat); screen.position.z = BD / 2 + .6; phone.add(screen);
+const island = new THREE.Mesh(rr(118, 34, 17), new THREE.MeshBasicMaterial({ color: '#05060A' })); island.position.set(0, SH / 2 - 44, BD / 2 + 1.2); phone.add(island);
+const gc = document.createElement('canvas'); gc.width = 512; gc.height = 8; { const x = gc.getContext('2d'), g = x.createLinearGradient(0, 0, 512, 0); g.addColorStop(0, 'rgba(255,255,255,0)'); g.addColorStop(.42, 'rgba(255,255,255,0)'); g.addColorStop(.5, 'rgba(255,255,255,.75)'); g.addColorStop(.58, 'rgba(255,255,255,0)'); g.addColorStop(1, 'rgba(255,255,255,0)'); x.fillStyle = g; x.fillRect(0, 0, 512, 8); }
+const gtex = new THREE.CanvasTexture(gc); gtex.wrapS = THREE.RepeatWrapping; gtex.rotation = -.5; gtex.repeat.set(.6, 1);
+const glare = new THREE.Mesh(rr(SW, SH, 58), new THREE.MeshBasicMaterial({ map: gtex, transparent: true, opacity: .0, blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false })); glare.position.z = BD / 2 + 1.6; phone.add(glare);
+const bump = new THREE.Mesh(new RoundedBoxGeometry(170, 170, 16, 6, 40), new THREE.MeshPhysicalMaterial({ color: '#1C2029', metalness: .8, roughness: .3 })); bump.position.set(-96, BH / 2 - 124, -BD / 2 - 6); phone.add(bump);
+[[-40, 40], [40, 40], [-40, -40]].forEach(([x, y]) => { const l = new THREE.Mesh(new THREE.CylinderGeometry(30, 30, 10, 32), new THREE.MeshPhysicalMaterial({ color: '#05070C', metalness: .6, roughness: .15, clearcoat: 1 })); l.rotation.x = Math.PI / 2; l.position.set(-96 + x, BH / 2 - 124 + y, -BD / 2 - 15); phone.add(l); });
+const itex = new THREE.CanvasTexture((() => { const c = document.createElement('canvas'); c.width = c.height = 256; c.getContext('2d').drawImage(imI, 0, 0, 256, 256); return c; })()); itex.colorSpace = THREE.SRGBColorSpace;
+const back = new THREE.Mesh(rr(120, 120, 28), new THREE.MeshBasicMaterial({ map: itex, toneMapped: false })); back.rotation.y = Math.PI; back.position.set(0, -40, -BD / 2 - .8); phone.add(back);
+const sh = new THREE.Mesh(new THREE.PlaneGeometry(900, 1500), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture((() => { const c = document.createElement('canvas'); c.width = c.height = 256; const x = c.getContext('2d'), g = x.createRadialGradient(128, 128, 20, 128, 128, 128); g.addColorStop(0, 'rgba(2,27,74,.34)'); g.addColorStop(1, 'rgba(2,27,74,0)'); x.fillStyle = g; x.fillRect(0, 0, 256, 256); return c; })()), transparent: true, depthWrite: false, toneMapped: false })); scene.add(sh);
+// phone keys: world anchor, scale, rotation; one spring per change
+const TR = (t, keys) => { let v = keys[0][1]; for (let i = 1; i < keys.length; i++) v += (keys[i][1] - keys[i - 1][1]) * S(t - keys[i][0], keys[i][2] || FLY); return v; };
+const PHX = [[0, Pw('land', 540, 0)[0]], [18.25, Pw('proof', 610, 0)[0], GLIDE], [26.0, Pw('save', 560, 0)[0]]];
+const PHY = [[0, Pw('land', 0, 2900)[1]], [13.85, Pw('land', 0, 800)[1], { k: 70, c: 16.8 }], [18.25, Pw('proof', 0, 1640)[1], GLIDE], [20.75, Pw('proof', 0, 3600)[1], FLY], [26.0, Pw('save', 0, 3600)[1]], [26.85, Pw('save', 0, 1540)[1], { k: 70, c: 16.8 }], [30.7, Pw('save', 0, 3900)[1], FLY]];
+const PHS = [[0, .9], [13.85, 1.22, GLIDE], [18.25, 1.38, GLIDE], [26.0, 1.7]];
+const PRY = [[0, -Math.PI * 2 - .5], [13.85, .32, SPIN], [15.2, 0, TILT], [16.3, .42, TILT], [18.25, -.5, TILT], [19.2, -.2, { k: 8, c: 5.7 }], [26.0, Math.PI * 2 + .75], [26.85, .5 + Math.PI * 2 - Math.PI * 2, SPIN], [28.6, .12, TILT]];
+const PRX = [[0, .5], [13.85, 0, TILT], [16.3, -.3, TILT], [18.25, .3, TILT], [26.0, .5], [26.85, .28, TILT], [28.6, .12, TILT]];
+const PRZ = [[0, -.3], [13.85, 0, TILT], [16.3, -.12, TILT], [18.25, .1, TILT], [26.0, -.2], [26.85, -.1, TILT], [28.6, -.04, TILT]];
+
+let STOP = null;
+window.seek = t => {
+  const [cx, cy, z] = camAt(t), [px, py] = camAt(t - 1 / 30);
+  cam.style.transform = `scale(${z}) translate(${-cx}px,${-cy}px)`;
+  const bx = clamp((Math.abs(cx - px) * z - 10) * .1, 0, 24), by = clamp((Math.abs(cy - py) * z - 10) * .1, 0, 24), fl = bx + by > .4 ? 'url(#mb)' : '';
+  $('mbg').setAttribute('stdDeviation', `${bx.toFixed(1)} ${by.toFixed(1)}`); cam.style.filter = fl; $('gl').style.filter = fl;
+  // panels, words, pops, lines, cards, light passes
+  INS.forEach(({ el, t0 }) => { const s = t0 < 0 ? 1 : S(t - t0, PANEL); el.style.opacity = clamp(s * 1.6); el.style.transform = `translateY(${(1 - s) * 90}px) scale(${.94 + .06 * s})`; el.style.filter = s < .98 ? `blur(${(1 - clamp(s)) * 12}px)` : ''; });
+  WDS.forEach(({ ws, t0, st }) => ws.forEach((w, i) => { const s = S(t - (t0 + i * st), WORD); w.style.opacity = sm(s * 1.25); w.style.filter = s < .98 ? `blur(${(1 - clamp(s)) * 12}px)` : ''; w.style.transform = `translateY(${(1 - s) * 34}px)`; }));
+  PPS.forEach(({ el, t0 }) => { const s = S(t - t0, POPS); el.style.opacity = sm(s * 1.3); el.style.transform = `translateY(${(1 - s) * 26}px) scale(${.86 + .14 * s})`; el.style.filter = s < .98 ? `blur(${(1 - clamp(s)) * 8}px)` : ''; });
+  DRS.forEach(({ el, t0, d, len }) => { el.style.strokeDashoffset = len * (1 - sm((t - t0) / d)); });
+  CDS.forEach(({ el, t0, dx }) => { const s = S(t - t0, PANEL); el.style.opacity = clamp(s * 1.6); el.style.transform = `translate(${(1 - s) * dx}px, ${(1 - s) * (dx ? 0 : 120) + 4 * Math.sin(t * 1.1 + t0)}px) scale(${.94 + .06 * s})`; el.style.filter = s < .98 ? `blur(${(1 - clamp(s)) * 12}px)` : ''; });
+  GLS.forEach(({ el, t0 }) => { const u = clamp((t - t0) / .9); el.style.background = u > 0 && u < 1 ? `linear-gradient(112deg, transparent ${u * 150 - 45}%, rgba(255,255,255,${.5 * Math.sin(Math.PI * u)}) ${u * 150 - 22}%, transparent ${u * 150}%)` : ''; });
+  PARS.forEach((el, i) => { el.style.transform = `translate(${(6 * Math.sin(t * .5 + i)).toFixed(1)}px, ${(10 * Math.sin(t * .4 + i * 2)).toFixed(1)}px) rotate(${(1.2 * Math.sin(t * .3 + i)).toFixed(2)}deg)`; });
+  // 1 hook: the spinner and the ring behind the line
+  $('spin').style.transform = `rotate(${t * 300}deg)`; $('ringwm').style.transform = `rotate(${t * 40}deg)`;
+  // 2 the turn: the colour sweep carries dark to light; the icon lands on a light pool
+  const sw = sm((t - 7.45) / .95), edge = -30 + sw * 190;
+  $('dark').style.clipPath = `polygon(${edge}% 0, 130% 0, 130% 100%, ${edge - 42}% 100%)`;
+  const band = $('band'); band.style.display = sw > 0 && sw < 1 ? '' : 'none'; band.style.transform = `translateX(${-200 + sw * 1976 - 250}px) rotate(12.5deg)`; band.style.background = `linear-gradient(90deg, rgba(79,209,255,0), rgba(79,209,255,.75) 30%, rgba(255,255,255,.95) 50%, rgba(245,178,26,.8) 70%, rgba(245,178,26,0))`; band.style.filter = 'blur(26px)'; band.style.opacity = Math.sin(Math.PI * sw);
+  $('tag2').style.opacity = 1 - clamp((t - 7.5) / .2);
+  const ic = S(t - 7.55, { k: 150, c: 24.5 }); $('icon2').style.opacity = clamp(ic * 2); $('icon2').style.transform = `scale(${.6 + .4 * ic}) translateY(${4 * Math.sin(t * 1.3)}px)`; $('icon2').style.filter = ic < .98 ? `blur(${(1 - ic) * 14}px)` : '';
+  const pl = clamp((t - 7.5) / 1.6); $('pool').style.background = `radial-gradient(closest-side, rgba(4,96,239,${.34 * Math.sin(Math.PI * Math.sqrt(pl))}), rgba(4,96,239,0))`; $('pool').style.transform = `scale(${.5 + .8 * ease(pl)})`;
+  // 3 the send: the amount counts; the gold route draws under the dart
+  const am = S(t - 10.55, WORD); $('amt').textContent = '₦' + Math.round(10000 * ease((t - 10.6) / .9)).toLocaleString('en-US'); $('amt').style.opacity = sm(am * 1.25); $('amt').style.transform = `translateY(${(1 - am) * 34}px)`; $('amt').style.filter = am < .98 ? `blur(${(1 - am) * 12}px)` : '';
+  const rt = $('route'), rl = 1120; rt.style.strokeDasharray = `${rl} ${rl}`; rt.style.strokeDashoffset = rl * (1 - S(t - 11.1, { k: 30, c: 11 }));
+  // 4 the landing: a light pool under the phone
+  const p4 = clamp((t - 13.9) / 2.2); $('pool4').style.background = `radial-gradient(closest-side, rgba(4,96,239,${.22 * Math.sin(Math.PI * Math.sqrt(p4))}), rgba(4,96,239,0))`;
+  // 5 proof, 8 savings: numbers count
+  const pc = S(t - 18.6, WORD); $('pct').textContent = (90 + 9.9 * ease((t - 18.65) / .8)).toFixed(1) + '%'; $('pct').style.opacity = sm(pc * 1.25); $('pct').style.transform = `translateY(${(1 - pc) * 50}px)`; $('pct').style.filter = pc < .98 ? `blur(${(1 - pc) * 14}px)` : '';
+  const p2 = S(t - 28.5, WORD); $('pc20').textContent = Math.round(20 * ease((t - 28.55) / .7)) + '%'; $('pc20').style.opacity = sm(p2 * 1.25);
+  // 6, 11 marquees
+  $('mq1').style.transform = `translateX(${-200 - (t - 20.9) * 170}px)`; $('mq2').style.transform = `translateX(${-120 - (t - 37.2) * 90}px)`;
+  // 7, 11 models rise with a slow push
+  [['model1', 22.85, 26.9], ['model2', 37.5, 42]].forEach(([id, t0]) => { const s = S(t - t0, { k: 60, c: 15.5 }), el = $(id); el.style.opacity = clamp(s * 1.8); el.style.transform = `translateY(${(1 - s) * 220}px) scale(${1 + .035 * clamp((t - t0) / 4)})`; el.style.filter = s < .97 ? `blur(${(1 - s) * 10}px)` : ''; });
+  // the dart and its trail
+  if (!STOP) { let x = 0, y = 0, e = $('stop'); while (e && e !== cam) { x += e.offsetLeft; y += e.offsetTop; e = e.offsetParent; } STOP = [x + 26, y - 22]; DW.push([39.1, STOP, FLY]); }
+  const dOn = DVIS.some(([a, b]) => t >= a && t < b), dEl = $('dartEl'); dEl.style.display = $('trail').style.display = dOn ? '' : 'none';
+  if (dOn) { const [x, y] = dartPos(t), [qx, qy] = dartPos(t - .05), sp = Math.hypot(x - qx, y - qy), va = Math.atan2(y - qy, x - qx) * 180 / Math.PI + 90, k = clamp(sp / 26);
+    const born = S(t - (t < 15 ? 7.72 : 20.3), POPS), into = t < 15 ? S(t - 13.95, FLY) : 0, dot = S(t - 39.35, { k: 200, c: 28.3 });
+    dEl.style.left = x + 'px'; dEl.style.top = y + 'px'; dEl.style.transform = `rotate(${(va * k).toFixed(1)}deg) scale(${(born * (1 - into) * lerp(1, .42, dot)).toFixed(3)})`;
+    $('dp').setAttribute('d', dot > .5 ? 'M50 20 A40 40 0 1 1 49.9 20 Z' : 'M0 120 L42 98 Q50 94 58 98 L100 120 L60 16 Q50 -2 40 16 Z');
+    let d = ''; for (let i = 0; i <= 26; i++) { const [a, b] = dartPos(t - i * .016); d += (i ? 'L' : 'M') + a.toFixed(1) + ' ' + b.toFixed(1); } $('tr').setAttribute('d', d); $('tr').setAttribute('stroke-width', (16 * born * (1 - into) * (1 - dot)).toFixed(1)); }
+  // the phone
+  const on = (t >= 13.8 && t < 21.3) || (t >= 26.8 && t < 31.3); phone.visible = sh.visible = on;
+  if (on) { screenMat.map = t < 24 ? TEX.receipt : TEX.save; const wx = TR(t, PHX), wy = TR(t, PHY), s = TR(t, PHS) * z, ry = TR(t, PRY), rx = TR(t, PRX), rz = TR(t, PRZ);
+    const sx = (wx - cx - 540) * z, sy = -((wy - cy - 960) * z);
+    phone.position.set(sx, sy + 5 * Math.sin(t * 1.2) * z, 0); phone.scale.setScalar(s); phone.rotation.set(rx + .02 * Math.sin(t * .9), ry + .03 * Math.sin(t * .7), rz);
+    sh.position.set(sx + 30 * z, sy - 70 * z, -900); sh.scale.setScalar(s * Math.abs(Math.cos(ry)) * .9 + .1);
+    const face = Math.cos(ry); gtex.offset.x = ry * 1.1 + rx * .6 + .25; glare.material.opacity = clamp(face) * clamp(Math.abs(Math.sin(ry * 1.0)) * 2.2 + .12) * .8;
+    rim.position.set(600 * Math.cos(t * .6), -200, -500 + 400 * Math.sin(t * .6)); }
+  R.render(scene, ocam);
+};
+await Promise.all([...document.images].map(i => i.decode().catch(() => {})).concat([document.fonts.load("900 80px S"), document.fonts.load("700 80px S"), document.fonts.load("500 80px S")]));
+window.seek(0); window.__ready = true;
+</script>
