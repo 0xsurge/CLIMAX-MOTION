@@ -32,21 +32,12 @@ svg.l{position:absolute;left:0;top:0;overflow:visible}img{display:block}.abs{pos
 <div id="stage">
   <svg width="0" height="0" style="position:absolute"><defs><path id="dart" d="M0 120 L42 98 Q50 94 58 98 L100 120 L60 16 Q50 -2 40 16 Z"/><filter id="mb" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur id="mbg" stdDeviation="0 0"/></filter></defs></svg>
   <div id="cam">
-  <!-- 1 hook -->
+  <!-- 1 hook: one centred line at a time, blue on a light ground -->
   <div class="scene" data-o="hook">
-    <div class="p navy" data-in="-1" style="left:20px;top:20px;width:1180px;height:1040px">
-      <svg class="wm" id="ringwm" style="left:560px;top:420px" width="900" height="900" viewBox="0 0 320 320"><circle cx="160" cy="160" r="120" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="56"/></svg>
-      <div class="tag am" data-pop=".5">Pending…</div>
-      <div class="h" data-words=".1,.16" style="left:70px;top:300px;font-size:140px;color:#fff"><b>You sent it.</b><br>They haven't<br>seen it.</div>
-      <div class="glint" data-glint="1.9"></div>
-    </div>
-    <div class="p" data-in=".9" style="left:1220px;top:20px;width:680px;height:510px;background:#FFF6DF">
-      <svg id="spin" style="position:absolute;left:200px;top:115px" width="280" height="280" viewBox="0 0 320 320"><circle cx="160" cy="160" r="120" fill="none" stroke="rgba(245,178,26,.25)" stroke-width="40"/><path d="M160 40 A120 120 0 0 1 280 160" fill="none" stroke="#F5B21A" stroke-width="40" stroke-linecap="round"/></svg>
-    </div>
-    <div class="p" data-in="1.05" style="left:1220px;top:550px;width:680px;height:510px">
-      <div class="pill" data-pop="2.2" style="left:40px;top:70px">Have you seen the alert?</div>
-      <div class="pill" data-pop="2.42" style="right:40px;top:210px;background:#F5B21A">Not yet o</div>
-      <div class="pill" data-pop="2.64" style="left:40px;top:350px">Check again 🙏</div>
+    <div class="p" data-in="-1" style="left:-200px;top:-200px;width:2320px;height:1480px;border-radius:0">
+      <svg class="wm par" style="left:660px;top:330px" width="1000" height="1200" viewBox="0 0 100 120"><use href="#dart" fill="#EEF1F6"/></svg>
+      <div class="h bl" data-words=".1,.17,1.42" style="left:200px;width:1920px;text-align:center;top:650px;font-size:160px"><b>You sent the money.</b></div>
+      <div class="h bl" data-words="1.55,.17" style="left:200px;width:1920px;text-align:center;top:650px;font-size:160px"><b>They haven't seen it.</b></div>
     </div>
   </div>
   <!-- 2 the wait, then the turn: problems, Moniepoint, solutions, left to right -->
@@ -149,7 +140,7 @@ const WORD = { k: 320, c: 36 }, PANEL = { k: 170, c: 26 }, POPS = { k: 420, c: 4
 const OR = { hook: [0, 0], turn: [0, 1200], send: [2100, 1200], land: [2100, 2400], proof: [4200, 2400], bridge: [4200, 1200], card: [6300, 1200], save: [6300, 2400], bills: [8400, 2400], cash: [8400, 1200], close: [10500, 1200] };
 document.querySelectorAll('.scene').forEach(s => { const o = OR[s.dataset.o]; s.style.left = o[0] + 'px'; s.style.top = o[1] + 'px'; });
 const camFlow = (t, tc, ti, to) => { const v0 = ti / (ti + to); return t < tc ? v0 * Math.exp((t - tc) / ti) : 1 - (1 - v0) * Math.exp(-(t - tc) / to); };
-const CK = [{ t: 0, x: -350, y: 0, z: 1.72 }, { t: 2.1, x: 600, y: 265, z: 2.45, w: 1 }, { t: 3.0, x: 0, y: 1200, z: 1, w: 1 }, { t: 4.3, x: -320, y: 1190, z: 1.45, tau: .7 }, { t: 6.3, x: -120, y: 1190, z: 1.3, tau: .7 }, { t: 7.7, x: 60, y: 1225, z: 1.1, tau: .42 }, { t: 9.0, x: 0, y: 1200, z: 1, tau: .4 },
+const CK = [{ t: 0, x: 0, y: 0, z: 1 }, { t: 3.0, x: 0, y: 1200, z: 1, w: 1 }, { t: 4.3, x: -320, y: 1190, z: 1.45, tau: .7 }, { t: 6.3, x: -120, y: 1190, z: 1.3, tau: .7 }, { t: 7.7, x: 60, y: 1225, z: 1.1, tau: .42 }, { t: 9.0, x: 0, y: 1200, z: 1, tau: .4 },
   { t: 9.9, x: 2100, y: 1200, z: 1, w: 1 }, { t: 10.65, x: 1990, y: 935, z: 1.5, tau: .3 }, { t: 11.6, x: 1750, y: 1465, z: 1.2, tau: .4 }, { t: 12.6, x: 2640, y: 1200, z: 1.12, tau: .35 },
   { t: 13.9, x: 2100, y: 2400, z: 1, w: 1 }, { t: 16.35, x: 1562, y: 2272, z: 4.0, tau: .36 }, { t: 18.4, x: 4200, y: 2400, z: 1, w: 1 }, { t: 19.4, x: 4240, z: 1.06, tau: .5 },
   { t: 20.9, x: 4200, y: 1200, z: 1, w: 1 }, { t: 21.7, y: 1240, z: 1.08, tau: .4 }, { t: 22.9, x: 6300, y: 1200, z: 1, w: 1 }, { t: 23.6, x: 6720, z: 1.2, tau: .35 }, { t: 24.9, x: 6300, y: 1200, z: 1.07, tau: .6 },
@@ -165,7 +156,7 @@ const camAt = t => { const c = creep(t), open = 0; return [camAxis(t, 'x') + c[0
 // ---- declarative motion ----
 const wrapWords = el => { const walk = n => { [...n.childNodes].forEach(c => { if (c.nodeType === 3) { const f = document.createDocumentFragment(); c.textContent.split(/(\s+)/).forEach(tok => { if (!tok) return; if (/^\s+$/.test(tok)) f.appendChild(document.createTextNode(' ')); else { const s = document.createElement('span'); s.className = 'w'; s.textContent = tok; f.appendChild(s); } }); n.replaceChild(f, c); } else if (c.nodeType === 1 && c.tagName !== 'BR' && c.id !== 'stop') walk(c); }); }; walk(el); return [...el.querySelectorAll('.w')]; };
 const INS = [...document.querySelectorAll('[data-in]')].map(el => ({ el, t0: +el.dataset.in }));
-const WDS = [...document.querySelectorAll('[data-words]')].map(el => { const [t0, st] = el.dataset.words.split(',').map(Number); return { ws: wrapWords(el), t0, st }; });
+const WDS = [...document.querySelectorAll('[data-words]')].map(el => { const [t0, st, out] = el.dataset.words.split(',').map(Number); return { ws: wrapWords(el), t0, st, out }; });
 const PPS = [...document.querySelectorAll('[data-pop]')].map(el => ({ el, t0: +el.dataset.pop }));
 const DRS = [...document.querySelectorAll('[data-draw]')].map(el => { const [t0, d] = el.dataset.draw.split(',').map(Number), len = el.getTotalLength(); el.style.strokeDasharray = `${len} ${len}`; return { el, t0, d, len }; });
 const CDS = [...document.querySelectorAll('[data-card]')].map(el => { const [t0, dx] = el.dataset.card.split(',').map(Number); return { el, t0, dx }; });
@@ -223,7 +214,7 @@ const PRX = [[0, .5], [13.85, 0, TILT], [16.3, -.3, TILT], [18.25, .3, TILT], [2
 const PRZ = [[0, -.3], [13.85, 0, TILT], [16.3, -.12, TILT], [18.25, .1, TILT], [26.0, -.2], [26.85, -.1, TILT], [28.6, -.04, TILT]];
 
 // ---- scene transitions borrowed from the Pulse explainer study: a colour flood out of an element (X3), a zoom through big type (X4) ----
-const FLOODS = [{ t: 3.0, col: '#F5B21A', rimc: '255,236,180', from: () => Pw('hook', 1720, 800) }, { t: 13.9, col: '#0460EF', rimc: '160,210,255', from: t => dartPos(t) }, { t: 22.9, col: '#0460EF', rimc: '160,210,255', from: () => null, word: 1 }, { t: 34.4, col: '#021B4A', rimc: '90,150,255', from: t => dartPos(t) }];
+const FLOODS = [{ t: 13.9, col: '#0460EF', rimc: '160,210,255', from: t => dartPos(t) }, { t: 22.9, col: '#0460EF', rimc: '160,210,255', from: () => null, word: 1 }, { t: 34.4, col: '#021B4A', rimc: '90,150,255', from: t => dartPos(t) }];
 let STOP = null;
 window.seek = t => {
   const [cx, cy, z] = camAt(t), [px, py] = camAt(t - 1 / 30);
@@ -232,7 +223,7 @@ window.seek = t => {
   $('mbg').setAttribute('stdDeviation', `${bx.toFixed(1)} ${by.toFixed(1)}`); cam.style.filter = fl; $('gl').style.filter = fl;
   // panels, words, pops, lines, cards, light passes
   INS.forEach(({ el, t0 }) => { const s = t0 < 0 ? 1 : S(t - t0, PANEL); el.style.opacity = clamp(s * 1.6); el.style.transform = `translateY(${(1 - s) * 90}px) scale(${.94 + .06 * s})`; el.style.filter = s < .98 ? `blur(${(1 - clamp(s)) * 12}px)` : ''; });
-  WDS.forEach(({ ws, t0, st }) => ws.forEach((w, i) => { const s = S(t - (t0 + i * st), WORD); w.style.opacity = sm(s * 1.25); w.style.filter = s < .98 ? `blur(${(1 - clamp(s)) * 12}px)` : ''; w.style.transform = `translateY(${(1 - s) * 34}px)`; }));
+  WDS.forEach(({ ws, t0, st, out }) => ws.forEach((w, i) => { const s = S(t - (t0 + i * st), WORD), ex = out ? S(t - out - i * .03, WORD) : 0; w.style.opacity = sm(s * 1.25) * (1 - sm(ex * 1.3)); w.style.filter = s < .98 || ex > .02 ? `blur(${(1 - clamp(s)) * 12 + ex * 12}px)` : ''; w.style.transform = `translateY(${(1 - s) * 34 - ex * 40}px)`; }));
   PPS.forEach(({ el, t0 }) => { const s = S(t - t0, POPS); el.style.opacity = sm(s * 1.3); el.style.transform = `translateY(${(1 - s) * 26}px) scale(${.86 + .14 * s})`; el.style.filter = s < .98 ? `blur(${(1 - clamp(s)) * 8}px)` : ''; });
   DRS.forEach(({ el, t0, d, len }) => { el.style.strokeDashoffset = len * (1 - sm((t - t0) / d)); });
   CDS.forEach(({ el, t0, dx }) => { const s = S(t - t0, PANEL); el.style.opacity = clamp(s * 1.6); el.style.transform = `translate(${(1 - s) * dx}px, ${(1 - s) * (dx ? 0 : 120) + 4 * Math.sin(t * 1.1 + t0)}px) scale(${.94 + .06 * s})`; el.style.filter = s < .98 ? `blur(${(1 - clamp(s)) * 12}px)` : ''; });
@@ -240,7 +231,7 @@ window.seek = t => {
   GWS.forEach(({ el, t0 }) => { const g = S(t - t0, { k: 120, c: 22 }) * (.8 + .2 * Math.sin((t - t0) * 3)); el.style.boxShadow = `0 0 0 ${(6 * g).toFixed(1)}px rgba(79,209,255,${(.9 * g).toFixed(2)}), 0 0 ${(70 * g).toFixed(0)}px rgba(79,209,255,${(.7 * g).toFixed(2)}), 0 30px 80px rgba(2,27,74,.25)`; });
   PARS.forEach((el, i) => { el.style.transform = `translate(${(6 * Math.sin(t * .5 + i)).toFixed(1)}px, ${(10 * Math.sin(t * .4 + i * 2)).toFixed(1)}px) rotate(${(1.2 * Math.sin(t * .3 + i)).toFixed(2)}deg)`; });
   // 1 hook: the spinner and the ring behind the line
-  $('spin').style.transform = `rotate(${t * 300}deg)`; $('ringwm').style.transform = `rotate(${t * 40}deg)`;
+  
   // 2 the turn: the colour sweep carries dark to light; the icon lands on a light pool
   { const u = clamp((t - 7.62) / .7), r = 2300 * (1 - Math.pow(1 - u, 2.4)), dk = $('dark');    // light opens from the icon
     dk.style.webkitMaskImage = dk.style.maskImage = u <= 0 ? '' : `radial-gradient(circle at 940px 500px, transparent ${Math.max(0, r - 50).toFixed(0)}px, #000 ${(r + 30).toFixed(0)}px)`; dk.style.display = u >= 1 ? 'none' : '';
