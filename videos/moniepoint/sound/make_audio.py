@@ -15,18 +15,18 @@ def load(p, af=None):
     w = wave.open(TMP); return np.frombuffer(w.readframes(w.getnframes()), '<i2') / 32768
 dr = load(PACK + 'drone/drone_10_mixkit2504.wav'); dr = np.tile(dr, 3)[:int((DUR + 1) * SR)]; env = np.minimum(1, np.arange(len(dr)) / (2.5 * SR)) * np.minimum(1, (len(dr) - np.arange(len(dr))) / (2 * SR)); put(0, dr * env, .2)
 wh = load(PACK + 'sweep/sweep_18_mixkit2636.wav', 'lowpass=f=5200,highpass=f=180'); pk = int(np.argmax(np.abs(wh)))
-WHIPS = [3.0, 9.9, 13.9, 18.4, 20.9, 22.9, 26.9, 30.9, 34.4, 37.4]
+WHIPS = [2.1, 9.9, 13.9, 18.4, 20.9, 22.9, 26.9, 30.9, 34.4, 37.4]
 for i, tc in enumerate(WHIPS): put(max(0, tc - pk / SR), wh, .15, (-.3, .3)[i % 2])
 # word pops: (start, count, step)
 for t0, k, st in [(.1, 8, .16), (8.05, 3, .17), (10.2, 2, .18), (12.45, 4, .16), (14.4, 3, .17), (19.35, 2, .2), (21.1, 5, .17), (23.3, 2, .2), (24.0, 7, .12), (27.3, 2, .2), (28.1, 3, .14), (29.0, 2, .14),
                   (31.25, 3, .18), (31.95, 5, .2), (34.75, 3, .18), (35.4, 4, .18), (38.2, 4, .2)]:
     for i in range(k): put(t0 + i * st, pop(820 + 60 * (i % 3)), .07, ((i % 3) - 1) * .2)
-for i, t0 in enumerate([1.45, 1.95, 2.4, 3.4, 4.2, 4.9, 8.2, 8.25, 8.3, 31.1, 31.7, 31.8, 31.9, 32.0]): put(t0, click(1900 + 200 * (i % 2), .005), .11, (-.3, .3)[i % 2])   # pills and bubbles
+for i, t0 in enumerate([2.2, 2.42, 2.64, 3.4, 5.3, 8.2, 31.1, 31.7, 31.8, 31.9, 32.0]): put(t0, click(1900 + 200 * (i % 2), .005), .11, (-.3, .3)[i % 2])   # pills and bubbles
 for k in range(0, 27, 3): put(10.6 + k / 30, click(2800, .003), .05)                   # the amount counts
 for k in range(0, 24, 3): put(18.65 + k / 30, click(2800, .003), .05)                  # 99.9 counts
 for k in range(0, 21, 3): put(28.55 + k / 30, click(2800, .003), .05)                  # 20 counts
 for tf in (3.0, 13.9, 22.9, 34.4): put(tf - .02, sub(), .16)                                # floods land
-put(max(0, 7.9 - pk / SR), wh, .2)                                                      # the colour sweep
+put(max(0, 7.75 - pk / SR), wh, .16)                                                      # the colour sweep
 for t0, g in [(14.75, .5), (19.5, .28), (28.0, .3), (39.35, .4)]: put(t0, thump(), g)   # phone lands, number lands, phone lands, the full stop
 for t0 in [7.6, 9.75, 12.05, 16.4, 18.3, 22.8, 24.9, 26.8, 31.4, 32.3, 32.75, 34.9, 35.45, 37.3, 37.5]: put(t0, sub(), .1)
 subprocess.run(['ffmpeg', '-y', '-v', 'error', '-ss', str(22.9 - 7.5), '-t', str(DUR + .5), '-i', os.environ.get('MUSIC', 'cand/720.mp3'), '-af', f'afade=t=in:d=0.05,afade=t=out:st={DUR - 2}:d=2', '-ar', '44100', '-ac', '2', 'music.wav'], check=True)

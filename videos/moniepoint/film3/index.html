@@ -44,9 +44,9 @@ svg.l{position:absolute;left:0;top:0;overflow:visible}img{display:block}.abs{pos
       <svg id="spin" style="position:absolute;left:200px;top:115px" width="280" height="280" viewBox="0 0 320 320"><circle cx="160" cy="160" r="120" fill="none" stroke="rgba(245,178,26,.25)" stroke-width="40"/><path d="M160 40 A120 120 0 0 1 280 160" fill="none" stroke="#F5B21A" stroke-width="40" stroke-linecap="round"/></svg>
     </div>
     <div class="p" data-in="1.05" style="left:1220px;top:550px;width:680px;height:510px">
-      <div class="pill" data-pop="1.45" style="left:40px;top:70px">Have you seen the alert?</div>
-      <div class="pill" data-pop="1.95" style="right:40px;top:210px;background:#F5B21A">Not yet o</div>
-      <div class="pill" data-pop="2.4" style="left:40px;top:350px">Check again 🙏</div>
+      <div class="pill" data-pop="2.2" style="left:40px;top:70px">Have you seen the alert?</div>
+      <div class="pill" data-pop="2.42" style="right:40px;top:210px;background:#F5B21A">Not yet o</div>
+      <div class="pill" data-pop="2.64" style="left:40px;top:350px">Check again 🙏</div>
     </div>
   </div>
   <!-- 2 the wait, then the turn: problems, Moniepoint, solutions, left to right -->
@@ -55,19 +55,13 @@ svg.l{position:absolute;left:0;top:0;overflow:visible}img{display:block}.abs{pos
       <div id="dark" class="abs navy" style="inset:0"></div>
       <svg class="wm par" style="left:520px;top:60px" width="900" height="1080" viewBox="0 0 100 120"><use href="#dart" fill="rgba(160,175,205,.14)"/></svg>
       <div class="tag am" id="tag2">Still waiting</div>
-      <svg class="l" width="1880" height="1040"><g fill="none" stroke="#9FB0CF" stroke-width="5" stroke-linecap="round"><path data-draw="3.9,1.4" d="M330 289 C650 289 650 520 850 520"/><path data-draw="4.6,1.2" d="M420 509 L850 520"/><path data-draw="5.3,1.4" d="M330 729 C650 729 650 520 850 520"/></g>
-        <g fill="none" stroke="#0460EF" stroke-width="7" stroke-linecap="round"><path data-draw="7.85,.5" d="M1070 520 C1230 520 1230 289 1390 289"/><path data-draw="7.8,.45" d="M1070 520 L1390 509"/><path data-draw="7.85,.5" d="M1070 520 C1230 520 1230 729 1390 729"/></g></svg>
-      <div class="pill" data-pop="3.4" style="left:120px;top:246px;background:#FFF1CC;color:#021B4A">Pending…</div>
-      <div class="pill" data-pop="4.2" style="left:210px;top:466px;background:#FFF1CC;color:#021B4A">“Not yet o”</div>
-      <div class="pill" data-pop="4.9" style="left:120px;top:686px;background:#FFF1CC;color:#021B4A">Failed transfer</div>
+      <svg class="l" width="1880" height="1040"><path id="lnA" data-draw="3.9,1.3" d="M470 520 L850 520" fill="none" stroke="#9FB0CF" stroke-width="6" stroke-linecap="round"/><path data-draw="7.9,.45" d="M1070 520 L1380 520" fill="none" stroke="#0460EF" stroke-width="7" stroke-linecap="round"/></svg>
+      <div class="pill" id="pend" style="left:200px;top:470px;background:#FFF1CC;color:#021B4A;font-size:44px;padding:28px 40px"></div>
       <div id="pool" class="abs" style="left:610px;top:170px;width:700px;height:700px;border-radius:50%"></div>
       <svg id="spin2" class="abs" style="left:860px;top:420px" width="200" height="200" viewBox="0 0 320 320"><circle cx="160" cy="160" r="120" fill="none" stroke="rgba(245,178,26,.22)" stroke-width="40"/><path d="M160 40 A120 120 0 0 1 280 160" fill="none" stroke="#F5B21A" stroke-width="40" stroke-linecap="round"/></svg>
       <img id="icon2" src="../assets/icon.png" class="abs" style="left:850px;top:410px;width:220px;border-radius:52px;box-shadow:0 30px 70px rgba(4,96,239,.35)">
-      <div class="pill blue" data-pop="8.25" style="left:1390px;top:246px">Sent</div>
-      <div class="pill blue" data-pop="8.2" data-glow="8.5" style="left:1390px;top:466px">Received</div>
-      <div class="pill blue" data-pop="8.3" style="left:1390px;top:686px">In seconds</div>
+      <div class="pill blue" data-pop="8.2" data-glow="8.55" style="left:1380px;top:470px;font-size:44px;padding:28px 40px">Received</div>
       <div class="h" data-words="8.05,.17" style="left:0;width:1880px;text-align:center;top:850px;font-size:104px">Not with <b class="bl">Moniepoint.</b></div>
-      <div id="band" class="abs" style="left:-400px;top:-900px;width:500px;height:3000px"></div>
     </div>
   </div>
   <!-- 3 the send -->
@@ -155,7 +149,7 @@ const WORD = { k: 320, c: 36 }, PANEL = { k: 170, c: 26 }, POPS = { k: 420, c: 4
 const OR = { hook: [0, 0], turn: [0, 1200], send: [2100, 1200], land: [2100, 2400], proof: [4200, 2400], bridge: [4200, 1200], card: [6300, 1200], save: [6300, 2400], bills: [8400, 2400], cash: [8400, 1200], close: [10500, 1200] };
 document.querySelectorAll('.scene').forEach(s => { const o = OR[s.dataset.o]; s.style.left = o[0] + 'px'; s.style.top = o[1] + 'px'; });
 const camFlow = (t, tc, ti, to) => { const v0 = ti / (ti + to); return t < tc ? v0 * Math.exp((t - tc) / ti) : 1 - (1 - v0) * Math.exp(-(t - tc) / to); };
-const CK = [{ t: 0, x: 0, y: 0, z: 1 }, { t: 2.25, x: 60, y: 0, z: 1.04, tau: .45 }, { t: 3.0, x: 0, y: 1200, z: 1, w: 1 }, { t: 4.3, x: -560, y: 1180, z: 1.5, tau: .7 }, { t: 6.4, x: -300, y: 1180, z: 1.28, tau: .6 }, { t: 7.7, x: 110, y: 1225, z: 1.08, tau: .42 }, { t: 9.0, x: 0, y: 1200, z: 1, tau: .4 },
+const CK = [{ t: 0, x: -350, y: 0, z: 1.72 }, { t: 2.1, x: 600, y: 265, z: 2.45, w: 1 }, { t: 3.0, x: 0, y: 1200, z: 1, w: 1 }, { t: 4.3, x: -320, y: 1190, z: 1.45, tau: .7 }, { t: 6.3, x: -120, y: 1190, z: 1.3, tau: .7 }, { t: 7.7, x: 60, y: 1225, z: 1.1, tau: .42 }, { t: 9.0, x: 0, y: 1200, z: 1, tau: .4 },
   { t: 9.9, x: 2100, y: 1200, z: 1, w: 1 }, { t: 10.65, x: 1990, y: 935, z: 1.5, tau: .3 }, { t: 11.6, x: 1750, y: 1465, z: 1.2, tau: .4 }, { t: 12.6, x: 2640, y: 1200, z: 1.12, tau: .35 },
   { t: 13.9, x: 2100, y: 2400, z: 1, w: 1 }, { t: 16.35, x: 1562, y: 2272, z: 4.0, tau: .36 }, { t: 18.4, x: 4200, y: 2400, z: 1, w: 1 }, { t: 19.4, x: 4240, z: 1.06, tau: .5 },
   { t: 20.9, x: 4200, y: 1200, z: 1, w: 1 }, { t: 21.7, y: 1240, z: 1.08, tau: .4 }, { t: 22.9, x: 6300, y: 1200, z: 1, w: 1 }, { t: 23.6, x: 6720, z: 1.2, tau: .35 }, { t: 24.9, x: 6300, y: 1200, z: 1.07, tau: .6 },
@@ -166,7 +160,7 @@ const camAxis = (t, k) => { let v = CK[0][k], p = v; for (let i = 1; i < CK.leng
 const SEG = [0, ...WHIPS, 1e9];
 const creep = t => { let x = 0, y = 0, z = 0; for (let i = 0; i < SEG.length - 1; i++) { const w = (i === 0 ? 1 : camFlow(t, SEG[i], TI, TO)) - (SEG[i + 1] > 1e8 ? 0 : camFlow(t, SEG[i + 1], TI, TO)); if (w < 1e-4) continue; const u = Math.max(0, t - SEG[i]), e = 2.5 * (1 - Math.exp(-u / 2.5)), d = i % 2 ? 1 : -1; x += w * d * 12 * e; y += w * -d * 6 * e; z += w * .026 * e; } return [x, y, z]; };
 const swell = t => WHIPS.reduce((a, tc) => { const d = t - tc; return a + .045 * (d < 0 ? Math.exp(d / TI) : Math.exp(-d / TO)); }, 0);
-const camAt = t => { const c = creep(t), open = 1 - camFlow(t, 1.25, .5, .7); return [camAxis(t, 'x') + c[0] - 330 * open, camAxis(t, 'y') + c[1] - 40 * open, camAxis(t, 'z') * (1 + c[2]) * (1 + swell(t)) * (1 + .6 * open)]; };
+const camAt = t => { const c = creep(t), open = 0; return [camAxis(t, 'x') + c[0] - 330 * open, camAxis(t, 'y') + c[1] - 40 * open, camAxis(t, 'z') * (1 + c[2]) * (1 + swell(t)) * (1 + .6 * open)]; };
 
 // ---- declarative motion ----
 const wrapWords = el => { const walk = n => { [...n.childNodes].forEach(c => { if (c.nodeType === 3) { const f = document.createDocumentFragment(); c.textContent.split(/(\s+)/).forEach(tok => { if (!tok) return; if (/^\s+$/.test(tok)) f.appendChild(document.createTextNode(' ')); else { const s = document.createElement('span'); s.className = 'w'; s.textContent = tok; f.appendChild(s); } }); n.replaceChild(f, c); } else if (c.nodeType === 1 && c.tagName !== 'BR' && c.id !== 'stop') walk(c); }); }; walk(el); return [...el.querySelectorAll('.w')]; };
@@ -183,10 +177,10 @@ MQ('mq2', ['Moniepoint'], '<img src="../assets/icon.png" style="width:74px;borde
 
 // ---- the dart ----
 const Pw = (o, x, y) => [OR[o][0] + x, OR[o][1] + y];
-const DW = [[0, Pw('turn', 1100, 540)], [7.72, Pw('turn', 1300, 400), GLIDE], [9.55, Pw('send', 110, 700), FLY], [11.1, Pw('send', 1110, 910), 'route'], [13.3, Pw('send', 1500, 1700), FLY], [13.75, Pw('land', 610, 60), FLY],
+const DW = [[0, Pw('turn', 1100, 540)], [7.9, Pw('turn', 1330, 390), GLIDE], [9.55, Pw('send', 110, 700), FLY], [11.1, Pw('send', 1110, 910), 'route'], [13.3, Pw('send', 1500, 1700), FLY], [13.75, Pw('land', 610, 60), FLY],
   [20.3, Pw('proof', 1750, 180)], [20.75, Pw('bridge', 300, 650), FLY], [21.5, Pw('bridge', 1560, 640), GLIDE], [22.65, Pw('card', 1780, 900), FLY], [26.55, Pw('save', 800, 900), FLY], [30.6, Pw('bills', 180, 600), FLY], [31.45, Pw('bills', 720, 804), GLIDE],
   [32.6, Pw('bills', 800, 400), GLIDE], [34.1, Pw('cash', 1790, 900), FLY], [37.1, Pw('close', 1650, 300), FLY]];
-const DVIS = [[7.72, 14.2], [20.3, 99]], RLEN = $('route').getTotalLength();
+const DVIS = [[7.9, 14.2], [20.3, 99]], RLEN = $('route').getTotalLength();
 const dartPos = t => { let x = DW[0][1][0], y = DW[0][1][1]; for (let i = 1; i < DW.length; i++) { const [ti, p, sp] = DW[i], q = DW[i - 1][1]; if (!sp) { if (t >= ti) { x += p[0] - q[0]; y += p[1] - q[1]; } continue; } if (sp === 'route') { const rp = $('route'), a = rp.getPointAtLength(0), b = rp.getPointAtLength(RLEN * S(t - ti, { k: 30, c: 11 })); x += b.x - a.x; y += b.y - a.y; continue; } const s = S(t - ti, sp), dx = p[0] - q[0], dy = p[1] - q[1], bow = Math.sin(Math.PI * clamp(s)) * .16 * (i % 2 ? 1 : -1); x += dx * s - dy * bow; y += dy * s + dx * bow; } return [x, y]; };
 
 // ---- the 3D phone (orthographic, so it sits on the flat board) ----
@@ -248,9 +242,11 @@ window.seek = t => {
   // 1 hook: the spinner and the ring behind the line
   $('spin').style.transform = `rotate(${t * 300}deg)`; $('ringwm').style.transform = `rotate(${t * 40}deg)`;
   // 2 the turn: the colour sweep carries dark to light; the icon lands on a light pool
-  const sw = sm((t - 7.45) / .95), edge = -30 + sw * 190;
-  $('dark').style.clipPath = `polygon(${edge}% 0, 130% 0, 130% 100%, ${edge - 42}% 100%)`;
-  const band = $('band'); band.style.display = sw > 0 && sw < 1 ? '' : 'none'; band.style.transform = `translateX(${-200 + sw * 2900 - 250}px) rotate(12.5deg)`; band.style.background = `linear-gradient(90deg, rgba(79,209,255,0), rgba(79,209,255,.75) 30%, rgba(255,255,255,.95) 50%, rgba(245,178,26,.8) 70%, rgba(245,178,26,0))`; band.style.filter = 'blur(26px)'; band.style.opacity = Math.sin(Math.PI * sw);
+  { const u = clamp((t - 7.62) / .7), r = 2300 * (1 - Math.pow(1 - u, 2.4)), dk = $('dark');    // light opens from the icon
+    dk.style.webkitMaskImage = dk.style.maskImage = u <= 0 ? '' : `radial-gradient(circle at 940px 500px, transparent ${Math.max(0, r - 50).toFixed(0)}px, #000 ${(r + 30).toFixed(0)}px)`; dk.style.display = u >= 1 ? 'none' : '';
+    const pe = $('pend'), a = S(t - 3.4, POPS), go = S(t - 7.3, { k: 170, c: 26 }); pe.textContent = t < 5.3 ? 'Pending…' : 'Still pending…';
+    const sw2 = Math.min(S(t - 5.3, WORD) + (t < 5.3 ? 1 : 0), 1);
+    pe.style.opacity = sm(a * 1.3) * (1 - sm(go * 1.4)); pe.style.transform = `translate(${go * 640}px, ${(1 - a) * 26}px) scale(${(.86 + .14 * a) * (1 - .6 * go) * (.94 + .06 * sw2)})`; pe.style.filter = go > .02 ? `blur(${go * 10}px)` : ''; }
   $('tag2').style.opacity = 1 - clamp((t - 7.5) / .2); { const a = S(t - 5.6, POPS), g = S(t - 7.5, FLY); $('spin2').style.opacity = clamp(a * 2) * (1 - g); $('spin2').style.transform = `rotate(${t * 300}deg) scale(${(.7 + .3 * a) * (1 + .4 * g)})`; }
   const ic = S(t - 7.55, { k: 150, c: 24.5 }); $('icon2').style.opacity = clamp(ic * 2); $('icon2').style.transform = `scale(${.6 + .4 * ic}) translateY(${4 * Math.sin(t * 1.3)}px)`; $('icon2').style.filter = ic < .98 ? `blur(${(1 - ic) * 14}px)` : '';
   const pl = clamp((t - 7.5) / 1.6); $('pool').style.background = `radial-gradient(closest-side, rgba(4,96,239,${.34 * Math.sin(Math.PI * Math.sqrt(pl))}), rgba(4,96,239,0))`; $('pool').style.transform = `scale(${.5 + .8 * ease(pl)})`;
@@ -270,7 +266,7 @@ window.seek = t => {
   if (!STOP) { let x = 0, y = 0, e = $('stop'); while (e && e !== cam) { x += e.offsetLeft; y += e.offsetTop; e = e.offsetParent; } STOP = [x + 30, y - 26]; DW.push([39.1, STOP, FLY]); }
   const dOn = DVIS.some(([a, b]) => t >= a && t < b), dEl = $('dartEl'); dEl.style.display = $('trail').style.display = dOn ? '' : 'none';
   if (dOn) { const [x, y] = dartPos(t), [qx, qy] = dartPos(t - .05), sp = Math.hypot(x - qx, y - qy), va = Math.atan2(y - qy, x - qx) * 180 / Math.PI + 90, k = clamp(sp / 26);
-    const born = S(t - (t < 15 ? 7.72 : 20.3), POPS), into = t < 15 ? S(t - 13.95, FLY) : 0, dot = S(t - 39.35, { k: 200, c: 28.3 });
+    const born = S(t - (t < 15 ? 7.9 : 20.3), POPS), into = t < 15 ? S(t - 13.95, FLY) : 0, dot = S(t - 39.35, { k: 200, c: 28.3 });
     dEl.style.left = x + 'px'; dEl.style.top = y + 'px'; dEl.style.transform = `rotate(${(va * k).toFixed(1)}deg) scale(${(born * (1 - into) * lerp(1, .42, dot)).toFixed(3)})`;
     $('dp').setAttribute('d', dot > .5 ? 'M50 20 A40 40 0 1 1 49.9 20 Z' : 'M0 120 L42 98 Q50 94 58 98 L100 120 L60 16 Q50 -2 40 16 Z');
     let d = ''; for (let i = 0; i <= 26; i++) { const [a, b] = dartPos(t - i * .016); d += (i ? 'L' : 'M') + a.toFixed(1) + ' ' + b.toFixed(1); } $('tr').setAttribute('d', d); $('tr').setAttribute('stroke-width', (16 * born * (1 - into) * (1 - dot)).toFixed(1)); }
