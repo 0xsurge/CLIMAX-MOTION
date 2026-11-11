@@ -1,0 +1,96 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Moniepoint world test: the gold ribbon and the dart</title>
+<!-- Motion test of the film's world. Night: the dart circles a closed gold ring (the spinner: money going nowhere).
+     The turn: the ring opens into a long ribbon, the dart rides it, the sky floods in. Pure function of t. -->
+<style>
+@font-face{font-family:S;font-weight:500;src:url(../assets/satoshi-500.woff2)}@font-face{font-family:S;font-weight:700;src:url(../assets/satoshi-700.woff2)}@font-face{font-family:S;font-weight:900;src:url(../assets/satoshi-900.woff2)}
+html,body{margin:0;background:#010E2B;overflow:hidden}#stage{position:relative;width:1080px;height:1920px;overflow:hidden;font-family:S,Inter,sans-serif}
+#ov{position:absolute;inset:0;z-index:5;color:#fff}#ov>*{position:absolute}
+.slam{font-weight:900;font-size:138px;line-height:1;letter-spacing:-.04em;width:1080px;text-align:center}
+.cap{font-weight:700;font-size:78px;line-height:1.12;letter-spacing:-.025em;width:1080px;text-align:center}
+.hl{display:inline-block;font-weight:900;font-style:italic;padding:.08em .28em;border-radius:.2em}
+.sh{text-shadow:0 6px 40px rgba(2,27,74,.45)}
+.pill{display:inline-block;vertical-align:middle;height:1.25em;border-radius:.34em;overflow:hidden;box-shadow:0 0 0 5px #fff,0 16px 40px rgba(2,27,74,.35);margin:0 .12em}
+.pill img{height:100%;display:block}
+</style>
+<div id="stage"><div id="sky" style="position:absolute;left:0;top:0;width:6000px;height:2000px;background:url(../assets/sky.jpg) 0 0/6000px 2000px"></div><div id="night" style="position:absolute;inset:0;background:radial-gradient(80% 50% at 50% 42%, rgba(10,47,122,.86) 0%, rgba(2,20,64,.95) 55%, #010B24 100%)"></div><div id="ov"></div></div>
+<script type="importmap">{ "imports": { "three": "../../../.claude/skills/motion-reel/engine/lib/three/three.module.js", "three/addons/": "../../../.claude/skills/motion-reel/engine/lib/three/addons/" } }</script>
+<script src="../assets/motion.js"></script>
+<script type="module">
+import * as THREE from 'three';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+const S = (t, p) => Motion.spring(t, p), clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x)), lerp = (a, b, u) => a + (b - a) * u;
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true }); renderer.setPixelRatio(1); renderer.setSize(1080, 1920, false); renderer.setClearColor(0x000000, 0);
+renderer.outputColorSpace = THREE.SRGBColorSpace; renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = .9;
+Object.assign(renderer.domElement.style, { position: 'absolute', left: 0, top: 0 }); document.getElementById('stage').appendChild(renderer.domElement);
+const scene = new THREE.Scene(), camera = new THREE.PerspectiveCamera(28, 1080 / 1920, .1, 200), pm = new THREE.PMREMGenerator(renderer); scene.environment = pm.fromScene(new RoomEnvironment(), .04).texture; scene.environmentIntensity = .55;
+const st = { render: () => renderer.render(scene, camera) };
+const NIGHT = new THREE.Color('#021440'), DAY = new THREE.Color('#BFE6FB'), bg = new THREE.Color();
+scene.fog = new THREE.Fog('#021440', 9, 26); const sky = document.getElementById('sky'), night = document.getElementById('night');
+const key = new THREE.DirectionalLight('#FFFFFF', 2.2); key.position.set(-3, 6, 6); scene.add(key);
+const rim = new THREE.DirectionalLight('#4FD1FF', 1.4); rim.position.set(5, -2, -4); scene.add(rim);
+const amb = new THREE.AmbientLight('#8FB4FF', 0.5); scene.add(amb);
+const pulse = new THREE.PointLight('#FFE9A8', 0, 7, 1.6); scene.add(pulse);       // the light that travels with the transfer
+
+// ---- the ribbon: a flat gold band along a curve that morphs from a closed ring to an open route ----
+const N = 14, ringPts = [], routePts = [];
+for (let i = 0; i < N; i++) { const a = i / (N - 1) * Math.PI * 2 * .985 - Math.PI / 2; ringPts.push(new THREE.Vector3(Math.cos(a) * 1.25, Math.sin(a) * 1.25 + .9, 0)); }
+const RT = [[-4.5, -5.5, -3], [-2.6, -3.6, -1.5], [.6, -2.9, .4], [2.1, -1.2, .6], [.9, .4, 0], [-1.6, 1.1, -.4], [-2.2, 2.9, -.2], [-.2, 4.2, .5], [2.2, 5.0, .2], [2.6, 7.0, -1], [.4, 8.6, -2], [-2.4, 10, -3], [-1, 12.5, -4], [2, 15, -6]];
+RT.forEach(p => routePts.push(new THREE.Vector3(...p)));
+const mat = new THREE.MeshPhysicalMaterial({ color: '#E79A00', metalness: .85, roughness: .3, clearcoat: 1, clearcoatRoughness: .15, side: THREE.DoubleSide, emissive: '#B36A00', emissiveIntensity: .3 });
+const SEG = 260, TH = .045; let W = .3;
+const geo = new THREE.BufferGeometry(), pos = new Float32Array((SEG + 1) * 4 * 3), idx = [];
+for (let i = 0; i < SEG; i++) { const a = i * 4, b = a + 4; [[0, 1], [1, 2], [2, 3], [3, 0]].forEach(([p, q]) => idx.push(a + p, b + p, a + q, a + q, b + p, b + q)); }
+geo.setIndex(idx); geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+const ribbon = new THREE.Mesh(geo, mat); ribbon.frustumCulled = false; scene.add(ribbon);
+let curve;
+function shape(open, draw) {            // open 0..1 morphs ring -> route; draw 0..1 is how much of the route exists
+  W = lerp(.15, .3, open); const pts = ringPts.map((p, i) => p.clone().lerp(routePts[i], open)); curve = new THREE.CatmullRomCurve3(pts, false, 'catmullrom', .5);
+  const up = new THREE.Vector3(0, 0, 1), T = new THREE.Vector3(), B = new THREE.Vector3(), Nn = new THREE.Vector3(), P = new THREE.Vector3();
+  for (let i = 0; i <= SEG; i++) { const u = clamp(i / SEG * draw, 0, 1); curve.getPointAt(u, P); curve.getTangentAt(u, T);
+    const tw = open * (.9 * Math.sin(u * 9) + .5 * Math.sin(u * 4 + 1));              // the route banks and twists; the ring lies flat to the lens
+    B.crossVectors(T, up).normalize(); Nn.crossVectors(B, T).normalize(); const c = Math.cos(tw), s = Math.sin(tw);
+    const bx = B.x * c + Nn.x * s, by = B.y * c + Nn.y * s, bz = B.z * c + Nn.z * s, nx = Nn.x * c - B.x * s, ny = Nn.y * c - B.y * s, nz = Nn.z * c - B.z * s;
+    [[-1, -1], [1, -1], [1, 1], [-1, 1]].forEach(([sw, sn], k) => { const o = (i * 4 + k) * 3; pos[o] = P.x + bx * W * sw + nx * TH * sn; pos[o + 1] = P.y + by * W * sw + ny * TH * sn; pos[o + 2] = P.z + bz * W * sw + nz * TH * sn; }); }
+  geo.attributes.position.needsUpdate = true; geo.computeVertexNormals();
+}
+// ---- the dart: Moniepoint's paper-plane mark, extruded and glossy ----
+const ds = new THREE.Shape(); ds.moveTo(-.5, -.6); ds.lineTo(-.08, -.38); ds.quadraticCurveTo(0, -.34, .08, -.38); ds.lineTo(.5, -.6); ds.lineTo(.1, .44); ds.quadraticCurveTo(0, .62, -.1, .44); ds.closePath();
+const dg = new THREE.ExtrudeGeometry(ds, { depth: .1, bevelEnabled: true, bevelThickness: .05, bevelSize: .04, bevelSegments: 6, curveSegments: 24 }); dg.center();
+const dart = new THREE.Mesh(dg, new THREE.MeshStandardMaterial({ color: '#0460EF', metalness: 0, roughness: .6, envMapIntensity: .1, emissive: '#0460EF', emissiveIntensity: .35, fog: false, toneMapped: false })); scene.add(dart);
+const TURN = window.TURN = 3.0;
+window.seek = t => {
+  const open = S(t - TURN, { k: 26, c: 9 }), flood = S(t - TURN - .15, { k: 60, c: 14 });
+  shape(open, 1);
+  bg.copy(NIGHT).lerp(DAY, flood); scene.fog.color.copy(bg); night.style.opacity = 1 - flood; sky.style.transform = `translate(${-2200 - 260 * flood - 30 * t}px, ${-80 + 80 * flood}px)`; scene.fog.near = lerp(12, 12, flood); scene.fog.far = lerp(30, 40, flood);
+  amb.intensity = lerp(.25, .7, flood); key.intensity = lerp(1.3, 2.0, flood); mat.emissiveIntensity = lerp(1.1, .12, flood);
+  // the dart: circles the ring while stuck, then rides the route
+  const lap = (t * .42) % 1, ride = clamp((t - TURN - .1) / 3.2), go = 1 - Math.pow(1 - ride, 2.2), u = clamp(lerp(lap, .06 + .9 * go, clamp(open * 3)), 0.001, .999);
+  const P = curve.getPointAt(u), T = curve.getTangentAt(u), Q = P.clone().add(T);
+  dart.position.copy(P).add(new THREE.Vector3(0, 0, .16)); dart.up.set(0, 0, 1); dart.lookAt(Q.x, Q.y, Q.z + .16); dart.rotateX(Math.PI / 2);
+  dart.scale.setScalar(lerp(.42, .62, open));
+  pulse.position.copy(P).add(new THREE.Vector3(0, 0, .9)); pulse.intensity = lerp(1.2, 3, flood);
+  // camera: holds on the ring, then follows the dart up the route with a little lag
+  const f = curve.getPointAt(clamp(u - .04, 0, 1)), follow = clamp(open * 1.5);
+  camera.position.set(lerp(0, f.x * .55, follow) + .08 * Math.sin(t * .9), lerp(.25, f.y - 1.2, follow) + .05 * Math.sin(t * 1.3), lerp(13.5, f.z + 11, follow));
+  camera.lookAt(lerp(0, f.x * .75, follow), lerp(.25, f.y + .6, follow), lerp(0, f.z, follow));
+  st.render();
+};
+// ---- mood-board frames: ?b=<name> shows one composed still ----
+const BOARD = {
+  hook: [1.2, `<div class="slam" style="top:1340px">You sent it.</div><div class="cap" style="top:1510px">They <span class="hl" style="background:#F5B21A;color:#021B4A">haven't seen</span> it.</div>`],
+  turn: [3.42, `<div class="slam sh" style="top:1000px;font-size:150px">Not with<br>Moniepoint.</div>`],
+  send: [4.4, `<div class="cap sh" style="top:1010px;font-size:92px;font-weight:900">You send <span class="pill"><img src="../assets/p_sender.png"></span></div><div class="slam sh" style="top:1150px;font-size:190px;font-family:Inter,S">₦10,000</div><div class="cap sh" style="top:1370px;font-size:92px;font-weight:900">to <span class="pill"><img src="../assets/p_receiver.png"></span> in seconds</div>`],
+  land: [5.35, `<div class="slam sh" style="top:130px;font-size:128px">Sent means<br>received.</div><img src="../assets/receipt_card.png" style="left:150px;top:500px;width:780px;border-radius:36px;box-shadow:0 60px 140px rgba(2,27,74,.5)">`],
+  card: [6.0, `<img src="../assets/p_card_cut.png" style="left:-40px;bottom:-10px;width:1160px;filter:drop-shadow(0 30px 60px rgba(2,27,74,.35))"><div class="slam sh" style="top:120px;font-size:170px">Spend it.</div><div class="cap sh" style="top:320px;font-weight:900">A card at your door<br>in <span class="hl" style="background:#fff;color:#0460EF">48 hours</span></div>`],
+  save: [4.9, `<img src="../assets/ui_save.png" style="left:170px;top:-40px;width:740px;border-radius:0 0 64px 64px;box-shadow:0 50px 120px rgba(2,27,74,.5)"><div class="cap sh" style="top:1385px;font-weight:900;font-size:92px">Save it. Earn up to</div><div class="slam sh" style="top:1490px;font-size:330px">20%</div>`],
+  close: [5.2, `<img src="../assets/p_phone_cut.png" style="left:60px;bottom:-10px;width:960px;filter:drop-shadow(0 30px 60px rgba(2,27,74,.35))"><img src="../assets/icon.png" style="left:455px;top:110px;width:170px;border-radius:40px;box-shadow:0 24px 60px rgba(2,27,74,.4)"><div class="slam sh" style="top:310px;font-size:124px">Banking that<br>simply works.</div>`],
+};
+const q = new URLSearchParams(location.search), b = q.get('b');
+window.FILM_DUR = 7; await document.fonts.load("900 80px S"); await document.fonts.load("700 80px S");
+if (b) { document.getElementById('ov').innerHTML = BOARD[b][1]; await Promise.all([...document.images].map(i => i.decode().catch(() => {}))); window.seek(BOARD[b][0]); } else window.seek(0);
+if (!b) document.getElementById('ov').innerHTML = `<div class="slam" id="tA" style="top:1340px">You sent it.</div><div class="slam sh" id="tB" style="top:1000px;font-size:150px">Not with<br>Moniepoint.</div>`;
+const seek0 = window.seek; window.seek = t => { seek0(t); const A = document.getElementById('tA'), Bn = document.getElementById('tB'); if (A) { const o = clamp((t - .2) / .2) * (1 - clamp((t - 2.8) / .15)); A.style.opacity = o; A.style.filter = `blur(${(1 - o) * 14}px)`; A.style.transform = `translateY(${(1 - o) * 40}px)`; const s2 = S(t - 3.5, { k: 900, c: 50 }); Bn.style.opacity = clamp(s2 * 1.5); Bn.style.filter = `blur(${(1 - clamp(s2)) * 14}px)`; Bn.style.transform = `translateY(${(1 - s2) * 44}px)`; } };
+window.__ready = true;
+</script>
