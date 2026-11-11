@@ -1,0 +1,65 @@
+<!doctype html><meta charset="utf-8">
+<style>
+@font-face{font-family:S;font-weight:500;src:url(../assets/satoshi-500.woff2)}
+@font-face{font-family:S;font-weight:700;src:url(../assets/satoshi-700.woff2)}
+@font-face{font-family:S;font-weight:900;src:url(../assets/satoshi-900.woff2)}
+*{box-sizing:border-box;margin:0}
+body{width:1080px;height:1920px;overflow:hidden;font-family:S;position:relative}
+.f{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.dark{background:radial-gradient(90% 60% at 50% 38%,#0A2F7A 0%,#021B4A 55%,#010E2B 100%);color:#fff}
+.sky{background:radial-gradient(100% 70% at 50% 40%,#FFFFFF 0%,#D5F1FE 55%,#A9DCFA 100%);color:#021B4A}
+.blue{background:#0460EF;color:#fff}
+h1{font-weight:900;font-size:132px;line-height:1.02;letter-spacing:-.035em}
+h2{font-weight:700;font-size:74px;line-height:1.08;letter-spacing:-.025em}
+.gold{color:#F5B21A}.cy{color:#4FD1FF}.bl{color:#0460EF}
+.spin{width:300px;height:300px;border-radius:50%;border:34px solid rgba(245,178,26,.18);border-top-color:#F5B21A;border-right-color:#F5B21A;transform:rotate(35deg)}
+.chip{font-weight:900;font-size:50px;padding:18px 40px;border-radius:999px;background:rgba(245,178,26,.16);color:#F5B21A}
+.bub{font:700 52px/1.15 S;padding:28px 40px;border-radius:44px;max-width:780px;position:absolute}
+.in{background:#12357F;color:#fff;border-bottom-left-radius:10px;left:70px}
+.out{background:#F5B21A;color:#021B4A;border-bottom-right-radius:10px;right:70px}
+svg.dart{position:absolute}
+</style>
+<body>
+<!-- 1 hook -->
+<div class="f dark" id="b1"><div class="spin" style="margin-bottom:110px"></div><h1>You sent it.</h1><h2 style="margin-top:36px;opacity:.9">They <span class="gold">haven't seen</span> it.</h2></div>
+<!-- 2 the wait -->
+<div class="f dark" id="b2">
+  <div class="bub in" style="top:300px">Have you seen the alert?</div>
+  <div class="bub out" style="top:480px">Not yet o</div>
+  <div class="bub in" style="top:660px">Check again 🙏</div>
+  <div class="bub out" style="top:840px">Still nothing</div>
+  <div class="bub in" style="top:1020px">I've sent it since…</div>
+  <div style="position:absolute;top:1330px;display:flex;flex-direction:column;align-items:center;gap:50px"><div class="spin" style="width:220px;height:220px;border-width:26px;transform:rotate(200deg)"></div><div class="chip">Pending…</div></div>
+</div>
+<!-- 3 the turn -->
+<div class="f dark" id="b3">
+  <div style="position:absolute;left:50%;top:1010px;width:1500px;height:1500px;margin:-750px 0 0 -750px;border-radius:50%;background:radial-gradient(closest-side,#FFFFFF 0%,#D5F1FE 70%,#A9DCFA 100%)"></div>
+  <svg class="dart" style="left:390px;top:640px" width="300" height="360" viewBox="0 0 100 120"><path d="M0 120 L42 98 Q50 94 58 98 L100 120 L60 16 Q50 -2 40 16 Z" fill="#0460EF"/></svg>
+  <svg style="position:absolute;left:0;top:0" width="1080" height="1920"><path d="M540 1010 C540 1400 300 1500 200 1920" stroke="#F5B21A" stroke-width="46" fill="none" stroke-linecap="round"/></svg>
+  
+</div>
+<!-- 4 the send -->
+<div class="f sky" id="b4">
+  <svg style="position:absolute;left:0;top:0" width="1080" height="1920"><path d="M-40 200 C500 180 1120 300 1010 760 C940 1120 380 1150 340 1700" stroke="#F5B21A" stroke-width="46" fill="none" stroke-linecap="round"/></svg>
+  <svg class="dart" style="left:255px;top:1640px;transform:rotate(183deg)" width="170" height="204" viewBox="0 0 100 120"><path d="M0 120 L42 98 Q50 94 58 98 L100 120 L60 16 Q50 -2 40 16 Z" fill="#0460EF"/></svg>
+  <h2 style="margin-top:-520px">You send</h2><h1 style="font-size:150px;margin-top:16px;font-family:Inter,S;font-weight:900" class="bl">₦10,000</h1>
+</div>
+<!-- 5 the landing -->
+<div class="f blue" id="b5">
+  <svg style="position:absolute;left:0;top:0" width="1080" height="1920"><path d="M-60 760 C200 640 80 520 -60 480 M1140 900 C800 1100 300 1500 -60 1840" stroke="#E5A50A" stroke-width="60" fill="none"/></svg>
+  <img src="../assets/receipt_card.png" style="position:absolute;left:90px;top:520px;width:900px;border-radius:40px;box-shadow:0 50px 120px rgba(1,14,43,.45)">
+  <h1 style="position:absolute;top:150px;font-size:118px">Sent means<br>received.</h1>
+</div>
+<!-- 6 proof -->
+<div class="f sky" id="b6">
+  <div style="position:absolute;top:300px;width:760px;height:236px;overflow:hidden;border-radius:28px;box-shadow:0 30px 70px rgba(2,27,74,.18)"><img src="../assets/receipt_card.png" style="position:absolute;width:1500px;left:-118px;top:-925px"></div>
+  <h1 style="font-size:300px;margin-top:120px" class="bl">99.9%</h1><h2 style="margin-top:10px">reliable transfers</h2>
+</div>
+<!-- 7 close -->
+<div class="f blue" id="b7">
+  <svg style="position:absolute;left:0;top:0" width="1080" height="1920"><path d="M-60 1500 C300 1300 800 1700 1140 1380" stroke="#E5A50A" stroke-width="60" fill="none"/></svg>
+  <h2 style="font-size:84px">Transfers that never<br>leave you <span style="color:#FFD25A">stranded.</span></h2>
+  <img src="../assets/icon.png" style="width:230px;border-radius:52px;margin-top:130px;box-shadow:0 30px 70px rgba(1,14,43,.35)">
+  <h2 style="margin-top:44px;font-weight:900">Moniepoint</h2><div style="font:700 46px S;margin-top:16px;opacity:.92">Banking that simply works.</div>
+</div>
+<script>document.getElementById('b'+(new URLSearchParams(location.search).get('b')||1)).style.display='flex'</script>
