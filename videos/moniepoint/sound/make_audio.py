@@ -25,6 +25,7 @@ for i, t0 in enumerate([1.45, 1.95, 2.4, 3.4, 4.2, 4.9, 8.2, 8.25, 8.3, 31.1, 31
 for k in range(0, 27, 3): put(10.6 + k / 30, click(2800, .003), .05)                   # the amount counts
 for k in range(0, 24, 3): put(18.65 + k / 30, click(2800, .003), .05)                  # 99.9 counts
 for k in range(0, 21, 3): put(28.55 + k / 30, click(2800, .003), .05)                  # 20 counts
+for tf in (3.0, 13.9, 22.9, 34.4): put(tf - .02, sub(), .16)                                # floods land
 put(max(0, 7.9 - pk / SR), wh, .2)                                                      # the colour sweep
 for t0, g in [(14.75, .5), (19.5, .28), (28.0, .3), (39.35, .4)]: put(t0, thump(), g)   # phone lands, number lands, phone lands, the full stop
 for t0 in [7.6, 9.75, 12.05, 16.4, 18.3, 22.8, 24.9, 26.8, 31.4, 32.3, 32.75, 34.9, 35.45, 37.3, 37.5]: put(t0, sub(), .1)

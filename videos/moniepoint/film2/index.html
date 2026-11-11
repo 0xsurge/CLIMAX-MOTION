@@ -143,6 +143,8 @@ svg.l{position:absolute;left:0;top:0;overflow:visible}img{display:block}.abs{pos
   <svg id="dartEl" class="abs" width="110" height="132" viewBox="0 0 100 120" style="margin:-66px 0 0 -55px;overflow:visible"><path id="dp" d="M0 120 L42 98 Q50 94 58 98 L100 120 L60 16 Q50 -2 40 16 Z" fill="#0460EF"/></svg>
   </div>
   <div id="gl"></div>
+  <div id="fx" style="position:absolute;inset:0;display:none"></div>
+  <div id="tz" style="position:absolute;left:0;top:0;width:1080px;height:1920px;display:none;align-items:center;justify-content:center;font:900 300px/1 S;letter-spacing:-.04em;color:#fff;white-space:nowrap">Spend</div>
 </div>
 <script type="importmap">{ "imports": { "three": "../../../.claude/skills/motion-reel/engine/lib/three/three.module.js", "three/addons/": "../../../.claude/skills/motion-reel/engine/lib/three/addons/" } }</script>
 <script src="../assets/motion.js"></script>
@@ -232,6 +234,8 @@ const PRY = [[0, -Math.PI * 2 - .5], [13.85, .32, SPIN], [15.2, 0, TILT], [16.3,
 const PRX = [[0, .5], [13.85, 0, TILT], [16.3, -.3, TILT], [18.25, .3, TILT], [26.0, .5], [26.85, .28, TILT], [28.6, .12, TILT]];
 const PRZ = [[0, -.3], [13.85, 0, TILT], [16.3, -.12, TILT], [18.25, .1, TILT], [26.0, -.2], [26.85, -.1, TILT], [28.6, -.04, TILT]];
 
+// ---- scene transitions borrowed from the Pulse explainer study: a colour flood out of an element (X3), a zoom through big type (X4) ----
+const FLOODS = [{ t: 3.0, col: '#F5B21A', rimc: '255,236,180', from: () => Pw('hook', 860, 1550) }, { t: 13.9, col: '#0460EF', rimc: '160,210,255', from: t => dartPos(t) }, { t: 22.9, col: '#0460EF', rimc: '160,210,255', from: () => null, word: 1 }, { t: 34.4, col: '#021B4A', rimc: '90,150,255', from: t => dartPos(t) }];
 let STOP = null;
 window.seek = t => {
   const [cx, cy, z] = camAt(t), [px, py] = camAt(t - 1 / 30);
@@ -285,6 +289,14 @@ window.seek = t => {
     const face = Math.cos(ry); gtex.offset.x = ry * 1.1 + rx * .6 + .25; glare.material.opacity = clamp(face) * clamp(Math.abs(Math.sin(ry * 1.0)) * 2.2 + .12) * .8;
     rim.position.set(600 * Math.cos(t * .6), -200, -500 + 400 * Math.sin(t * .6)); }
   R.render(scene, ocam);
+  // floods: cover from the element (ease-in), then open from the centre onto the next scene
+  const fx = $('fx'), tz = $('tz'); let fOn = false, wOn = false;
+  FLOODS.forEach(f => { const u = t - f.t; if (u < -.3 || u > .5) return; fOn = true;
+    if (u < 0) { const w = f.from(t), ox = w ? (w[0] - cx - 540) * z + 540 : 540, oy = w ? (w[1] - cy - 960) * z + 960 : 960, g = Math.pow(clamp((u + .3) / .3), 2.4);
+      fx.style.background = f.col; fx.style.clipPath = `circle(${(g * 2400).toFixed(0)}px at ${ox.toFixed(0)}px ${oy.toFixed(0)}px)`; }
+    else { const r = 2300 * (1 - Math.pow(1 - clamp(u / .5), 2.6)); fx.style.clipPath = ''; fx.style.background = `radial-gradient(circle at 540px 960px, transparent ${Math.max(0, r - 60).toFixed(0)}px, rgba(${f.rimc},.9) ${r.toFixed(0)}px, ${f.col} ${(r + 70).toFixed(0)}px)`; }
+    if (f.word && u > -.34 && u < .34) { wOn = true; const k = (u + .34) / .68, sc = .5 * Math.exp(k * 3.6); tz.style.transform = `scale(${sc.toFixed(3)})`; tz.style.opacity = clamp(k * 5) * clamp((1 - k) * 4); tz.style.filter = `blur(${(2 + sc * 1.6).toFixed(1)}px)`; } });
+  fx.style.display = fOn ? '' : 'none'; tz.style.display = wOn ? 'flex' : 'none';
 };
 await Promise.all([...document.images].map(i => i.decode().catch(() => {})).concat([document.fonts.load("900 80px S"), document.fonts.load("700 80px S"), document.fonts.load("500 80px S")]));
 window.seek(0); window.__ready = true;
