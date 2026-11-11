@@ -1,0 +1,149 @@
+<!doctype html><meta charset="utf-8">
+<!-- Storyboard v3: the Fynora-style bento look, in Moniepoint's brand. One frame per ?b=N, 1080x1920. -->
+<style>
+@font-face{font-family:S;font-weight:500;src:url(../assets/satoshi-500.woff2)}
+@font-face{font-family:S;font-weight:700;src:url(../assets/satoshi-700.woff2)}
+@font-face{font-family:S;font-weight:900;src:url(../assets/satoshi-900.woff2)}
+*{box-sizing:border-box;margin:0}
+body{width:1080px;height:1920px;overflow:hidden;font-family:S,Inter,sans-serif;background:#ECEFF4;color:#0B1B3F;position:relative}
+.f{position:absolute;inset:0;display:none}
+.p{position:absolute;border-radius:46px;background:#F7F8FB;overflow:hidden}
+.navy{background:radial-gradient(120% 90% at 30% 20%,#0B3A8F 0%,#021B4A 60%,#010E2B 100%);color:#fff}
+.grad{background:linear-gradient(165deg,#FFFFFF 0%,#BFE3FF 22%,#4D96FF 55%,#0460EF 100%)}
+.blue{background:#0460EF;color:#fff}
+.tag{position:absolute;left:34px;top:34px;font:700 30px/1 S;padding:14px 26px;border-radius:999px;background:#0460EF;color:#fff}
+.tag.am{background:#F5B21A;color:#021B4A}
+.h{font-weight:500;font-size:74px;line-height:1.1;letter-spacing:-.03em}
+.h b{font-weight:900}.sub{font-weight:500;font-size:34px;line-height:1.3;color:#6B7A99;margin-top:22px}
+.caps{font-weight:900;letter-spacing:-.04em;line-height:.92;text-transform:uppercase}
+.wm{position:absolute;opacity:1}
+.phone{position:absolute;background:#0A0D14;border-radius:76px;padding:16px;box-shadow:0 50px 100px rgba(2,27,74,.22),inset 0 0 0 3px #2A2F3A}
+.phone .s{width:100%;height:100%;border-radius:62px;overflow:hidden;position:relative;background:#fff}
+.phone .s img{width:100%;display:block}
+.phone:after{content:"";position:absolute;left:50%;top:34px;width:28%;height:34px;margin-left:-14%;border-radius:20px;background:#0A0D14}
+.pill{font:700 38px/1 S;padding:24px 34px;border-radius:999px;background:#fff;box-shadow:0 10px 30px rgba(2,27,74,.08);position:absolute;white-space:nowrap}
+.bl{color:#0460EF}.pill.blue{background:#0460EF;color:#fff}
+svg.l{position:absolute;left:0;top:0}
+</style>
+<body>
+<svg width="0" height="0"><defs><path id="dart" d="M0 120 L42 98 Q50 94 58 98 L100 120 L60 16 Q50 -2 40 16 Z"/></defs></svg>
+
+<!-- 1 hook -->
+<div class="f" id="b1">
+  <div class="p navy" style="left:20px;top:20px;width:1040px;height:1180px">
+    <svg class="wm" style="left:420px;top:560px" width="900" height="900" viewBox="0 0 320 320"><circle cx="160" cy="160" r="120" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="56"/></svg>
+    <div class="tag am">Pending…</div>
+    <div class="h" style="position:absolute;left:60px;top:420px;font-size:128px;color:#fff"><b>You sent it.</b><br>They haven't<br>seen it.</div>
+  </div>
+  <div class="p" style="left:20px;top:1220px;width:510px;height:680px;background:#FFF6DF">
+    <svg style="position:absolute;left:105px;top:190px" width="300" height="300" viewBox="0 0 320 320"><circle cx="160" cy="160" r="120" fill="none" stroke="rgba(245,178,26,.25)" stroke-width="40"/><path d="M160 40 A120 120 0 0 1 280 160" fill="none" stroke="#F5B21A" stroke-width="40" stroke-linecap="round"/></svg>
+  </div>
+  <div class="p" style="left:550px;top:1220px;width:510px;height:680px">
+    <div class="pill" style="left:34px;top:150px;font-size:34px">Have you seen the alert?</div>
+    <div class="pill" style="right:34px;top:290px;background:#F5B21A;font-size:34px">Not yet o</div>
+    <div class="pill" style="left:34px;top:430px;font-size:34px">Check again 🙏</div>
+  </div>
+</div>
+
+<!-- 2 the turn: problems -> Moniepoint -> solutions -->
+<div class="f" id="b2">
+  <div class="p" style="left:20px;top:20px;width:1040px;height:1880px">
+    <svg class="wm" style="left:-260px;top:940px" width="1400" height="1680" viewBox="0 0 100 120"><use href="#dart" fill="#EEF1F6"/></svg>
+    <div class="tag">The turn</div>
+    <svg class="l" width="1040" height="1880"><g fill="none" stroke="#C9D3E6" stroke-width="5"><path d="M330 330 C330 700 520 700 520 880"/><path d="M520 430 L520 880"/><path d="M720 330 C720 700 520 700 520 880"/></g>
+      <g fill="none" stroke="#0460EF" stroke-width="6"><path d="M520 1080 C520 1300 250 1260 250 1440"/><path d="M520 1080 L520 1440"/><path d="M520 1080 C520 1300 790 1260 790 1440"/></g></svg>
+    <div class="pill" style="left:110px;top:240px;background:#FFF1CC">Pending…</div>
+    <div class="pill" style="left:330px;top:360px;background:#FFF1CC">“Not yet o”</div>
+    <div class="pill" style="left:620px;top:240px;background:#FFF1CC">Failed transfer</div>
+    <img src="../assets/icon.png" style="position:absolute;left:410px;top:870px;width:220px;border-radius:52px;box-shadow:0 30px 70px rgba(4,96,239,.35)">
+    <svg style="position:absolute;left:484px;top:1150px;transform:rotate(180deg)" width="72" height="86" viewBox="0 0 100 120"><use href="#dart" fill="#0460EF"/></svg>
+    <div class="pill blue" style="left:160px;top:1440px">Sent</div>
+    <div class="pill blue" style="left:410px;top:1440px">Received</div>
+    <div class="pill blue" style="left:690px;top:1440px">In seconds</div>
+    <div class="h" style="position:absolute;left:0;width:1040px;text-align:center;top:1610px;font-size:92px">Not with <b class="bl">Moniepoint.</b></div>
+  </div>
+</div>
+
+<!-- 3 the send -->
+<div class="f" id="b3">
+  <div class="p grad" style="left:20px;top:20px;width:510px;height:640px"><svg class="wm" style="left:60px;top:40px" width="420" height="504" viewBox="0 0 100 120"><use href="#dart" fill="#fff"/></svg><img src="../assets/p_sender.png" style="position:absolute;left:105px;top:110px;width:300px;border-radius:28%"><div style="position:absolute;left:34px;bottom:34px;color:#fff;font:700 36px/1.2 S">Tunde<br><span style="font-weight:500;opacity:.85">sends</span></div></div>
+  <div class="p" style="left:550px;top:20px;width:510px;height:640px"><div class="tag">Transfers</div><div class="h" style="position:absolute;left:44px;top:250px;font-size:66px">You send</div><div class="h bl" style="position:absolute;left:44px;top:340px;font-size:104px;font-family:Inter,S"><b>₦10,000</b></div></div>
+  <div class="p" style="left:20px;top:680px;width:1040px;height:560px"><svg class="l" width="1040" height="560"><path d="M90 150 C380 60 600 520 950 400" fill="none" stroke="#F5B21A" stroke-width="16" stroke-linecap="round" stroke-dasharray="1 34"/><path d="M90 150 C380 60 600 520 950 400" fill="none" stroke="#F5B21A" stroke-width="10" stroke-linecap="round" stroke-dasharray="620 2000"/></svg>
+    <svg style="position:absolute;left:560px;top:250px;transform:rotate(118deg)" width="110" height="132" viewBox="0 0 100 120"><use href="#dart" fill="#0460EF"/></svg></div>
+  <div class="p" style="left:20px;top:1260px;width:510px;height:640px"><div class="h" style="position:absolute;left:44px;top:230px;font-size:66px">and Ada<br>has it.</div><div class="sub" style="position:absolute;left:44px;top:410px">Before you put<br>your phone down.</div></div>
+  <div class="p grad" style="left:550px;top:1260px;width:510px;height:640px"><svg class="wm" style="left:60px;top:40px" width="420" height="504" viewBox="0 0 100 120"><use href="#dart" fill="#fff"/></svg><img src="../assets/p_receiver.png" style="position:absolute;left:105px;top:110px;width:300px;border-radius:28%"><div style="position:absolute;left:34px;bottom:34px;color:#fff;font:700 36px/1.2 S">Ada<br><span style="font-weight:500;opacity:.85">receives</span></div></div>
+</div>
+
+<!-- 4 the landing -->
+<div class="f" id="b4">
+  <div class="p" style="left:20px;top:20px;width:1040px;height:1180px">
+    <svg class="wm" style="left:380px;top:300px" width="1100" height="1320" viewBox="0 0 100 120"><use href="#dart" fill="#EEF1F6"/></svg>
+    <div class="tag">Receipt</div>
+    <div class="phone" style="left:280px;top:150px;width:480px;height:1180px"><div class="s"><img src="../assets/receipt.png"></div></div>
+  </div>
+  <div class="p" style="left:20px;top:1220px;width:1040px;height:330px;background:#fff"><img src="../assets/receipt_card.png" style="position:absolute;width:2500px;left:-170px;top:-1585px"></div>
+  <div class="p blue" style="left:20px;top:1570px;width:1040px;height:330px"><div class="h" style="position:absolute;left:0;width:1040px;text-align:center;top:106px;font-size:98px;color:#fff"><b>Sent means received.</b></div></div>
+</div>
+
+<!-- 5 proof -->
+<div class="f" id="b5">
+  <div class="p" style="left:20px;top:20px;width:1040px;height:1880px">
+    <div class="tag">Reliability</div>
+    <div class="caps" style="position:absolute;left:50px;top:300px;font-size:290px;color:#0460EF">99.9%</div>
+    <div class="caps" style="position:absolute;left:56px;top:640px;font-size:150px">Reliable<br>transfers</div>
+    <div class="phone" style="left:330px;top:1010px;width:560px;height:1380px"><div class="s"><img src="../assets/receipt.png"></div></div>
+  </div>
+</div>
+
+<!-- 6 bridge marquee -->
+<div class="f" id="b6">
+  <div class="p" style="left:20px;top:20px;width:1040px;height:1880px">
+    <svg class="wm" style="left:120px;top:900px" width="1300" height="1560" viewBox="0 0 100 120"><use href="#dart" fill="#EEF1F6"/></svg>
+    <div class="h" style="position:absolute;left:0;width:1040px;text-align:center;top:520px;font-size:120px">And that's<br><b class="bl">just the start.</b></div>
+    <div style="position:absolute;left:-40px;top:960px;width:1200px;height:150px;background:#E6EAF2;display:flex;align-items:center;gap:36px;white-space:nowrap;font:500 70px/1 S;padding-left:20px">Spend it <svg width="50" height="60" viewBox="0 0 100 120" style="transform:rotate(90deg)"><use href="#dart" fill="#0460EF"/></svg> Save it <svg width="50" height="60" viewBox="0 0 100 120" style="transform:rotate(90deg)"><use href="#dart" fill="#0460EF"/></svg> Pay with it <svg width="50" height="60" viewBox="0 0 100 120" style="transform:rotate(90deg)"><use href="#dart" fill="#0460EF"/></svg> Get</div>
+  </div>
+</div>
+
+<!-- 7 card -->
+<div class="f" id="b7">
+  <div class="p grad" style="left:20px;top:20px;width:1040px;height:1240px"><svg class="wm" style="left:150px;top:-60px" width="900" height="1080" viewBox="0 0 100 120"><use href="#dart" fill="#fff"/></svg><img src="../assets/p_card_cut.png" style="position:absolute;left:-30px;bottom:0;width:1100px"><div class="tag" style="background:#fff;color:#0460EF">Card</div></div>
+  <div class="p" style="left:20px;top:1280px;width:1040px;height:620px"><div class="h" style="position:absolute;left:56px;top:110px;font-size:110px"><b>Spend it.</b></div><div class="h" style="position:absolute;left:56px;top:260px;font-size:72px">A card at your door<br>in <b class="bl">48 hours.</b></div></div>
+</div>
+
+<!-- 8 savings -->
+<div class="f" id="b8">
+  <div class="p" style="left:20px;top:20px;width:1040px;height:560px"><div class="tag">Savings</div><div class="h" style="position:absolute;left:56px;top:170px;font-size:110px"><b>Save it.</b></div><div class="h" style="position:absolute;left:56px;top:310px;font-size:72px">Earn up to <b class="bl">20%</b> a year.</div></div>
+  <div class="p" style="left:20px;top:600px;width:1040px;height:1300px">
+    <svg class="wm" style="left:-300px;top:200px" width="1100" height="1320" viewBox="0 0 100 120"><use href="#dart" fill="#EEF1F6"/></svg>
+    <div class="phone" style="left:250px;top:90px;width:540px;height:1400px"><div class="s"><img src="../assets/ui_save.png" style="margin-top:60px"></div></div>
+  </div>
+</div>
+
+<!-- 9 bills flow -->
+<div class="f" id="b9">
+  <div class="p" style="left:20px;top:20px;width:1040px;height:1880px">
+    <div class="tag">Bills</div>
+    <div class="h" style="position:absolute;left:56px;top:190px;font-size:110px"><b>Pay with it.</b></div><div class="h" style="position:absolute;left:56px;top:330px;font-size:72px">Bills. Airtime. Data. <b class="bl">In seconds.</b></div>
+    <svg class="l" width="1040" height="1880"><g fill="none" stroke="#C9D3E6" stroke-width="5"><path d="M240 760 C330 760 330 640 420 640"/><path d="M240 760 L420 760"/><path d="M240 760 C330 760 330 880 420 880"/><path d="M240 760 C330 760 330 1000 420 1000"/></g></svg>
+    <div class="pill blue" style="left:56px;top:716px">Pay</div>
+    <div class="pill" style="left:420px;top:596px">Cable TV</div><div class="pill" style="left:420px;top:716px">Electricity</div><div class="pill" style="left:420px;top:836px">Airtime</div><div class="pill" style="left:420px;top:956px">Data</div>
+    <img src="../assets/ui_bills.png" style="position:absolute;left:56px;top:1150px;width:520px;border-radius:28px;box-shadow:0 30px 80px rgba(2,27,74,.14)">
+    <img src="../assets/ui_airtime.png" style="position:absolute;left:480px;top:1250px;width:500px;border-radius:28px;box-shadow:0 30px 80px rgba(2,27,74,.2)">
+  </div>
+</div>
+
+<!-- 10 cashback -->
+<div class="f" id="b10">
+  <div class="p navy" style="left:20px;top:20px;width:1040px;height:1100px"><svg class="wm" style="left:330px;top:260px" width="1000" height="1200" viewBox="0 0 100 120"><use href="#dart" fill="rgba(255,255,255,.05)"/></svg><div class="tag am">Rewards</div><img src="../assets/ui_rewards.png" style="position:absolute;left:50px;top:400px;width:940px;border-radius:30px;box-shadow:0 40px 100px rgba(0,0,0,.5)"></div>
+  <div class="p" style="left:20px;top:1140px;width:1040px;height:760px"><div class="h" style="position:absolute;left:56px;top:150px;font-size:110px"><b>Get more back.</b></div><div class="h" style="position:absolute;left:56px;top:300px;font-size:72px"><b class="bl">Daily cashback.</b><br>Weekly rewards.</div></div>
+</div>
+
+<!-- 11 close -->
+<div class="f" id="b11">
+  <div class="p" style="left:20px;top:20px;width:1040px;height:150px;background:#E6EAF2;display:flex;align-items:center;gap:30px;white-space:nowrap;font:500 62px/1 S;padding-left:30px">Moniepoint <img src="../assets/icon.png" style="width:74px;border-radius:18px"> Moniepoint <img src="../assets/icon.png" style="width:74px;border-radius:18px"> Moniepoint</div>
+  <div class="p" style="left:20px;top:190px;width:1040px;height:1710px">
+    <div class="caps" style="position:absolute;left:56px;top:120px;font-size:168px">Banking<br>that <span class="bl">simply<br>works.</span></div>
+    <img src="../assets/p_phone_cut.png" style="position:absolute;left:230px;bottom:0;width:800px">
+  </div>
+</div>
+<script>document.getElementById('b'+(new URLSearchParams(location.search).get('b')||1)).style.display='block'</script>
