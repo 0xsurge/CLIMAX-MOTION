@@ -15,7 +15,8 @@ html,body{background:#F7F8FB;overflow:hidden}
 #cam{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:960px 540px}
 #gl{position:absolute;left:0;top:0;pointer-events:none}
 .scene{position:absolute;width:1920px;height:1080px}
-.p{position:absolute;border-radius:46px;background:#F7F8FB;overflow:hidden}
+.p{position:absolute;border-radius:46px;background:#FFFFFF;overflow:hidden;box-shadow:0 24px 70px rgba(2,27,74,.07)}
+.p[style*="background:transparent"]{box-shadow:none}
 .navy{background:radial-gradient(120% 90% at 30% 20%,#0B3A8F 0%,#021B4A 60%,#010E2B 100%);color:#fff}
 .grad{background:linear-gradient(165deg,#FFFFFF 0%,#BFE3FF 22%,#4D96FF 55%,#0460EF 100%)}
 .blue{background:#0460EF;color:#fff}
@@ -34,14 +35,14 @@ svg.l{position:absolute;left:0;top:0;overflow:visible}img{display:block}.abs{pos
   <div id="cam">
   <!-- 1 the question -->
   <div class="scene" data-o="hook">
-    <div class="p" id="hookP" data-in="-1" style="left:-200px;top:-200px;width:2320px;height:1480px;border-radius:0;background:transparent;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 210px,#000 2110px,transparent 2320px),linear-gradient(180deg,transparent 0,#000 210px,#000 1270px,transparent 1480px);-webkit-mask-composite:source-in;mask-composite:intersect">
+    <div class="p" id="hookP" data-in="-1" style="left:-200px;top:-200px;width:2320px;height:1480px;border-radius:0;background:transparent;-webkit-mask-image:linear-gradient(90deg,transparent 20px,#000 200px,#000 2120px,transparent 2300px),linear-gradient(180deg,transparent 80px,#000 200px,#000 1280px,transparent 1400px);-webkit-mask-composite:source-in;mask-composite:intersect">
       <div class="abs blob" style="width:1100px;height:1100px;border-radius:50%"></div><div class="abs blob" style="width:1000px;height:1000px;border-radius:50%"></div><div class="abs blob" style="width:760px;height:760px;border-radius:50%"></div>
       <div class="h bl" data-words=".1,.2" style="left:200px;width:1920px;text-align:center;top:650px;font-size:180px"><b>Sent it?</b></div>
     </div>
   </div>
   <!-- 2 somewhere: real Lagos moments in frames; the money itself floats lost across them -->
   <div class="scene" data-o="where">
-    <div class="p" data-in="-1" style="left:-200px;top:-200px;width:2320px;height:1480px;border-radius:0;background:transparent;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 210px,#000 2110px,transparent 2320px),linear-gradient(180deg,transparent 0,#000 210px,#000 1270px,transparent 1480px);-webkit-mask-composite:source-in;mask-composite:intersect">
+    <div class="p" data-in="-1" style="left:-200px;top:-200px;width:2320px;height:1480px;border-radius:0;background:transparent;-webkit-mask-image:linear-gradient(90deg,transparent 20px,#000 200px,#000 2120px,transparent 2300px),linear-gradient(180deg,transparent 80px,#000 200px,#000 1280px,transparent 1400px);-webkit-mask-composite:source-in;mask-composite:intersect">
       <div class="h" data-words="1.6,.12" style="left:380px;top:250px;font-size:64px;font-weight:700">Your money is</div>
       <div class="abs" data-card="1.5,320" style="left:380px;top:350px;width:1000px;height:640px;border-radius:48px;overflow:hidden;box-shadow:0 40px 100px rgba(2,27,74,.22)"><img src="../assets/life/l4.jpg" style="width:100%;height:100%;object-fit:cover"></div>
       <div class="abs" data-card="1.62,320" style="left:1460px;top:560px;width:520px;height:560px;border-radius:48px;overflow:hidden;box-shadow:0 40px 100px rgba(2,27,74,.22)"><img src="../assets/life/l6.jpg" style="width:100%;height:100%;object-fit:cover"></div>
@@ -53,7 +54,7 @@ svg.l{position:absolute;left:0;top:0;overflow:visible}img{display:block}.abs{pos
   </div>
   <!-- 3 what it carries: the dart rides over a blue hill, real moments pop up above it -->
   <div class="scene" data-o="hill">
-    <div class="p" data-in="-1" style="left:-200px;top:-200px;width:2320px;height:1480px;border-radius:0;background:transparent;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 210px,#000 2110px,transparent 2320px),linear-gradient(180deg,transparent 0,#000 210px,#000 1270px,transparent 1480px);-webkit-mask-composite:source-in;mask-composite:intersect">
+    <div class="p" data-in="-1" style="left:-200px;top:-200px;width:2320px;height:1480px;border-radius:0;background:transparent;-webkit-mask-image:linear-gradient(90deg,transparent 20px,#000 200px,#000 2120px,transparent 2300px),linear-gradient(180deg,transparent 80px,#000 200px,#000 1280px,transparent 1400px);-webkit-mask-composite:source-in;mask-composite:intersect">
       <div class="abs" style="left:0;top:950px;width:2320px;height:1100px;border-radius:50%;background:linear-gradient(180deg,#2F7BFF 0%,#0460EF 35%,#0342B8 100%)"></div>
       <div class="abs" data-card="4.55,0" style="left:520px;top:280px;width:560px;height:400px;border-radius:40px;overflow:hidden;border:8px solid #fff;box-shadow:0 40px 100px rgba(2,27,74,.25);transform-origin:50% 100%"><img src="../assets/life/l1.jpg" style="width:100%;height:100%;object-fit:cover"></div>
       <div class="abs" data-card="5.25,0" style="left:1240px;top:240px;width:580px;height:410px;border-radius:40px;overflow:hidden;border:8px solid #fff;box-shadow:0 40px 100px rgba(2,27,74,.25)"><img src="../assets/life/l7.jpg" style="width:100%;height:100%;object-fit:cover"></div>
@@ -64,7 +65,7 @@ svg.l{position:absolute;left:0;top:0;overflow:visible}img{display:block}.abs{pos
   </div>
   <!-- 4 the character -->
   <div class="scene" data-o="char">
-    <div class="p" data-in="-1" style="left:-200px;top:-200px;width:2320px;height:1480px;border-radius:0;background:transparent;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 210px,#000 2110px,transparent 2320px),linear-gradient(180deg,transparent 0,#000 210px,#000 1270px,transparent 1480px);-webkit-mask-composite:source-in;mask-composite:intersect">
+    <div class="p" data-in="-1" style="left:-200px;top:-200px;width:2320px;height:1480px;border-radius:0;background:transparent;-webkit-mask-image:linear-gradient(90deg,transparent 20px,#000 200px,#000 2120px,transparent 2300px),linear-gradient(180deg,transparent 80px,#000 200px,#000 1280px,transparent 1400px);-webkit-mask-composite:source-in;mask-composite:intersect">
       <div class="abs" style="left:1100px;top:160px;width:1200px;height:1200px;border-radius:50%;background:radial-gradient(closest-side,rgba(4,96,239,.26),rgba(4,96,239,0))"></div>
       <div class="abs" data-card="6.6,240" style="left:1260px;top:290px;width:720px;height:900px;border-radius:48px;overflow:hidden;box-shadow:0 40px 100px rgba(2,27,74,.22)"><img src="../assets/life/l3.jpg" style="width:100%;height:100%;object-fit:cover;object-position:40% 50%"></div>
       <div class="h" data-words="6.75,.14" style="left:340px;top:520px;font-size:150px;line-height:1;letter-spacing:-.045em"><b>Waiting<br>shouldn't be<br><span class="bl">a struggle.</span></b></div>
@@ -72,7 +73,7 @@ svg.l{position:absolute;left:0;top:0;overflow:visible}img{display:block}.abs{pos
   </div>
   <!-- 5 the logo pill: the dart lands and becomes the mark -->
   <div class="scene" data-o="logo">
-    <div class="p" data-in="-1" style="left:-200px;top:-200px;width:2320px;height:1480px;border-radius:0;background:transparent;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 210px,#000 2110px,transparent 2320px),linear-gradient(180deg,transparent 0,#000 210px,#000 1270px,transparent 1480px);-webkit-mask-composite:source-in;mask-composite:intersect">
+    <div class="p" data-in="-1" style="left:-200px;top:-200px;width:2320px;height:1480px;border-radius:0;background:transparent;-webkit-mask-image:linear-gradient(90deg,transparent 20px,#000 200px,#000 2120px,transparent 2300px),linear-gradient(180deg,transparent 80px,#000 200px,#000 1280px,transparent 1400px);-webkit-mask-composite:source-in;mask-composite:intersect">
       <div id="pillL" class="abs" style="left:970px;top:600px;width:380px;height:280px;border-radius:70px;background:#0460EF;display:flex;align-items:center;justify-content:center;box-shadow:0 40px 100px rgba(4,96,239,.35)"><img src="../assets/icon.png" style="width:190px;border-radius:44px"></div>
       <div class="h" data-words="9.0,.1" style="left:200px;width:1920px;text-align:center;top:960px;font-size:88px;font-weight:900;letter-spacing:-.03em">Moniepoint</div>
       <div class="glint" data-glint="9.15"></div>
@@ -80,7 +81,7 @@ svg.l{position:absolute;left:0;top:0;overflow:visible}img{display:block}.abs{pos
   </div>
   <!-- 6 the app: pick who, tap send, dive into Ada's card -->
   <div class="scene" data-o="send">
-    <div class="p" data-in="-1" style="left:-200px;top:-200px;width:2320px;height:1480px;border-radius:0;background:transparent;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 210px,#000 2110px,transparent 2320px),linear-gradient(180deg,transparent 0,#000 210px,#000 1270px,transparent 1480px);-webkit-mask-composite:source-in;mask-composite:intersect">
+    <div class="p" data-in="-1" style="left:-200px;top:-200px;width:2320px;height:1480px;border-radius:0;background:transparent;-webkit-mask-image:linear-gradient(90deg,transparent 20px,#000 200px,#000 2120px,transparent 2300px),linear-gradient(180deg,transparent 80px,#000 200px,#000 1280px,transparent 1400px);-webkit-mask-composite:source-in;mask-composite:intersect">
       <div class="h" data-words="10.15,.17" style="left:200px;width:1920px;text-align:center;top:330px;font-size:120px;letter-spacing:-.04em"><b>Pick who. <span class="bl">Tap send.</span></b></div>
       <div class="abs" data-card="10.3,0" style="left:630px;top:560px;width:1060px;height:190px;background:#fff;border-radius:40px;box-shadow:0 20px 60px rgba(2,27,74,.10);display:flex;align-items:center;padding:0 40px;font:900 130px/1 Inter,S;color:#0460EF;letter-spacing:-.04em"><span id="amt"></span><span id="caret" style="display:inline-block;width:10px;height:110px;margin-left:12px;background:#0460EF;border-radius:5px"></span></div>
       <div id="ada" class="abs" data-card="10.75,0" style="left:630px;top:820px;width:1060px;height:220px;background:#fff;border-radius:40px;border:5px solid #0460EF;display:flex;align-items:center;gap:30px;padding:0 36px">
@@ -90,14 +91,14 @@ svg.l{position:absolute;left:0;top:0;overflow:visible}img{display:block}.abs{pos
   </div>
   <!-- 7 no stress: the slam beside the 3D phone (Bolt) -->
   <div class="scene" data-o="land">
-    <div class="p" data-in="-1" style="left:-200px;top:-200px;width:2320px;height:1480px;border-radius:0;background:transparent;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 210px,#000 2110px,transparent 2320px),linear-gradient(180deg,transparent 0,#000 210px,#000 1270px,transparent 1480px);-webkit-mask-composite:source-in;mask-composite:intersect">
+    <div class="p" data-in="-1" style="left:-200px;top:-200px;width:2320px;height:1480px;border-radius:0;background:transparent;-webkit-mask-image:linear-gradient(90deg,transparent 20px,#000 200px,#000 2120px,transparent 2300px),linear-gradient(180deg,transparent 80px,#000 200px,#000 1280px,transparent 1400px);-webkit-mask-composite:source-in;mask-composite:intersect">
       <div id="pool4" class="abs" style="left:1100px;top:120px;width:1100px;height:1100px;border-radius:50%"></div>
       <div class="h" data-words="13.85,.22" style="left:340px;top:520px;font-size:240px;line-height:.92;letter-spacing:-.05em"><b>No<br><span class="bl">stress.</span></b></div>
     </div>
   </div>
   <!-- 8 no more asking: the line parts and the money pops in a box between the words -->
   <div class="scene" data-o="ask">
-    <div class="p" data-in="-1" style="left:-200px;top:-200px;width:2320px;height:1480px;border-radius:0;background:transparent;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 210px,#000 2110px,transparent 2320px),linear-gradient(180deg,transparent 0,#000 210px,#000 1270px,transparent 1480px);-webkit-mask-composite:source-in;mask-composite:intersect">
+    <div class="p" data-in="-1" style="left:-200px;top:-200px;width:2320px;height:1480px;border-radius:0;background:transparent;-webkit-mask-image:linear-gradient(90deg,transparent 20px,#000 200px,#000 2120px,transparent 2300px),linear-gradient(180deg,transparent 80px,#000 200px,#000 1280px,transparent 1400px);-webkit-mask-composite:source-in;mask-composite:intersect">
       <div class="h" data-words="16.55,.14" style="left:200px;width:1920px;text-align:center;top:440px;font-size:84px;font-weight:700;color:#6B7A99">No more</div>
       <div id="askL" class="abs" style="top:590px;font:900 128px/1.1 S;letter-spacing:-.045em;white-space:nowrap;color:#0460EF"><span class="w">“Have</span> <span class="w">you</span></div>
       <div id="askR" class="abs" style="top:590px;font:900 128px/1.1 S;letter-spacing:-.045em;white-space:nowrap;color:#0460EF"><span class="w">seen</span> <span class="w">it?”</span></div>
@@ -181,8 +182,7 @@ const OR = { hook: [0, 0], where: [2100, 0], hill: [2100, -1200], char: [4200, -
 document.querySelectorAll('.scene').forEach(s => { const o = OR[s.dataset.o]; s.style.left = o[0] + 'px'; s.style.top = o[1] + 'px'; });
 // the opening scenes share one continuous light ground underneath; their content fades out across each boundary instead of ending on a hard edge
 ['hook', 'where', 'hill', 'char', 'logo', 'send', 'land', 'ask'].forEach(k => { const d = document.createElement('div'), o = OR[k]; d.className = 'abs'; Object.assign(d.style, { left: (o[0] - 90) + 'px', top: (o[1] - 60) + 'px', width: '2100px', height: '1200px', background: '#F7F8FB' }); cam.insertBefore(d, cam.firstChild); });
-// the board scenes keep their slightly darker ground, faded out at its edges so there is no line between the two
-['proof', 'bridge', 'card', 'save', 'bills', 'cash', 'close'].forEach(k => { const d = document.createElement('div'), o = OR[k]; d.className = 'abs'; Object.assign(d.style, { left: (o[0] - 150) + 'px', top: (o[1] - 120) + 'px', width: '2220px', height: '1320px', background: '#ECEFF4', webkitMaskImage: 'linear-gradient(90deg,transparent 0,#000 220px,#000 2000px,transparent 2220px),linear-gradient(180deg,transparent 0,#000 200px,#000 1120px,transparent 1320px)', webkitMaskComposite: 'source-in', maskComposite: 'intersect' }); cam.insertBefore(d, cam.firstChild); });
+// one continuous light ground everywhere; the board panels are white cards with a soft shadow on it
 const camFlow = (t, tc, ti, to) => { const v0 = ti / (ti + to); return t < tc ? v0 * Math.exp((t - tc) / ti) : 1 - (1 - v0) * Math.exp(-(t - tc) / to); };
 const CK = [{ t: 0, x: 0, y: 0, z: 1 }, { t: 1.45, x: 2100, y: 0, z: 1, w: 1 }, { t: 2.7, x: 2260, z: 1.05, tau: .9 }, { t: 4.0, x: 2100, y: -1200, z: 1, w: 1 }, { t: 5.2, x: 2330, tau: 1.0 },
   { t: 6.5, x: 4200, y: -1200, z: 1, w: 1 }, { t: 7.4, z: 1.08, tau: .8 }, { t: 8.5, x: 4200, y: 0, z: 1, w: 1 }, { t: 9.3, z: 1.06, tau: .7 },
