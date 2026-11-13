@@ -382,9 +382,12 @@ window.seek = t => {
     const span = DVIS.find(([a, b]) => t >= a && t < b), born = S(t - span[0], POPS), into = t < 7 ? S(t - 6.2, FLY) : t < 9 ? S(t - 8.55, FLY) : t < 15 ? S(t - 12.75, FLY) : 0, dot = S(t - 39.35, { k: 200, c: 28.3 });
     dEl.style.left = x + 'px'; dEl.style.top = y + 'px'; dEl.style.transform = `rotate(${(va * k).toFixed(1)}deg) scale(${(born * (1 - into) * lerp(1, .42, dot)).toFixed(3)})`;
     $('dp').setAttribute('fill', t < 7 ? '#FFFFFF' : '#0460EF'); $('dp').setAttribute('d', dot > .5 ? 'M50 20 A40 40 0 1 1 49.9 20 Z' : 'M0 120 L42 98 Q50 94 58 98 L100 120 L60 16 Q50 -2 40 16 Z');
-    const P = []; for (let i = 0; i <= 40; i++) P.push(dartPos(t - i * .016)); const seg = (a, b) => P.slice(a, b + 1).map(([x, y], k) => (k ? 'L' : 'M') + x.toFixed(1) + ' ' + y.toFixed(1)).join('');
+    const P = []; for (let i = 0; i <= 80; i++) { const ts = t - i * .008; if (ts < span[0] + .005) break; P.push(dartPos(ts)); }   // only since the dart appeared in this scene, so no jump from its previous place
+    const seg = (a, b) => { const q = P.slice(a, b + 1); if (q.length < 2) return ''; let d = 'M' + q[0][0].toFixed(1) + ' ' + q[0][1].toFixed(1);   // smooth curve through the samples
+      for (let k = 1; k < q.length - 1; k++) { const mx = (q[k][0] + q[k + 1][0]) / 2, my = (q[k][1] + q[k + 1][1]) / 2; d += 'Q' + q[k][0].toFixed(1) + ' ' + q[k][1].toFixed(1) + ' ' + mx.toFixed(1) + ' ' + my.toFixed(1); }
+      const l = q[q.length - 1]; return d + 'L' + l[0].toFixed(1) + ' ' + l[1].toFixed(1); };
     const tw = 16 * born * (1 - into) * (1 - dot);   // the trail: sharp near the dart, then it thins and dissolves into a soft smoke at its end
-    $('tr').setAttribute('d', seg(0, 14)); $('tr').setAttribute('stroke-width', tw.toFixed(1)); $('tr2').setAttribute('d', seg(10, 28)); $('tr2').setAttribute('stroke-width', (tw * .8).toFixed(1)); $('tr3').setAttribute('d', seg(22, 40)); $('tr3').setAttribute('stroke-width', (tw * 1.1).toFixed(1)); }
+    $('tr').setAttribute('d', seg(0, 28)); $('tr').setAttribute('stroke-width', tw.toFixed(1)); $('tr2').setAttribute('d', seg(20, 56)); $('tr2').setAttribute('stroke-width', (tw * .8).toFixed(1)); $('tr3').setAttribute('d', seg(44, 80)); $('tr3').setAttribute('stroke-width', (tw * 1.1).toFixed(1)); }
   // the phone
   const on = (t >= 13.55 && t < 21.3) || (t >= 26.8 && t < 31.3); phone.visible = sh.visible = on;
   if (on) { screenMat.map = t < 24 ? TEX.receipt : TEX.save; const wx = TR(t, PHX), wy = TR(t, PHY), s = TR(t, PHS) * z, ry = TR(t, PRY), rx = TR(t, PRX), rz = TR(t, PRZ);
