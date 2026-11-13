@@ -6,9 +6,9 @@
      (three.js, orthographic, so it sits on the 2D board) that spins 360 and tilts for macro shots, a colour sweep at the turn,
      light passes on landings. Declarative: data-in (panel enters), data-words (word build), data-pop, data-draw (line draws). -->
 <style>
-@font-face{font-family:S;font-weight:500;src:url(../assets/satoshi-500.woff2)}
-@font-face{font-family:S;font-weight:700;src:url(../assets/satoshi-700.woff2)}
-@font-face{font-family:S;font-weight:900;src:url(../assets/satoshi-900.woff2)}
+@font-face{font-family:S;font-weight:500;src:url(../assets/InterDisplay-Medium.otf)}
+@font-face{font-family:S;font-weight:700;src:url(../assets/InterDisplay-SemiBold.otf)}
+@font-face{font-family:S;font-weight:900;src:url(../assets/InterDisplay-Bold.otf)}
 *{box-sizing:border-box;margin:0}
 html,body{background:#F7F8FB;overflow:hidden}
 #stage{position:relative;width:1920px;height:1080px;overflow:hidden;background:#F7F8FB;font-family:S,Inter,sans-serif;color:#0B1B3F}
@@ -56,10 +56,10 @@ svg.l{position:absolute;left:0;top:0;overflow:visible}img{display:block}.abs{pos
   <div class="scene" data-o="hill">
     <div class="p" data-in="-1" style="left:-200px;top:-200px;width:2320px;height:1480px;border-radius:0;background:transparent;-webkit-mask-image:linear-gradient(90deg,transparent 20px,#000 200px,#000 2120px,transparent 2300px),linear-gradient(180deg,transparent 80px,#000 200px,#000 1280px,transparent 1400px);-webkit-mask-composite:source-in;mask-composite:intersect">
       <div class="abs" style="left:0;top:950px;width:2320px;height:1100px;border-radius:50%;background:linear-gradient(180deg,#2F7BFF 0%,#0460EF 35%,#0342B8 100%)"></div>
-      <div class="abs" data-card="4.55,0" style="left:520px;top:280px;width:560px;height:400px;border-radius:40px;overflow:hidden;border:8px solid #fff;box-shadow:0 40px 100px rgba(2,27,74,.25);transform-origin:50% 100%"><img src="../assets/life/l1.jpg" style="width:100%;height:100%;object-fit:cover"></div>
-      <div class="abs" data-card="5.25,0" style="left:1240px;top:240px;width:580px;height:410px;border-radius:40px;overflow:hidden;border:8px solid #fff;box-shadow:0 40px 100px rgba(2,27,74,.25)"><img src="../assets/life/l7.jpg" style="width:100%;height:100%;object-fit:cover"></div>
-      <div class="pill" data-pop="4.75" style="left:600px;top:640px">Shop stock · ₦45,000</div>
-      <div class="pill" data-pop="5.45" style="left:1330px;top:610px">Mama's upkeep · ₦10,000</div>
+      <div class="abs" data-card="4.55,0" style="left:520px;top:370px;width:560px;height:400px;border-radius:40px;overflow:hidden;border:8px solid #fff;box-shadow:0 40px 100px rgba(2,27,74,.25);transform-origin:50% 100%"><img src="../assets/life/l1.jpg" style="width:100%;height:100%;object-fit:cover"></div>
+      <div class="abs" data-card="5.25,0" style="left:1240px;top:330px;width:580px;height:410px;border-radius:40px;overflow:hidden;border:8px solid #fff;box-shadow:0 40px 100px rgba(2,27,74,.25)"><img src="../assets/life/l7.jpg" style="width:100%;height:100%;object-fit:cover"></div>
+      <div class="pill" data-pop="4.75" style="left:600px;top:730px">Shop stock · ₦45,000</div>
+      <div class="pill" data-pop="5.45" style="left:1330px;top:700px">Mama's upkeep · ₦10,000</div>
       <div class="h" data-words="4.35,.2" style="left:200px;width:1920px;text-align:center;top:1060px;font-size:66px;color:#fff;font-weight:700">Rent. School fees. Mama's upkeep.</div>
     </div>
   </div>
@@ -68,14 +68,13 @@ svg.l{position:absolute;left:0;top:0;overflow:visible}img{display:block}.abs{pos
     <div class="p" data-in="-1" style="left:-200px;top:-200px;width:2320px;height:1480px;border-radius:0;background:transparent;-webkit-mask-image:linear-gradient(90deg,transparent 20px,#000 200px,#000 2120px,transparent 2300px),linear-gradient(180deg,transparent 80px,#000 200px,#000 1280px,transparent 1400px);-webkit-mask-composite:source-in;mask-composite:intersect">
       <div class="abs" style="left:1100px;top:160px;width:1200px;height:1200px;border-radius:50%;background:radial-gradient(closest-side,rgba(4,96,239,.26),rgba(4,96,239,0))"></div>
       <div class="abs" data-card="6.6,240" style="left:1260px;top:290px;width:720px;height:900px;border-radius:48px;overflow:hidden;box-shadow:0 40px 100px rgba(2,27,74,.22)"><img src="../assets/life/l3.jpg" style="width:100%;height:100%;object-fit:cover;object-position:40% 50%"></div>
-      <div class="h" data-words="6.75,.14" style="left:340px;top:520px;font-size:150px;line-height:1;letter-spacing:-.045em"><b>Waiting<br>shouldn't be<br><span class="bl">a struggle.</span></b></div>
+      <div class="h" data-words="6.75,.14" style="left:340px;top:520px;font-size:150px;line-height:1;letter-spacing:-.045em"><b>None of it<br>should hang<br>on a <span class="bl">maybe.</span></b></div>
     </div>
   </div>
   <!-- 5 the logo pill: the dart lands and becomes the mark -->
   <div class="scene" data-o="logo">
     <div class="p" data-in="-1" style="left:-200px;top:-200px;width:2320px;height:1480px;border-radius:0;background:transparent;-webkit-mask-image:linear-gradient(90deg,transparent 20px,#000 200px,#000 2120px,transparent 2300px),linear-gradient(180deg,transparent 80px,#000 200px,#000 1280px,transparent 1400px);-webkit-mask-composite:source-in;mask-composite:intersect">
       <div id="pillL" class="abs" style="left:970px;top:600px;width:380px;height:280px;border-radius:70px;background:#0460EF;display:flex;align-items:center;justify-content:center;box-shadow:0 40px 100px rgba(4,96,239,.35)"><img src="../assets/icon.png" style="width:190px;border-radius:44px"></div>
-      <div class="h" data-words="9.0,.1" style="left:200px;width:1920px;text-align:center;top:960px;font-size:88px;font-weight:900;letter-spacing:-.03em">Moniepoint</div>
       <div class="glint" data-glint="9.15"></div>
     </div>
   </div>
@@ -114,7 +113,7 @@ svg.l{position:absolute;left:0;top:0;overflow:visible}img{display:block}.abs{pos
     <div class="p" data-in="18.45" style="left:20px;top:20px;width:1880px;height:1040px">
       <div class="tag">Reliability</div>
       <div class="caps bl" id="pct" style="left:70px;top:210px;font-size:330px"></div>
-      <div class="caps" data-words="19.35,.2" style="left:76px;top:600px;font-size:170px">Reliable<br>transfers</div>
+      <div class="h" data-words="19.35,.2" style="left:80px;top:610px;font-size:96px;font-weight:500;letter-spacing:-.03em">Reliable transfers</div>
     </div>
   </div>
   <!-- 6 bridge -->
@@ -126,7 +125,7 @@ svg.l{position:absolute;left:0;top:0;overflow:visible}img{display:block}.abs{pos
   </div>
   <!-- 7 card -->
   <div class="scene" data-o="card">
-    <div class="p grad" data-in="22.72" style="left:20px;top:20px;width:900px;height:1040px"><svg class="wm par" style="left:60px;top:-80px" width="820" height="984" viewBox="0 0 100 120"><use href="#dart" fill="#fff"/></svg><img id="model1" src="../assets/p_card_cut.png" class="abs" style="left:50px;bottom:0;width:790px;transform-origin:50% 100%"><div class="tag" style="background:#fff;color:#0460EF">Card</div><div class="glint" data-glint="24.6"></div></div>
+    <div class="p grad" data-in="22.72" style="left:20px;top:20px;width:900px;height:1040px"><svg class="wm par" style="left:60px;top:-80px" width="820" height="984" viewBox="0 0 100 120"><use href="#dart" fill="#fff"/></svg><img id="model1" src="../assets/p_card_cut.png" class="abs" style="-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 14%,#000 86%,transparent 100%),linear-gradient(180deg,#000 0,#000 84%,transparent 100%);-webkit-mask-composite:source-in;mask-composite:intersect;left:50px;bottom:0;width:790px;transform-origin:50% 100%"><div class="tag" style="background:#fff;color:#0460EF">Card</div><div class="glint" data-glint="24.6"></div></div>
     <div class="p" data-in="22.86" style="left:940px;top:20px;width:960px;height:1040px"><div class="h" data-words="23.3,.2" style="left:70px;top:320px;font-size:150px"><b>Spend it.</b></div><div class="h" data-words="24.0,.12" style="left:70px;top:520px;font-size:84px">A card at your door<br>in <b class="bl">48 hours.</b></div></div>
   </div>
   <!-- 8 savings -->
@@ -153,10 +152,9 @@ svg.l{position:absolute;left:0;top:0;overflow:visible}img{display:block}.abs{pos
   </div>
   <!-- 11 close -->
   <div class="scene" data-o="close">
-    <div class="p" data-in="37.22" style="left:20px;top:20px;width:1880px;height:130px;background:#E6EAF2"><div id="mq2" class="abs" style="left:0;top:0;height:130px;display:flex;align-items:center;gap:30px;white-space:nowrap;font:500 58px/1 S"></div></div>
     <div class="p" data-in="37.34" style="left:20px;top:170px;width:1880px;height:890px"><svg class="wm par" style="left:700px;top:-100px" width="1100" height="1320" viewBox="0 0 100 120"><use href="#dart" fill="#EEF1F6"/></svg>
-      <div class="caps" data-words="38.2,.2" style="left:76px;top:250px;font-size:150px">Banking that<br><span class="bl">simply works<span id="stop" style="display:inline-block;width:.3em"></span></span></div>
-      <img id="model2" src="../assets/p_phone_cut.png" class="abs" style="left:1180px;bottom:0;width:640px;transform-origin:50% 100%">
+      <div class="h" data-words="38.2,.2" style="left:90px;top:250px;font-size:150px;font-weight:700;line-height:1;letter-spacing:-.045em">Money that<br><span class="bl">simply works<span id="stop" style="display:inline-block;width:.3em"></span></span></div>
+      <img id="model2" src="../assets/p_phone_cut.png" class="abs" style="-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 14%,#000 86%,transparent 100%),linear-gradient(180deg,#000 0,#000 84%,transparent 100%);-webkit-mask-composite:source-in;mask-composite:intersect;left:1180px;bottom:0;width:640px;transform-origin:50% 100%">
     </div>
   </div>
   <svg id="trail" class="abs" width="1" height="1" style="left:0;top:0;overflow:visible"><path id="tr" fill="none" stroke="#F5B21A" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -174,7 +172,7 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 const S = (t, p) => Motion.spring(t, p), clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x)), lerp = (a, b, u) => a + (b - a) * u, $ = id => document.getElementById(id), cam = $('cam');
 const ease = x => { x = clamp(x); return 1 - Math.pow(1 - x, 3); }, sm = x => { x = clamp(x); return x * x * (3 - 2 * x); };
-window.FILM_DUR = 42;
+window.FILM_DUR = 43;
 // Springs: all critically damped (no pop-and-settle), quick but soft.
 const WORD = { k: 320, c: 36 }, PANEL = { k: 170, c: 26 }, POPS = { k: 420, c: 41 }, FLY = { k: 300, c: 35 }, GLIDE = { k: 110, c: 21 }, SPIN = { k: 22, c: 9.4 }, TILT = { k: 46, c: 13.6 };
 // ---- places and camera ----
@@ -184,7 +182,7 @@ document.querySelectorAll('.scene').forEach(s => { const o = OR[s.dataset.o]; s.
 ['hook', 'where', 'hill', 'char', 'logo', 'send', 'land', 'ask'].forEach(k => { const d = document.createElement('div'), o = OR[k]; d.className = 'abs'; Object.assign(d.style, { left: (o[0] - 90) + 'px', top: (o[1] - 60) + 'px', width: '2100px', height: '1200px', background: '#F7F8FB' }); cam.insertBefore(d, cam.firstChild); });
 // one continuous light ground everywhere; the board panels are white cards with a soft shadow on it
 const camFlow = (t, tc, ti, to) => { const v0 = ti / (ti + to); return t < tc ? v0 * Math.exp((t - tc) / ti) : 1 - (1 - v0) * Math.exp(-(t - tc) / to); };
-const CK = [{ t: 0, x: 0, y: 0, z: 1 }, { t: 1.45, x: 2100, y: 0, z: 1, w: 1 }, { t: 2.7, x: 2260, z: 1.05, tau: .9 }, { t: 4.0, x: 2100, y: -1200, z: 1, w: 1 }, { t: 5.2, x: 2330, tau: 1.0 },
+const CK = [{ t: 0, x: 0, y: 0, z: 1 }, { t: 1.45, x: 2100, y: 0, z: 1, w: 1 }, { t: 2.7, x: 2260, z: 1.05, tau: .9 }, { t: 4.0, x: 2100, y: -1200, z: 1, w: 1 }, { t: 5.2, x: 2190, y: -1180, z: 1.03, tau: 1.0 },
   { t: 6.5, x: 4200, y: -1200, z: 1, w: 1 }, { t: 7.4, z: 1.08, tau: .8 }, { t: 8.5, x: 4200, y: 0, z: 1, w: 1 }, { t: 9.3, z: 1.06, tau: .7 },
   { t: 10.0, x: 2100, y: 1200, z: 1, w: 1 }, { t: 11.0, y: 1290, z: 1.06, tau: .6 }, { t: 13.05, x: 2120, y: 1670, z: 2.6, tau: .22 },
   { t: 13.6, x: 2100, y: 2400, z: 1, w: 1 }, { t: 15.0, z: 1.06, tau: 1.0 }, { t: 16.3, x: 2100, y: 3600, z: 1, w: 1 }, { t: 17.3, z: 1.05, tau: .8 }, { t: 18.6, x: 4200, y: 2400, z: 1, w: 1 }, { t: 19.4, x: 4240, z: 1.06, tau: .5 },
@@ -209,7 +207,7 @@ const GLS = [...document.querySelectorAll('[data-glint]')].map(el => ({ el, t0: 
 const PARS = [...document.querySelectorAll('.par')], GWS = [...document.querySelectorAll('[data-glow]')].map(el => ({ el, t0: +el.dataset.glow }));
 const MQ = (id, items, sep) => { $(id).innerHTML = Array.from({ length: 6 }, () => items.map(i => `<span>${i}</span>${sep}`).join('')).join(''); };
 MQ('mq1', ['Spend it', 'Save it', 'Pay with it', 'Get more back'], '<svg width="50" height="60" viewBox="0 0 100 120" style="transform:rotate(90deg);flex:none"><use href="#dart" fill="#0460EF"/></svg>');
-MQ('mq2', ['Moniepoint'], '<img src="../assets/icon.png" style="width:74px;border-radius:18px;flex:none">');
+
 
 // ---- the dart ----
 const Pw = (o, x, y) => [OR[o][0] + x, OR[o][1] + y];
@@ -374,7 +372,7 @@ window.seek = t => {
   const pc = S(t - 18.75, WORD); $('pct').textContent = (90 + 9.9 * ease((t - 18.8) / .8)).toFixed(1) + '%'; $('pct').style.opacity = sm(pc * 1.25); $('pct').style.transform = `translateY(${(1 - pc) * 50}px)`; $('pct').style.filter = pc < .98 ? `blur(${(1 - pc) * 14}px)` : '';
   const p2 = S(t - 28.5, WORD); $('pc20').textContent = Math.round(20 * ease((t - 28.55) / .7)) + '%'; $('pc20').style.opacity = sm(p2 * 1.25);
   // 6, 11 marquees
-  $('mq1').style.transform = `translateX(${-200 - (t - 20.9) * 220}px)`; $('mq2').style.transform = `translateX(${-120 - (t - 37.2) * 90}px)`;
+  $('mq1').style.transform = `translateX(${-200 - (t - 20.9) * 220}px)`; 
   // 7, 11 models rise with a slow push
   [['model1', 22.85, 26.9], ['model2', 37.5, 42]].forEach(([id, t0]) => { const s = S(t - t0, { k: 60, c: 15.5 }), el = $(id); el.style.opacity = clamp(s * 1.8); el.style.transform = `translateY(${(1 - s) * 220}px) scale(${1 + .035 * clamp((t - t0) / 4)})`; el.style.filter = s < .97 ? `blur(${(1 - s) * 10}px)` : ''; });
   // the dart and its trail
@@ -407,6 +405,10 @@ window.seek = t => {
     if (f.word && u > -.34 && u < .34) { wOn = true; const k = (u + .34) / .68, sc = .5 * Math.exp(k * 3.6); tz.style.transform = `scale(${sc.toFixed(3)})`; tz.style.opacity = clamp(k * 5) * clamp((1 - k) * 4); tz.style.filter = `blur(${(2 + sc * 1.6).toFixed(1)}px)`; } });
   fx.style.display = fOn ? '' : 'none'; tz.style.display = wOn ? 'flex' : 'none';
 };
+// time warp: real time tr -> film time t; the hill beat (rent, school fees, Mama's upkeep) slows smoothly and gains 1.0 s
+const WARP = (() => { const dt = .001, N = 44000, T = new Float32Array(N + 1), b = x => sm((x - 4.9) / .5) * (1 - sm((x - 7.2) / .5)); let a = 0; for (let i = 0; i < N; i++) a += b(i * dt) * dt; const amp = 1.0 / a; let t = 0; T[0] = 0; for (let i = 0; i < N; i++) { t += (1 - amp * b(i * dt)) * dt; T[i + 1] = t; } return T; })();
+const W = tr => { const x = clamp(tr / .001, 0, WARP.length - 2), i = Math.floor(x); return WARP[i] + (WARP[i + 1] - WARP[i]) * (x - i); };
+{ const inner = window.seek; window.seek = tr => inner(W(tr)); }
 await Promise.all([...document.images].map(i => i.decode().catch(() => {})).concat([document.fonts.load("900 80px S"), document.fonts.load("700 80px S"), document.fonts.load("500 80px S")]));
 window.seek(0); window.__ready = true;
 </script>

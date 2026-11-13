@@ -1,6 +1,6 @@
 # Lay the voiceover lines on the film's timeline (each at its scene, never overlapping) -> sound/vo.wav
 import json, sys, numpy as np, wave, subprocess
-SR = 44100; DUR = 42.0; src = sys.argv[1]; out_path = sys.argv[2]
+SR = 44100; DUR = 43.0; src = sys.argv[1]; out_path = sys.argv[2]
 L = json.load(open('sound/vo_lines.json')); out = np.zeros(int((DUR + 2) * SR)); prev = 0
 tmp = '/tmp/claude-0/-home-user-CLIMAX-MOTION/ebd3c3d1-b9fc-58c3-8e73-03b9f49be28b/scratchpad/v.wav'
 for key, t0, text in L:

@@ -1,10 +1,11 @@
 # Moniepoint "Sent means received": placeholder music (Mixkit 720, lift on the turn at 7.5 s) plus the soft motion layer:
 # word pops, a tick per chat bubble, air passes on the camera whips, sub-thumps on landings. No tonal notes.
 import numpy as np, wave, subprocess, os
-SR = 44100; DUR = 42.0; TMP = '/tmp/claude-0/-home-user-CLIMAX-MOTION/ebd3c3d1-b9fc-58c3-8e73-03b9f49be28b/scratchpad/mp_sfx.wav'
+SR = 44100; DUR = 43.0; TMP = '/tmp/claude-0/-home-user-CLIMAX-MOTION/ebd3c3d1-b9fc-58c3-8e73-03b9f49be28b/scratchpad/mp_sfx.wav'
 PACK = '../../obi-reel/sound/sfxpack/'; rng = np.random.default_rng(5); fx = np.zeros((int((DUR + 1) * SR), 2))
+from warp import real
 def put(t, s, g, pan=0.):
-    i = int(t * SR); j = min(len(fx), i + len(s)); fx[i:j, 0] += s[:j - i] * g * (1 - max(pan, 0)); fx[i:j, 1] += s[:j - i] * g * (1 + min(pan, 0))
+    i = int(real(t) * SR); j = min(len(fx), i + len(s)); fx[i:j, 0] += s[:j - i] * g * (1 - max(pan, 0)); fx[i:j, 1] += s[:j - i] * g * (1 + min(pan, 0))
 def hp(x): return x - np.concatenate([[0], x[:-1]]) * .95
 def click(f=2400, d=.006): n = int(.04 * SR); t = np.arange(n) / SR; return hp(rng.standard_normal(n)) * np.exp(-t / .003) * .6 + np.sin(2 * np.pi * f * t) * np.exp(-t / d) * .4
 def pop(f0=900): n = int(.05 * SR); t = np.arange(n) / SR; return np.sin(2 * np.pi * np.cumsum(f0 * np.exp(-t * 30) + f0 * .45) / SR) * np.exp(-t / .012) * (1 - np.exp(-t / .001)) * .8 + hp(rng.standard_normal(n)) * np.exp(-t / .003) * .15
