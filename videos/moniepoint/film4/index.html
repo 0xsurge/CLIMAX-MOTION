@@ -1,0 +1,364 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Moniepoint: Sent means received (v2, bento board)</title>
+<!-- v4: new first 20 s from the ad, Bolt and EarnEdits studies (carousel light sweep, pull-out carrier, dive through the button). 16:9 re-block of film2. 1920x1080, 42 s, pure function of t. Look from the Fynora study (videos/reference/fynora/STUDY.md): one big bento board,
+     a flat camera that travels across it (camFlow, from the Bolt study), the dart as carrier along thin lines, a real 3D phone
+     (three.js, orthographic, so it sits on the 2D board) that spins 360 and tilts for macro shots, a colour sweep at the turn,
+     light passes on landings. Declarative: data-in (panel enters), data-words (word build), data-pop, data-draw (line draws). -->
+<style>
+@font-face{font-family:S;font-weight:500;src:url(../assets/satoshi-500.woff2)}
+@font-face{font-family:S;font-weight:700;src:url(../assets/satoshi-700.woff2)}
+@font-face{font-family:S;font-weight:900;src:url(../assets/satoshi-900.woff2)}
+*{box-sizing:border-box;margin:0}
+html,body{background:#ECEFF4;overflow:hidden}
+#stage{position:relative;width:1920px;height:1080px;overflow:hidden;background:#ECEFF4;font-family:S,Inter,sans-serif;color:#0B1B3F}
+#cam{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:960px 540px}
+#gl{position:absolute;left:0;top:0;pointer-events:none}
+.scene{position:absolute;width:1920px;height:1080px}
+.p{position:absolute;border-radius:46px;background:#F7F8FB;overflow:hidden}
+.navy{background:radial-gradient(120% 90% at 30% 20%,#0B3A8F 0%,#021B4A 60%,#010E2B 100%);color:#fff}
+.grad{background:linear-gradient(165deg,#FFFFFF 0%,#BFE3FF 22%,#4D96FF 55%,#0460EF 100%)}
+.blue{background:#0460EF;color:#fff}
+.tag{position:absolute;left:34px;top:34px;font:700 30px/1 S;padding:14px 26px;border-radius:999px;background:#0460EF;color:#fff}
+.tag.am{background:#F5B21A;color:#021B4A}
+.h{position:absolute;font-weight:500;font-size:74px;line-height:1.1;letter-spacing:-.03em}
+.h b{font-weight:900}.sub{position:absolute;font-weight:500;font-size:34px;line-height:1.3;color:#6B7A99}
+.caps{position:absolute;font-weight:900;letter-spacing:-.04em;line-height:.92;text-transform:uppercase}
+.wm{position:absolute}.pill{font:700 38px/1 S;padding:24px 34px;border-radius:999px;background:#fff;box-shadow:0 10px 30px rgba(2,27,74,.08);position:absolute;white-space:nowrap}
+.pill.blue{background:#0460EF;color:#fff}.bl{color:#0460EF}.w{display:inline-block}
+svg.l{position:absolute;left:0;top:0;overflow:visible}img{display:block}.abs{position:absolute}
+.glint{position:absolute;inset:0;pointer-events:none}
+</style>
+<div id="stage">
+  <svg width="0" height="0" style="position:absolute"><defs><path id="dart" d="M0 120 L42 98 Q50 94 58 98 L100 120 L60 16 Q50 -2 40 16 Z"/><filter id="mb" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur id="mbg" stdDeviation="0 0"/></filter></defs></svg>
+  <div id="cam">
+  <!-- 1 hook: one centred line at a time, blue on a light ground, soft brand colour drifting at the edges (ad study) -->
+  <div class="scene" data-o="hook">
+    <div class="p" id="hookP" data-in="-1" style="left:-200px;top:-200px;width:2320px;height:1480px;border-radius:0">
+      <div class="abs blob" style="width:1100px;height:1100px;border-radius:50%"></div><div class="abs blob" style="width:1000px;height:1000px;border-radius:50%"></div><div class="abs blob" style="width:760px;height:760px;border-radius:50%"></div>
+      <div class="h bl" data-words=".1,.17,1.42" style="left:200px;width:1920px;text-align:center;top:650px;font-size:160px"><b>You sent the money.</b></div>
+      <div class="h bl" id="hook2" data-words="1.55,.17" style="left:200px;width:1920px;text-align:center;top:650px;font-size:160px"><b>They haven't seen it.</b></div>
+    </div>
+  </div>
+  <!-- 2 the wait and the turn happen in the 3D carousel (GL); this is the white card it lands on -->
+  <div class="scene" data-o="turn">
+    <div class="p" data-in="-1" style="left:-200px;top:-200px;width:2320px;height:1480px;border-radius:0">
+      <img id="icon2" src="../assets/icon.png" class="abs" style="left:1050px;top:470px;width:220px;border-radius:52px;box-shadow:0 30px 70px rgba(4,96,239,.35)">
+      <div class="h" id="notw" style="left:200px;width:1920px;text-align:center;top:780px;font-size:110px"><span class="w">Not</span> <span class="w">with</span> <b class="bl"><span class="w">Moniepoint.</span></b></div>
+    </div>
+  </div>
+  <!-- 3 the send: the amount types into a big field, the Send button lights, the dart taps it, and the camera dives through the button into Ada's side -->
+  <div class="scene" data-o="send">
+    <div class="p" data-in="9.75" style="left:20px;top:20px;width:1880px;height:1040px">
+      <div class="tag">Transfers</div>
+      <div class="abs" data-pop="9.95" style="left:90px;top:140px;display:flex;align-items:center;gap:26px"><img src="../assets/p_sender.png" style="width:110px;height:110px;border-radius:28%;object-fit:cover"><div><div style="font:700 46px/1.1 S">Tunde</div><div style="font:500 30px/1.3 S;color:#6B7A99">Moniepoint account</div></div></div>
+      <div class="h" data-words="10.0,.15" style="left:90px;top:330px;font-size:60px">You send</div>
+      <div class="abs" data-card="9.9,0" style="left:90px;top:420px;width:1180px;height:230px;background:#fff;border-radius:40px;box-shadow:0 30px 80px rgba(2,27,74,.10)"><div class="abs" style="left:60px;top:26px;font:900 170px/1 Inter,S;letter-spacing:-.04em;color:#0460EF;display:flex;align-items:center"><span id="amt"></span><span id="caret" style="display:inline-block;width:10px;height:140px;margin-left:12px;background:#0460EF;border-radius:5px"></span></div></div>
+      <div class="abs" data-pop="10.15" style="left:90px;top:700px;display:flex;align-items:center;gap:22px"><img src="../assets/p_receiver.png" style="width:84px;height:84px;border-radius:28%;object-fit:cover"><div style="font:700 44px/1 S">To Ada Okafor <span style="font-weight:500;color:#6B7A99">· Moniepoint</span></div></div>
+      <div id="btn" class="abs" style="left:1340px;top:420px;width:448px;height:252px;border-radius:48px;overflow:hidden;background:#0460EF;transform-origin:50% 50%">
+        <div id="mini" class="abs" style="left:0;top:0;width:1920px;height:1080px;transform:scale(.233333);transform-origin:0 0;background:radial-gradient(120% 100% at 30% 20%,#3D8BFF 0%,#0460EF 55%,#0342B8 100%);color:#fff;opacity:0">
+          <img id="adaP" src="../assets/p_receiver.png" class="abs" style="left:220px;top:250px;width:470px;height:470px;object-fit:cover;border-radius:28%;box-shadow:0 40px 100px rgba(1,14,43,.35)">
+          <div id="note" class="abs" style="left:800px;top:250px;width:920px;height:190px;border-radius:40px;background:rgba(255,255,255,.96);color:#0B1B3F;display:flex;align-items:center;gap:30px;padding:0 40px;box-shadow:0 30px 80px rgba(1,14,43,.3)"><img src="../assets/icon.png" style="width:110px;height:110px;border-radius:26px"><div><div style="font:700 34px/1.2 S;color:#6B7A99">Moniepoint · now</div><div style="font:700 50px/1.2 S">Credit alert: <span style="color:#0460EF">₦10,000.00</span></div></div></div>
+          <div class="h" data-words="11.6,.16,0,.24" style="left:800px;top:520px;font-size:120px;color:#fff"><b>and Ada has it.</b></div>
+          <div class="sub" data-words="12.1,.07,0,.24" style="left:800px;top:690px;font-size:46px;color:rgba(255,255,255,.88)">Before you put your phone down.</div>
+        </div>
+        <div id="sendL" class="abs" style="inset:0;display:flex;align-items:center;justify-content:center;gap:24px;font:900 96px/1 S;color:#fff">Send <svg width="70" height="84" viewBox="0 0 100 120" style="transform:rotate(90deg)"><use href="#dart" fill="#fff"/></svg></div>
+        <div class="glint" data-glint="10.3"></div>
+      </div>
+    </div>
+  </div>
+  <!-- 4 the landing -->
+  <div class="scene" data-o="land">
+    <div class="p" data-in="13.72" style="left:20px;top:20px;width:1180px;height:1040px"><svg class="wm par" style="left:500px;top:-40px" width="1000" height="1200" viewBox="0 0 100 120"><use href="#dart" fill="#EEF1F6"/></svg><div class="tag">Receipt</div><div id="pool4" class="abs" style="left:190px;top:120px;width:800px;height:800px;border-radius:50%"></div></div>
+    <div class="p blue" data-in="13.86" style="left:1220px;top:20px;width:680px;height:1040px"><div class="h" data-words="14.4,.17" style="left:56px;top:330px;font-size:124px;color:#fff"><b>Sent<br>means<br>received.</b></div><div class="glint" data-glint="15.1"></div></div>
+  </div>
+  <!-- 5 proof -->
+  <div class="scene" data-o="proof">
+    <div class="p" data-in="18.22" style="left:20px;top:20px;width:1880px;height:1040px">
+      <div class="tag">Reliability</div>
+      <div class="caps bl" id="pct" style="left:70px;top:210px;font-size:330px"></div>
+      <div class="caps" data-words="19.35,.2" style="left:76px;top:600px;font-size:170px">Reliable<br>transfers</div>
+    </div>
+  </div>
+  <!-- 6 bridge -->
+  <div class="scene" data-o="bridge">
+    <div class="p" data-in="20.72" style="left:20px;top:20px;width:1880px;height:1040px"><svg class="wm par" style="left:1000px;top:200px" width="1000" height="1200" viewBox="0 0 100 120"><use href="#dart" fill="#EEF1F6"/></svg>
+      <div class="h" data-words="21.1,.17" style="left:0;width:1880px;text-align:center;top:230px;font-size:150px">And that's<br><b class="bl">just the start.</b></div>
+      <div class="abs" style="left:0;top:720px;width:1880px;height:150px;background:#E6EAF2;overflow:hidden"><div id="mq1" class="abs" style="left:0;top:0;height:150px;display:flex;align-items:center;gap:36px;white-space:nowrap;font:500 70px/1 S"></div></div>
+    </div>
+  </div>
+  <!-- 7 card -->
+  <div class="scene" data-o="card">
+    <div class="p grad" data-in="22.72" style="left:20px;top:20px;width:900px;height:1040px"><svg class="wm par" style="left:60px;top:-80px" width="820" height="984" viewBox="0 0 100 120"><use href="#dart" fill="#fff"/></svg><img id="model1" src="../assets/p_card_cut.png" class="abs" style="left:50px;bottom:0;width:790px;transform-origin:50% 100%"><div class="tag" style="background:#fff;color:#0460EF">Card</div><div class="glint" data-glint="24.6"></div></div>
+    <div class="p" data-in="22.86" style="left:940px;top:20px;width:960px;height:1040px"><div class="h" data-words="23.3,.2" style="left:70px;top:320px;font-size:150px"><b>Spend it.</b></div><div class="h" data-words="24.0,.12" style="left:70px;top:520px;font-size:84px">A card at your door<br>in <b class="bl">48 hours.</b></div></div>
+  </div>
+  <!-- 8 savings -->
+  <div class="scene" data-o="save">
+    <div class="p" data-in="26.72" style="left:20px;top:20px;width:900px;height:1040px"><div class="tag">Savings</div><div class="h" data-words="27.3,.2" style="left:70px;top:320px;font-size:150px"><b>Save it.</b></div><div class="h" style="left:70px;top:520px;font-size:84px"><span data-words="28.1,.14">Earn up to</span> <b class="bl" id="pc20"></b><br><span data-words="29.0,.14">a year.</span></div></div>
+    <div class="p" data-in="26.86" style="left:940px;top:20px;width:960px;height:1040px"><svg class="wm par" style="left:-200px;top:100px" width="1000" height="1200" viewBox="0 0 100 120"><use href="#dart" fill="#EEF1F6"/></svg></div>
+  </div>
+  <!-- 9 bills -->
+  <div class="scene" data-o="bills">
+    <div class="p" data-in="30.72" style="left:20px;top:20px;width:1880px;height:1040px">
+      <div class="tag">Bills</div>
+      <div class="h" data-words="31.25,.18" style="left:70px;top:150px;font-size:130px"><b>Pay with it.</b></div><div class="h" data-words="31.95,.2" style="left:70px;top:310px;font-size:66px">Bills. Airtime. Data. <b class="bl">In seconds.</b></div>
+      <svg class="l" width="1880" height="1040"><g fill="none" stroke="#0460EF" stroke-width="6" stroke-linecap="round"><path data-draw="31.3,.45" d="M250 724 C340 724 340 544 430 544"/><path data-draw="31.4,.4" d="M250 724 C340 724 340 664 430 664"/><path data-draw="31.5,.45" d="M250 724 C340 724 340 784 430 784"/><path data-draw="31.6,.5" d="M250 724 C340 724 340 904 430 904"/></g></svg>
+      <div class="pill blue" data-pop="31.1" style="left:70px;top:680px">Pay</div>
+      <div class="pill" data-pop="31.7" style="left:430px;top:500px">Cable TV</div><div class="pill" data-pop="31.8" style="left:430px;top:620px">Electricity</div><div class="pill" data-pop="31.9" data-glow="32.05" style="left:430px;top:740px">Airtime</div><div class="pill" data-pop="32.0" style="left:430px;top:860px">Data</div>
+      <img data-card="32.3,-300" src="../assets/ui_bills.png" class="abs" style="left:980px;top:150px;width:440px;border-radius:28px;box-shadow:0 30px 80px rgba(2,27,74,.14)">
+      <img data-card="32.75,300" src="../assets/ui_airtime.png" class="abs" style="left:1360px;top:330px;width:480px;border-radius:28px;box-shadow:0 30px 80px rgba(2,27,74,.2)">
+    </div>
+  </div>
+  <!-- 10 cashback -->
+  <div class="scene" data-o="cash">
+    <div class="p navy" data-in="34.22" style="left:20px;top:20px;width:1100px;height:1040px"><svg class="wm par" style="left:300px;top:100px" width="900" height="1080" viewBox="0 0 100 120"><use href="#dart" fill="rgba(255,255,255,.05)"/></svg><div class="tag am">Rewards</div><div data-card="34.9,0" data-glow="35.45" class="abs" style="left:60px;top:370px;width:980px;border-radius:30px;overflow:hidden"><img src="../assets/ui_rewards.png" style="width:980px"><div class="glint" data-glint="35.7"></div></div></div>
+    <div class="p" data-in="34.36" style="left:1140px;top:20px;width:760px;height:1040px"><div class="h" data-words="34.75,.18" style="left:60px;top:300px;font-size:124px"><b>Get more<br>back.</b></div><div class="h" data-words="35.4,.18" style="left:60px;top:620px;font-size:70px"><b class="bl">Daily cashback.</b><br>Weekly rewards.</div></div>
+  </div>
+  <!-- 11 close -->
+  <div class="scene" data-o="close">
+    <div class="p" data-in="37.22" style="left:20px;top:20px;width:1880px;height:130px;background:#E6EAF2"><div id="mq2" class="abs" style="left:0;top:0;height:130px;display:flex;align-items:center;gap:30px;white-space:nowrap;font:500 58px/1 S"></div></div>
+    <div class="p" data-in="37.34" style="left:20px;top:170px;width:1880px;height:890px"><svg class="wm par" style="left:700px;top:-100px" width="1100" height="1320" viewBox="0 0 100 120"><use href="#dart" fill="#EEF1F6"/></svg>
+      <div class="caps" data-words="38.2,.2" style="left:76px;top:250px;font-size:150px">Banking that<br><span class="bl">simply works<span id="stop" style="display:inline-block;width:.3em"></span></span></div>
+      <img id="model2" src="../assets/p_phone_cut.png" class="abs" style="left:1180px;bottom:0;width:640px;transform-origin:50% 100%">
+    </div>
+  </div>
+  <svg id="trail" class="abs" width="1" height="1" style="left:0;top:0;overflow:visible"><path id="tr" fill="none" stroke="#F5B21A" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <svg id="dartEl" class="abs" width="110" height="132" viewBox="0 0 100 120" style="margin:-66px 0 0 -55px;overflow:visible"><path id="dp" d="M0 120 L42 98 Q50 94 58 98 L100 120 L60 16 Q50 -2 40 16 Z" fill="#0460EF"/></svg>
+  </div>
+  <div id="gl"></div>
+  <div id="fx" style="position:absolute;inset:0;display:none"></div>
+  <div id="tz" style="position:absolute;left:0;top:0;width:1920px;height:1080px;display:none;align-items:center;justify-content:center;font:900 300px/1 S;letter-spacing:-.04em;color:#fff;white-space:nowrap">Spend</div>
+</div>
+<script type="importmap">{ "imports": { "three": "../../../.claude/skills/motion-reel/engine/lib/three/three.module.js", "three/addons/": "../../../.claude/skills/motion-reel/engine/lib/three/addons/" } }</script>
+<script src="../assets/motion.js"></script>
+<script type="module">
+import * as THREE from 'three';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
+const S = (t, p) => Motion.spring(t, p), clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x)), lerp = (a, b, u) => a + (b - a) * u, $ = id => document.getElementById(id), cam = $('cam');
+const ease = x => { x = clamp(x); return 1 - Math.pow(1 - x, 3); }, sm = x => { x = clamp(x); return x * x * (3 - 2 * x); };
+window.FILM_DUR = 42;
+// Springs: all critically damped (no pop-and-settle), quick but soft.
+const WORD = { k: 320, c: 36 }, PANEL = { k: 170, c: 26 }, POPS = { k: 420, c: 41 }, FLY = { k: 300, c: 35 }, GLIDE = { k: 110, c: 21 }, SPIN = { k: 22, c: 9.4 }, TILT = { k: 46, c: 13.6 };
+// ---- places and camera ----
+const OR = { hook: [0, 0], turn: [0, 1200], send: [2100, 1200], land: [2100, 2400], proof: [4200, 2400], bridge: [4200, 1200], card: [6300, 1200], save: [6300, 2400], bills: [8400, 2400], cash: [8400, 1200], close: [10500, 1200] };
+document.querySelectorAll('.scene').forEach(s => { const o = OR[s.dataset.o]; s.style.left = o[0] + 'px'; s.style.top = o[1] + 'px'; });
+const camFlow = (t, tc, ti, to) => { const v0 = ti / (ti + to); return t < tc ? v0 * Math.exp((t - tc) / ti) : 1 - (1 - v0) * Math.exp(-(t - tc) / to); };
+const CK = [{ t: 0, x: 0, y: 0, z: 1 }, { t: 4.0, x: 0, y: 1200, z: 1, w: 1 }, { t: 4.3, x: -320, y: 1190, z: 1.45, tau: .7 }, { t: 6.3, x: -120, y: 1190, z: 1.3, tau: .7 }, { t: 7.7, x: 60, y: 1225, z: 1.1, tau: .42 }, { t: 9.0, x: 0, y: 1200, z: 1, tau: .4 },
+  { t: 9.9, x: 2100, y: 1200, z: 1, w: 1 }, { t: 10.75, x: 2724, y: 1226, z: 4.2857, tau: .2 }, { t: 13.9, x: 2100, y: 2400, z: 1, w: 1 }, { t: 16.35, x: 1562, y: 2272, z: 4.0, tau: .36 }, { t: 18.4, x: 4200, y: 2400, z: 1, w: 1 }, { t: 19.4, x: 4240, z: 1.06, tau: .5 },
+  { t: 20.9, x: 4200, y: 1200, z: 1, w: 1 }, { t: 21.7, y: 1240, z: 1.08, tau: .4 }, { t: 22.9, x: 6300, y: 1200, z: 1, w: 1 }, { t: 23.6, x: 6720, z: 1.2, tau: .35 }, { t: 24.9, x: 6300, y: 1200, z: 1.07, tau: .6 },
+  { t: 26.9, x: 6300, y: 2400, z: 1, w: 1 }, { t: 27.5, x: 5830, y: 2370, z: 1.25, tau: .35 }, { t: 28.6, x: 6300, y: 2400, z: 1.0, tau: .5 }, { t: 30.9, x: 8400, y: 2400, z: 1, w: 1 }, { t: 31.6, x: 8140, y: 2460, z: 1.15, tau: .35 }, { t: 32.7, x: 8400, y: 2400, z: 1.0, tau: .5 },
+  { t: 34.4, x: 8400, y: 1200, z: 1, w: 1 }, { t: 35.2, x: 8300, z: 1.06, tau: .4 }, { t: 36.2, x: 8430, z: 1.04, tau: .5 }, { t: 37.4, x: 10500, y: 1200, z: 1, w: 1 }, { t: 39.6, z: 1.05, tau: 1.3 }];
+const WHIPS = CK.filter(c => c.w).map(c => c.t), TI = .24, TO = .18;
+const camAxis = (t, k) => { let v = CK[0][k], p = v; for (let i = 1; i < CK.length; i++) { const c = CK[i]; if (c[k] === undefined) continue; v += (c[k] - p) * camFlow(t, c.t, c.w ? TI : c.tau, c.w ? TO : c.tau * 1.25); p = c[k]; } return v; };
+const SEG = [0, ...WHIPS, 1e9];
+const creep = t => { let x = 0, y = 0, z = 0; for (let i = 0; i < SEG.length - 1; i++) { const w = (i === 0 ? 1 : camFlow(t, SEG[i], TI, TO)) - (SEG[i + 1] > 1e8 ? 0 : camFlow(t, SEG[i + 1], TI, TO)); if (w < 1e-4) continue; const u = Math.max(0, t - SEG[i]), e = 2.5 * (1 - Math.exp(-u / 2.5)), d = i % 2 ? 1 : -1; x += w * d * 12 * e; y += w * -d * 6 * e; z += w * .026 * e; } return [x, y, z]; };
+const swell = t => WHIPS.reduce((a, tc) => { const d = t - tc; return a + .045 * (d < 0 ? Math.exp(d / TI) : Math.exp(-d / TO)); }, 0);
+const camAt = t => { const c = creep(t), open = 0, zc = camAxis(t, 'z'); return [camAxis(t, 'x') + c[0] / zc, camAxis(t, 'y') + c[1] / zc, camAxis(t, 'z') * (1 + c[2]) * (1 + swell(t)) * (1 + .6 * open)]; };
+
+// ---- declarative motion ----
+const wrapWords = el => { const walk = n => { [...n.childNodes].forEach(c => { if (c.nodeType === 3) { const f = document.createDocumentFragment(); c.textContent.split(/(\s+)/).forEach(tok => { if (!tok) return; if (/^\s+$/.test(tok)) f.appendChild(document.createTextNode(' ')); else { const s = document.createElement('span'); s.className = 'w'; s.textContent = tok; f.appendChild(s); } }); n.replaceChild(f, c); } else if (c.nodeType === 1 && c.tagName !== 'BR' && c.id !== 'stop') walk(c); }); }; walk(el); return [...el.querySelectorAll('.w')]; };
+const INS = [...document.querySelectorAll('[data-in]')].map(el => ({ el, t0: +el.dataset.in }));
+const WDS = [...document.querySelectorAll('[data-words]')].map(el => { const [t0, st, out, bs] = el.dataset.words.split(',').map(Number); return { ws: wrapWords(el), t0, st, out, bs: bs || 1 }; });
+const PPS = [...document.querySelectorAll('[data-pop]')].map(el => ({ el, t0: +el.dataset.pop }));
+const DRS = [...document.querySelectorAll('[data-draw]')].map(el => { const [t0, d] = el.dataset.draw.split(',').map(Number), len = el.getTotalLength(); el.style.strokeDasharray = `${len} ${len}`; return { el, t0, d, len }; });
+const CDS = [...document.querySelectorAll('[data-card]')].map(el => { const [t0, dx] = el.dataset.card.split(',').map(Number); return { el, t0, dx }; });
+const GLS = [...document.querySelectorAll('[data-glint]')].map(el => ({ el, t0: +el.dataset.glint }));
+const PARS = [...document.querySelectorAll('.par')], GWS = [...document.querySelectorAll('[data-glow]')].map(el => ({ el, t0: +el.dataset.glow }));
+const MQ = (id, items, sep) => { $(id).innerHTML = Array.from({ length: 6 }, () => items.map(i => `<span>${i}</span>${sep}`).join('')).join(''); };
+MQ('mq1', ['Spend it', 'Save it', 'Pay with it', 'Get more back'], '<svg width="50" height="60" viewBox="0 0 100 120" style="transform:rotate(90deg);flex:none"><use href="#dart" fill="#0460EF"/></svg>');
+MQ('mq2', ['Moniepoint'], '<img src="../assets/icon.png" style="width:74px;border-radius:18px;flex:none">');
+
+// ---- the dart ----
+const Pw = (o, x, y) => [OR[o][0] + x, OR[o][1] + y];
+const DW = [[0, Pw('turn', 1300, 520)], [9.1, Pw('turn', 1420, 470), GLIDE], [9.75, Pw('send', 1300, 300), FLY], [10.2, Pw('send', 1640, 640), FLY],
+  [20.3, Pw('proof', 1750, 180)], [20.75, Pw('bridge', 300, 650), FLY], [21.5, Pw('bridge', 1560, 640), GLIDE], [22.65, Pw('card', 1780, 900), FLY], [26.55, Pw('save', 800, 900), FLY], [30.6, Pw('bills', 180, 600), FLY], [31.45, Pw('bills', 720, 804), GLIDE],
+  [32.6, Pw('bills', 800, 400), GLIDE], [34.1, Pw('cash', 1790, 900), FLY], [37.1, Pw('close', 1650, 300), FLY]];
+const DVIS = [[9.05, 10.75], [20.3, 99]], RLEN = 1;
+const dartPos = t => { let x = DW[0][1][0], y = DW[0][1][1]; for (let i = 1; i < DW.length; i++) { const [ti, p, sp] = DW[i], q = DW[i - 1][1]; if (!sp) { if (t >= ti) { x += p[0] - q[0]; y += p[1] - q[1]; } continue; } if (sp === 'route') { const rp = $('route'), a = rp.getPointAtLength(0), b = rp.getPointAtLength(RLEN * S(t - ti, { k: 30, c: 11 })); x += b.x - a.x; y += b.y - a.y; continue; } const s = S(t - ti, sp), dx = p[0] - q[0], dy = p[1] - q[1], bow = Math.sin(Math.PI * clamp(s)) * .16 * (i % 2 ? 1 : -1); x += dx * s - dy * bow; y += dy * s + dx * bow; } return [x, y]; };
+
+// ---- the 3D phone (orthographic, so it sits on the flat board) ----
+const R = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true }); R.setPixelRatio(1); R.setSize(1920, 1080, false); R.setClearColor(0, 0); R.outputColorSpace = THREE.SRGBColorSpace; R.toneMapping = THREE.ACESFilmicToneMapping; R.toneMappingExposure = 1; $('gl').appendChild(R.domElement);
+const scene = new THREE.Scene(), ocam = new THREE.OrthographicCamera(-960, 960, 540, -540, -4000, 4000); ocam.position.z = 1000;
+scene.environment = new THREE.PMREMGenerator(R).fromScene(new RoomEnvironment(), .04).texture; scene.environmentIntensity = .7;
+const key = new THREE.DirectionalLight('#FFFFFF', 2.2); key.position.set(-400, 700, 900); scene.add(key); const rim = new THREE.DirectionalLight('#7FC4FF', 2.4); rim.position.set(600, -200, -500); scene.add(rim);
+const phone = new THREE.Group(); scene.add(phone);
+const BW = 446, BH = 962, BD = 40, SW = 414, SH = 930;        // a real phone's proportions (about 19.5:9), not a slab cut to the screenshot
+const rrShape = (w, h, r) => { const s = new THREE.Shape(), x = -w / 2, y = -h / 2; s.moveTo(x + r, y); s.lineTo(x + w - r, y); s.absarc(x + w - r, y + r, r, -Math.PI / 2, 0, false); s.lineTo(x + w, y + h - r); s.absarc(x + w - r, y + h - r, r, 0, Math.PI / 2, false); s.lineTo(x + r, y + h); s.absarc(x + r, y + h - r, r, Math.PI / 2, Math.PI, false); s.lineTo(x, y + r); s.absarc(x + r, y + r, r, Math.PI, Math.PI * 1.5, false); return s; };
+const rr = (w, h, r) => { const g = new THREE.ShapeGeometry(rrShape(w, h, r), 32), p = g.attributes.position, uv = g.attributes.uv; for (let i = 0; i < p.count; i++) uv.setXY(i, p.getX(i) / w + .5, p.getY(i) / h + .5); return g; };
+// body: an extruded rounded rectangle with a soft bevel, in brushed titanium; black glass front and back
+const bodyG = new THREE.ExtrudeGeometry(rrShape(BW - 16, BH - 16, 66), { depth: BD - 16, bevelEnabled: true, bevelThickness: 8, bevelSize: 8, bevelSegments: 8, curveSegments: 32 }); bodyG.translate(0, 0, -(BD - 16) / 2);
+phone.add(new THREE.Mesh(bodyG, new THREE.MeshPhysicalMaterial({ color: '#B9BCC4', metalness: 1, roughness: .28, clearcoat: .4 })));
+const glassM = new THREE.MeshPhysicalMaterial({ color: '#06080D', metalness: .2, roughness: .08, clearcoat: 1 });
+const front = new THREE.Mesh(rr(BW - 14, BH - 14, 62), glassM); front.position.z = BD / 2 + .2; phone.add(front);
+const backG = new THREE.Mesh(rr(BW - 14, BH - 14, 62), new THREE.MeshPhysicalMaterial({ color: '#1B1F29', metalness: .5, roughness: .35, clearcoat: .6 })); backG.rotation.y = Math.PI; backG.position.z = -BD / 2 - .2; phone.add(backG);
+[[BW / 2 + 1, 150, 110], [-BW / 2 - 1, 210, 60], [-BW / 2 - 1, 120, 60]].forEach(([x, y, h]) => { const bt = new THREE.Mesh(new RoundedBoxGeometry(7, h, 12, 3, 3), new THREE.MeshPhysicalMaterial({ color: '#A9ACB4', metalness: 1, roughness: .3 })); bt.position.set(x, y, 0); phone.add(bt); });
+const texOf = draw => { const c = document.createElement('canvas'); c.width = 1024; c.height = Math.round(1024 * SH / SW); draw(c.getContext('2d'), c); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; return t; };
+const load = src => new Promise(r => { const im = new Image(); im.onload = () => r(im); im.src = src; });
+const [imR, imS, imI] = await Promise.all([load('../assets/receipt.png'), load('../assets/ui_save.png'), load('../assets/icon.png')]);
+const TEX = { receipt: texOf((x, c) => { x.drawImage(imR, 0, 0, c.width, c.width * imR.height / imR.width); }), save: texOf((x, c) => { x.fillStyle = '#F3F5F9'; x.fillRect(0, 0, c.width, c.height); x.drawImage(imS, 0, 150, c.width, c.width * imS.height / imS.width); }) };
+const screenMat = new THREE.MeshBasicMaterial({ map: TEX.receipt, toneMapped: false }), screen = new THREE.Mesh(rr(SW, SH, 50), screenMat); screen.position.z = BD / 2 + .8; phone.add(screen);
+const island = new THREE.Mesh(rr(112, 32, 16), new THREE.MeshBasicMaterial({ color: '#05060A' })); island.position.set(0, SH / 2 - 40, BD / 2 + 1.4); phone.add(island);
+const gc = document.createElement('canvas'); gc.width = 512; gc.height = 8; { const x = gc.getContext('2d'), g = x.createLinearGradient(0, 0, 512, 0); g.addColorStop(0, 'rgba(255,255,255,0)'); g.addColorStop(.42, 'rgba(255,255,255,0)'); g.addColorStop(.5, 'rgba(255,255,255,.75)'); g.addColorStop(.58, 'rgba(255,255,255,0)'); g.addColorStop(1, 'rgba(255,255,255,0)'); x.fillStyle = g; x.fillRect(0, 0, 512, 8); }
+const gtex = new THREE.CanvasTexture(gc); gtex.wrapS = THREE.RepeatWrapping; gtex.rotation = -.5; gtex.repeat.set(.6, 1);
+const glare = new THREE.Mesh(rr(SW, SH, 50), new THREE.MeshBasicMaterial({ map: gtex, transparent: true, opacity: .0, blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false })); glare.position.z = BD / 2 + 1.6; phone.add(glare);
+const bump = new THREE.Mesh(new RoundedBoxGeometry(170, 170, 16, 6, 40), new THREE.MeshPhysicalMaterial({ color: '#1C2029', metalness: .8, roughness: .3 })); bump.position.set(-104, BH / 2 - 120, -BD / 2 - 6); phone.add(bump);
+[[-40, 40], [40, 40], [-40, -40]].forEach(([x, y]) => { const l = new THREE.Mesh(new THREE.CylinderGeometry(30, 30, 10, 32), new THREE.MeshPhysicalMaterial({ color: '#05070C', metalness: .6, roughness: .15, clearcoat: 1 })); l.rotation.x = Math.PI / 2; l.position.set(-104 + x, BH / 2 - 120 + y, -BD / 2 - 15); phone.add(l); });
+const itex = new THREE.CanvasTexture((() => { const c = document.createElement('canvas'); c.width = c.height = 256; c.getContext('2d').drawImage(imI, 0, 0, 256, 256); return c; })()); itex.colorSpace = THREE.SRGBColorSpace;
+const back = new THREE.Mesh(rr(120, 120, 28), new THREE.MeshBasicMaterial({ map: itex, toneMapped: false })); back.rotation.y = Math.PI; back.position.set(0, -40, -BD / 2 - .8); phone.add(back);
+const sh = new THREE.Mesh(new THREE.PlaneGeometry(900, 1500), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture((() => { const c = document.createElement('canvas'); c.width = c.height = 256; const x = c.getContext('2d'), g = x.createRadialGradient(128, 128, 20, 128, 128, 128); g.addColorStop(0, 'rgba(2,27,74,.34)'); g.addColorStop(1, 'rgba(2,27,74,0)'); x.fillStyle = g; x.fillRect(0, 0, 256, 256); return c; })()), transparent: true, depthWrite: false, toneMapped: false })); scene.add(sh);
+// phone keys: world anchor, scale, rotation; one spring per change
+const TR = (t, keys) => { let v = keys[0][1]; for (let i = 1; i < keys.length; i++) v += (keys[i][1] - keys[i - 1][1]) * S(t - keys[i][0], keys[i][2] || FLY); return v; };
+const PHX = [[0, Pw('land', 610, 0)[0]], [18.25, Pw('proof', 1570, 0)[0], GLIDE], [26.0, Pw('save', 1420, 0)[0]]];
+const PHY = [[0, Pw('land', 0, 1800)[1]], [13.85, Pw('land', 0, 540)[1], { k: 70, c: 16.8 }], [18.25, Pw('proof', 0, 800)[1], GLIDE], [20.75, Pw('proof', 0, 2300)[1], FLY], [26.0, Pw('save', 0, 2300)[1]], [26.85, Pw('save', 0, 960)[1], { k: 70, c: 16.8 }], [30.7, Pw('save', 0, 2500)[1], FLY]];
+const PHS = [[0, .7], [13.85, .95, GLIDE], [18.25, 1.25, GLIDE], [26.0, 1.55]];
+const PRY = [[0, -Math.PI * 2 - .5], [13.85, .32, SPIN], [15.2, 0, TILT], [16.3, .42, TILT], [18.25, -.5, TILT], [19.2, -.2, { k: 8, c: 5.7 }], [26.0, Math.PI * 2 + .75], [26.85, .5 + Math.PI * 2 - Math.PI * 2, SPIN], [28.6, .12, TILT]];
+const PRX = [[0, .5], [13.85, 0, TILT], [16.3, -.3, TILT], [18.25, .3, TILT], [26.0, .5], [26.85, .28, TILT], [28.6, .12, TILT]];
+const PRZ = [[0, -.3], [13.85, 0, TILT], [16.3, -.12, TILT], [18.25, .1, TILT], [26.0, -.2], [26.85, -.1, TILT], [28.6, -.04, TILT]];
+
+// ---- scene transitions borrowed from the Pulse explainer study: a colour flood out of an element (X3), a zoom through big type (X4) ----
+const FLOODS = [{ t: 22.9, col: '#0460EF', rimc: '160,210,255', from: () => null, word: 1 }, { t: 34.4, col: '#021B4A', rimc: '90,150,255', from: t => dartPos(t) }];
+// ---- the carousel of waiting (EarnEdits study: a receding row of cards with a light that travels along it) ----
+const BLOBS = [[-60, 960, 550, 'rgba(4,96,239,.42)', 0], [1980, 80, 500, 'rgba(79,209,255,.42)', 2.1], [1760, 1140, 380, 'rgba(77,150,255,.36)', 4.2]].map(([x, y, r, c, p], i) => { const el = document.querySelectorAll('.blob')[i]; el.style.background = `radial-gradient(closest-side, ${c}, ${c.replace(/[\d.]+\)$/, '0)')})`; return { el, x, y, r, c, p }; });
+const blobAt = (b, t) => [b.x + 60 * Math.sin(.35 * t + b.p), b.y + 40 * Math.cos(.3 * t + b.p)];
+const T0 = 2.62, T1 = 8.95, CW = 3.2, CH = 1.8, D0 = (CH / 2) / Math.tan(15 * Math.PI / 180), RY = -.5, NC = 12;
+const car = new THREE.Scene(), pcam = new THREE.PerspectiveCamera(30, 16 / 9, .05, 200), tcam = pcam.clone(); car.background = new THREE.Color('#020B22'); car.fog = new THREE.Fog('#020B22', 8, 26);
+car.environment = scene.environment; car.environmentIntensity = .3; car.add(new THREE.AmbientLight('#5A78C0', .35));
+const nrm = new THREE.Vector3(Math.sin(RY), 0, Math.cos(RY)), rgt = new THREE.Vector3(Math.cos(RY), 0, -Math.sin(RY)), upv = new THREE.Vector3(0, 1, 0);
+const ROW = new THREE.Vector3().addScaledVector(rgt, 2.5).addScaledVector(upv, .26).addScaledVector(nrm, -.85), cpos = s => ROW.clone().multiplyScalar(s);
+const ss = x => { x = clamp(x); return x * x * x * (x * (x * 6 - 15) + 10); };
+const lightW = new THREE.PointLight('#3D7BFF', 0, 7, 1.5), lightS = new THREE.PointLight('#D8F1FF', 0, 7, 1.3); car.add(lightW, lightS);
+const glowTex = col => { const c = document.createElement('canvas'); c.width = c.height = 256; const x = c.getContext('2d'), g = x.createRadialGradient(128, 128, 0, 128, 128, 128); g.addColorStop(0, col); g.addColorStop(1, 'rgba(0,0,0,0)'); x.fillStyle = g; x.fillRect(0, 0, 256, 256); const t = new THREE.CanvasTexture(c); return t; };
+const mkGlow = (col, sc) => { const m = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex(col), blending: THREE.AdditiveBlending, depthWrite: false, transparent: true, fog: false })); m.scale.set(sc, sc, 1); car.add(m); return m; };
+// light that runs along the row: long soft streaks behind and under the cards, never a disc
+const rowDir = new THREE.Vector3().addScaledVector(rgt, 2.5).addScaledVector(upv, .26).addScaledVector(nrm, -.85).normalize();
+const streak = (col, w, h) => { const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ map: glowTex(col), blending: THREE.AdditiveBlending, depthWrite: false, transparent: true, fog: false, side: THREE.DoubleSide }));
+  const y = upv.clone().addScaledVector(rowDir, -upv.dot(rowDir)).normalize(), z = new THREE.Vector3().crossVectors(rowDir, y); m.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeBasis(rowDir, y, z)); car.add(m); return m; };
+const glowW = streak('rgba(70,140,255,1)', 18, 5.5), glowS = streak('rgba(210,240,255,1)', 11, 3.6);
+const floorM = new THREE.Mesh(new THREE.PlaneGeometry(14, 3.2), new THREE.MeshBasicMaterial({ map: glowTex('rgba(40,110,255,.6)'), blending: THREE.AdditiveBlending, depthWrite: false, transparent: true, fog: false })); { const rh = rowDir.clone().setY(0).normalize(), py = new THREE.Vector3().crossVectors(upv, rh); floorM.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeBasis(rh, py, upv)); } car.add(floorM);
+const floorS = floorM.clone(); floorS.material = floorM.material.clone(); floorS.material.map = glowTex('rgba(200,240,255,.8)'); car.add(floorS);
+const CARDS = [];
+const cv = (w, h, draw) => { const c = document.createElement('canvas'); c.width = w; c.height = h; const x = c.getContext('2d'); draw(x, w, h); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; return t; };
+const rrect = (x, X, Y, w, h, r) => { x.beginPath(); x.roundRect(X, Y, w, h, r); };
+const rel = (el, anc) => { let x = 0, y = 0; while (el && el !== anc) { x += el.offsetLeft; y += el.offsetTop; el = el.offsetParent; } return [x, y]; };
+const drawWords = (x, root, anc) => root.querySelectorAll('.w').forEach(w => { const cs = getComputedStyle(w), [px, py] = rel(w, anc); x.font = `${cs.fontWeight} ${cs.fontSize} S`; x.letterSpacing = cs.letterSpacing === 'normal' ? '0px' : cs.letterSpacing; x.fillStyle = cs.color;
+  const m = x.measureText('Hg'), fa = m.fontBoundingBoxAscent, fd = m.fontBoundingBoxDescent; x.textBaseline = 'alphabetic'; x.fillText(w.textContent, px, py + (w.offsetHeight - (fa + fd)) / 2 + fa); });
+const WAIT = [['status', 'Pending…', '₦10,000 · Transfer to Ada'], ['in', 'Have you seen the alert?'], ['out', 'Not yet o'], ['bar', 'Transfer processing…', ''], ['in', 'Check again 🙏'], ['out', 'Still nothing'],
+  ['status', 'Pending · 2 hrs', 'We are looking into it'], ['in', 'Did it go through?'], ['bar', 'Network busy. Try again.', ''], ['out', "I've sent it since…"], ['status', 'Pending…', 'Reversal in 24 hrs']];
+const darkFace = ([k, a, b]) => cv(960, 540, (x, w, h) => { const g = x.createLinearGradient(0, 0, w, h); g.addColorStop(0, '#16306A'); g.addColorStop(1, '#0A1838'); x.fillStyle = g; x.fillRect(0, 0, w, h);
+  x.fillStyle = 'rgba(255,255,255,.08)'; rrect(x, 40, 40, 200, 34, 17); x.fill(); x.fillStyle = 'rgba(255,255,255,.08)'; rrect(x, 820, 40, 100, 34, 17); x.fill();
+  if (k === 'status' || k === 'bar') { x.lineWidth = 22; x.strokeStyle = 'rgba(255,255,255,.12)'; x.beginPath(); x.arc(150, 300, 60, 0, Math.PI * 2); x.stroke(); x.strokeStyle = '#9FB0CF'; x.lineCap = 'round'; x.beginPath(); x.arc(150, 300, 60, -1.2, .4); x.stroke();
+    x.fillStyle = '#FFFFFF'; x.font = '700 56px S'; x.fillText(a, 250, 300); x.fillStyle = '#8C9BBD'; x.font = '500 32px S'; if (b) x.fillText(b, 250, 350);
+    if (k === 'bar') { x.fillStyle = 'rgba(255,255,255,.12)'; rrect(x, 250, 350, 560, 18, 9); x.fill(); x.fillStyle = '#9FB0CF'; rrect(x, 250, 350, 170, 18, 9); x.fill(); } }
+  else { x.font = '700 50px S'; const tw = x.measureText(a).width, bw = tw + 90, bx = k === 'in' ? 70 : w - 70 - bw; x.fillStyle = k === 'in' ? '#28488F' : '#3A4664'; rrect(x, bx, 230, bw, 110, [55, 55, k === 'in' ? 55 : 12, k === 'in' ? 12 : 55]); x.fill(); x.fillStyle = '#FFFFFF'; x.fillText(a, bx + 45, 302); } });
+const BACKS = ['Received', 'Sent', 'Credit alert', 'Received', 'Successful', 'Received'];
+let icImg; const lightFace = i => cv(960, 540, (x, w, h) => { x.fillStyle = '#F7F8FB'; x.fillRect(0, 0, w, h); x.drawImage(icImg, w - 140, 40, 90, 90);
+  x.fillStyle = '#A4F4AD'; rrect(x, 60, 60, 230, 60, 30); x.fill(); x.fillStyle = '#0B7A2A'; x.font = '700 32px S'; x.fillText('Successful', 88, 101);
+  x.fillStyle = '#0B1B3F'; x.font = '900 104px S'; x.letterSpacing = '-3px'; x.fillText('₦10,000.00', 60, 300); x.letterSpacing = '0px'; x.fillStyle = '#6B7A99'; x.font = '500 36px S'; x.fillText(BACKS[i % BACKS.length] + ' · just now', 60, 380); });
+let card0F, card0B, FLIPT = [];
+function buildCarousel() {
+  icImg = $('icon2');
+  const hookP = $('hookP'), hookS = hookP.parentNode, turnS = document.querySelector('[data-o="turn"]');
+  card0F = cv(1920, 1080, (x, w, h) => { x.fillStyle = '#F7F8FB'; x.fillRect(0, 0, w, h);
+    BLOBS.forEach(b => { const [bx, by] = blobAt(b, T0), g = x.createRadialGradient(bx, by, 0, bx, by, b.r); g.addColorStop(0, b.c); g.addColorStop(1, b.c.replace(/[\d.]+\)$/, '0)')); x.fillStyle = g; x.fillRect(bx - b.r, by - b.r, 2 * b.r, 2 * b.r); });
+    drawWords(x, $('hook2'), hookS); });
+  card0B = cv(1920, 1080, (x, w, h) => { x.fillStyle = '#F7F8FB'; x.fillRect(0, 0, w, h); const [ix, iy] = rel(icImg, turnS);
+    x.save(); x.shadowColor = 'rgba(4,96,239,.35)'; x.shadowBlur = 70; x.shadowOffsetY = 30; rrect(x, ix, iy, 220, 220, 52); x.fillStyle = '#fff'; x.fill(); x.restore(); x.save(); rrect(x, ix, iy, 220, 220, 52); x.clip(); x.drawImage(icImg, ix, iy, 220, 220); x.restore();
+    drawWords(x, $('notw'), turnS); });
+  const body = new THREE.ExtrudeGeometry(rrShape(CW - .04, CH - .04, .14), { depth: .05, bevelEnabled: true, bevelThickness: .012, bevelSize: .02, bevelSegments: 3, curveSegments: 16 }); body.translate(0, 0, -.025);
+  const bodyM = new THREE.MeshPhysicalMaterial({ color: '#0B1430', metalness: .75, roughness: .22, clearcoat: 1 }), face = rr(CW - .03, CH - .03, .15);
+  for (let i = 0; i < NC; i++) { const g = new THREE.Group(); g.position.copy(cpos(i)); g.rotation.y = RY; g.add(new THREE.Mesh(body, bodyM));
+    const fm = i === 0 ? new THREE.MeshBasicMaterial({ map: card0F, toneMapped: false, fog: false }) : (() => { const m = darkFace(WAIT[(i - 1) % WAIT.length]); return new THREE.MeshStandardMaterial({ map: m, emissiveMap: m, emissive: '#ffffff', emissiveIntensity: .7, roughness: .4, metalness: .1 }); })();
+    const bm = i === 0 ? new THREE.MeshBasicMaterial({ map: card0B, toneMapped: false, fog: false }) : (() => { const m = lightFace(i); return new THREE.MeshStandardMaterial({ map: m, emissiveMap: m, emissive: '#ffffff', emissiveIntensity: .55, roughness: .45 }); })();
+    const f = new THREE.Mesh(face, fm); f.position.z = .045; const b = new THREE.Mesh(face, bm); b.rotation.y = Math.PI; b.position.z = -.045; g.add(f, b); car.add(g); CARDS.push(g); }
+  // when the sweep (far to near) passes each card, that card flips
+  for (let i = 0; i < NC; i++) { let tf = 8.9; for (let t = 7.5; t < 8.9; t += .005) if (sweepS(t) <= i + .25) { tf = t; break; } FLIPT.push(tf); }
+  // GL camera keys; the first and last poses match the DOM camera exactly (pull out of the hook, push into the turn)
+  const poseFrom = (t, O) => { const [cx, cy, z] = camAt(t), p = cpos(0).addScaledVector(nrm, D0 / z).addScaledVector(rgt, (cx - O[0]) * CW / 1920).addScaledVector(upv, (O[1] - cy) * CH / 1080); return [p, p.clone().sub(nrm)]; };
+  const K = (p, g) => [p, g], A = poseFrom(T0, OR.hook), E = poseFrom(T1, OR.turn);
+  const P = (s, back, side, dn, look) => K(cpos(s).addScaledVector(nrm, back).addScaledVector(rgt, side).addScaledVector(upv, dn), cpos(look));
+  const keys = [[T0, 0, A], [2.68, 1.7, P(0, 6.4, -.6, -.6, 2)], [4.1, 3.2, P(3, 5.2, -1.2, -.5, 5.6)], [6.9, 1.35, P(1.5, 8.4, -1.6, -.8, 4)], [8.22, .73, E]];
+  GK = keys.map(([t, d, [p, g]], i) => ({ t, d, p, g, dp: i ? p.clone().sub(keys[i - 1][2][0]) : null, dg: i ? g.clone().sub(keys[i - 1][2][1]) : null }));
+}
+let GK = [];
+const sweepS = t => 12 - 12.6 * ss((t - 7.55) / .8);
+const glPose = t => { const p = GK[0].p.clone(), g = GK[0].g.clone(); for (let i = 1; i < GK.length; i++) { const k = GK[i], u = ss((t - k.t) / k.d); p.addScaledVector(k.dp, u); g.addScaledVector(k.dg, u); } return [p, g]; };
+const setCam = (c, t) => { const [p, g] = glPose(t); c.position.copy(p); c.up.set(0, 1, 0); c.lookAt(g); c.updateMatrixWorld(); };
+function carousel(t) {
+  setCam(pcam, t);
+  CARDS.forEach((g, i) => { const f = i === 0 ? ss((t - FLIPT[0]) / .5) : S(t - FLIPT[i], { k: 160, c: 25.3 }); g.rotation.y = RY + Math.PI * f; g.position.copy(cpos(i)); if (i) g.position.y += .035 * Math.sin(t * 1.2 + i); });
+  const s1 = .3 + 10 * ss((t - 2.9) / 4.7), w1 = clamp((t - 2.75) / .5) * (1 - sm((t - 7.55) / .5)), s2 = sweepS(t), w2 = Math.sin(Math.PI * clamp((t - 7.5) / 1.0));
+  const p1 = cpos(s1), p2 = cpos(s2);
+  lightW.position.copy(p1).addScaledVector(nrm, .9).addScaledVector(upv, -1.0); lightW.intensity = 70 * w1;
+  lightS.position.copy(p2).addScaledVector(nrm, 1.1); lightS.intensity = 70 * w2;
+  glowW.position.copy(p1).addScaledVector(nrm, -1.1).addScaledVector(upv, -.2); glowW.material.opacity = w1; glowS.position.copy(p2).addScaledVector(nrm, -1.0); glowS.material.opacity = w2;
+  floorM.position.copy(p1).addScaledVector(upv, -1.15); floorM.material.opacity = w1; floorS.position.copy(p2).addScaledVector(upv, -1.15); floorS.material.opacity = w2;
+}
+let STOP = null;
+window.seek = t => {
+  const [cx, cy, z] = camAt(t), [px, py] = camAt(t - 1 / 30);
+  cam.style.transform = `scale(${z}) translate(${-cx}px,${-cy}px)`;
+  const bx = clamp((Math.abs(cx - px) * z - 10) * .1, 0, 24), by = clamp((Math.abs(cy - py) * z - 10) * .1, 0, 24), fl = bx + by > .4 ? 'url(#mb)' : '';
+  $('mbg').setAttribute('stdDeviation', `${bx.toFixed(1)} ${by.toFixed(1)}`); cam.style.filter = fl; $('gl').style.filter = fl;
+  // panels, words, pops, lines, cards, light passes
+  INS.forEach(({ el, t0 }) => { const s = t0 < 0 ? 1 : S(t - t0, PANEL); el.style.opacity = clamp(s * 1.6); el.style.transform = `translateY(${(1 - s) * 90}px) scale(${.94 + .06 * s})`; el.style.filter = s < .98 ? `blur(${(1 - clamp(s)) * 12}px)` : ''; });
+  WDS.forEach(({ ws, t0, st, out, bs }) => ws.forEach((w, i) => { const s = S(t - (t0 + i * st), WORD), ex = out ? S(t - out - i * .03, WORD) : 0; w.style.opacity = sm(s * 1.25) * (1 - sm(ex * 1.3)); w.style.filter = s < .98 || ex > .02 ? `blur(${((1 - clamp(s)) * 12 + ex * 12) * bs}px)` : ''; w.style.transform = `translateY(${(1 - s) * 34 - ex * 40}px)`; }));
+  PPS.forEach(({ el, t0 }) => { const s = S(t - t0, POPS); el.style.opacity = sm(s * 1.3); el.style.transform = `translateY(${(1 - s) * 26}px) scale(${.86 + .14 * s})`; el.style.filter = s < .98 ? `blur(${(1 - clamp(s)) * 8}px)` : ''; });
+  DRS.forEach(({ el, t0, d, len }) => { el.style.strokeDashoffset = len * (1 - sm((t - t0) / d)); });
+  CDS.forEach(({ el, t0, dx }) => { const s = S(t - t0, PANEL); el.style.opacity = clamp(s * 1.6); el.style.transform = `translate(${(1 - s) * dx}px, ${(1 - s) * (dx ? 0 : 120) + 4 * Math.sin(t * 1.1 + t0)}px) scale(${.94 + .06 * s})`; el.style.filter = s < .98 ? `blur(${(1 - clamp(s)) * 12}px)` : ''; });
+  GLS.forEach(({ el, t0 }) => { const u = clamp((t - t0) / .9); el.style.background = u > 0 && u < 1 ? `linear-gradient(112deg, transparent ${u * 150 - 45}%, rgba(255,255,255,${.5 * Math.sin(Math.PI * u)}) ${u * 150 - 22}%, transparent ${u * 150}%)` : ''; });
+  GWS.forEach(({ el, t0 }) => { const g = S(t - t0, { k: 120, c: 22 }) * (.8 + .2 * Math.sin((t - t0) * 3)); el.style.boxShadow = `0 0 0 ${(6 * g).toFixed(1)}px rgba(79,209,255,${(.9 * g).toFixed(2)}), 0 0 ${(70 * g).toFixed(0)}px rgba(79,209,255,${(.7 * g).toFixed(2)}), 0 30px 80px rgba(2,27,74,.25)`; });
+  PARS.forEach((el, i) => { el.style.transform = `translate(${(6 * Math.sin(t * .5 + i)).toFixed(1)}px, ${(10 * Math.sin(t * .4 + i * 2)).toFixed(1)}px) rotate(${(1.2 * Math.sin(t * .3 + i)).toFixed(2)}deg)`; });
+  // 1 hook: brand colour drifting at the edges
+  BLOBS.forEach((b, i) => { const [x, y] = blobAt(b, t); b.el.style.left = (x - b.r + 200) + 'px'; b.el.style.top = (y - b.r + 200) + 'px'; });
+  // 3 the send: the amount types, the button lights, the dart taps, the camera dives in
+  { const n = Math.max(0, Math.floor((t - 10.05) * 24)), str = '₦10,000'; $('amt').textContent = str.slice(0, n); $('caret').style.opacity = (n > 0 && n < str.length) || ((t * 2.2) % 1 < .6) ? 1 : 0;
+    const g = S(t - 10.2, { k: 120, c: 22 }), dip = (S(t - 10.5, POPS) - S(t - 10.62, POPS)) * .06, grow = S(t - 10.6, { k: 120, c: 22 }), btn = $('btn');
+    btn.style.transform = `scale(${((1 - dip) * (1 + .16 * grow)).toFixed(4)})`; btn.style.borderRadius = (48 * (1 - grow)).toFixed(1) + 'px';
+    btn.style.boxShadow = `0 0 0 ${(8 * g * (1 - grow)).toFixed(1)}px rgba(79,209,255,${(.55 * g).toFixed(2)}), 0 30px ${(90 * g).toFixed(0)}px rgba(4,96,239,${(.55 * g * (1 - grow)).toFixed(2)})`;
+    $('sendL').style.opacity = 1 - sm((t - 10.58) / .14); $('mini').style.opacity = sm((t - 10.6) / .22);
+    const nt = S(t - 11.25, PANEL), nl = $('note'); nl.style.opacity = clamp(nt * 1.6); nl.style.transform = `translateY(${(1 - nt) * -140}px)`; nl.style.filter = nt < .98 ? `blur(${(1 - nt) * 3}px)` : '';
+    const ap = S(t - 10.75, { k: 60, c: 15.5 }); $('adaP').style.transform = `translateY(${(1 - ap) * 60}px) scale(${.94 + .06 * ap + .02 * clamp((t - 11) / 3)})`; }
+  // 4 the landing: a light pool under the phone
+  const p4 = clamp((t - 13.9) / 2.2); $('pool4').style.background = `radial-gradient(closest-side, rgba(4,96,239,${.22 * Math.sin(Math.PI * Math.sqrt(p4))}), rgba(4,96,239,0))`;
+  // 5 proof, 8 savings: numbers count
+  const pc = S(t - 18.6, WORD); $('pct').textContent = (90 + 9.9 * ease((t - 18.65) / .8)).toFixed(1) + '%'; $('pct').style.opacity = sm(pc * 1.25); $('pct').style.transform = `translateY(${(1 - pc) * 50}px)`; $('pct').style.filter = pc < .98 ? `blur(${(1 - pc) * 14}px)` : '';
+  const p2 = S(t - 28.5, WORD); $('pc20').textContent = Math.round(20 * ease((t - 28.55) / .7)) + '%'; $('pc20').style.opacity = sm(p2 * 1.25);
+  // 6, 11 marquees
+  $('mq1').style.transform = `translateX(${-200 - (t - 20.9) * 220}px)`; $('mq2').style.transform = `translateX(${-120 - (t - 37.2) * 90}px)`;
+  // 7, 11 models rise with a slow push
+  [['model1', 22.85, 26.9], ['model2', 37.5, 42]].forEach(([id, t0]) => { const s = S(t - t0, { k: 60, c: 15.5 }), el = $(id); el.style.opacity = clamp(s * 1.8); el.style.transform = `translateY(${(1 - s) * 220}px) scale(${1 + .035 * clamp((t - t0) / 4)})`; el.style.filter = s < .97 ? `blur(${(1 - s) * 10}px)` : ''; });
+  // the dart and its trail
+  if (!STOP) { let x = 0, y = 0, e = $('stop'); while (e && e !== cam) { x += e.offsetLeft; y += e.offsetTop; e = e.offsetParent; } STOP = [x + 30, y - 26]; DW.push([39.1, STOP, FLY]); }
+  const dOn = DVIS.some(([a, b]) => t >= a && t < b), dEl = $('dartEl'); dEl.style.display = $('trail').style.display = dOn ? '' : 'none';
+  if (dOn) { const [x, y] = dartPos(t), [qx, qy] = dartPos(t - .05), sp = Math.hypot(x - qx, y - qy), va = Math.atan2(y - qy, x - qx) * 180 / Math.PI + 90, k = clamp(sp / 26);
+    const born = S(t - (t < 15 ? 9.05 : 20.3), POPS), into = t < 15 ? S(t - 10.55, FLY) : 0, dot = S(t - 39.35, { k: 200, c: 28.3 });
+    dEl.style.left = x + 'px'; dEl.style.top = y + 'px'; dEl.style.transform = `rotate(${(va * k).toFixed(1)}deg) scale(${(born * (1 - into) * lerp(1, .42, dot)).toFixed(3)})`;
+    $('dp').setAttribute('d', dot > .5 ? 'M50 20 A40 40 0 1 1 49.9 20 Z' : 'M0 120 L42 98 Q50 94 58 98 L100 120 L60 16 Q50 -2 40 16 Z');
+    let d = ''; for (let i = 0; i <= 26; i++) { const [a, b] = dartPos(t - i * .016); d += (i ? 'L' : 'M') + a.toFixed(1) + ' ' + b.toFixed(1); } $('tr').setAttribute('d', d); $('tr').setAttribute('stroke-width', (16 * born * (1 - into) * (1 - dot)).toFixed(1)); }
+  // the phone
+  const on = (t >= 13.8 && t < 21.3) || (t >= 26.8 && t < 31.3); phone.visible = sh.visible = on;
+  if (on) { screenMat.map = t < 24 ? TEX.receipt : TEX.save; const wx = TR(t, PHX), wy = TR(t, PHY), s = TR(t, PHS) * z, ry = TR(t, PRY), rx = TR(t, PRX), rz = TR(t, PRZ);
+    const sx = (wx - cx - 960) * z, sy = -((wy - cy - 540) * z);
+    phone.position.set(sx, sy + 5 * Math.sin(t * 1.2) * z, 0); phone.scale.setScalar(s); phone.rotation.set(rx + .02 * Math.sin(t * .9), ry + .03 * Math.sin(t * .7), rz);
+    sh.position.set(sx + 30 * z, sy - 70 * z, -900); sh.scale.setScalar(s * Math.abs(Math.cos(ry)) * .9 + .1);
+    const face = Math.cos(ry); gtex.offset.x = ry * 1.1 + rx * .6 + .25; glare.material.opacity = clamp(face) * clamp(Math.abs(Math.sin(ry * 1.0)) * 2.2 + .12) * .8;
+    rim.position.set(600 * Math.cos(t * .6), -200, -500 + 400 * Math.sin(t * .6)); }
+  const carOn = t >= T0 && t < T1;
+  if (carOn) { carousel(t); setCam(tcam, t - 1 / 30); const [, g] = glPose(t), a = g.clone().project(pcam), b = g.clone().project(tcam), dx = (a.x - b.x) * 960, dy = (a.y - b.y) * 540;
+    const gx = clamp((Math.abs(dx) - 6) * .12, 0, 20), gy = clamp((Math.abs(dy) - 6) * .12, 0, 20); $('mbg').setAttribute('stdDeviation', `${gx.toFixed(1)} ${gy.toFixed(1)}`); $('gl').style.filter = gx + gy > .4 ? 'url(#mb)' : '';
+    R.autoClear = true; R.render(car, pcam); R.autoClear = false; R.clearDepth(); }
+  R.render(scene, ocam); R.autoClear = true;
+  // floods: cover from the element (ease-in), then open from the centre onto the next scene
+  const fx = $('fx'), tz = $('tz'); let fOn = false, wOn = false;
+  FLOODS.forEach(f => { const u = t - f.t; if (u < -.3 || u > .5) return; fOn = true;
+    if (u < 0) { const w = f.from(t), ox = w ? (w[0] - cx - 960) * z + 960 : 960, oy = w ? (w[1] - cy - 540) * z + 540 : 540, g = Math.pow(clamp((u + .3) / .3), 2.4);
+      fx.style.background = f.col; fx.style.clipPath = `circle(${(g * 2400).toFixed(0)}px at ${ox.toFixed(0)}px ${oy.toFixed(0)}px)`; }
+    else { const r = 2300 * (1 - Math.pow(1 - clamp(u / .5), 2.6)); fx.style.clipPath = ''; fx.style.background = `radial-gradient(circle at 960px 540px, transparent ${Math.max(0, r - 60).toFixed(0)}px, rgba(${f.rimc},.9) ${r.toFixed(0)}px, ${f.col} ${(r + 70).toFixed(0)}px)`; }
+    if (f.word && u > -.34 && u < .34) { wOn = true; const k = (u + .34) / .68, sc = .5 * Math.exp(k * 3.6); tz.style.transform = `scale(${sc.toFixed(3)})`; tz.style.opacity = clamp(k * 5) * clamp((1 - k) * 4); tz.style.filter = `blur(${(2 + sc * 1.6).toFixed(1)}px)`; } });
+  fx.style.display = fOn ? '' : 'none'; tz.style.display = wOn ? 'flex' : 'none';
+};
+await Promise.all([...document.images].map(i => i.decode().catch(() => {})).concat([document.fonts.load("900 80px S"), document.fonts.load("700 80px S"), document.fonts.load("500 80px S")]));
+buildCarousel();
+window.seek(0); window.__ready = true;
+</script>
