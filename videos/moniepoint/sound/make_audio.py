@@ -1,4 +1,5 @@
-# Moniepoint "Sent means received": placeholder music (Mixkit 720, lift on the turn at 7.5 s) plus the soft motion layer:
+# Moniepoint "Sent means received": music from the user's reference film (sound/ref_music.wav, the Demucs music stem
+# looped on a downbeat to 43 s, its lift on the turn at 9.6 s; set MUSIC=cand/720.mp3 MUSIC_SS=15.4 DRONE=1 for the old Mixkit bed) plus the soft motion layer:
 # word pops, a tick per chat bubble, air passes on the camera whips, sub-thumps on landings. No tonal notes.
 import numpy as np, wave, subprocess, os, tempfile
 SR = 44100; DUR = 43.0; TMP = os.path.join(tempfile.mkdtemp(), 'mp_sfx.wav')
@@ -14,7 +15,11 @@ def thump(): n = int(.7 * SR); t = np.arange(n) / SR; return np.sin(2 * np.pi * 
 def load(p, af=None):
     subprocess.run(['ffmpeg', '-y', '-v', 'error', '-i', p] + (['-af', af] if af else []) + ['-ar', '44100', '-ac', '1', TMP], check=True)
     w = wave.open(TMP); return np.frombuffer(w.readframes(w.getnframes()), '<i2') / 32768
-dr = load(PACK + 'drone/drone_10_mixkit2504.wav'); dr = np.tile(dr, 3)[:int((DUR + 1) * SR)]; env = np.minimum(1, np.arange(len(dr)) / (2.5 * SR)) * np.minimum(1, (len(dr) - np.arange(len(dr))) / (2 * SR)); put(0, dr * env, .2)
+if os.environ.get('DRONE'):
+    dr = load(PACK + 'drone/drone_10_mixkit2504.wav')
+    dr = np.tile(dr, 3)[:int((DUR + 1) * SR)]
+    env = np.minimum(1, np.arange(len(dr)) / (2.5 * SR)) * np.minimum(1, (len(dr) - np.arange(len(dr))) / (2 * SR))
+    put(0, dr * env, .2)
 wh = load(PACK + 'sweep/sweep_18_mixkit2636.wav', 'lowpass=f=5200,highpass=f=180'); pk = int(np.argmax(np.abs(wh)))
 WHIPS = [1.45, 4.0, 6.5, 8.5, 10.0, 13.6, 16.3, 18.6, 20.9, 22.9, 26.9, 30.9, 34.4, 37.4]
 for i, tc in enumerate(WHIPS): put(max(0, tc - pk / SR), wh, .15, (-.3, .3)[i % 2])
@@ -30,7 +35,7 @@ for tf in (22.9,): put(tf - .02, sub(), .16)                                # fl
 for t0, g in [(8.62, .35), (13.75, .45), (17.3, .3), (19.6, .28), (28.0, .3), (39.35, .4)]: put(t0, thump(), g)   # the pill lands, the phone lands, the money opens, the number lands
 put(max(0, 13.1 - pk / SR), wh, .14)   # the dive into Ada's card
 for t0 in [4.1, 6.6, 9.0, 11.45, 17.5, 16.4, 18.3, 22.8, 24.9, 26.8, 31.4, 32.3, 32.75, 34.9, 35.45, 37.3, 37.5]: put(t0, sub(), .1)
-subprocess.run(['ffmpeg', '-y', '-v', 'error', '-ss', str(22.9 - 7.5), '-t', str(DUR + .5), '-i', os.environ.get('MUSIC', 'cand/720.mp3'), '-af', f'afade=t=in:d=0.05,afade=t=out:st={DUR - 2}:d=2', '-ar', '44100', '-ac', '2', 'music.wav'], check=True)
+subprocess.run(['ffmpeg', '-y', '-v', 'error', '-ss', os.environ.get('MUSIC_SS', '0'), '-t', str(DUR + .5), '-i', os.environ.get('MUSIC', 'ref_music.wav'), '-af', f'afade=t=in:d=0.05,afade=t=out:st={DUR - 2}:d=2', '-ar', '44100', '-ac', '2', 'music.wav'], check=True)
 w = wave.open('music.wav'); m = np.frombuffer(w.readframes(w.getnframes()), '<i2').reshape(-1, 2) / 32768
 n = min(len(m), len(fx)); mix = m[:n] * .8 + fx[:n]; mix /= max(1e-9, np.abs(mix).max()) / .9
 with wave.open('mix.wav', 'wb') as o: o.setnchannels(2); o.setsampwidth(2); o.setframerate(SR); o.writeframes((mix * 32767).astype('<i2').tobytes())
