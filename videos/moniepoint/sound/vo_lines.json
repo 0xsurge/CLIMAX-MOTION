@@ -1,13 +1,77 @@
-[["v01",0.2,"You know this feeling."],
- ["v02",1.65,"Heart in your mouth."],
- ["v03",3.3,"You refresh. You call. You say sorry for what isn't your fault."],
- ["v04",7.9,"There's a better way to move money."],
- ["v05",10.2,"One tap, and it's already on the other side."],
- ["v06",14.3,"No screenshots. No, check again. Just proof."],
- ["v07",18.7,"It just works. Day after day."],
- ["v08",21.15,"And your money can do more."],
- ["v09",23.3,"Use it at any P.O.S., A.T.M., or checkout."],
- ["v10",27.3,"Put some aside, and watch it grow."],
- ["v11",31.2,"Light, TV, airtime. Sorted from your phone."],
- ["v12",34.8,"And a little comes back to you, every day."],
- ["v13",38.1,"Moniepoint. Money that moves when you do."]]
+[
+ [
+  "n01",
+  0.2,
+  "You hit send."
+ ],
+ [
+  "n02",
+  1.6,
+  "It left your phone. But where did it go?"
+ ],
+ [
+  "n03",
+  4.2,
+  "Every naira has somewhere to be."
+ ],
+ [
+  "n04",
+  6.6,
+  "None of it should hang on a maybe."
+ ],
+ [
+  "n05",
+  8.6,
+  "With Moniepoint,"
+ ],
+ [
+  "n06",
+  10.3,
+  "you choose who, you tap once,"
+ ],
+ [
+  "n07",
+  13.7,
+  "and it's there before you look up."
+ ],
+ [
+  "n08",
+  16.4,
+  "No screenshots. No calling to check."
+ ],
+ [
+  "v07",
+  18.7,
+  "It just works. Day after day."
+ ],
+ [
+  "v08",
+  21.15,
+  "And your money can do more."
+ ],
+ [
+  "v09",
+  23.3,
+  "Use it at any P.O.S., A.T.M., or checkout."
+ ],
+ [
+  "v10",
+  27.3,
+  "Put some aside, and watch it grow."
+ ],
+ [
+  "v11",
+  31.2,
+  "Light, TV, airtime. Sorted from your phone."
+ ],
+ [
+  "v12",
+  34.8,
+  "And a little comes back to you, every day."
+ ],
+ [
+  "v13",
+  38.1,
+  "Moniepoint. Money that moves when you do."
+ ]
+]
