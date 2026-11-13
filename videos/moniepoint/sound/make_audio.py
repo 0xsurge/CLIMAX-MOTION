@@ -55,6 +55,9 @@ if os.path.exists('vo.wav') and float(os.environ.get('DUCK', 9)) > 0:
     band = np.fft.irfft(np.fft.rfft(m, axis=0) * mask[:, None], n=len(m), axis=0); rest = m - band
     duck = (1 - gain) / (1 - lo)                                             # 0 between lines, 1 under the voice
     m = rest * gain[:, None] + band * (gain * 10 ** (-CARVE * duck / 20))[:, None]
+    # The sound effects (pops, ticks, whips, thumps) also step under the voice: FX_DUCK dB while he talks.
+    k = min(len(fx), len(duck)); fx[:k] *= (10 ** (-float(os.environ.get('FX_DUCK', 6)) * duck[:k] / 20))[:, None]
+fx *= 10 ** (float(os.environ.get('FX_DB', -6)) / 20)                    # the whole effects layer sits FX_DB lower
 n = min(len(m), len(fx)); mix = m[:n] + fx[:n]; mix /= max(1e-9, np.abs(mix).max()) / .9
 with wave.open('mix.wav', 'wb') as o: o.setnchannels(2); o.setsampwidth(2); o.setframerate(SR); o.writeframes((mix * 32767).astype('<i2').tobytes())
 print('mix', DUR)
