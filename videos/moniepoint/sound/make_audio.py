@@ -1,7 +1,7 @@
 # Moniepoint "Sent means received": placeholder music (Mixkit 720, lift on the turn at 7.5 s) plus the soft motion layer:
 # word pops, a tick per chat bubble, air passes on the camera whips, sub-thumps on landings. No tonal notes.
-import numpy as np, wave, subprocess, os
-SR = 44100; DUR = 43.0; TMP = '/tmp/claude-0/-home-user-CLIMAX-MOTION/ebd3c3d1-b9fc-58c3-8e73-03b9f49be28b/scratchpad/mp_sfx.wav'
+import numpy as np, wave, subprocess, os, tempfile
+SR = 44100; DUR = 43.0; TMP = os.path.join(tempfile.mkdtemp(), 'mp_sfx.wav')
 PACK = '../../obi-reel/sound/sfxpack/'; rng = np.random.default_rng(5); fx = np.zeros((int((DUR + 1) * SR), 2))
 from warp import real
 def put(t, s, g, pan=0.):
