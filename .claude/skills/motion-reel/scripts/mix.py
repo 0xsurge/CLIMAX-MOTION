@@ -1,25 +1,27 @@
 #!/usr/bin/env python3
 """Mix music + sfx (+ optional voiceover), normalize to -14 LUFS / -1 dBTP (two-pass loudnorm), mux onto the video.
    python3 mix.py --video renders/16x9.mp4 --music audio/music.wav --sfx audio/sfx.wav [--vo audio/vo.wav] --out out/final_16x9.mp4
-Music sits at -6 dB under SFX; with a voiceover it ducks a further 8 dB while the voice plays."""
+Music sits at -6 dB under SFX; with a voiceover it ducks a further 8 dB while the voice plays.
+   --music-gain (default 0.5) sets the music level; --duck-ratio 1 turns the sidechain duck off (for music pre-ducked in the film's own mix)."""
 import argparse, json, re, subprocess, sys, os
 
 p = argparse.ArgumentParser()
 p.add_argument('--video', required=True); p.add_argument('--music'); p.add_argument('--sfx'); p.add_argument('--vo')
 p.add_argument('--out', required=True); p.add_argument('--lufs', type=float, default=-14); p.add_argument('--tp', type=float, default=-1)
+p.add_argument('--music-gain', type=float, default=0.5); p.add_argument('--duck-ratio', type=float, default=8)
 a = p.parse_args()
 ins = [x for x in (a.music, a.sfx, a.vo) if x]
 if not ins: sys.exit('need at least one audio input')
 dur = float(subprocess.check_output(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', a.video]))
 args, parts, labels, idx = ['ffmpeg', '-y', '-hide_banner', '-nostats', '-i', a.video], [], [], 1
-GAIN = {'music': 0.5, 'sfx': 1.0, 'vo': 1.2}
+GAIN = {'music': a.music_gain, 'sfx': 1.0, 'vo': 1.2}
 for kind, path in (('music', a.music), ('sfx', a.sfx), ('vo', a.vo)):
     if not path: continue
     args += ['-i', path]
-    out_label = 'vo_raw' if (kind == 'vo' and a.music) else kind
+    out_label = 'vo_raw' if (kind == 'vo' and a.music and a.duck_ratio > 1) else kind
     parts.append(f'[{idx}:a]aresample=44100,aformat=channel_layouts=stereo,volume={GAIN[kind]}[{out_label}]')
     idx += 1
-if a.vo and a.music:  # duck the music under the voice
+if a.vo and a.music and a.duck_ratio > 1:  # duck the music under the voice
     parts.append('[vo_raw]asplit[vo][vo_sc]')
     parts = [x.replace('[music]', '[music_raw]') for x in parts]
     parts.append('[music_raw][vo_sc]sidechaincompress=threshold=0.03:ratio=8:attack=20:release=300[music]')

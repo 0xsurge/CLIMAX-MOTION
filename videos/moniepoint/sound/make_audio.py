@@ -37,6 +37,16 @@ put(max(0, 13.1 - pk / SR), wh, .14)   # the dive into Ada's card
 for t0 in [4.1, 6.6, 9.0, 11.45, 17.5, 16.4, 18.3, 22.8, 24.9, 26.8, 31.4, 32.3, 32.75, 34.9, 35.45, 37.3, 37.5]: put(t0, sub(), .1)
 subprocess.run(['ffmpeg', '-y', '-v', 'error', '-ss', os.environ.get('MUSIC_SS', '0'), '-t', str(DUR + .5), '-i', os.environ.get('MUSIC', 'ref_music.wav'), '-af', f'afade=t=in:d=0.05,afade=t=out:st={DUR - 2}:d=2', '-ar', '44100', '-ac', '2', 'music.wav'], check=True)
 w = wave.open('music.wav'); m = np.frombuffer(w.readframes(w.getnframes()), '<i2').reshape(-1, 2) / 32768
-n = min(len(m), len(fx)); mix = m[:n] * .8 + fx[:n]; mix /= max(1e-9, np.abs(mix).max()) / .9
+# Music up front: bring it to MUSIC_RMS dBFS, then dip it a fixed DUCK dB while the voice plays (vo.wav), easing back after.
+# mix.py then runs with --music-gain 1 --duck-ratio 1 so this is the only duck.
+m = m * 10 ** ((float(os.environ.get('MUSIC_RMS', -18)) - 20 * np.log10(np.sqrt(np.mean(m ** 2)) + 1e-9)) / 20)
+if os.path.exists('vo.wav') and float(os.environ.get('DUCK', 6)) > 0:
+    w = wave.open('vo.wav'); v = np.abs(np.frombuffer(w.readframes(w.getnframes()), '<i2') / 32768); hop = SR // 100
+    act = np.array([v[i:i + hop].max() > .02 for i in range(0, len(v), hop)], float)          # voice on, per 10 ms
+    act = np.convolve(act, np.ones(15), 'same') > 0                                            # bridge gaps under 150 ms
+    g, gain = 1.0, []; lo = 10 ** (-float(os.environ.get('DUCK', 6)) / 20)
+    for a_ in act: g += ((lo if a_ else 1.0) - g) * (.12 if a_ else .025); gain.append(g)    # ~80 ms down, ~400 ms up
+    gain = np.interp(np.arange(len(m)) / hop, np.arange(len(gain)), gain); m = m * gain[:, None]
+n = min(len(m), len(fx)); mix = m[:n] + fx[:n]; mix /= max(1e-9, np.abs(mix).max()) / .9
 with wave.open('mix.wav', 'wb') as o: o.setnchannels(2); o.setsampwidth(2); o.setframerate(SR); o.writeframes((mix * 32767).astype('<i2').tobytes())
 print('mix', DUR)
