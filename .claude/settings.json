@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(/opt/yarn/venv/bin/python:*)"
+    ]
+  }
+}
