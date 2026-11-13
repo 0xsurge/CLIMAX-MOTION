@@ -152,13 +152,13 @@ svg.l{position:absolute;left:0;top:0;overflow:visible}img{display:block}.abs{pos
   </div>
   <!-- 11 close -->
   <div class="scene" data-o="close">
-    <div class="p" data-in="37.34" style="left:20px;top:170px;width:1880px;height:890px"><svg class="wm par" style="left:700px;top:-100px" width="1100" height="1320" viewBox="0 0 100 120"><use href="#dart" fill="#EEF1F6"/></svg>
-      <div class="h" data-words="38.2,.2" style="left:90px;top:250px;font-size:150px;font-weight:700;line-height:1;letter-spacing:-.045em">Money that<br><span class="bl">simply works<span id="stop" style="display:inline-block;width:.3em"></span></span></div>
-      <img id="model2" src="../assets/p_phone_cut.png" class="abs" style="-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 14%,#000 86%,transparent 100%),linear-gradient(180deg,#000 0,#000 84%,transparent 100%);-webkit-mask-composite:source-in;mask-composite:intersect;left:1180px;bottom:0;width:640px;transform-origin:50% 100%">
+    <div class="p" data-in="37.34" style="left:-200px;top:-200px;width:2320px;height:1480px;border-radius:0;background:transparent;-webkit-mask-image:linear-gradient(90deg,transparent 20px,#000 200px,#000 2120px,transparent 2300px),linear-gradient(180deg,transparent 80px,#000 200px,#000 1280px,transparent 1400px);-webkit-mask-composite:source-in;mask-composite:intersect"><svg class="wm par" style="left:920px;top:170px" width="1100" height="1320" viewBox="0 0 100 120"><use href="#dart" fill="#EEF1F6"/></svg>
+      <div class="h" data-words="38.2,.2" style="left:330px;top:560px;font-size:150px;font-weight:700;line-height:1;letter-spacing:-.045em">Money that<br><span class="bl">simply works<span id="stop" style="display:inline-block;width:.3em"></span></span></div>
+      <img id="model2" src="../assets/p_phone_cut.png" class="abs" style="-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 14%,#000 86%,transparent 100%),linear-gradient(180deg,#000 0,#000 84%,transparent 100%);-webkit-mask-composite:source-in;mask-composite:intersect;left:1230px;bottom:220px;width:640px;transform-origin:50% 100%">
     </div>
   </div>
-  <svg id="trail" class="abs" width="1" height="1" style="left:0;top:0;overflow:visible"><path id="tr" fill="none" stroke="#F5B21A" stroke-linecap="round" stroke-linejoin="round"/></svg>
-  <svg id="dartEl" class="abs" width="110" height="132" viewBox="0 0 100 120" style="margin:-66px 0 0 -55px;overflow:visible"><path id="dp" d="M0 120 L42 98 Q50 94 58 98 L100 120 L60 16 Q50 -2 40 16 Z" fill="#0460EF"/></svg>
+  <svg id="trail" class="abs" width="1" height="1" style="left:0;top:0;overflow:visible"><defs><filter id="sm1" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter><filter id="sm2" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="11"/></filter></defs><path id="tr3" fill="none" stroke="#F5B21A" stroke-linecap="round" stroke-linejoin="round" filter="url(#sm2)" opacity=".35"/><path id="tr2" fill="none" stroke="#F5B21A" stroke-linecap="round" stroke-linejoin="round" filter="url(#sm1)" opacity=".65"/><path id="tr" fill="none" stroke="#F5B21A" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <svg id="dartEl" class="abs" width="110" height="132" viewBox="0 0 100 120" style="margin:-66px 0 0 -55px;overflow:visible;filter:drop-shadow(0 0 10px rgba(79,170,255,.75)) drop-shadow(0 0 26px rgba(4,96,239,.4))"><path id="dp" d="M0 120 L42 98 Q50 94 58 98 L100 120 L60 16 Q50 -2 40 16 Z" fill="#0460EF"/></svg>
   </div>
   <div id="gl"></div>
   <div id="fx" style="position:absolute;inset:0;display:none"></div>
@@ -382,7 +382,9 @@ window.seek = t => {
     const span = DVIS.find(([a, b]) => t >= a && t < b), born = S(t - span[0], POPS), into = t < 7 ? S(t - 6.2, FLY) : t < 9 ? S(t - 8.55, FLY) : t < 15 ? S(t - 12.75, FLY) : 0, dot = S(t - 39.35, { k: 200, c: 28.3 });
     dEl.style.left = x + 'px'; dEl.style.top = y + 'px'; dEl.style.transform = `rotate(${(va * k).toFixed(1)}deg) scale(${(born * (1 - into) * lerp(1, .42, dot)).toFixed(3)})`;
     $('dp').setAttribute('fill', t < 7 ? '#FFFFFF' : '#0460EF'); $('dp').setAttribute('d', dot > .5 ? 'M50 20 A40 40 0 1 1 49.9 20 Z' : 'M0 120 L42 98 Q50 94 58 98 L100 120 L60 16 Q50 -2 40 16 Z');
-    let d = ''; for (let i = 0; i <= 26; i++) { const [a, b] = dartPos(t - i * .016); d += (i ? 'L' : 'M') + a.toFixed(1) + ' ' + b.toFixed(1); } $('tr').setAttribute('d', d); $('tr').setAttribute('stroke-width', (16 * born * (1 - into) * (1 - dot)).toFixed(1)); }
+    const P = []; for (let i = 0; i <= 40; i++) P.push(dartPos(t - i * .016)); const seg = (a, b) => P.slice(a, b + 1).map(([x, y], k) => (k ? 'L' : 'M') + x.toFixed(1) + ' ' + y.toFixed(1)).join('');
+    const tw = 16 * born * (1 - into) * (1 - dot);   // the trail: sharp near the dart, then it thins and dissolves into a soft smoke at its end
+    $('tr').setAttribute('d', seg(0, 14)); $('tr').setAttribute('stroke-width', tw.toFixed(1)); $('tr2').setAttribute('d', seg(10, 28)); $('tr2').setAttribute('stroke-width', (tw * .8).toFixed(1)); $('tr3').setAttribute('d', seg(22, 40)); $('tr3').setAttribute('stroke-width', (tw * 1.1).toFixed(1)); }
   // the phone
   const on = (t >= 13.55 && t < 21.3) || (t >= 26.8 && t < 31.3); phone.visible = sh.visible = on;
   if (on) { screenMat.map = t < 24 ? TEX.receipt : TEX.save; const wx = TR(t, PHX), wy = TR(t, PHY), s = TR(t, PHS) * z, ry = TR(t, PRY), rx = TR(t, PRX), rz = TR(t, PRZ);
