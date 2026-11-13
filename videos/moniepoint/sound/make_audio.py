@@ -1,5 +1,5 @@
 # Moniepoint "Sent means received": music from the user's reference film (sound/ref_music.wav, the Demucs music stem
-# looped on a downbeat to 43 s, its lift on the turn at 9.6 s; set MUSIC=cand/720.mp3 MUSIC_SS=15.4 DRONE=1 for the old Mixkit bed) plus the soft motion layer:
+# built by build_ref_music.py: starts past the quiet intro so it plays from frame 0, looped on a downbeat to 43 s; set MUSIC=cand/720.mp3 MUSIC_SS=15.4 DRONE=1 for the old Mixkit bed) plus the soft motion layer:
 # word pops, a tick per chat bubble, air passes on the camera whips, sub-thumps on landings. No tonal notes.
 import numpy as np, wave, subprocess, os, tempfile
 SR = 44100; DUR = 43.0; TMP = os.path.join(tempfile.mkdtemp(), 'mp_sfx.wav')
