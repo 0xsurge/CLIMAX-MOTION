@@ -259,7 +259,7 @@ const PRX = [[0, .5], [13.7, .04, TILT], [18.45, .3, TILT], [26.0, .5], [26.85, 
 const PRZ = [[0, -.3], [13.7, .03, TILT], [18.45, .1, TILT], [26.0, -.2], [26.85, -.1, TILT], [28.6, -.04, TILT]];
 
 // ---- scene transitions borrowed from the Pulse explainer study: a colour flood out of an element (X3), a zoom through big type (X4) ----
-const FLOODS = [{ t: 22.9, col: '#0460EF', rimc: '160,210,255', from: () => null, word: 1 }, { t: 34.4, col: '#021B4A', rimc: '90,150,255', from: t => dartPos(t) }];
+const FLOODS = [{ t: 22.9, col: '#0460EF', rimc: '160,210,255', from: () => null, word: 1 }];
 // ---- the carousel of waiting (EarnEdits study: a receding row of cards with a light that travels along it) ----
 const BLOBS = [[-60, 960, 550, 'rgba(4,96,239,.42)', 0], [1980, 80, 500, 'rgba(79,209,255,.42)', 2.1], [1760, 1140, 380, 'rgba(77,150,255,.36)', 4.2]].map(([x, y, r, c, p], i) => { const el = document.querySelectorAll('.blob')[i]; el.style.background = `radial-gradient(closest-side, ${c}, ${c.replace(/[\d.]+\)$/, '0)')})`; return { el, x, y, r, c, p }; });
 const blobAt = (b, t) => [b.x + 60 * Math.sin(.35 * t + b.p), b.y + 40 * Math.cos(.3 * t + b.p)];

@@ -25,7 +25,7 @@ for i, t0 in enumerate([1.8, 4.75, 5.45, 12.58, 31.1, 31.7, 31.8, 31.9, 32.0]): 
 for k in range(0, 7): put(10.55 + k / 22, click(2800, .003), .05)                      # the amount types
 for k in range(0, 24, 3): put(18.8 + k / 30, click(2800, .003), .05)                   # 99.9 counts
 for k in range(0, 21, 3): put(28.55 + k / 30, click(2800, .003), .05)                  # 20 counts
-for tf in (22.9, 34.4): put(tf - .02, sub(), .16)                                # floods land
+for tf in (22.9,): put(tf - .02, sub(), .16)                                # floods land
 for t0, g in [(8.62, .35), (13.75, .45), (17.3, .3), (19.6, .28), (28.0, .3), (39.35, .4)]: put(t0, thump(), g)   # the pill lands, the phone lands, the money opens, the number lands
 put(max(0, 13.1 - pk / SR), wh, .14)   # the dive into Ada's card
 for t0 in [4.1, 6.6, 9.0, 11.45, 17.5, 16.4, 18.3, 22.8, 24.9, 26.8, 31.4, 32.3, 32.75, 34.9, 35.45, 37.3, 37.5]: put(t0, sub(), .1)
