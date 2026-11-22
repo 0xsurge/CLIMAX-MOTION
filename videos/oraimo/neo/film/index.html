@@ -38,7 +38,7 @@ html,body{background:#F5F6F3;overflow:hidden}
     <!-- 1 the line -->
     <div class="abs" id="s1" style="left:0;width:1920px;text-align:center;top:420px;font:700 86px/1.25 D;letter-spacing:-.03em">
       <span class="w">The</span> <span class="w">world</span> <span class="w">is</span> <span class="pill" id="pnoise" style="height:84px;background:#111318"><svg width="130" height="50" viewBox="0 0 130 50"><path id="pnw" fill="none" stroke="#FF453A" stroke-width="5" stroke-linejoin="round"/></svg></span> <span class="w">loud.</span><br>
-      <span class="w mute">Your</span> <span class="w mute">space</span> <span class="pill" id="pcase" style="height:84px;background:#fff"><img src="../../assets/neo/closed_cut.png" style="height:74px"></span> <span class="w mute">doesn't</span> <span class="w mute">have</span> <span class="w mute">to</span> <span class="w mute">be.</span></div>
+      <span class="w mute">Your</span> <span class="w mute">space</span> <span class="pill" id="pcase" style="height:84px;background:#fff"><img src="../../assets/neo/case_only.png" style="height:74px"></span> <span class="w mute">doesn't</span> <span class="w mute">have</span> <span class="w mute">to</span> <span class="w mute">be.</span></div>
     <div class="abs" id="bloom" style="left:-400px;top:-400px;width:2720px;height:1880px"></div>
     <!-- 3 the wordmark stage (fully in frame) -->
     <img id="word" src="../../assets/logo_lime.png" class="abs" style="left:140px;top:250px;width:1640px;transform-origin:820px 208px">
@@ -85,10 +85,10 @@ html,body{background:#F5F6F3;overflow:hidden}
     <div class="abs wide" id="h11a" style="left:0;width:1920px;text-align:center;top:520px;font:700 40px/1 D;letter-spacing:.42em;color:#fff"><span class="w">SpaceBuds</span> <span class="w">Neo+</span></div>
     <div class="abs wide" id="h11b" style="left:0;width:1920px;text-align:center;top:600px;font:700 28px/1 D;letter-spacing:.6em;color:#82E600"><span class="w">Beyond</span> <span class="w">the</span> <span class="w">noise.</span></div>
     <!-- the product layer: one element per real render, each a carrier with its own keys -->
-    <img id="pCase" class="im" src="../../assets/neo/closed_cut.png">
+    <img id="pCase" class="im" src="../../assets/neo/case_only.png">
     <img id="pHero" class="im" src="../../assets/neo/hero_cut.png">
-    <img id="pDrop" class="im" src="../../assets/neo/closed_cut.png">
-    <img id="pBuds" class="im" src="../../assets/neo/mic_cut.png">
+    <img id="pDrop" class="im" src="../../assets/neo/case_only.png">
+    <img id="pBuds" class="im" src="../../assets/neo/buds_pair.png">
     <img id="pAnc" class="im" src="../../assets/neo/anc_cut.png">
     <img id="p30" class="im" src="../../assets/neo/h30_cut.png">
     <img id="pIpx" class="im" src="../../assets/neo/ipx4_cut.png">
@@ -136,7 +136,7 @@ const rel = (el, anc) => { let x = 0, y = 0; while (el && el !== anc) { x += el.
 // a carrier: keys [t, {x, y, s, r, o}, spring]; one spring per change, each from its own time.
 const K = keys => t => { const st = { ...keys[0][1] }; for (let i = 1; i < keys.length; i++) { const [ti, v, sp] = keys[i], pv = {}; for (let j = i - 1; j >= 0; j--) Object.keys(v).forEach(k => { if (pv[k] === undefined && keys[j][1][k] !== undefined) pv[k] = keys[j][1][k]; });
   const u = sp === 'cut' ? (t >= ti ? 1 : 0) : S(t - ti, sp); Object.keys(v).forEach(k => { st[k] = (st[k] === undefined ? v[k] : st[k]) + (v[k] - (pv[k] === undefined ? v[k] : pv[k])) * u; }); } return st; };
-const IMW = { pCase: [620, 626], pHero: [560, 657], pDrop: [440, 444], pBuds: [540, 369], pAnc: [1300, 386], p30: [520, 483], pIpx: [1020, 870] };
+const IMW = { pCase: [541, 570], pHero: [560, 657], pDrop: [384, 405], pBuds: [586, 506], pAnc: [1300, 386], p30: [520, 483], pIpx: [1020, 870] };
 function draw(id, f, t, vis, extra = {}) { const el = $(id); if (!vis) { el.style.display = 'none'; return null; } const a = f(t), b = f(t - 1 / 30), sp = Math.hypot(a.x - b.x, a.y - b.y) + Math.abs(a.s - b.s) * 300;
   const [w, h] = IMW[id]; el.style.display = ''; el.style.width = w + 'px'; el.style.left = (a.x - w / 2) + 'px'; el.style.top = (a.y - h / 2) + 'px';
   const fl = Math.sin(t * 1.2 + w) * (extra.float ?? 6); el.style.transform = `translateY(${fl.toFixed(1)}px) scale(${a.s.toFixed(4)}) rotate(${(a.r || 0).toFixed(2)}deg)`;
