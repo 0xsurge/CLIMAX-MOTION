@@ -86,8 +86,6 @@ html,body{background:#F5F6F3;overflow:hidden}
     <div class="abs wide" id="h11b" style="left:0;width:1920px;text-align:center;top:600px;font:700 28px/1 D;letter-spacing:.6em;color:#82E600"><span class="w">Beyond</span> <span class="w">the</span> <span class="w">noise.</span></div>
     <!-- the product layer: one element per real render, each a carrier with its own keys -->
     <img id="pCase" class="im" src="../../assets/neo/case_only.png">
-    <img id="pHero" class="im" src="../../assets/neo/hero_cut.png">
-    <img id="pDrop" class="im" src="../../assets/neo/case_only.png">
     <img id="pBuds" class="im" src="../../assets/neo/buds_pair.png">
     <img id="pAnc" class="im" src="../../assets/neo/anc_cut.png">
     <img id="p30" class="im" src="../../assets/neo/h30_cut.png">
@@ -136,7 +134,7 @@ const rel = (el, anc) => { let x = 0, y = 0; while (el && el !== anc) { x += el.
 // a carrier: keys [t, {x, y, s, r, o}, spring]; one spring per change, each from its own time.
 const K = keys => t => { const st = { ...keys[0][1] }; for (let i = 1; i < keys.length; i++) { const [ti, v, sp] = keys[i], pv = {}; for (let j = i - 1; j >= 0; j--) Object.keys(v).forEach(k => { if (pv[k] === undefined && keys[j][1][k] !== undefined) pv[k] = keys[j][1][k]; });
   const u = sp === 'cut' ? (t >= ti ? 1 : 0) : S(t - ti, sp); Object.keys(v).forEach(k => { st[k] = (st[k] === undefined ? v[k] : st[k]) + (v[k] - (pv[k] === undefined ? v[k] : pv[k])) * u; }); } return st; };
-const IMW = { pCase: [541, 570], pHero: [560, 657], pDrop: [384, 405], pBuds: [586, 506], pAnc: [1300, 386], p30: [520, 483], pIpx: [1020, 870] };
+const IMW = { pCase: [541, 570], pBuds: [586, 506], pAnc: [1300, 386], p30: [520, 483], pIpx: [1020, 870] };
 function draw(id, f, t, vis, extra = {}) { const el = $(id); if (!vis) { el.style.display = 'none'; return null; } const a = f(t), b = f(t - 1 / 30), sp = Math.hypot(a.x - b.x, a.y - b.y) + Math.abs(a.s - b.s) * 300;
   const [w, h] = IMW[id]; el.style.display = ''; el.style.width = w + 'px'; el.style.left = (a.x - w / 2) + 'px'; el.style.top = (a.y - h / 2) + 'px';
   const fl = Math.sin(t * 1.2 + w) * (extra.float ?? 6); el.style.transform = `translateY(${fl.toFixed(1)}px) scale(${a.s.toFixed(4)}) rotate(${(a.r || 0).toFixed(2)}deg)`;
@@ -147,13 +145,12 @@ function sweepOn(id, t, t0, dur) { const el = $(id), sw = $('sweepP'), u = clamp
   sw.style.background = `linear-gradient(112deg, transparent ${u * 150 - 45}%, rgba(255,255,255,${(.6 * Math.sin(Math.PI * u)).toFixed(2)}) ${u * 150 - 20}%, transparent ${u * 150}%)`;
   sw.style.webkitMaskImage = `url(${el.getAttribute('src')})`; sw.style.webkitMaskSize = '100% 100%'; sw.style.mixBlendMode = 'screen'; return true; }
 // ---- carriers ----
-const FCase = K([[0, { x: 960, y: 560, s: .2, r: -14, o: 0, b: 16 }], [4.55, { s: 1, r: 0, o: 1, b: 0 }, SOFT], [5.5, { r: 4 }, GLIDE], [6.1, { y: 470, s: .9, r: 0 }, { k: 90, c: 19 }]]);
-const FHero = K([[0, { x: 960, y: 470, s: .9, o: 0 }], [6.28, { o: 1 }, 'cut'], [6.3, { y: 430, s: .82 }, SOFT], [9.95, { y: 330, s: .7, o: 0 }, FLY]]);
-const FDrop = K([[0, { x: 960, y: 560, s: .82, r: 0 }], [10.0, { y: 1500, r: 18 }, { k: 60, c: 9 }]]);
-const FBuds = K([[0, { x: 960, y: 330, s: .9, r: -6, o: 0 }], [9.98, { o: 1 }, 'cut'], [10.0, { x: 970, y: 444, s: 1, r: 0 }, FLY], [14.7, { s: 1.04 }, GLIDE]]);
+// one case, one layer from the bloom to the lift-off: it turns as the light sweeps the ground, never swaps for another render
+const FCase = K([[0, { x: 960, y: 560, s: .2, r: -14, o: 0, b: 16 }], [4.55, { s: 1, r: 0, o: 1, b: 0 }, SOFT], [5.5, { r: 5 }, GLIDE], [6.05, { y: 470, s: 1.04, r: -17 }, { k: 55, c: 12.5 }], [8.0, { r: -12, s: 1.07 }, GLIDE], [9.9, { y: 1500, r: 8 }, { k: 60, c: 9 }]]);
+const FBuds = K([[0, { x: 960, y: 420, s: .45, r: -14, o: 0, b: 8 }], [9.85, { o: 1, b: 0 }, POPS], [9.9, { x: 970, y: 444, s: 1, r: 0 }, FLY], [14.7, { s: 1.04 }, GLIDE]]);
 const FAnc = K([[0, { x: 960, y: 573, s: .78, o: 0, b: 14 }], [15.9, { s: 1, o: 1, b: 0 }, SOFT], [21.8, { x: 1260, y: 541, s: .18, o: 0 }, FLY]]);
-const F30 = K([[0, { x: 1260, y: 541, s: .3, o: 0, b: 14 }], [22.05, { s: 1, o: 1, b: 0 }, SOFT], [26.95, { x: 960, y: 531, s: 1.05 }, FLY]]);
-const FHero7 = K([[0, { x: 960, y: 531, s: 1.0, o: 0 }], [27.15, { o: 1 }, 'cut'], [27.2, { s: .86 }, SOFT], [31.75, { x: 1640, y: 900, s: .38, r: 12, o: 0 }, FLY]]);
+// the open case stays one layer from the 30 h ring through the calls scene, turning slightly, then flies into the game
+const F30 = K([[0, { x: 1260, y: 541, s: .3, o: 0, b: 14 }], [22.05, { s: 1, o: 1, b: 0 }, SOFT], [26.95, { x: 960, y: 531, s: 1.05, r: -6 }, FLY], [29.4, { r: 5, s: 1.0 }, GLIDE], [31.75, { x: 1640, y: 900, s: .38, r: 14, o: 0 }, FLY]]);
 const FIpx = K([[0, { x: 960, y: 260, s: .85, o: 0, r: -6 }], [39.95, { y: 605, s: 1, o: 1, r: 0 }, { k: 60, c: 13 }], [42.55, { s: 0, y: 560, o: 0 }, { k: 200, c: 28.3 }]]);
 // cursor
 const CUR = [[10.9, [1700, 1180]], [11.3, [1060, 880]], [13.6, [1500, 1200]], [36.9, [1980, 760]], [37.3, [1560, 396]], [39.0, [1700, 1150]]], CURON = [[10.9, 13.9], [36.9, 39.4]], PRESS = [12.3, 38.2];
@@ -181,15 +178,12 @@ window.seek = t => {
   if (show('bloom', 3.4, 5.6)) { const g = ease((t - 3.45) / .9), [ox, oy] = PC || [1000, 600], r = 40 + 2600 * g, k = 1 - sm((t - 4.5) / 1.0);
     $('bloom').style.background = `radial-gradient(circle at ${ox + 400}px ${oy + 400}px, rgba(255,255,240,${k.toFixed(3)}) 0, rgba(200,255,110,${k.toFixed(3)}) ${(r * .25).toFixed(0)}px, rgba(130,230,0,${(k * .95).toFixed(3)}) ${(r * .6).toFixed(0)}px, rgba(130,230,0,0) ${r.toFixed(0)}px)`; }
   if (show('floor', 4.6, 46)) { const a = sm((t - 4.7) / .9) * (1 - sm((t - 5.95) / .5)) + sm((t - 43.2) / .9); $('floor').style.opacity = a.toFixed(3); $('floor').style.transform = `translateY(${((1 - clamp(a)) * 200).toFixed(1)}px)`; }
-  const pc = draw('pCase', FCase, t, on(4.5, 6.4), { f: t < 6.0 ? 'brightness(.62) contrast(1.25) drop-shadow(0 0 40px rgba(130,230,0,.35))' : 'drop-shadow(0 50px 70px rgba(17,19,24,.35))' });
-  if (pc && t > 6.28) $('pCase').style.opacity = 1 - sm((t - 6.28) / .1);
+  { const lit = sm((t - 6.0) / .9); draw('pCase', FCase, t, on(4.5, 11.2), { f: `brightness(${(.62 + .38 * lit).toFixed(3)}) contrast(${(1.25 - .25 * lit).toFixed(3)}) drop-shadow(0 0 40px rgba(130,230,0,${(.35 * (1 - lit)).toFixed(3)})) drop-shadow(0 50px 70px rgba(17,19,24,${(.35 * lit).toFixed(3)}))` }); }
   // ===== 3 the wordmark, fully in frame, grows behind the case; the case rises over it =====
   if (show('word', 6.2, 10.7)) { const s = S(t - 6.25, SOFT), ex = S(t - 9.85, FLY); $('word').style.opacity = clamp(s * 1.5);
     $('word').style.filter = (s < .98 || ex > .02) ? `blur(${((1 - s) * 16 + ex * 14).toFixed(1)}px)` : ''; $('word').style.transform = `translateX(${(-1400 * ex).toFixed(1)}px) scale(${(.55 + .45 * s + .02 * clamp((t - 7) / 3)).toFixed(4)})`; }
-  draw('pHero', t < 20 ? FHero : FHero7, t, on(6.28, 10.2) || on(27.12, 32.5), { f: 'drop-shadow(0 40px 60px rgba(17,19,24,.3))' });
   // the buds lift off the case: the case drops away, the buds fly to the noise scene
-  draw('pDrop', FDrop, t, on(9.98, 10.9));
-  draw('pBuds', FBuds, t, on(9.98, 15.75));
+  draw('pBuds', FBuds, t, on(9.85, 15.75));
   // ===== 4 noise off =====
   if (show('wv', 10.0, 15.75)) { const grow = ease((t - 10.25) / .8), calmR = sm((t - 12.4) / 1.0), calmL = sm((t - 13.0) / 1.6) * .55, amp = clamp(S(t - 10.2, PANEL));
     let dl = '', dr = ''; const nL = Math.max(1, Math.round(18 * grow)), nR = Math.max(1, Math.round(24 * grow));
@@ -218,9 +212,9 @@ window.seek = t => {
   if (arcOn) { const p = ease((t - 22.6) / 1.7), col = S(t - 26.95, FLY), R = Math.max(0, 380 * (1 - col)), C = 2 * Math.PI * Math.max(R, .01), acx = 1260 + (960 - 1260) * col;
     ['arc', 'arcG'].forEach(id => { const e = $(id); e.setAttribute('cx', acx.toFixed(1)); e.setAttribute('cy', 540); e.setAttribute('r', R.toFixed(1)); e.setAttribute('stroke-dasharray', `${C.toFixed(1)} ${C.toFixed(1)}`); e.setAttribute('stroke-dashoffset', (C * (1 - p)).toFixed(1)); e.setAttribute('transform', `rotate(-90 ${acx.toFixed(1)} 540)`); });
     const n = S(t - 22.55, WORD), ex = S(t - 26.75, WORD), el = $('n30'); el.textContent = Math.round(30 * p); el.style.opacity = sm(n * 1.25) * (1 - sm(ex * 1.3)); el.style.filter = (n < .98 || ex > .02) ? `blur(${((1 - n) * 14 + ex * 14).toFixed(1)}px)` : ''; el.style.transform = `translateY(${((1 - n) * 50 - ex * 40).toFixed(1)}px)`; } else $('n30').style.opacity = 0;
-  draw('p30', F30, t, on(22.0, 27.2)); if (on(27.12, 27.2)) $('p30').style.opacity = 1 - sm((t - 27.12) / .08);
+  draw('p30', F30, t, on(22.0, 32.5));
   // light passes along the products (motivated rim light, dies away)
-  sweepOn('pAnc', t, 18.4, 1.4) || sweepOn('pHero', t, 8.3, 1.1) || sweepOn('pCase', t, 4.55, 1.2) || sweepOn('pIpx', t, 41.0, 1.2) || ($('sweepP').style.display = 'none');
+  sweepOn('pAnc', t, 18.4, 1.4) || sweepOn('pCase', t, 7.6, 1.2) || sweepOn('pCase', t, 4.55, 1.2) || sweepOn('pIpx', t, 41.0, 1.2) || ($('sweepP').style.display = 'none');
   // ===== 7 the ring bursts into the voice bars; the case is carried to the centre =====
   const barsOn = on(26.95, 32.4); $('bars').style.display = barsOn ? '' : 'none';
   if (barsOn) { const fly = S(t - 27.0, { k: 120, c: 22 }), flat = S(t - 31.6, FLY);
