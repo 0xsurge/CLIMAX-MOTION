@@ -1,0 +1,259 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>oraimo SpaceBuds Neo+: Beyond the noise.</title>
+<!-- 1920x1080, 46 s, pure function of t (window.seek). Approved storyboard: ../../board/neo.html.
+     Styling, transitions and camera from the Lovable study (videos/reference/ig-ref/STUDY.md): light statements, dark
+     product moments, a glowing lime cursor whose taps flood things with the lime gradient, a light bloom that becomes the
+     case, the wordmark as a stage, dives into what is tapped, a collapse to a dot that becomes the logo.
+     Places on one canvas, one flat camera (camFlow from the Bolt study), feathered dark grounds so no edge ever shows. -->
+<style>
+@font-face{font-family:D;font-weight:500;src:url(../../assets/InterDisplay-Medium.otf)}
+@font-face{font-family:D;font-weight:700;src:url(../../assets/InterDisplay-SemiBold.otf)}
+@font-face{font-family:D;font-weight:900;src:url(../../assets/InterDisplay-Bold.otf)}
+*{box-sizing:border-box;margin:0}
+html,body{background:#F5F6F3;overflow:hidden}
+#stage{position:relative;width:1920px;height:1080px;overflow:hidden;background:#F5F6F3;font-family:D,sans-serif;color:#111318}
+#cam{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:960px 540px}
+.abs{position:absolute}.sc{position:absolute;width:1920px;height:1080px}
+.dk{position:absolute;left:-600px;top:-600px;width:3120px;height:2280px;background:#050607;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 340px,#000 2780px,transparent 3120px),linear-gradient(180deg,transparent 0,#000 340px,#000 1940px,transparent 2280px);-webkit-mask-composite:source-in;mask-composite:intersect}
+.w{display:inline-block}.lime{color:#82E600}.mute{color:#5A6068}
+.wide{text-transform:uppercase;white-space:nowrap}
+.pill{display:inline-flex;align-items:center;justify-content:center;vertical-align:middle;border-radius:999px;overflow:hidden;margin:0 .14em;box-shadow:0 10px 30px rgba(17,19,24,.14)}
+.prod{position:absolute;transform-origin:50% 50%}
+.chip{position:absolute;font:700 30px/1 D;padding:16px 26px;border-radius:999px;white-space:nowrap;background:#111318;color:#fff}
+</style>
+<div id="stage">
+<svg width="0" height="0" style="position:absolute"><defs>
+  <linearGradient id="cg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E4FFA8"/><stop offset=".5" stop-color="#82E600"/><stop offset="1" stop-color="#2FA800"/></linearGradient>
+  <filter id="mb" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur id="mbg" stdDeviation="0 0"/></filter>
+  <filter id="gl" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="10"/></filter></defs></svg>
+<div id="cam">
+
+  <!-- ===== P1 (0,0): 1 the line, 2 the bloom and the case on black, 3 the wordmark stage ===== -->
+  <div class="sc" data-p="p1">
+    <div class="abs" id="b1a" style="left:-260px;top:620px;width:760px;height:760px;border-radius:50%;background:radial-gradient(closest-side,rgba(130,230,0,.34),rgba(130,230,0,0))"></div>
+    <div class="abs" id="b1b" style="left:1500px;top:-300px;width:760px;height:760px;border-radius:50%;background:radial-gradient(closest-side,rgba(190,196,206,.75),rgba(190,196,206,0))"></div>
+    <div class="abs" id="s1" style="left:0;width:1920px;text-align:center;top:420px;font:700 86px/1.25 D;letter-spacing:-.03em">
+      <span class="w">The</span> <span class="w">world</span> <span class="w">is</span> <span class="pill" id="pnoise" style="height:84px;background:#111318"><svg width="130" height="50" viewBox="0 0 130 50"><path id="pnw" fill="none" stroke="#FF453A" stroke-width="5" stroke-linejoin="round"/></svg></span> <span class="w">loud.</span><br>
+      <span class="w mute">Your</span> <span class="w mute">space</span> <span class="pill" id="pcase" style="height:84px;background:#fff"><img src="../../assets/neo/closed_cut.png" style="height:74px"></span> <span class="w mute">doesn't</span> <span class="w mute">have</span> <span class="w mute">to</span> <span class="w mute">be.</span></div>
+    <div class="abs" id="bloom" style="left:-400px;top:-400px;width:2720px;height:1880px"></div>
+    <div id="d2" class="dk"></div>
+    <div class="abs" id="floor2" style="left:-200px;top:690px;width:2320px;height:700px;border-radius:50%;background:radial-gradient(closest-side,rgba(130,230,0,.35),rgba(130,230,0,0))"></div>
+    <div class="abs" id="paper3" style="left:-400px;top:-400px;width:2720px;height:1880px"></div>
+    <img id="word3" src="../../assets/logo_lime.png" class="abs" style="left:-160px;top:250px;width:2240px;transform-origin:1120px 284px">
+    <div class="abs" id="prodWrap" style="left:0;top:0;width:1920px;height:1080px">
+      <img id="prod" class="prod" src="../../assets/neo/closed_cut.png">
+      <div id="prodSweep" class="abs" style="left:0;top:0"></div></div>
+    <div class="abs wide" id="name3" style="left:0;width:1920px;text-align:center;top:960px;font:700 34px/1 D;letter-spacing:.34em"><span class="w">SpaceBuds</span> <span class="w">Neo+</span></div>
+  </div>
+
+  <!-- ===== P4: 4 noise off ===== -->
+  <div class="sc" data-p="p4">
+    <svg class="abs" style="left:0;top:0;overflow:visible" width="1920" height="1080"><path id="wL" fill="none" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/><path id="wRg" fill="none" stroke-width="18" filter="url(#gl)"/><path id="wR" fill="none" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/></svg>
+    <img id="buds4" src="../../assets/neo/mic_cut.png" class="abs" style="left:700px;top:260px;width:540px;filter:drop-shadow(0 40px 60px rgba(17,19,24,.3))">
+    <div class="abs" id="tg" style="left:740px;top:820px;width:440px;height:110px;border-radius:999px;background:#D9DCD6;overflow:hidden;box-shadow:0 20px 50px rgba(17,19,24,.12)">
+      <div class="abs" id="tgFill" style="left:0;top:0;width:440px;height:110px;background:linear-gradient(90deg,#E4FFA8,#82E600 60%,#2FA800)"></div>
+      <div class="abs" style="left:36px;top:33px;font:700 44px/1 D;color:#0B1A00">ANC</div>
+      <div class="abs" style="left:254px;top:20px;width:150px;height:70px;border-radius:999px;background:#fff"></div>
+      <div class="abs" id="tgKnob" style="left:262px;top:28px;width:54px;height:54px;border-radius:50%;background:#B9BDB5"></div></div>
+    <div class="abs" id="h4a" style="left:110px;top:150px;font:700 30px/1.3 D"><span class="w"><span class="lime">●</span> Active</span> <span class="w">Noise</span> <span class="w">Cancellation</span></div>
+    <div class="abs" id="h4b" style="left:110px;top:200px;font:700 76px/1.05 D;letter-spacing:-.035em"><span class="w">Less</span> <span class="w">noise.</span><br><span class="w mute">More</span> <span class="w mute">you.</span></div>
+  </div>
+
+  <!-- ===== P5: 5 Sound360 (dark) ===== -->
+  <div class="sc" data-p="p5">
+    <div class="dk"></div>
+    <svg class="abs" style="left:0;top:0;overflow:visible" width="1920" height="1080"><g id="rings" fill="none" stroke="#82E600"></g><g id="orbs"></g></svg>
+    <img id="anc5" src="../../assets/neo/anc_cut.png" class="abs" style="left:310px;top:380px;width:1300px">
+    <div id="sw5" class="abs" style="left:310px;top:380px;width:1300px;height:386px"></div>
+    <div class="abs wide" id="h5a" style="left:0;width:1920px;text-align:center;top:140px;font:700 34px/1 D;letter-spacing:.3em;color:#fff"><span class="w lime">Sound360</span> <span class="w">spatial</span> <span class="w">audio</span></div>
+    <div class="abs" id="h5b" style="left:0;width:1920px;text-align:center;top:850px;font:700 72px/1 D;letter-spacing:-.03em;color:#fff"><span class="w">Sound</span> <span class="w">that</span> <span class="w">surrounds</span> <span class="w">you.</span></div>
+  </div>
+
+  <!-- ===== P6: 6 thirty hours ===== -->
+  <div class="sc" data-p="p6">
+    <svg class="abs" style="left:0;top:0;overflow:visible" width="1920" height="1080"><circle cx="1260" cy="540" r="380" fill="none" stroke="#E3E6E0" stroke-width="22"/>
+      <circle id="ringG" cx="1260" cy="540" r="380" fill="none" stroke="#82E600" stroke-width="40" stroke-dasharray="2388" transform="rotate(-90 1260 540)" filter="url(#gl)" opacity=".35"/>
+      <circle id="ring" cx="1260" cy="540" r="380" fill="none" stroke="url(#cg)" stroke-width="22" stroke-linecap="round" stroke-dasharray="2388" transform="rotate(-90 1260 540)"/></svg>
+    <img id="case6" src="../../assets/neo/h30_cut.png" class="abs" style="left:1000px;top:300px;width:520px;filter:drop-shadow(0 40px 60px rgba(17,19,24,.3))">
+    <div class="abs mute" id="h6a" style="left:130px;top:250px;font:500 40px/1 D"><span class="w">Up</span> <span class="w">to</span></div>
+    <div class="abs lime" id="n30" style="left:120px;top:300px;font:900 380px/.9 D;letter-spacing:-.06em"></div>
+    <div class="abs" id="h6b" style="left:136px;top:660px;font:700 64px/1.1 D;letter-spacing:-.02em"><span class="w">hours</span> <span class="w">of</span> <span class="w">play.</span></div>
+    <div class="abs mute" id="h6c" style="left:138px;top:760px;font:500 28px/1.4 D"><span class="w">5 h in the buds, 25 h more from the case (ANC off).</span></div>
+  </div>
+
+  <!-- ===== P7: 7 clear calls ===== -->
+  <div class="sc" data-p="p7">
+    <svg class="abs" style="left:0;top:0;overflow:visible" width="1920" height="1080"><g id="bars" stroke="#82E600" stroke-width="10" stroke-linecap="round"></g></svg>
+    <img id="case7" src="../../assets/neo/hero_cut.png" class="abs" style="left:720px;top:250px;width:480px;filter:drop-shadow(0 40px 60px rgba(17,19,24,.3))">
+    <div class="chip" id="m1" style="left:720px;top:920px"><span class="lime">●</span> Mic 1</div><div class="chip" id="m2" style="left:1000px;top:920px"><span class="lime">●</span> Mic 2</div>
+    <div class="abs" id="h7" style="left:0;width:1920px;text-align:center;top:90px;font:700 72px/1 D;letter-spacing:-.03em"><span class="w">Clear</span> <span class="w">calls.</span> <span class="w mute">Every</span> <span class="w mute">time.</span></div>
+  </div>
+
+  <!-- ===== P8: 8 game mode (dark) ===== -->
+  <div class="sc" data-p="p8">
+    <div class="dk"></div>
+    <img id="game" src="../../assets/neo/game.jpg" class="abs" style="left:-60px;top:110px;width:2040px">
+    <div class="abs" style="left:-60px;top:560px;width:2040px;height:560px;background:linear-gradient(180deg,rgba(5,6,7,0),rgba(5,6,7,.92))"></div>
+    <div class="abs wide" id="h8a" style="left:120px;top:880px;font:700 30px/1.3 D;letter-spacing:.3em;color:#fff"><span class="w"><span class="lime">●</span> Low-latency</span> <span class="w">game</span> <span class="w">mode</span></div>
+    <div class="abs" id="h8b" style="left:120px;top:930px;font:700 64px/1.1 D;letter-spacing:-.03em;color:#fff"><span class="w">Sound</span> <span class="w">in</span> <span class="w">perfect</span> <span class="w">sync.</span></div>
+  </div>
+
+  <!-- ===== P9: 9 connected ===== -->
+  <div class="sc" data-p="p9">
+    <div class="abs" style="left:1050px;top:80px;width:900px;height:900px;border-radius:50%;background:radial-gradient(closest-side,rgba(130,230,0,.24),rgba(130,230,0,0))"></div>
+    <div class="abs" id="phone" style="left:1120px;top:140px;width:520px;height:790px;border-radius:60px;overflow:hidden;box-shadow:0 50px 120px rgba(17,19,24,.35),0 0 0 10px #111318">
+      <img src="../../assets/neo/bt.jpg" style="width:520px;margin-top:-70px;display:block">
+      <div class="abs" id="row" style="left:30px;top:235px;width:470px;height:38px;border-radius:12px;background:linear-gradient(90deg,#E4FFA8,#82E600);mix-blend-mode:multiply"></div></div>
+    <div class="abs" id="chk" style="left:1670px;top:372px;width:64px;height:64px;border-radius:50%;background:#82E600;box-shadow:0 0 30px rgba(130,230,0,.7)"><svg width="64" height="64" viewBox="0 0 64 64"><path id="chkP" d="M18 33 L28 43 L47 22" fill="none" stroke="#0B1A00" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="abs" id="h9a" style="left:130px;top:340px;font:700 30px/1.3 D"><span class="w"><span class="lime">●</span> Bluetooth</span> <span class="w">5.4</span></div>
+    <div class="abs" id="h9b" style="left:126px;top:400px;font:700 96px/1 D;letter-spacing:-.04em"><span class="w">Open</span> <span class="w">the</span> <span class="w">case.</span></div>
+    <div class="abs" id="h9c" style="left:126px;top:496px;font:700 96px/1 D;letter-spacing:-.04em"><span class="w lime">Connected.</span></div>
+    <div class="abs mute" id="h9d" style="left:130px;top:640px;font:500 30px/1.4 D"><span class="w">Built-in hall sensor: it connects the moment the lid opens.</span></div>
+  </div>
+
+  <!-- ===== P10: 10 design, 11 brand signature (dark) ===== -->
+  <div class="sc" data-p="p10">
+    <div class="dk"></div>
+    <div class="abs" style="left:200px;top:120px;width:1500px;height:900px;border-radius:50%;background:radial-gradient(closest-side,rgba(199,205,214,.2),rgba(199,205,214,0))"></div>
+    <div class="abs" id="g10" style="left:0;top:0;width:1920px;height:1080px;transform-origin:960px 560px">
+      <img id="ipx" src="../../assets/neo/ipx4_cut.png" class="abs" style="left:450px;top:170px;width:1020px">
+      <div id="sw10" class="abs" style="left:450px;top:170px;width:1020px;height:870px"></div>
+      <div class="abs wide" id="h10" style="left:0;width:1920px;text-align:center;top:90px;font:700 32px/1 D;letter-spacing:.3em;color:#fff"><span class="w">IPX4</span> <span class="w lime">·</span> <span class="w">Metallic</span> <span class="w">finish</span> <span class="w lime">·</span> <span class="w">Touch</span> <span class="w">control</span></div></div>
+    <div class="abs" id="dot" style="left:940px;top:540px;width:40px;height:40px;border-radius:50%;background:#B6FF4D;box-shadow:0 0 40px 10px rgba(130,230,0,.7)"></div>
+    <div class="abs" id="floor11" style="left:-200px;top:720px;width:2320px;height:800px;border-radius:50%;background:radial-gradient(closest-side,rgba(130,230,0,.55),rgba(47,168,0,.25) 45%,rgba(130,230,0,0))"></div>
+    <img id="logo11" src="../../assets/logo_lime.png" class="abs" style="left:700px;top:330px;width:520px;transform-origin:260px 66px">
+    <div class="abs wide" id="h11a" style="left:0;width:1920px;text-align:center;top:520px;font:700 40px/1 D;letter-spacing:.42em;color:#fff"><span class="w">SpaceBuds</span> <span class="w">Neo+</span></div>
+    <div class="abs wide" id="h11b" style="left:0;width:1920px;text-align:center;top:600px;font:700 28px/1 D;letter-spacing:.6em;color:#82E600"><span class="w">Beyond</span> <span class="w">the</span> <span class="w">noise.</span></div>
+  </div>
+
+  <svg id="cur" class="abs" width="54" height="72" viewBox="0 0 54 72" style="left:0;top:0;margin:-4px 0 0 -4px;overflow:visible;filter:drop-shadow(0 0 14px rgba(130,230,0,.85)) drop-shadow(0 8px 16px rgba(0,0,0,.3));transform-origin:4px 2px"><path d="M4 2 L4 58 L19 45 L29 68 L39 64 L29 41 L49 41 Z" fill="url(#cg)" stroke="#fff" stroke-width="3" stroke-linejoin="round"/></svg>
+</div>
+<div id="cover" class="abs" style="left:0;top:0;width:1920px;height:1080px;background:linear-gradient(90deg,#E4FFA8,#82E600 60%,#2FA800);display:none;transform-origin:960px 540px"></div>
+</div>
+<script src="../../../moniepoint/assets/motion.js"></script>
+<script>
+const M = window.Motion, S = (t, p) => M.spring(t, p), clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x)), lerp = (a, b, u) => a + (b - a) * u;
+const sm = x => { x = clamp(x); return x * x * (3 - 2 * x); }, ease = x => { x = clamp(x); return 1 - Math.pow(1 - x, 3); };
+const $ = id => document.getElementById(id), cam = $('cam');
+window.FILM_DUR = 46;
+const WORD = { k: 320, c: 36 }, PANEL = { k: 170, c: 26 }, POPS = { k: 420, c: 41 }, SOFT = { k: 70, c: 16.8 }, FLY = { k: 140, c: 23.7 };
+// ---- places ----
+const OR = { p1: [0, 0], p4: [2600, 0], p5: [2600, 1600], p6: [5200, 1600], p7: [5200, 3200], p8: [7800, 3200], p9: [7800, 1600], p10: [10400, 1600] };
+document.querySelectorAll('.sc').forEach(s => { const o = OR[s.dataset.p]; s.style.left = o[0] + 'px'; s.style.top = o[1] + 'px'; });
+// ---- camera ----
+const camFlow = (t, tc, ti, to) => { const v0 = ti / (ti + to); return t < tc ? v0 * Math.exp((t - tc) / ti) : 1 - (1 - v0) * Math.exp(-(t - tc) / to); };
+const TOG = [OR.p4[0] + 860 - 960, OR.p4[1] + 875 - 540], GAME = [OR.p8[0] + 935 - 960, OR.p8[1] + 488 - 540];
+const CK = [{ t: 0, x: 0, y: 0, z: 1.22 }, { t: 1.5, z: 1.0, tau: .9 }, { t: 6.2, z: 1.0, tau: .4 },
+  { t: 10.0, x: OR.p4[0], y: OR.p4[1], z: 1, w: 1 }, { t: 12.2, z: 1.06, tau: .6 }, { t: 15.1, x: TOG[0], y: TOG[1], z: 9, tau: .24 },
+  { t: 15.72, x: OR.p5[0], y: OR.p5[1], z: 1.12, tau: .001 }, { t: 16.6, z: 1.0, tau: .7 },
+  { t: 21.9, x: OR.p6[0], y: OR.p6[1], z: 1, w: 1 }, { t: 23.8, z: 1.06, tau: .8 },
+  { t: 26.9, x: OR.p7[0], y: OR.p7[1], z: 1, w: 1 }, { t: 31.9, x: OR.p8[0], y: OR.p8[1], z: 1, w: 1 },
+  { t: 34.9, x: GAME[0], y: GAME[1], z: 2.4, tau: .28 }, { t: 35.75, x: OR.p9[0], y: OR.p9[1], z: 1, w: 1 }, { t: 37.9, z: 1.06, tau: .6 },
+  { t: 39.9, x: OR.p10[0], y: OR.p10[1], z: 1, w: 1 }, { t: 43.6, z: 1.06, tau: 1.2 }];
+const WHIPS = CK.filter(c => c.w).map(c => c.t), TI = .24, TO = .18;
+const camAxis = (t, k) => { let v = CK[0][k], p = v; for (let i = 1; i < CK.length; i++) { const c = CK[i]; if (c[k] === undefined) continue; v += (c[k] - p) * camFlow(t, c.t, c.w ? TI : c.tau, c.w ? TO : c.tau * 1.25); p = c[k]; } return v; };
+const SEG = [0, ...WHIPS, 15.72, 1e9].sort((a, b) => a - b);
+const creep = t => { let x = 0, y = 0, z = 0; for (let i = 0; i < SEG.length - 1; i++) { const w = (i === 0 ? 1 : camFlow(t, SEG[i], TI, TO)) - (SEG[i + 1] > 1e8 ? 0 : camFlow(t, SEG[i + 1], TI, TO)); if (w < 1e-4) continue;
+  const u = Math.max(0, t - SEG[i]), e = 2.5 * (1 - Math.exp(-u / 2.5)), d = i % 2 ? 1 : -1; x += w * d * 10 * e; y += w * -d * 6 * e; z += w * .018 * e; } return [x, y, z]; };
+const swell = t => WHIPS.reduce((a, tc) => { const d = t - tc; return a + .045 * (d < 0 ? Math.exp(d / TI) : Math.exp(-d / TO)); }, 0);
+const camAt = t => { const c = creep(t), zc = camAxis(t, 'z'); return [camAxis(t, 'x') + c[0] / zc, camAxis(t, 'y') + c[1] / zc, zc * (1 + c[2]) * (1 + swell(t))]; };
+// ---- motion helpers ----
+const words = (id, t0, st, out) => { const ws = [...$(id).querySelectorAll('.w')]; return t => ws.forEach((w, i) => { const s = S(t - (t0 + i * st), WORD), ex = out ? S(t - out - i * .025, WORD) : 0;
+  w.style.opacity = sm(s * 1.25) * (1 - sm(ex * 1.3)); w.style.filter = (s < .98 || ex > .02) ? `blur(${((1 - clamp(s)) * 12 + ex * 12).toFixed(1)}px)` : ''; w.style.transform = `translateY(${((1 - s) * 34 - ex * 30).toFixed(1)}px)`; }); };
+const WS = [words('s1', .2, .14, 3.9), words('name3', 7.4, .2), words('h4a', 10.4, .12), words('h4b', 10.7, .16), words('h5a', 16.4, .15), words('h5b', 17.6, .15),
+  words('h6a', 22.3, .1), words('h6b', 23.4, .14), words('h6c', 24.4, .1), words('h7', 27.4, .14), words('h8a', 32.4, .12), words('h8b', 33.0, .14),
+  words('h9a', 36.2, .12), words('h9b', 36.5, .14), words('h9c', 38.25, .1), words('h9d', 38.8, .1), words('h10', 40.5, .08, 42.45), words('h11a', 44.0, .15), words('h11b', 44.5, .12)];
+function enter(el, t, t0, { dx = 0, dy = 90, sc = .94, sp = PANEL, out = 1e9 } = {}) { const s = S(t - t0, sp), ex = S(t - out, PANEL);
+  el.style.opacity = clamp(s * 1.6) * (1 - sm(ex * 1.4)); el.style.filter = (s < .98 || ex > .02) ? `blur(${((1 - clamp(s)) * 12 + ex * 14).toFixed(1)}px)` : '';
+  return [(1 - s) * dx, (1 - s) * dy, sc + (1 - sc) * s]; }
+const tf = (el, x, y, s, r = 0, extra = '') => { el.style.transform = `translate(${x.toFixed(1)}px,${y.toFixed(1)}px) scale(${s.toFixed(4)}) rotate(${r.toFixed(2)}deg)${extra}`; };
+const sweep = (el, src, w, t, t0, dur = 1.1) => { const u = clamp((t - t0) / dur); el.style.background = u > 0 && u < 1 ? `linear-gradient(112deg, transparent ${u * 150 - 45}%, rgba(255,255,255,${(.6 * Math.sin(Math.PI * u)).toFixed(2)}) ${u * 150 - 20}%, transparent ${u * 150}%)` : '';
+  el.style.webkitMaskImage = `url(${src})`; el.style.webkitMaskSize = `${w}px auto`; el.style.webkitMaskRepeat = 'no-repeat'; el.style.mixBlendMode = 'screen'; };
+const rel = (el, anc) => { let x = 0, y = 0; while (el && el !== anc) { x += el.offsetLeft; y += el.offsetTop; el = el.offsetParent; } return [x, y]; };
+const qn = (i, k, t, r = 12) => { const v = Math.sin(i * 12.9898 + k * 78.233 + Math.floor(t * r) * 3.1) * 43758.5453; return v - Math.floor(v); };
+const hexM = (a, b, u) => { const A = [1, 3, 5].map(i => parseInt(a.slice(i, i + 2), 16)), B = [1, 3, 5].map(i => parseInt(b.slice(i, i + 2), 16)); return `rgb(${A.map((x, i) => Math.round(lerp(x, B[i], u))).join(',')})`; };
+// the glowing cursor: spring legs between keyed points, press dips
+const CUR = [[10.9, [OR.p4[0] + 1700, OR.p4[1] + 1180]], [11.3, [OR.p4[0] + 1060, OR.p4[1] + 880]], [13.6, [OR.p4[0] + 1500, OR.p4[1] + 1200]],
+  [36.9, [OR.p9[0] + 1980, OR.p9[1] + 760]], [37.3, [OR.p9[0] + 1560, OR.p9[1] + 396]], [39.0, [OR.p9[0] + 1700, OR.p9[1] + 1150]]];
+const CURON = [[10.9, 13.9], [36.9, 39.4]], PRESS = [12.3, 38.2];
+const curPos = t => { let x = CUR[0][1][0], y = CUR[0][1][1]; for (let i = 1; i < CUR.length; i++) { const [ti, p] = CUR[i], q = CUR[i - 1][1]; if (i === 3) { if (t >= ti) { x = p[0]; y = p[1]; } continue; } const s = S(t - ti, FLY), b = Math.sin(Math.PI * clamp(s)) * .12; x += (p[0] - q[0]) * s - (p[1] - q[1]) * b; y += (p[1] - q[1]) * s + (p[0] - q[0]) * b; } return [x, y]; };
+// ---- scene builders ----
+const NS = 'http://www.w3.org/2000/svg', mk = (tag, parent, attrs) => { const e = document.createElementNS(NS, tag); Object.entries(attrs).forEach(([k, v]) => e.setAttribute(k, v)); parent.appendChild(e); return e; };
+const RINGS = [[380, 120], [620, 200], [880, 290]].map(([rx, ry], i) => ({ rx, ry, el: mk('ellipse', $('rings'), { cx: 960, cy: 560, 'stroke-width': 2 }), gl: i === 0 ? mk('ellipse', $('rings'), { cx: 960, cy: 560, 'stroke-width': 12, filter: 'url(#gl)' }) : null }));
+const ORBS = Array.from({ length: 9 }, (_, i) => ({ r: i % 3, ph: i * 2.1, sp: .35 + .1 * (i % 3), el: mk('circle', $('orbs'), { fill: '#D8FF8A' }) }));
+const BARS = Array.from({ length: 16 }, (_, i) => ({ x: i < 8 ? 180 + i * 40 : 1460 + (i - 8) * 40, f: 3 + (i * 1.7) % 4, ph: i * 1.3, el: mk('line', $('bars'), {}) }));
+let PC = null;   // the case pill centre in p1 coordinates, measured once
+window.seek = t => {
+  const [cx, cy, z] = camAt(t), [px, py, pz] = camAt(t - 1 / 30);
+  cam.style.transform = `scale(${z}) translate(${-cx}px,${-cy}px)`;
+  const jump = Math.abs(cx - px) > 900 || Math.abs(cy - py) > 900, bx = jump ? 0 : clamp((Math.abs(cx - px) * z - 10) * .1, 0, 24), by = jump ? 0 : clamp((Math.abs(cy - py) * z - 10) * .1, 0, 24), bz = jump ? 0 : clamp((Math.abs(z - pz) / z * 30 - .4) * 3, 0, 10);   // the cut under the cover is not a move
+  $('mbg').setAttribute('stdDeviation', `${(bx + bz).toFixed(1)} ${(by + bz).toFixed(1)}`); cam.style.filter = bx + by + bz > .4 ? 'url(#mb)' : '';
+  WS.forEach(f => f(t));
+  const on = (a, b) => t >= a && t < b, vis = (id, a, b) => { $(id).style.display = on(a, b) ? '' : 'none'; return on(a, b); };
+  // ===== 1 the line, its pills open from a slit, the noise pill jitters =====
+  if (vis('s1', 0, 4.6)) { [['pnoise', 130 + 40, .62], ['pcase', 120, 2.05]].forEach(([id, w, t0]) => { const s = S(t - t0, POPS); $(id).style.width = (w * clamp(s)).toFixed(1) + 'px'; $(id).style.opacity = clamp(s * 3); });
+    let d = ''; for (let k = 0; k <= 12; k++) d += (k ? 'L' : 'M') + (k * 130 / 12).toFixed(1) + ' ' + (25 + (k % 2 ? 1 : -1) * (8 + 14 * qn(1, k, t))).toFixed(1); $('pnw').setAttribute('d', d);
+    $('b1a').style.transform = `translate(${(40 * Math.sin(t * .5)).toFixed(1)}px,${(-30 * Math.sin(t * .4)).toFixed(1)}px)`; $('b1b').style.transform = `translate(${(-40 * Math.sin(t * .45)).toFixed(1)}px,${(30 * Math.sin(t * .35)).toFixed(1)}px)`;
+    if (!PC) { const [x, y] = rel($('pcase'), $('s1').parentNode); PC = [x + 60, y + 42]; } }
+  // ===== 2 the bloom grows from the case pill, swallows the line, condenses into the case on black =====
+  const bl = $('bloom'); if (on(3.4, 5.6)) { bl.style.display = ''; const g = ease((t - 3.45) / .85), dk = sm((t - 4.45) / .9), [ox, oy] = PC || [1000, 600];
+    const r = 40 + 2600 * g; bl.style.background = `radial-gradient(circle at ${ox + 400}px ${oy + 400}px, rgba(255,255,240,${(1 - dk).toFixed(3)}) 0, rgba(200,255,110,${(1 - dk).toFixed(3)}) ${(r * .25).toFixed(0)}px, rgba(130,230,0,${(1 - dk).toFixed(3)}) ${(r * .6).toFixed(0)}px, rgba(130,230,0,0) ${r.toFixed(0)}px)`; } else bl.style.display = 'none';
+  vis('d2', 4.4, 6.9); vis('floor2', 4.4, 6.9);
+  if (on(4.4, 6.9)) $('floor2').style.opacity = sm((t - 4.6) / .8) * (1 - sm((t - 6.0) / .5));
+  // ===== 3 paper light grows from the case, the wordmark becomes the stage, the case rises over it =====
+  const pp = $('paper3'); if (on(5.95, 10.6)) { pp.style.display = ''; const g = ease((t - 6.0) / .7), r = 60 + 3000 * g; pp.style.background = g >= .999 ? '#F5F6F3' : `radial-gradient(circle at 1360px 960px, #F5F6F3 ${(r * .55).toFixed(0)}px, rgba(245,246,243,0) ${r.toFixed(0)}px)`; } else pp.style.display = 'none';
+  if (vis('word3', 6.25, 10.6)) { const s = S(t - 6.25, SOFT); $('word3').style.opacity = clamp(s * 1.5); $('word3').style.filter = s < .98 ? `blur(${((1 - s) * 16).toFixed(1)}px)` : ''; tf($('word3'), 0, 0, .35 + .65 * s + .02 * clamp((t - 7) / 3)); }
+  const pr = $('prod'); if (vis('prodWrap', 4.55, 10.6)) { const hero = t >= 6.3, a = S(t - 4.6, SOFT), mv = S(t - 6.05, { k: 90, c: 19 });
+    pr.src = hero ? '../../assets/neo/hero_cut.png' : '../../assets/neo/closed_cut.png'; const w = hero ? 560 : 620, h = hero ? 657 : 626; pr.style.width = w + 'px';
+    const cxp = 960, cyp = lerp(560, 448, mv), sc = (hero ? 1 : (.25 + .75 * a)) * (1 + .03 * Math.sin(t * .9)), rot = hero ? 0 : (1 - a) * -12 + 2 * Math.sin(t * .7);
+    pr.style.left = (cxp - w / 2) + 'px'; pr.style.top = (cyp - h / 2) + 'px'; tf(pr, 0, 6 * Math.sin(t * 1.2), sc, rot);
+    const swap = Math.max(0, 1 - Math.abs(t - 6.3) / .18); pr.style.filter = `${(a < .98 || swap > 0) ? `blur(${((1 - clamp(a)) * 16 + swap * 10).toFixed(1)}px) ` : ''}${hero ? 'drop-shadow(0 50px 70px rgba(17,19,24,.35))' : 'brightness(.62) contrast(1.25) drop-shadow(0 0 40px rgba(130,230,0,.35))'}`;
+    pr.style.opacity = clamp(a * 1.6);
+    const sw = $('prodSweep'); sw.style.left = pr.style.left; sw.style.top = pr.style.top; sw.style.width = w + 'px'; sw.style.height = h + 'px'; sw.style.transform = pr.style.transform; sweep(sw, pr.src, w, t, hero ? 8.3 : 5.0, hero ? 1.1 : 1.2); }
+  // ===== 4 the noise, the tap, the calm =====
+  if (on(9.6, 16.0)) { const tap = S(t - 12.3, { k: 160, c: 25.3 }), flood = sm((t - 12.32) / .45), b = enter($('buds4'), t, 10.3, { dy: 80, sp: SOFT }); tf($('buds4'), b[0], b[1] + 6 * Math.sin(t * 1.3), b[2]);
+    const tg = enter($('tg'), t, 10.9, { dy: 60 }); tf($('tg'), tg[0], tg[1], tg[2] * (1 - (S(t - 12.3, POPS) - S(t - 12.42, POPS)) * .05));
+    $('tgFill').style.clipPath = `inset(0 ${((1 - flood) * 100).toFixed(1)}% 0 0)`; $('tgKnob').style.left = (262 + 80 * tap) + 'px'; $('tgKnob').style.background = hexM('#B9BDB5', '#82E600', flood);
+    $('tg').style.boxShadow = `0 20px ${(50 + 40 * flood).toFixed(0)}px rgba(${flood > .5 ? '130,230,0,.45' : '17,19,24,.12'})`;
+    const amp = clamp(S(t - 9.9, PANEL)), calmR = sm((t - 12.4) / 1.0), calmL = sm((t - 13.0) / 1.6) * .55;
+    let dl = '', dr = ''; for (let k = 0; k <= 18; k++) { const x = k / 18 * 720, a = amp * (1 - calmL) * (40 + 90 * qn(2, k, t)) * (k % 2 ? 1 : -1) + calmL * 14 * Math.sin(x * .02 + t * 3); dl += (k ? 'L' : 'M') + x.toFixed(1) + ' ' + (540 + a).toFixed(1); }
+    for (let k = 0; k <= 24; k++) { const x = 1220 + k / 24 * 700, j = amp * (40 + 90 * qn(3, k, t)) * (k % 2 ? 1 : -1), c = 16 * Math.sin(x * .018 - t * 3); const loc = clamp(calmR * 1.6 - k / 24 * .6); dr += (k ? 'L' : 'M') + x.toFixed(1) + ' ' + (540 + lerp(j, c, loc)).toFixed(1); }
+    $('wL').setAttribute('d', dl); $('wL').setAttribute('stroke', hexM('#FF453A', '#82E600', calmL * .5)); $('wR').setAttribute('d', dr); $('wR').setAttribute('stroke', hexM('#FF453A', '#82E600', calmR)); $('wRg').setAttribute('d', dr); $('wRg').setAttribute('stroke', '#82E600'); $('wRg').style.opacity = .5 * calmR; }
+  // the dive into the toggle: the lime toggle fills the frame, collapses into one lime line, and the line opens into the rings
+  const cv = $('cover'); if (on(14.9, 16.6)) { cv.style.display = ''; const fill = sm((z - 3) / 3), col = t >= 15.72 ? S(t - 15.72, { k: 160, c: 25.3 }) : 0, shr = sm((t - 16.0) / .5);
+    cv.style.opacity = t < 15.72 ? fill : (1 - shr * .9); cv.style.transform = `scale(${(1 - .6 * shr).toFixed(3)}, ${Math.max(.004, 1 - col).toFixed(4)})`; } else cv.style.display = 'none';
+  // ===== 5 Sound360 =====
+  if (on(15.6, 22.6)) { RINGS.forEach((r, i) => { const s = S(t - (15.85 + i * .22), SOFT), br = 1 + .03 * Math.sin(t * 1.4 + i); [r.el, r.gl].forEach(e => { if (!e) return; e.setAttribute('rx', (r.rx * s * br).toFixed(1)); e.setAttribute('ry', (r.ry * s * br).toFixed(1)); });
+      r.el.style.opacity = (.6 - i * .18) * clamp(s * 2); if (r.gl) r.gl.style.opacity = .45 * clamp(s * 2); });
+    ORBS.forEach(o => { const r = RINGS[o.r], s = S(t - (16.3 + o.r * .22), SOFT), a = o.ph + t * o.sp, x = 960 + Math.cos(a) * r.rx * s, y = 560 + Math.sin(a) * r.ry * s, dep = .5 + .5 * Math.sin(a); o.el.setAttribute('cx', x.toFixed(1)); o.el.setAttribute('cy', y.toFixed(1)); o.el.setAttribute('r', (3 + 5 * dep).toFixed(1)); o.el.style.opacity = (.35 + .65 * dep) * clamp(s * 2); });
+    const a = enter($('anc5'), t, 16.0, { dy: 40, sc: .9, sp: SOFT }); tf($('anc5'), a[0], a[1] + 8 * Math.sin(t * 1.1), a[2] * (1 + .03 * clamp((t - 16) / 5))); $('sw5').style.transform = $('anc5').style.transform; $('sw5').style.opacity = $('anc5').style.opacity; sweep($('sw5'), '../../assets/neo/anc_cut.png', 1300, t, 18.4, 1.4); }
+  // ===== 6 thirty hours =====
+  if (on(21.6, 27.4)) { const p = ease((t - 22.6) / 1.7), L = 2388; ['ring', 'ringG'].forEach(id => $(id).setAttribute('stroke-dashoffset', (L * (1 - p)).toFixed(1)));
+    const n = S(t - 22.55, WORD), el = $('n30'); el.textContent = Math.round(30 * p); el.style.opacity = sm(n * 1.25); el.style.filter = n < .98 ? `blur(${((1 - n) * 14).toFixed(1)}px)` : ''; tf(el, 0, (1 - n) * 50, 1);
+    const c = enter($('case6'), t, 22.3, { dy: 70, sc: .9, sp: SOFT }); tf($('case6'), c[0], c[1] + 6 * Math.sin(t * 1.2), c[2] * (1 + .04 * p)); }
+  // ===== 7 clear calls =====
+  if (on(26.6, 32.4)) { BARS.forEach((b, i) => { const v = S(t - (27.2 + (i % 8) * .04), POPS), h = v * (18 + 110 * Math.abs(Math.sin(t * b.f + b.ph)) * (i < 8 ? (t < 29.3 ? 1 : .45) : (t >= 29.3 ? 1 : .45))); b.el.setAttribute('x1', b.x); b.el.setAttribute('x2', b.x); b.el.setAttribute('y1', (540 - h).toFixed(1)); b.el.setAttribute('y2', (540 + h).toFixed(1)); });
+    const c = enter($('case7'), t, 27.1, { dy: 70, sc: .92, sp: SOFT }); tf($('case7'), c[0], c[1] + 6 * Math.sin(t * 1.2), c[2]);
+    [['m1', 27.8, 27.9, 29.3], ['m2', 28.0, 29.3, 31.2]].forEach(([id, t0, a, b]) => { const e = enter($(id), t, t0, { dy: 40 }); tf($(id), e[0], e[1], e[2]); const g = on(a, b) ? sm((t - a) / .25) * (1 - sm((t - b + .25) / .25)) : 0; $(id).style.boxShadow = `0 0 0 ${(4 * g).toFixed(1)}px #82E600, 0 0 ${(40 * g).toFixed(0)}px rgba(130,230,0,${(.8 * g).toFixed(2)})`; }); }
+  // ===== 8 game mode =====
+  if (on(31.6, 36.2)) { const g = enter($('game'), t, 32.0, { dy: 120, sc: .96, sp: SOFT }); tf($('game'), g[0], g[1], g[2] * (1 + .03 * clamp((t - 32) / 3))); }
+  // ===== 9 connected =====
+  if (on(35.4, 40.4)) { const ph = enter($('phone'), t, 36.0, { dx: 240, dy: 0, sc: .95, sp: SOFT }); tf($('phone'), ph[0], ph[1] + 5 * Math.sin(t * 1.2), ph[2]);
+    const f = sm((t - 38.22) / .4); $('row').style.clipPath = `inset(0 ${((1 - f) * 100).toFixed(1)}% 0 0)`; $('row').style.boxShadow = `0 10px 40px rgba(130,230,0,${(.6 * f).toFixed(2)})`;
+    const k = S(t - 38.5, POPS); $('chk').style.opacity = clamp(k * 2); tf($('chk'), ph[0], 0, .5 + .5 * k); const cp = $('chkP'); cp.style.strokeDasharray = '50 50'; cp.style.strokeDashoffset = (50 * (1 - sm((t - 38.6) / .35))).toFixed(1); }
+  // ===== 10 design, then everything collapses into a dot that becomes the logo =====
+  if (on(39.4, 46)) { const col = S(t - 42.55, { k: 200, c: 28.3 }), ip = enter($('ipx'), t, 40.1, { dy: 80, sc: .92, sp: SOFT });
+    tf($('ipx'), ip[0], ip[1] + 8 * Math.sin(t * 1.1), ip[2], 2 * Math.sin(t * .6)); $('sw10').style.transform = $('ipx').style.transform; $('sw10').style.opacity = $('ipx').style.opacity; sweep($('sw10'), '../../assets/neo/ipx4_cut.png', 1020, t, 41.0, 1.2);
+    const g = $('g10'); g.style.display = col < .995 ? '' : 'none'; g.style.transform = `scale(${(1 - col).toFixed(4)})`; g.style.filter = col > .02 ? `blur(${(col * 20).toFixed(1)}px)` : '';
+    const dg = S(t - 42.75, POPS), dd = S(t - 43.25, { k: 260, c: 32 }), dot = $('dot'); dot.style.display = on(42.7, 43.8) ? '' : 'none'; dot.style.transform = `scale(${(dg * (1 - dd * .8) + dd * 1.6).toFixed(3)})`; dot.style.opacity = 1 - sm((t - 43.35) / .35);
+    const lg = S(t - 43.3, SOFT); $('logo11').style.opacity = clamp(lg * 1.6); $('logo11').style.filter = lg < .98 ? `blur(${((1 - lg) * 14).toFixed(1)}px)` : ''; tf($('logo11'), 0, 0, .3 + .7 * lg + .015 * clamp((t - 44) / 2));
+    const fl = S(t - 43.2, SOFT); $('floor11').style.opacity = clamp(fl); tf($('floor11'), 0, (1 - fl) * 400, 1); }
+  // ===== the cursor =====
+  const cOn = CURON.some(([a, b]) => on(a, b)); $('cur').style.display = cOn ? '' : 'none';
+  if (cOn) { const [x, y] = curPos(t), [qx, qy] = curPos(t - 1 / 30), sp = Math.hypot(x - qx, y - qy), born = S(t - CURON.find(([a, b]) => on(a, b))[0], POPS), pr = PRESS.reduce((a, p) => a + (S(t - p, POPS) - S(t - p - .12, POPS)), 0);
+    $('cur').style.left = x + 'px'; $('cur').style.top = y + 'px'; $('cur').style.transform = `scale(${(born * (1.25 + .25 * clamp(sp / 40) - .2 * pr)).toFixed(3)})`; }
+};
+Promise.all([...document.images].map(i => i.decode().catch(() => {})).concat([document.fonts.load("900 80px D"), document.fonts.load("700 80px D"), document.fonts.load("500 80px D")])).then(() => { window.seek(0); window.__ready = true; });
+</script>
