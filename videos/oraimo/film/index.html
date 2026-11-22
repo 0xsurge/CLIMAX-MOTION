@@ -17,7 +17,7 @@ html,body{background:#050606;overflow:hidden}
 .ph{position:absolute;border-radius:36px;overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,.6)}
 .ph img{width:100%;height:100%;object-fit:cover;display:block}
 .w{display:inline-block}
-.spec{position:absolute;font:700 34px/1.15 D;color:#fff;white-space:nowrap}.spec span{display:block;font:500 24px/1.4 D;color:#8E9496}
+.spec{position:absolute;font:700 40px/1.15 D;color:#fff;white-space:nowrap}.spec span{display:block;font:500 27px/1.4 D;color:#8E9496}
 </style>
 <div id="stage">
   <svg width="0" height="0" style="position:absolute"><filter id="mb" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur id="mbg" stdDeviation="0 0"/></filter><filter id="soft"><feGaussianBlur stdDeviation="9"/></filter></svg>
@@ -40,9 +40,9 @@ html,body{background:#050606;overflow:hidden}
     <div class="abs big lime" id="db" style="left:2720px;top:250px;font-size:330px"></div>
     <div class="abs" id="anc" style="left:2730px;top:610px;font:700 60px/1.15 D;white-space:nowrap"><span class="w">Hybrid</span> <span class="w">Active</span><br><span class="w">Noise</span> <span class="w">Cancellation</span></div>
     <div class="abs" id="pcase" style="left:3510px;top:240px;width:600px;height:540px;overflow:visible"><img src="../assets/case_web.png" style="width:600px;display:block"><div id="sweep" class="abs" style="inset:0"></div></div>
-    <svg class="abs" style="left:2600px;top:0;overflow:visible" width="1" height="1"><path id="l1" d="M1470 368 L1560 368" stroke="#82E600" stroke-width="2" fill="none"/><path id="l2" d="M1490 668 L1560 668" stroke="#82E600" stroke-width="2" fill="none"/></svg>
-    <div class="spec" id="s1" style="left:4175px;top:330px">52dB ANC<span>Hybrid noise cancelling</span></div>
-    <div class="spec" id="s2" style="left:4175px;top:630px">Deep low end<span>Big-speaker bass</span></div>
+    <svg class="abs" style="left:2600px;top:0;overflow:visible" width="1" height="1"><path id="l1" d="M1460 368 L1508 368" stroke="#82E600" stroke-width="2" fill="none"/><path id="l2" d="M1480 668 L1508 668" stroke="#82E600" stroke-width="2" fill="none"/></svg>
+    <div class="spec" id="s1" style="left:4120px;top:330px">52dB ANC<span>Hybrid noise cancelling</span></div>
+    <div class="spec" id="s2" style="left:4120px;top:630px">Deep low end<span>Big-speaker bass</span></div>
     <!-- 5 space on (place 2600,1300) -->
     <div class="abs" id="city" style="left:2300px;top:1100px;width:2600px;height:1500px;overflow:hidden"><div id="cityImg" class="abs" style="left:0;top:0;width:3400px;height:1500px;background:url(../assets/l6.jpg) center/cover;filter:blur(22px) brightness(.42) saturate(.8)"></div></div>
     <div class="abs" style="left:2300px;top:1100px;width:2600px;height:1500px;background:radial-gradient(45% 55% at 62% 50%,rgba(5,6,6,0),rgba(5,6,6,.9))"></div>
@@ -66,8 +66,8 @@ const DUR = 36; window.FILM_DUR = DUR;
 const WORD = { k: 320, c: 36 }, PANEL = { k: 170, c: 26 }, SOFT = { k: 70, c: 16.8 };
 // ---- camera: flat, exponential moves (camFlow from the Bolt study), always creeping ----
 const camFlow = (t, tc, ti, to) => { const v0 = ti / (ti + to); return t < tc ? v0 * Math.exp((t - tc) / ti) : 1 - (1 - v0) * Math.exp(-(t - tc) / to); };
-const CK = [{ t: 0, x: 0, y: 0, z: 1.06 }, { t: 1.6, z: 1, tau: .9 }, { t: 6.0, z: 1.2, tau: .45 }, { t: 8.3, z: 1.0, tau: .5 },
-  { t: 14.6, x: 2600, y: 0, z: 1, tau: .34 }, { t: 18.4, x: 2610, z: 1.05, tau: .8 }, { t: 23.9, x: 2600, y: 1300, z: 1, tau: .3 }, { t: 26.5, x: 2600, z: 1.05, tau: 1.2 },
+const CK = [{ t: 0, x: 0, y: 0, z: 1.06 }, { t: 1.6, z: 1, tau: .9 }, { t: 3.4, z: 1.07, tau: 1.0 }, { t: 6.0, z: 1.2, tau: .45 }, { t: 8.3, z: 1.0, tau: .5 },
+  { t: 14.6, x: 2600, y: 0, z: 1, tau: .34 }, { t: 18.4, x: 2610, z: 1.05, tau: .8 }, { t: 19.7, x: 3020, y: -10, z: 1.4, tau: .45 }, { t: 22.2, x: 2610, y: 0, z: 1.03, tau: .6 }, { t: 23.9, x: 2600, y: 1300, z: 1, tau: .3 }, { t: 26.5, x: 2600, z: 1.05, tau: 1.2 },
   { t: 30.9, x: 5200, y: 1300, z: 1, tau: .3 }, { t: 33.5, z: 1.07, tau: 1.6 }];
 const camAxis = (t, k) => { let v = CK[0][k], p = v; for (let i = 1; i < CK.length; i++) { const c = CK[i]; if (c[k] === undefined) continue; v += (c[k] - p) * camFlow(t, c.t, c.tau, c.tau * 1.25); p = c[k]; } return v; };
 const camAt = t => { const sh = (t < 8.3 ? 1 : 0) * (1 - sm((t - 7.6) / .7)) * 7;   // the noisy part shakes a little; it stops when the noise does
