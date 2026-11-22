@@ -222,3 +222,16 @@ Sources:
 - **G8. A keyword CTA.**
   - **Make it:** close on a question ("Want this for your launch?") and a pill with a comment keyword
     ("DM me · LAUNCH"). This works with LinkedIn comment-to-DM funnels.
+
+## H. Devices from the Lovable concept ad (videos/reference/ig-ref/STUDY.md; approved by the user)
+- **H1. Giant 3D symbol in the question.**
+  - **Says:** this is the doubt.
+  - **Make it:** a big glossy 3D question mark (or the brand's own symbol) floats behind or beside a short question line,
+    lit by the brand gradient, drifting slowly.
+- **H2. Glowing gradient cursor.**
+  - **Make it:** the cursor is filled with the brand gradient and has a soft glow. It grows a little as it travels and
+    presses, so it reads as the hero.
+- **H3. Screens in orbit.**
+  - **Says:** look how much it makes.
+  - **Make it:** one real product screen bursts into dozens of real screens scattered in depth and slowly orbiting,
+    with a few cursors flying between them. A screen version of B3.

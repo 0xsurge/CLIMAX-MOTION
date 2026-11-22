@@ -95,3 +95,11 @@ plain cut: allowed at most two or three times per film, and only on big beats.
 | T22 | **Burst into assembled card:** items fly out, then assemble into one card with orbiting status chips | the items |
 | T23 | **Number into light pool into caption:** a huge number lands on a glow, shrinks and lifts, and the caption builds beneath | the number |
 Note: Resend's camera rolls and tilts its planes in 3D. The user's flat-camera rule (camera-style) still applies by default.
+
+## More carriers (from the Lovable concept ad, videos/reference/ig-ref/STUDY.md; approved by the user)
+| # | pattern | carrier |
+|---|---|---|
+| T24 | **Light bloom into the mark:** a soft cloud of the brand colours swells over the last word of the problem line, swallows it, then condenses into the brand mark on a dark ground (about 1 s) | light |
+| T25 | **The wordmark becomes the stage:** the brand name scales up past the frame edges, and the product UI (a prompt box, a card) rises over it | the wordmark |
+| T26 | **Gradient success flood:** the pressed button fills edge to edge with the brand gradient and a check draws in; it carries into the next screen | the button |
+| T27 | **Live edit as proof:** on a real page the cursor selects a headline, a box draws round it, the text retypes, and font and colour menus open | the selection |
