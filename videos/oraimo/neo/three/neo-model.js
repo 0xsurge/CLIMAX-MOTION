@@ -36,10 +36,12 @@ export async function buildNeo(THREE, renderer, scene, base = '../../assets/neo/
   const lidMat = new THREE.MeshPhysicalMaterial({ color: 0x08080a, roughness: 0.14, clearcoat: 1, clearcoatRoughness: 0.04, envMapIntensity: 1.1 });
   const bodyMat = new THREE.MeshPhysicalMaterial({ color: 0x101012, roughness: 0.42, clearcoat: 0.25, clearcoatRoughness: 0.3, envMapIntensity: 1.0 });
   const capMat = new THREE.MeshPhysicalMaterial({ color: 0x0c0c0e, roughness: 0.35, clearcoat: .5, side: THREE.DoubleSide });
-  const ribs = canvasTex(THREE, 512, 512, (g, w, h) => { g.fillStyle = '#808080'; g.fillRect(0, 0, w, h); g.strokeStyle = '#ffffff'; g.lineWidth = 7;
-    for (let i = -h; i < w + h; i += 20) { g.beginPath(); g.moveTo(i, 0); g.lineTo(i - h * .55, h); g.stroke(); } });
-  ribs.wrapS = ribs.wrapT = THREE.RepeatWrapping; ribs.repeat.set(1.5, 1);
-  const innerMat = new THREE.MeshPhysicalMaterial({ color: 0x2a2b2e, metalness: 0.6, roughness: 0.35, bumpMap: ribs, bumpScale: 0.25, side: THREE.DoubleSide });
+  // the inner lid's feather-wave pattern (soft chevron ripples), as a bump map
+  const ribs = canvasTex(THREE, 1024, 512, (g, w, h) => { g.fillStyle = '#808080'; g.fillRect(0, 0, w, h);
+    for (let row = -2; row < 18; row++) { const y0 = row * 34; const gr = g.createLinearGradient(0, y0 - 14, 0, y0 + 14); gr.addColorStop(0, '#808080'); gr.addColorStop(.5, '#e8e8e8'); gr.addColorStop(1, '#808080');
+      g.strokeStyle = gr; g.lineWidth = 18; g.beginPath(); for (let x = 0; x <= w; x += 8) { const y = y0 + 22 * Math.abs(((x / 120) % 2) - 1) + 6 * Math.sin(x / 37 + row); x ? g.lineTo(x, y) : g.moveTo(x, y); } g.stroke(); } });
+  ribs.wrapS = ribs.wrapT = THREE.RepeatWrapping; ribs.repeat.set(1, 1);
+  const innerMat = new THREE.MeshPhysicalMaterial({ color: 0x1c1d20, metalness: 0.5, roughness: 0.22, clearcoat: .6, bumpMap: ribs, bumpScale: 1.2, side: THREE.DoubleSide });
   const tipMat = new THREE.MeshPhysicalMaterial({ color: 0x2c2f33, roughness: 0.5, sheen: 0.6, sheenColor: new THREE.Color(0x777777) });
   const chrome = new THREE.MeshPhysicalMaterial({ color: 0xdedede, metalness: 1, roughness: 0.12 });
 
@@ -91,12 +93,13 @@ export async function buildNeo(THREE, renderer, scene, base = '../../assets/neo/
     art.position.set(0, -.17, .0565); g.add(art);
     return g; };
   const budL = makeBud(-1), budR = makeBud(1); cs.add(budL, budR);
-  const seatBuds = () => { [budL, budR].forEach((b, i) => { if (b.parent !== cs) cs.add(b); const s = i ? 1 : -1; b.position.set(s * .2, SEAM + .07, .02); b.rotation.set(0, s * .3, 0); b.scale.setScalar(1.12); }); };
+  const seatBuds = () => { [budL, budR].forEach((b, i) => { if (b.parent !== cs) cs.add(b); const s = i ? 1 : -1; b.position.set(s * .2, SEAM + .2, .02); b.rotation.set(0, s * .3, -s * .08); b.scale.setScalar(1.12); }); };
   seatBuds();
 
   const setLid = a => { hinge.rotation.x = -a; };
   const update = () => { scene.updateMatrixWorld(true);
     clipBody.set(new THREE.Vector3(0, -1, 0), SEAM - GAP).applyMatrix4(body.matrixWorld);
     clipLid.set(new THREE.Vector3(0, 1, 0), -(SEAM + GAP)).applyMatrix4(lid.matrixWorld); };
-  return { case: cs, lid: hinge, budL, budR, setLid, seatBuds, update, setSweep, dims: { W, H, D, SEAM } };
+  const seatLocal = side => { const m = new THREE.Matrix4(); m.compose(new THREE.Vector3(side * .2, SEAM + .2, .02), new THREE.Quaternion().setFromEuler(new THREE.Euler(0, side * .3, -side * .08)), new THREE.Vector3(1.12, 1.12, 1.12)); return m; };
+  return { seatLocal, case: cs, lid: hinge, budL, budR, setLid, seatBuds, update, setSweep, dims: { W, H, D, SEAM } };
 }
