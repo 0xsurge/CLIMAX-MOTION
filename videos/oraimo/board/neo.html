@@ -1,0 +1,128 @@
+<!doctype html><meta charset="utf-8">
+<!-- oraimo SpaceBuds Neo+ "Beyond the noise." storyboard, 16:9. Story structure from the user's two campaign boards;
+     styling, transitions and camera from the Lovable study (videos/reference/ig-ref/STUDY.md). Real product renders and
+     the real Bluetooth screen from oraimo.com. One frame per ?b=N. -->
+<style>
+@font-face{font-family:D;font-weight:500;src:url(../assets/InterDisplay-Medium.otf)}
+@font-face{font-family:D;font-weight:700;src:url(../assets/InterDisplay-SemiBold.otf)}
+@font-face{font-family:D;font-weight:900;src:url(../assets/InterDisplay-Bold.otf)}
+*{box-sizing:border-box;margin:0}
+body{width:1920px;height:1080px;overflow:hidden;font-family:D,sans-serif;position:relative}
+.f{position:absolute;inset:0;display:none;overflow:hidden}.abs{position:absolute}
+.paper{background:#F5F6F3}.ink{color:#111318}.night{background:#050607;color:#fff}
+.lime{color:#82E600}.mute{color:#555B63}
+.wide{text-transform:uppercase;letter-spacing:.28em;white-space:nowrap}
+.blob{position:absolute;border-radius:50%;filter:blur(40px)}
+.pill{display:inline-flex;align-items:center;justify-content:center;vertical-align:middle;border-radius:999px;overflow:hidden;margin:0 .14em;box-shadow:0 10px 30px rgba(17,19,24,.14)}
+.cursor{position:absolute;filter:drop-shadow(0 0 14px rgba(130,230,0,.85)) drop-shadow(0 8px 16px rgba(0,0,0,.3))}
+.chip{position:absolute;font:700 30px/1 D;padding:16px 26px;border-radius:999px;white-space:nowrap}
+</style>
+<body>
+<svg width="0" height="0" style="position:absolute"><defs>
+  <linearGradient id="cg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#D8FF8A"/><stop offset=".5" stop-color="#82E600"/><stop offset="1" stop-color="#2FA800"/></linearGradient>
+  <path id="cur" d="M4 2 L4 58 L19 45 L29 68 L39 64 L29 41 L49 41 Z"/>
+  <filter id="gl"><feGaussianBlur stdDeviation="10"/></filter></defs></svg>
+
+<!-- 1  0-4 s  the line, images inside it (Lovable opening) -->
+<div class="f paper ink" id="b1">
+  <div class="blob" style="left:-260px;top:620px;width:760px;height:760px;background:rgba(130,230,0,.30)"></div>
+  <div class="blob" style="left:1500px;top:-300px;width:700px;height:700px;background:rgba(199,205,214,.85)"></div>
+  <div class="abs" style="left:0;width:1920px;text-align:center;top:420px;font:700 86px/1.25 D;letter-spacing:-.03em">
+    The world is <span class="pill" style="width:170px;height:84px;background:#111318"><svg width="130" height="50" viewBox="0 0 130 50"><path d="M0 25 L12 8 L22 42 L34 4 L46 46 L58 12 L70 38 L82 6 L94 44 L106 14 L118 36 L130 25" fill="none" stroke="#FF453A" stroke-width="5" stroke-linejoin="round"/></svg></span> loud.<br>
+    <span class="mute">Your space</span> <span class="pill" style="width:120px;height:84px;background:#fff"><img src="../assets/neo/closed_cut.png" style="height:74px"></span> <span class="mute">doesn't have to be.</span></div>
+</div>
+
+<!-- 2  4-6 s  light bloom swallows the line and condenses into the case on black (T24) -->
+<div class="f night" id="b2">
+  <div class="abs" style="left:310px;top:-260px;width:1300px;height:1300px;border-radius:50%;background:radial-gradient(closest-side,rgba(216,255,138,.55),rgba(130,230,0,.22) 40%,rgba(130,230,0,0) 72%)"></div>
+  <div class="abs" style="left:-200px;top:690px;width:2320px;height:700px;border-radius:50%;background:radial-gradient(closest-side,rgba(130,230,0,.35),rgba(130,230,0,0))"></div>
+  <img src="../assets/neo/closed_cut.png" class="abs" style="left:650px;top:170px;width:620px;filter:brightness(.55) contrast(1.3) drop-shadow(0 0 40px rgba(130,230,0,.35))">
+  <div class="abs" style="left:520px;top:180px;width:880px;height:700px;background:linear-gradient(112deg,transparent 38%,rgba(255,255,255,.55) 48%,transparent 58%);-webkit-mask:url(../assets/neo/closed_cut.png) 130px 0/620px auto no-repeat;mix-blend-mode:screen"></div>
+</div>
+
+<!-- 3  6-10 s  the wordmark is the stage, the product rises over it (T25) -->
+<div class="f paper" id="b3">
+  <img src="../assets/logo_lime.png" class="abs" style="left:-140px;top:250px;width:2200px;opacity:.95">
+  <img src="../assets/neo/hero_cut.png" class="abs" style="left:700px;top:120px;width:560px;filter:drop-shadow(0 50px 70px rgba(17,19,24,.35))">
+  <div class="abs wide ink" style="left:0;width:1920px;text-align:center;top:960px;font:700 34px/1 D;letter-spacing:.34em">SpaceBuds Neo+</div>
+</div>
+
+<!-- 4  10-16 s  ANC: noise rushes in, the glowing cursor flips the real-style toggle, the toggle floods lime (T26) -->
+<div class="f paper ink" id="b4">
+  <svg class="abs" style="left:0;top:0" width="1920" height="1080">
+    <path d="M0 540 L50 470 L90 610 L140 430 L190 650 L240 460 L290 620 L340 420 L390 660 L440 480 L490 600 L540 440 L590 630 L640 500 L700 540" fill="none" stroke="#FF453A" stroke-width="7" stroke-linejoin="round"/>
+    <path d="M1220 540 C1300 520 1360 560 1440 540 S1600 522 1680 540 S1840 556 1920 540" fill="none" stroke="#82E600" stroke-width="7"/>
+    <path d="M1220 540 C1300 520 1360 560 1440 540 S1600 522 1680 540 S1840 556 1920 540" fill="none" stroke="#82E600" stroke-width="18" filter="url(#gl)" opacity=".5"/></svg>
+  <img src="../assets/neo/mic_cut.png" class="abs" style="left:700px;top:260px;width:540px;filter:drop-shadow(0 40px 60px rgba(17,19,24,.3))">
+  <div class="abs" style="left:740px;top:820px;width:440px;height:110px;border-radius:999px;background:linear-gradient(90deg,#D8FF8A,#82E600 60%,#2FA800);box-shadow:0 20px 60px rgba(130,230,0,.45);display:flex;align-items:center;padding:0 36px;font:700 44px/1 D;color:#0B1A00">ANC <span style="margin-left:auto;width:150px;height:70px;border-radius:999px;background:#fff;display:flex;align-items:center;justify-content:flex-end;padding:8px"><span style="width:54px;height:54px;border-radius:50%;background:#82E600"></span></span></div>
+  <svg class="cursor" style="left:1100px;top:860px" width="54" height="72" viewBox="0 0 54 72"><use href="#cur" fill="url(#cg)" stroke="#fff" stroke-width="3"/></svg>
+  <div class="abs" style="left:110px;top:150px;font:700 30px/1.3 D" class="mute"><span class="lime">●</span> Active Noise Cancellation</div>
+  <div class="abs" style="left:110px;top:200px;font:700 76px/1.05 D;letter-spacing:-.035em">Less noise.<br><span class="mute">More you.</span></div>
+</div>
+
+<!-- 5  16-22 s  Sound360: the real see-through render inside an expanding spatial field (dark) -->
+<div class="f night" id="b5">
+  <svg class="abs" style="left:0;top:0" width="1920" height="1080"><g fill="none" stroke="#82E600">
+    <ellipse cx="960" cy="560" rx="380" ry="120" opacity=".55" stroke-width="2"/><ellipse cx="960" cy="560" rx="620" ry="200" opacity=".35" stroke-width="2"/><ellipse cx="960" cy="560" rx="880" ry="290" opacity=".18" stroke-width="2"/>
+    <ellipse cx="960" cy="560" rx="380" ry="120" opacity=".5" stroke-width="12" filter="url(#gl)"/></g>
+    <g fill="#D8FF8A"><circle cx="1340" cy="560" r="7"/><circle cx="420" cy="460" r="6"/><circle cx="1500" cy="700" r="5"/><circle cx="560" cy="720" r="5"/></g></svg>
+  <img src="../assets/neo/anc_cut.png" class="abs" style="left:310px;top:380px;width:1300px">
+  <div class="abs" style="left:0;width:1920px;text-align:center;top:140px;font:700 34px/1 D;letter-spacing:.3em" class="wide"><span class="lime">SOUND360</span> SPATIAL AUDIO</div>
+  <div class="abs" style="left:0;width:1920px;text-align:center;top:850px;font:700 72px/1 D;letter-spacing:-.03em">Sound that surrounds you.</div>
+</div>
+
+<!-- 6  22-27 s  30 hours: the ring fills around the open case -->
+<div class="f paper ink" id="b6">
+  <svg class="abs" style="left:0;top:0" width="1920" height="1080"><circle cx="1260" cy="540" r="380" fill="none" stroke="#E3E6E0" stroke-width="22"/>
+    <circle cx="1260" cy="540" r="380" fill="none" stroke="url(#cg)" stroke-width="22" stroke-linecap="round" stroke-dasharray="2388" stroke-dashoffset="300" transform="rotate(-90 1260 540)"/>
+    <circle cx="1260" cy="540" r="380" fill="none" stroke="#82E600" stroke-width="40" stroke-dasharray="2388" stroke-dashoffset="300" transform="rotate(-90 1260 540)" filter="url(#gl)" opacity=".35"/></svg>
+  <img src="../assets/neo/h30_cut.png" class="abs" style="left:1000px;top:300px;width:520px;filter:drop-shadow(0 40px 60px rgba(17,19,24,.3))">
+  <div class="abs" style="left:130px;top:250px;font:500 40px/1 D" class="mute">Up to</div>
+  <div class="abs lime" style="left:120px;top:300px;font:900 380px/.9 D;letter-spacing:-.06em">30</div>
+  <div class="abs" style="left:136px;top:660px;font:700 64px/1.1 D;letter-spacing:-.02em">hours of play.</div>
+  <div class="abs mute" style="left:138px;top:760px;font:500 28px/1.4 D">5 h in the buds, 25 h more from the case (ANC off).</div>
+</div>
+
+<!-- 7  27-32 s  2-mic calls: the voice in green, noise filtered out -->
+<div class="f paper ink" id="b7">
+  <svg class="abs" style="left:0;top:0" width="1920" height="1080"><g stroke="#82E600" stroke-width="10" stroke-linecap="round">
+    <line x1="180" y1="510" x2="180" y2="570"/><line x1="220" y1="470" x2="220" y2="610"/><line x1="260" y1="420" x2="260" y2="660"/><line x1="300" y1="480" x2="300" y2="600"/><line x1="340" y1="440" x2="340" y2="640"/><line x1="380" y1="500" x2="380" y2="580"/><line x1="420" y1="460" x2="420" y2="620"/><line x1="460" y1="520" x2="460" y2="560"/>
+    <line x1="1460" y1="520" x2="1460" y2="560"/><line x1="1500" y1="460" x2="1500" y2="620"/><line x1="1540" y1="500" x2="1540" y2="580"/><line x1="1580" y1="430" x2="1580" y2="650"/><line x1="1620" y1="480" x2="1620" y2="600"/><line x1="1660" y1="420" x2="1660" y2="660"/><line x1="1700" y1="470" x2="1700" y2="610"/><line x1="1740" y1="510" x2="1740" y2="570"/></g></svg>
+  <img src="../assets/neo/hero_cut.png" class="abs" style="left:720px;top:250px;width:480px;filter:drop-shadow(0 40px 60px rgba(17,19,24,.3))">
+  <div class="chip" style="left:720px;top:920px;background:#111318;color:#fff"><span class="lime">●</span> Mic 1</div><div class="chip" style="left:1000px;top:920px;background:#111318;color:#fff"><span class="lime">●</span> Mic 2</div>
+  <div class="abs" style="left:0;width:1920px;text-align:center;top:90px;font:700 72px/1 D;letter-spacing:-.03em">Clear calls. <span class="mute">Every time.</span></div>
+</div>
+
+<!-- 8  32-36 s  game mode: the real game shot, the camera dives into the screen -->
+<div class="f night" id="b8">
+  <img src="../assets/neo/game.jpg" class="abs" style="left:-60px;top:110px;width:2040px">
+  <div class="abs" style="inset:0;background:linear-gradient(180deg,rgba(5,6,7,.0) 55%,rgba(5,6,7,.9))"></div>
+  <div class="abs" style="left:120px;top:880px;font:700 30px/1.3 D;letter-spacing:.3em" class="wide"><span class="lime">●</span> LOW-LATENCY GAME MODE</div>
+  <div class="abs" style="left:120px;top:930px;font:700 64px/1.1 D;letter-spacing:-.03em">Sound in perfect sync.</div>
+</div>
+
+<!-- 9  36-40 s  instant connection: the real Bluetooth screen, the device row floods lime, a check draws -->
+<div class="f paper ink" id="b9">
+  <div class="blob" style="left:1100px;top:120px;width:800px;height:800px;background:rgba(130,230,0,.22)"></div>
+  <div class="abs" style="left:1120px;top:140px;width:520px;height:790px;border-radius:60px;overflow:hidden;box-shadow:0 50px 120px rgba(17,19,24,.35),0 0 0 10px #111318"><img src="../assets/neo/bt.jpg" style="width:520px;margin-top:-70px"></div>
+  <div class="abs" style="left:1150px;top:375px;width:470px;height:38px;border-radius:12px;background:linear-gradient(90deg,#D8FF8A,#82E600);mix-blend-mode:multiply;box-shadow:0 10px 40px rgba(130,230,0,.6)"></div>
+  <div class="abs" style="left:130px;top:340px;font:700 30px/1.3 D"><span class="lime">●</span> Bluetooth 5.4</div>
+  <div class="abs" style="left:126px;top:400px;font:700 96px/1 D;letter-spacing:-.04em">Open the case.<br><span class="lime">Connected.</span></div>
+  <div class="abs mute" style="left:130px;top:640px;font:500 30px/1.4 D">Built-in hall sensor: it connects the moment the lid opens.</div>
+</div>
+
+<!-- 10  40-43 s  design that stands out: IPX4, metallic finish, water on black -->
+<div class="f night" id="b10">
+  <div class="abs" style="left:200px;top:120px;width:1500px;height:900px;border-radius:50%;background:radial-gradient(closest-side,rgba(199,205,214,.22),rgba(199,205,214,0))"></div>
+  <img src="../assets/neo/ipx4_cut.png" class="abs" style="left:450px;top:170px;width:1020px">
+  <div class="abs" style="left:0;width:1920px;text-align:center;top:90px;font:700 32px/1 D;letter-spacing:.3em" class="wide">IPX4 <span class="lime">·</span> METALLIC FINISH <span class="lime">·</span> TOUCH CONTROL</div>
+</div>
+
+<!-- 11  43-45 s  brand signature: collapse to a dot, then the wordmark on black over lime light (Lovable close) -->
+<div class="f night" id="b11">
+  <div class="abs" style="left:-200px;top:720px;width:2320px;height:800px;border-radius:50%;background:radial-gradient(closest-side,rgba(130,230,0,.55),rgba(47,168,0,.25) 45%,rgba(130,230,0,0))"></div>
+  <img src="../assets/logo_lime.png" class="abs" style="left:700px;top:330px;width:520px">
+  <div class="abs" style="left:0;width:1920px;text-align:center;top:520px;font:700 40px/1 D;letter-spacing:.42em;color:#fff">SPACEBUDS NEO+</div>
+  <div class="abs" style="left:0;width:1920px;text-align:center;top:600px;font:700 28px/1 D;letter-spacing:.6em;color:#82E600">BEYOND THE NOISE.</div>
+</div>
+<script>document.getElementById('b'+(new URLSearchParams(location.search).get('b')||1)).style.display='block'</script>
