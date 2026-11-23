@@ -40,12 +40,12 @@ html,body{background:#F5F6F3;overflow:hidden}
     <div class="abs" id="b1b" style="left:1500px;top:-300px;width:760px;height:760px;border-radius:50%;background:radial-gradient(closest-side,rgba(190,196,206,.75),rgba(190,196,206,0))"></div>
     <div class="abs" id="floor" style="left:-200px;top:700px;width:2320px;height:720px;border-radius:50%;background:radial-gradient(closest-side,rgba(130,230,0,.42),rgba(47,168,0,.18) 45%,rgba(130,230,0,0))"></div>
     <!-- 1 the line -->
-    <div class="abs" id="s1" style="left:0;width:1920px;text-align:center;top:420px;font:700 86px/1.25 D;letter-spacing:-.03em">
+    <div class="abs" id="s1" style="left:0;width:1920px;text-align:center;top:400px;font:700 100px/1.22 D;letter-spacing:-.03em">
       <span class="w">The</span> <span class="w">world</span> <span class="w">is</span> <span class="pill" id="pnoise" style="height:84px;background:#111318"><svg width="130" height="50" viewBox="0 0 130 50"><path id="pnw" fill="none" stroke="#FF453A" stroke-width="5" stroke-linejoin="round"/></svg></span> <span class="w">loud.</span><br>
       <span class="w mute">Your</span> <span class="w mute">space</span> <span class="pill" id="pcase" style="height:84px;background:#fff"><img src="../../assets/neo/case_only.png" style="height:74px"></span> <span class="w mute">doesn't</span> <span class="w mute">have</span> <span class="w mute">to</span> <span class="w mute">be.</span></div>
     <div class="abs" id="bloom" style="left:0;top:0;width:1920px;height:1080px"></div>
     <!-- 3 the wordmark stage (fully in frame) -->
-    <img id="word" src="../../assets/logo_lime.png" class="abs" style="left:140px;top:250px;width:1640px;transform-origin:820px 208px">
+    <img id="word" src="../../assets/logo_lime.png" class="abs" style="left:310px;top:96px;width:1300px;transform-origin:650px 165px">
     <div class="abs" id="name3" style="left:0;width:1920px;text-align:center;top:920px;font:700 44px/1 D;letter-spacing:-.01em"><span class="w">SpaceBuds</span> <span class="w lime">Neo+</span></div>
     <!-- 4 noise off -->
     <svg class="abs" id="wv" style="left:0;top:0;overflow:visible" width="1920" height="1080"><path id="wL" fill="none" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/><path id="wRg" fill="none" stroke-width="18" filter="url(#gl)"/><path id="wR" fill="none" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/></svg>
@@ -62,7 +62,7 @@ html,body{background:#F5F6F3;overflow:hidden}
     <div class="abs" id="h5a" style="left:0;width:1920px;text-align:center;top:130px;font:700 44px/1 D;letter-spacing:-.01em;color:#fff"><span class="w lime">Sound360</span> <span class="w">spatial</span> <span class="w">audio</span></div>
     <div class="abs" id="h5b" style="left:0;width:1920px;text-align:center;top:850px;font:700 72px/1 D;letter-spacing:-.03em;color:#fff"><span class="w">Sound</span> <span class="w">that</span> <span class="w">surrounds</span> <span class="w">you.</span></div>
     <div class="abs mute" id="h6a" style="left:130px;top:250px;font:500 40px/1 D"><span class="w">Up</span> <span class="w">to</span></div>
-    <div class="abs lime" id="n30" style="left:120px;top:300px;font:900 380px/.9 D;letter-spacing:-.06em"></div>
+    <div class="abs lime" id="n30" style="left:170px;top:300px;font:900 380px/.9 D;letter-spacing:-.06em"></div>
     <div class="abs" id="h6b" style="left:136px;top:660px;font:700 64px/1.1 D;letter-spacing:-.02em"><span class="w">hours</span> <span class="w">of</span> <span class="w">play.</span></div>
     <div class="abs mute" id="h6c" style="left:138px;top:760px;font:500 36px/1.35 D"><span class="w">5 h in the buds, 25 h more from the case (ANC off).</span></div>
     <!-- 7 calls -->
@@ -93,7 +93,6 @@ html,body{background:#F5F6F3;overflow:hidden}
     <div class="abs" id="h9a" style="left:130px;top:334px;font:700 40px/1.2 D;letter-spacing:-.01em"><span class="w"><span class="dot"></span>Bluetooth</span> <span class="w">5.4</span></div>
     <div class="abs" id="h9b" style="left:126px;top:400px;font:700 96px/1 D;letter-spacing:-.04em"><span class="w">Open</span> <span class="w">the</span> <span class="w">case.</span></div>
     <div class="abs" id="h9c" style="left:126px;top:496px;font:700 96px/1 D;letter-spacing:-.04em"><span class="w lime">Connected.</span></div>
-    <div class="abs mute" id="h9d" style="left:130px;top:640px;width:900px;font:500 36px/1.35 D"><span class="w">Built-in hall sensor: it connects the moment the lid opens.</span></div>
     <!-- 10 / 11 -->
     <div class="abs" id="h10" style="left:0;width:1920px;text-align:center;top:90px;font:700 44px/1 D;letter-spacing:-.01em;color:#fff"><span class="w">IPX4</span> <span class="w"><span class="dot"></span>Metallic</span> <span class="w">finish</span> <span class="w"><span class="dot"></span>Touch</span> <span class="w">control</span></div>
     <div class="abs" id="dot" style="left:940px;top:520px;width:40px;height:40px;border-radius:50%;background:#B6FF4D;box-shadow:0 0 40px 10px rgba(130,230,0,.7)"></div>
@@ -133,7 +132,7 @@ const CK = () => { const c = (i, lx = 960, ly = 540) => W(i, lx, ly); return [
   { t: 9.9, p: c(3), tau: .11 }, { t: 12.3, z: 1.08, tau: .04 }, { t: 12.45, z: 1.0, tau: .15 }, { t: 13.2, z: 1.04, tau: .6 },
   { t: 15.1, p: c(3, 960, 875), z: 9, tau: .2 }, { t: 15.5, p: c(4), z: 1.2, tau: .001 }, { t: 16.3, z: 1.0, tau: .8 }, { t: 19.0, z: 1.05, tau: 1.0 },
   { t: 21.8, p: c(5), z: 1.0, tau: .1 }, { t: 24.3, z: 1.1, tau: .04 }, { t: 24.45, z: 1.0, tau: .15 },
-  { t: 27.0, p: c(6), z: .82, tau: .14 }, { t: 27.5, z: 1.0, tau: .3 }, { t: 29.4, z: 1.05, tau: .8 },
+  { t: 27.1, p: c(6), z: .85, tau: .26 }, { t: 27.8, z: 1.0, tau: .35 }, { t: 29.4, z: 1.05, tau: .8 },
   { t: 31.8, p: c(7), z: 1.0, tau: .11 }, { t: 34.9, p: c(7, 960, 470), z: 2.9, tau: .2 },
   { t: 35.45, p: c(8, 960, 470), z: 2.9, tau: .001 }, { t: 35.55, p: c(8), z: 1.0, tau: .3 }, { t: 38.2, z: 1.08, tau: .04 }, { t: 38.35, z: 1.0, tau: .15 },
   { t: 39.75, p: c(8, 1702, 404), z: 7, tau: .14 }, { t: 40.0, p: c(9), z: 1.15, tau: .001 }, { t: 40.6, z: 1.0, tau: .6 },
@@ -152,9 +151,9 @@ function paintGround() { gs.fillStyle = DARK; gs.fillRect(0, 0, 640, 400); gs.fi
 // ---- helpers ----
 const words = (id, t0, st, out) => { const ws = [...$(id).querySelectorAll('.w')]; return t => ws.forEach((w, i) => { const s = S(t - (t0 + i * st), WORD), ex = out ? S(t - out - i * .025, WORD) : 0;
   w.style.opacity = sm(s * 1.25) * (1 - sm(ex * 1.3)); w.style.filter = (s < .98 || ex > .02) ? `blur(${((1 - clamp(s)) * 12 + ex * 12).toFixed(1)}px)` : ''; w.style.transform = `translateY(${((1 - s) * 34 - ex * 30).toFixed(1)}px)`; }); };
-const WS = [words('s1', .2, .14, 3.9), words('name3', 7.4, .2, 9.75), words('h4a', 10.6, .12, 14.6), words('h4b', 10.9, .16, 14.6), words('h5a', 16.4, .15, 21.55), words('h5b', 17.6, .15, 21.55),
-  words('h6a', 22.5, .1, 26.7), words('h6b', 23.4, .14, 26.7), words('h6c', 24.4, .1, 26.7), words('h7', 27.6, .14, 31.55), words('h8a', 32.5, .12, 34.6), words('h8b', 33.0, .14, 34.6),
-  words('h9a', 36.3, .12, 39.6), words('h9b', 36.6, .14, 39.6), words('h9c', 38.25, .1, 39.6), words('h9d', 38.8, .1, 39.6), words('h10', 40.6, .08, 42.45), words('h11a', 44.0, .15), words('h11b', 44.5, .12)];
+const WS = [words('s1', -.3, .13, 3.9), words('name3', 7.4, .2, 9.75), words('h4a', 10.6, .12, 14.6), words('h4b', 10.9, .16, 14.6), words('h5a', 16.4, .15, 21.55), words('h5b', 17.6, .15, 21.55),
+  words('h6a', 22.5, .1, 26.35), words('h6b', 23.4, .14, 26.35), words('h6c', 24.4, .1, 26.35), words('h7', 27.6, .14, 31.55), words('h8a', 32.5, .12, 34.6), words('h8b', 33.0, .14, 34.6),
+  words('h9a', 36.3, .12, 39.6), words('h9b', 36.6, .14, 39.6), words('h9c', 38.25, .1, 39.6), words('h10', 40.6, .08, 42.45), words('h11a', 44.0, .15), words('h11b', 44.5, .12)];
 const qn = (i, k, t, r = 12) => { const v = Math.sin(i * 12.9898 + k * 78.233 + Math.floor(t * r) * 3.1) * 43758.5453; return v - Math.floor(v); };
 const hexM = (a, b, u) => { const A = [1, 3, 5].map(i => parseInt(a.slice(i, i + 2), 16)), B = [1, 3, 5].map(i => parseInt(b.slice(i, i + 2), 16)); return `rgb(${A.map((x, i) => Math.round(lerp(x, B[i], u))).join(',')})`; };
 const rel = (el, anc) => { let x = 0, y = 0; while (el && el !== anc) { x += el.offsetLeft; y += el.offsetTop; el = el.offsetParent; } return [x, y]; };
@@ -188,7 +187,7 @@ const RINGS = [[380, 120], [620, 200], [880, 290]].map(([rx, ry], i) => ({ rx, r
 const ORBS = Array.from({ length: 9 }, (_, i) => ({ r: i % 3, ph: i * 2.1, sp: .35 + .1 * (i % 3), el: mk('circle', $('orbs'), { fill: '#D8FF8A' }) }));
 const BARS = Array.from({ length: 16 }, (_, i) => ({ x: i < 8 ? 180 + i * 40 : 1460 + (i - 8) * 40, f: 3 + (i * 1.7) % 4, ph: i * 1.3, a: i / 16 * Math.PI * 2, el: mk('line', $('bars'), {}) }));
 const PLACE = { 0: ['b1a', 'b1b', 's1'], 1: ['floor'], 2: ['word', 'name3'], 3: ['wv', 'tg', 'h4a', 'h4b', 'cur'], 4: ['h5a', 'h5b'], 5: ['h6a', 'n30', 'h6b', 'h6c'],
-  6: ['m1', 'm2', 'h7'], 7: ['game', 'gshade', 'h8a', 'h8b'], 8: ['phone', 'chk', 'h9a', 'h9b', 'h9c', 'h9d'], 9: ['h10'], 10: ['logo11', 'h11a', 'h11b'] };
+  6: ['m1', 'm2', 'h7'], 7: ['game', 'gshade', 'h8a', 'h8b'], 8: ['phone', 'chk', 'h9a', 'h9b', 'h9c'], 9: ['h10'], 10: ['logo11', 'h11a', 'h11b'] };
 function init() { const world = $('world');
   GRID.forEach((g, i) => { const d = document.createElement('div'); d.className = 'pl'; d.id = 'P' + i; d.style.left = (PCX(i) - 960) + 'px'; d.style.top = (PCY(i) - 540) + 'px'; world.appendChild(d); });
   Object.entries(PLACE).forEach(([i, ids]) => ids.forEach(id => $('P' + i).appendChild($(id))));
@@ -211,7 +210,7 @@ window.seek = t => {
   $('b1a').style.transform = `translate(${(40 * Math.sin(t * .5)).toFixed(1)}px,${(-30 * Math.sin(t * .4)).toFixed(1)}px)`; $('b1b').style.transform = `translate(${(-40 * Math.sin(t * .45)).toFixed(1)}px,${(30 * Math.sin(t * .35)).toFixed(1)}px)`;
   show('b1a', 0, 4.8); show('b1b', 0, 4.8);
   // ===== 1 the line =====
-  if (show('s1', 0, 4.7)) { [['pnoise', 170, .62], ['pcase', 120, 2.05]].forEach(([id, w, t0]) => { const s = S(t - t0, POPS); $(id).style.width = (w * clamp(s)).toFixed(1) + 'px'; $(id).style.opacity = clamp(s * 3); });
+  if (show('s1', 0, 4.7)) { [['pnoise', 170, .12], ['pcase', 120, 1.75]].forEach(([id, w, t0]) => { const s = S(t - t0, POPS); $(id).style.width = (w * clamp(s)).toFixed(1) + 'px'; $(id).style.opacity = clamp(s * 3); });
     let d = ''; for (let k = 0; k <= 12; k++) d += (k ? 'L' : 'M') + (k * 130 / 12).toFixed(1) + ' ' + (25 + (k % 2 ? 1 : -1) * (8 + 14 * qn(1, k, t))).toFixed(1); $('pnw').setAttribute('d', d);
     }
   // ===== 2 the bloom grows out of the case pill, then the dark sweeps in behind a lime band =====
@@ -236,6 +235,7 @@ window.seek = t => {
   // the dive: the toggle fills the frame, collapses into one lime line, the line opens into the rings
   const cv = $('cover'), LIME = [[14.5, 15.5, 17.3, 3, 3], [39.25, 40.0, 41.6, 2.2, 2.6]], lm = LIME.find(([a, c, e]) => t >= a && t < e);
   if (lm) { const [a, c, e, z0, zr] = lm; cv.style.display = ''; cv.style.transform = ''; cv.style.filter = '';
+    cv.style.background = `radial-gradient(circle at ${(960 + 120 * Math.sin(t * 2.1)).toFixed(0)}px ${(560 + 60 * Math.cos(t * 1.7)).toFixed(0)}px, #F4FFD8 0, #B6FF4D ${(160 + 900 * clamp((t - a) / (e - a))).toFixed(0)}px, #82E600 ${(420 + 1100 * clamp((t - a) / (e - a))).toFixed(0)}px, #2FA800 ${(900 + 1300 * clamp((t - a) / (e - a))).toFixed(0)}px)`;
     if (t < c) { cv.style.opacity = sm((z - z0) / zr).toFixed(3); cv.style.webkitMaskImage = ''; }
     else { const u = sm((t - c - .05) / .9), r2 = lerp(160, 20, u), r1 = r2 * .3; cv.style.opacity = (1 - sm((t - c - .7) / (e - c - .7))).toFixed(3);
       cv.style.webkitMaskImage = `radial-gradient(ellipse 60% 55% at 50% 56%, #000 ${r1.toFixed(1)}%, rgba(0,0,0,.35) ${(r1 + (r2 - r1) * .55).toFixed(1)}%, transparent ${r2.toFixed(1)}%)`; } }
@@ -253,7 +253,7 @@ window.seek = t => {
   const arcOn = on(22.4, 27.5); $('arc').style.display = $('arcG').style.display = arcOn ? '' : 'none';
   if (arcOn) { const p = ease((t - 22.6) / 1.7), col = S(t - 26.95, FLY), R = Math.max(0, 380 * (1 - col)), C = 2 * Math.PI * Math.max(R, .01), acx = 1260 + (960 - 1260) * col;
     ['arc', 'arcG'].forEach(id => { const e = $(id); e.setAttribute('cx', acx.toFixed(1)); e.setAttribute('cy', 540); e.setAttribute('r', R.toFixed(1)); e.setAttribute('stroke-dasharray', `${C.toFixed(1)} ${C.toFixed(1)}`); e.setAttribute('stroke-dashoffset', (C * (1 - p)).toFixed(1)); e.setAttribute('transform', `rotate(-90 ${acx.toFixed(1)} 540)`); });
-    const n = S(t - 22.55, WORD), ex = S(t - 26.75, WORD), el = $('n30'); el.textContent = Math.round(30 * p); el.style.opacity = sm(n * 1.25) * (1 - sm(ex * 1.3)); el.style.filter = (n < .98 || ex > .02) ? `blur(${((1 - n) * 14 + ex * 14).toFixed(1)}px)` : ''; el.style.transform = `translateY(${((1 - n) * 50 - ex * 40).toFixed(1)}px)`; } else $('n30').style.opacity = 0;
+    const n = S(t - 22.55, WORD), ex = S(t - 26.4, WORD), el = $('n30'); el.textContent = Math.round(30 * p); el.style.opacity = sm(n * 1.25) * (1 - sm(ex * 1.3)); el.style.filter = (n < .98 || ex > .02) ? `blur(${((1 - n) * 14 + ex * 14).toFixed(1)}px)` : ''; el.style.transform = `translateY(${((1 - n) * 50 - ex * 40).toFixed(1)}px)`; } else $('n30').style.opacity = 0;
   // light passes along the products (motivated rim light, dies away)
   // ===== 7 the ring bursts into the voice bars; the case is carried to the centre =====
   const barsOn = on(26.95, 32.4); $('bars').style.display = barsOn ? '' : 'none';
