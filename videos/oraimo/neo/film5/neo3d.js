@@ -25,12 +25,12 @@ const dropMat = new THREE.MeshPhysicalMaterial({ color: 0xF2FFE0, transmission: 
 const rnd = (() => { let a = 11; return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; })();
 const DROPS = Array.from({ length: 6 }, () => { const m = new THREE.Mesh(new THREE.SphereGeometry(1, 40, 28), dropMat); m.scale.set(1, 1.18, 1); scene.add(m);
   return { m, x: [140, 1780][Math.floor(rnd() * 2)] + (rnd() - .5) * 360, y: 140 + rnd() * 800, z: -1.5 + rnd() * 2.0, r: .045 + rnd() * .07, ph: rnd() * 6.28, sp: .2 + rnd() * .3 }; });
-const DROP_ON = [[6.0, 12.1], [32.0, 36.1], [40.6, 46]];
+const DROP_ON = [[6.0, 12.1], [32.0, 36.1], [40.2, 41.25]];
 // ---- tracks: x, y are place-local px; pl is the place; s in case widths ----
 const CASE = K([[0, { pl: 0, x: 1460, y: 560, s: 0, rx: .2, ry: -2.6, rz: .1, lid: 0 }],
   [.2, { s: 1.05, ry: -.5, rx: .22, rz: .06 }, { k: 32, c: 9.6 }], [1.4, { ry: -.3 }, GLIDE],
-  [15.9, { pl: 4, x: 960, y: 590, s: .2, ry: -.45, rx: .3, lid: 1.9 }, 'cut'], [16.0, { s: .82 }, SOFT],
-  [31.9, { pl: 9, x: 960, y: 640, s: .4, ry: -.3, rx: .32, lid: 1.9 }, 'cut'], [32.2, { s: 1.15 }, SOFT], [34.75, { lid: 0, rx: .16 }, { k: 90, c: 14 }],
+  [15.9, { pl: 4, x: 960, y: 560, s: .2, ry: -.45, rx: .3, lid: 1.9 }, 'cut'], [16.2, { s: .78 }, SOFT],
+  [31.9, { pl: 9, x: 960, y: 640, s: .001, ry: -.3, rx: .32, lid: 1.9 }, 'cut'], [33.3, { s: 1.15 }, SOFT], [34.75, { lid: 0, rx: .16 }, { k: 90, c: 14 }],
   [35.9, { pl: 10, x: 760, y: 1500, s: .8, ry: .35, rx: .2, lid: 0 }, 'cut'], [36.2, { y: 800 }, { k: 70, c: 15 }], [37.2, { lid: 1.7 }, { k: 60, c: 11.5 }]]);
 const CASE_ON = [[0, 2.6], [15.9, 20.2], [31.9, 40.8]];
 const PAIR = K([[0, { pl: 2, x: 1380, y: 470, s: 1.7, d: 360, rx: .1, ry: 0, rz: 0, w: 0 }],
@@ -54,7 +54,7 @@ function pose(t) {
       b.position.lerpVectors(pF, pS, w); b.quaternion.slerpQuaternions(qF, qS, w); b.scale.lerpVectors(sF, sS, w); }); }
   const dOn = inAny(t, DROP_ON);
   DROPS.forEach((d, i) => { d.m.visible = dOn; if (!dOn) return; const g = S(t - DROP_ON.find(([a, b]) => t >= a && t < b)[0] - .2 - i * .06, SOFT);
-    d.m.position.copy(at(d.x + 40 * Math.sin(t * d.sp + d.ph), d.y + 30 * Math.cos(t * d.sp * .8 + d.ph), d.z)); d.m.scale.set(d.r * g, d.r * 1.18 * g, d.r * g); d.m.rotation.z = Math.sin(t * .3 + d.ph) * .3; });
+    const gx = t > 40.2 ? sm((t - 40.4) / .8) : 0, [lx, ly] = window.NEO.w2s(...window.NEO.W(11, 960, 440)); d.m.position.copy(at(lerp(d.x + 40 * Math.sin(t * d.sp + d.ph), lx, gx), lerp(d.y + 30 * Math.cos(t * d.sp * .8 + d.ph), ly, gx), d.z * (1 - gx))); d.m.scale.set(d.r * g, d.r * 1.18 * g, d.r * g); if (gx > 0) d.m.scale.multiplyScalar(1 - .7 * gx); d.m.rotation.z = Math.sin(t * .3 + d.ph) * .3; });
   let r = 0; for (const [ti, v] of RIM) if (t >= ti) r = v; rim.intensity = r;
   neo.update(); renderer.render(scene, camera);
 }

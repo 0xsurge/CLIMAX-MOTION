@@ -15,10 +15,10 @@ html,body{background:#0A0C0B;overflow:hidden}
 #stage{position:relative;width:1920px;height:1080px;overflow:hidden;background:#0A0C0B;font-family:D,sans-serif;color:#111318}
 #view{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:hidden}
 #cam{position:absolute;left:0;top:0;width:1px;height:1px;transform-origin:0 0}
-.cell{position:absolute;width:2400px;height:1500px;overflow:hidden}
-.cell.photo::after{content:"";position:absolute;left:0;right:0;bottom:0;height:640px;background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.55));z-index:1}
-.cell>img.bg{z-index:0;position:absolute;left:0;top:0;width:2400px;height:1500px;object-fit:cover;transform-origin:50% 50%}
-.pl{position:absolute;left:240px;top:210px;width:1920px;height:1080px;z-index:2}
+.cell{position:absolute;width:1920px;height:1080px;overflow:hidden}
+.cell.photo::after{content:"";position:absolute;left:0;right:0;bottom:0;height:520px;background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.55));z-index:1}
+.cell>img.bg{z-index:0;position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:cover;transform-origin:50% 50%}
+.pl{position:absolute;left:0;top:0;width:1920px;height:1080px;z-index:2}
 .abs{position:absolute}.w{display:inline-block}.lime{color:#82E600}.mute{color:#5A6068}.wht{color:#fff}
 .disp{font:700 104px/1.02 D;letter-spacing:-.035em}.sup{font:700 56px/1.12 D;letter-spacing:-.02em}.lab{font:700 40px/1.2 D;letter-spacing:-.01em}
 .dot{display:inline-block;width:.42em;height:.42em;border-radius:50%;background:#82E600;margin-right:.32em;vertical-align:.12em}
@@ -61,10 +61,10 @@ html,body{background:#0A0C0B;overflow:hidden}
   </div></div>
   <!-- P4 thirty hours: two moments joined by a line -->
   <div class="cell world" id="C4"><div class="pl">
-    <div class="ph" id="ph4a" style="left:120px;top:300px;width:420px;height:520px"><img src="../../assets/people/sky.jpg"></div>
-    <div class="ph" id="ph4b" style="left:1380px;top:300px;width:420px;height:520px"><img src="../../assets/city/rain.jpg"></div>
-    <svg class="abs" style="left:0;top:0;overflow:visible" width="1920" height="1080"><path id="ln4" d="M540 560 C 800 560, 1120 560, 1380 560" fill="none" stroke="#82E600" stroke-width="8" stroke-linecap="round"/><path id="ln4g" d="M540 560 C 800 560, 1120 560, 1380 560" fill="none" stroke="#82E600" stroke-width="22" stroke-linecap="round" filter="url(#gl)" opacity=".45"/></svg>
-    <div class="abs lab mute" id="t4a" style="left:120px;top:850px"><span class="w">First</span> <span class="w">stop</span></div><div class="abs lab mute" id="t4b" style="left:1380px;top:850px"><span class="w">Last</span> <span class="w">stop</span></div>
+    <div class="ph" id="ph4a" style="left:100px;top:400px;width:520px;height:292px;border-radius:18px"><img src="../../assets/city/crosswalk.jpg" style="object-position:50% 40%;transform:scale(1.043)"></div>
+    <div class="ph" id="ph4b" style="left:1300px;top:400px;width:520px;height:292px;border-radius:18px"><img src="../../assets/city/rain.jpg" style="object-position:60% 50%"></div>
+    <svg class="abs" style="left:0;top:0;overflow:visible" width="1920" height="1080"><path id="ln4" d="M620 546 C 800 546, 1120 546, 1300 546" fill="none" stroke="#82E600" stroke-width="8" stroke-linecap="round"/><path id="ln4g" d="M620 546 C 800 546, 1120 546, 1300 546" fill="none" stroke="#82E600" stroke-width="22" stroke-linecap="round" filter="url(#gl)" opacity=".45"/></svg>
+    <div class="abs lab mute" id="t4a" style="left:100px;top:720px"><span class="w">First</span> <span class="w">stop</span></div><div class="abs lab mute" id="t4b" style="left:1300px;top:720px"><span class="w">Last</span> <span class="w">stop</span></div>
     <div class="abs" id="n30" style="left:0;width:1920px;text-align:center;top:90px;font:900 190px/1 D;letter-spacing:-.05em"><span id="n30v">0</span><span class="lime" style="font-size:.6em">&thinsp;h</span></div>
   </div></div>
   <!-- P5 a call -->
@@ -94,6 +94,7 @@ html,body{background:#0A0C0B;overflow:hidden}
   <!-- P9 the whole day, in one case -->
   <div class="cell world" id="C9"><div class="pl">
     <div id="col" class="abs" style="left:0;top:0;width:1920px;height:1080px"></div>
+    <div class="ph" id="hero9" style="left:640px;top:420px;width:640px;height:360px;border-radius:20px"><img src="../../assets/city/rain.jpg" style="object-position:60% 50%;transform:scale(1.043)"></div>
     <div class="abs sup" id="t9" style="left:0;width:1920px;text-align:center;top:120px"><span class="w">Your</span> <span class="w">whole</span> <span class="w">day,</span> <span class="w lime">in</span> <span class="w lime">one</span> <span class="w lime">case.</span></div>
   </div></div>
   <!-- P10 connected -->
@@ -126,26 +127,33 @@ window.FILM_DUR = 46;
 const WORD = { k: 320, c: 36 }, PANEL = { k: 170, c: 26 }, POPS = { k: 420, c: 41 }, SOFT = { k: 70, c: 16.8 }, FLY = { k: 140, c: 23.7 }, GLIDE = { k: 46, c: 13.6 };
 // ---- places: twelve cells of 2400 x 1500 on one canvas; each place is the 1920 x 1080 frame in the middle of its cell ----
 const GRID = [[0, 0], [1, 0], [2, 0], [2, 1], [3, 1], [3, 2], [4, 2], [5, 2], [5, 1], [6, 1], [7, 1], [7, 0]];
-const PX = i => GRID[i][0] * 2400 + 1200, PY = i => GRID[i][1] * 1500 + 750;          // place centres in world px
+const PX = i => GRID[i][0] * 1920 + 960, PY = i => GRID[i][1] * 1080 + 540;          // the places abut: moves between them are slides          // place centres in world px
 const W = (i, lx, ly) => [PX(i) + lx - 960, PY(i) + ly - 540];
 // ---- camera (camera-style camMove): whips tau .1, the pill dive, two cuts hidden inside the luma sweeps ----
 const camMove = (t, tc, tau) => t < tc ? 0.5 * Math.exp((t - tc) / tau) : 1 - 0.5 * Math.exp(-(t - tc) / tau);
 let SLOT = [0, 0];
 const CK = () => { const c = (i, lx = 960, ly = 540) => W(i, lx, ly); return [
   { t: 0, p: c(0), z: 1.08 }, { t: 1.0, z: 1.0, tau: .6 },
-  { t: 2.25, p: SLOT, z: 9, tau: .12 }, { t: 2.55, p: c(1), z: 1.18, tau: .001 }, { t: 3.4, z: 1.04, tau: .9 },
-  { t: 6.0, p: c(2), z: 1.1, tau: .001 }, { t: 6.8, z: 1.0, tau: .7 }, { t: 9.0, z: 1.04, tau: .9 },
-  { t: 12.0, p: c(3), z: 1.0, tau: .1 }, { t: 14.0, z: 1.06, tau: 1.2 },
-  { t: 16.0, p: c(4), z: 1.0, tau: .1 }, { t: 18.3, z: 1.08, tau: .04 }, { t: 18.45, z: 1.0, tau: .15 },
-  { t: 20.0, p: c(5), tau: .11 }, { t: 22.0, z: 1.05, tau: 1.0 },
-  { t: 24.0, p: c(6), z: 1.0, tau: .1 }, { t: 25.4, z: 1.12, tau: .5 },
-  { t: 26.0, p: c(7), z: 1.15, tau: .001 }, { t: 26.6, z: 1.0, tau: .6 },
-  { t: 28.0, p: c(8), tau: .11 }, { t: 30.0, z: 1.06, tau: 1.0 },
-  { t: 32.0, p: c(9), z: .9, tau: .12 }, { t: 32.8, z: 1.0, tau: .5 },
-  { t: 36.0, p: c(10), z: 1.0, tau: .1 }, { t: 38.3, z: 1.07, tau: .04 }, { t: 38.45, z: 1.0, tau: .15 },
-  { t: 40.6, p: c(11), z: 1.0, tau: .12 }, { t: 42.8, z: 1.1, tau: 1.6 }]; };
+  { t: 2.2, p: SLOT, z: 13, tau: .33 }, { t: 2.75, p: c(1), z: 1.18, tau: .001 }, { t: 3.4, z: 1.04, tau: .9 },             // push through the photo pill
+  { t: 6.0, p: c(2), z: 1.1, tau: .001 }, { t: 6.8, z: 1.0, tau: .7 }, { t: 9.0, z: 1.04, tau: .9 },                       // the light sweep
+  { t: 11.8, p: c(3), z: 1.0, tau: .5 }, { t: 13.6, z: 1.06, tau: 1.2 },                                                // slide down to the walk
+  { t: 16.0, p: c(4, 360, 546), z: 1920 * 1.06 / 520, tau: .001 }, { t: 16.05, p: c(4), z: 1.0, tau: .3 },             // pull out: the walk was a card
+  { t: 18.3, z: 1.08, tau: .04 }, { t: 18.45, z: 1.0, tau: .15 },
+  { t: 19.8, p: c(5), tau: .5 }, { t: 21.8, z: 1.05, tau: 1.0 },                                                        // slide down to the call
+  { t: 23.8, p: c(6), z: 1.0, tau: .5 }, { t: 25.3, p: c(6, 800, 360), z: 1.5, tau: .5 },                               // slide across, push toward the phone
+  { t: 26.0, p: c(7), z: 1.15, tau: .001 }, { t: 26.6, z: 1.0, tau: .6 },                                               // the light sweep into the game
+  { t: 27.8, p: c(8), tau: .5 }, { t: 29.8, z: 1.06, tau: 1.0 },                                                        // slide up to the rain
+  { t: 32.0, p: c(9, 960, 600), z: 1920 * 1.06 / 640, tau: .001 }, { t: 32.05, p: c(9), z: 1.0, tau: .3 },             // pull out: the rain was a card
+  { t: 35.8, p: c(10), z: 1.0, tau: .5 }, { t: 38.3, z: 1.07, tau: .04 }, { t: 38.45, z: 1.0, tau: .15 },               // slide across to the phone
+  { t: 40.4, p: c(11), z: 1.0, tau: .5 }, { t: 42.8, z: 1.1, tau: 1.6 }]; };                                            // slide up to the logo
 let CKS = null, CAM = [0, 0, 1];
-const camAxis = (t, f) => { let v = null, prev = null; for (const k of CKS) { const val = f(k); if (val === undefined) continue; if (v === null) { v = val; prev = val; continue; } v += (val - prev) * camMove(t, k.t, k.tau); prev = val; } return v; };
+// a key with tau .001 is a cut: from its time the value is exactly that key, whatever earlier moves still had to go;
+// keys after a cut do not act before it (no pre-tail through the cut)
+const camAxis = (t, f) => { let v = null, prev = null, lastCut = -1;
+  for (const k of CKS) { const val = f(k); if (val === undefined) continue; if (v === null) { v = val; prev = val; continue; }
+    const cut = k.tau <= .002; if (cut) { if (t >= k.t) { v = val; lastCut = k.t; } prev = val; continue; }
+    if (CKS.some(c => c.tau <= .002 && c.t <= k.t && t < c.t && f(c) !== undefined)) { prev = val; continue; }
+    v += (val - prev) * camMove(t, k.t, k.tau); prev = val; } return v; };
 const camAt = t => [camAxis(t, k => k.p ? k.p[0] : undefined) + 5 * Math.sin(t * .41), camAxis(t, k => k.p ? k.p[1] : undefined) + 4 * Math.sin(t * .33 + 1), camAxis(t, k => k.z) * (1 + .004 * Math.sin(t * .5))];
 const w2s = (wx, wy) => [960 + (wx - CAM[0]) * CAM[2], 540 + (wy - CAM[1]) * CAM[2]];
 window.NEO = { w2s, W, cam: () => CAM };
@@ -166,11 +174,11 @@ const rel = (el, anc) => { let x = 0, y = 0; while (el && el !== anc) { x += el.
 const SLOTIMG = ['people/run.jpg', 'city/call.jpg', 'city/gamer.jpg', 'people/bus.jpg', 'city/alapere.jpg'];
 const NS = 'http://www.w3.org/2000/svg', mk = (tag, parent, attrs) => { const e = document.createElementNS(NS, tag); Object.entries(attrs).forEach(([k, v]) => e.setAttribute(k, v)); parent.appendChild(e); return e; };
 const RINGS = Array.from({ length: 5 }, (_, i) => mk('ellipse', $('rng'), { fill: 'none', stroke: '#B6FF4D', 'stroke-width': 4 }));
-const COL = ['city/alapere.jpg', 'people/city.jpg', 'city/crosswalk.jpg', 'people/sky.jpg', 'city/call.jpg', 'city/gamer.jpg', 'city/rain.jpg', 'people/smile.jpg', 'people/closed.jpg', 'city/idumota.jpg'];
+const COL = ['city/alapere.jpg', 'people/city.jpg', 'city/crosswalk.jpg', 'people/sky.jpg', 'city/call.jpg', 'city/gamer.jpg', 'people/run.jpg', 'people/smile.jpg', 'people/closed.jpg', 'city/idumota.jpg'];
 const COLS = COL.map((src, i) => { const d = document.createElement('div'); d.className = 'ph'; d.style.width = '300px'; d.style.height = '360px'; d.innerHTML = `<img src="../../assets/${src}">`; $('col').appendChild(d); return d; });
 const gnd = document.createElement('canvas');
 function init() { $('slot').style.width = '200px';
-  GRID.forEach((g, i) => { const c = $('C' + i); c.style.left = (g[0] * 2400) + 'px'; c.style.top = (g[1] * 1500) + 'px'; });
+  GRID.forEach((g, i) => { const c = $('C' + i); c.style.left = (g[0] * 1920) + 'px'; c.style.top = (g[1] * 1080) + 'px'; });
   // the slot sits in the C0 cell; its world position = cell origin + offsets
   const [cx, cy] = rel($('slot'), $('C0')); SLOT = [cx + 100, cy + 46]; CKS = CK(); }
 window.seek = t => {
@@ -182,7 +190,7 @@ window.seek = t => {
   const on = (a, b) => t >= a && t < b;
   WS.forEach(f => f(t)); PS.forEach(f => f(t));
   // photos breathe: each place's photo pushes in slowly from its own arrival
-  [[1, 2.5], [3, 11.7], [5, 19.7], [6, 23.7], [8, 27.7], [10, 35.7]].forEach(([i, t0]) => { const img = $('C' + i).querySelector('img.bg'); img.style.transform = `scale(${(1.0 + .05 * clamp((t - t0) / 5)).toFixed(4)})`; });
+  [[1, 2.7], [3, 11.0], [5, 19.5], [6, 23.5], [8, 27.5], [10, 35.5]].forEach(([i, t0]) => { const img = $('C' + i).querySelector('img.bg'); img.style.transform = `scale(${(1.0 + .05 * clamp((t - t0) / 5)).toFixed(4)})`; });
   // P0: the living slot opens in the sentence and flips through real photos every 4 frames, then holds on Lagos for the dive
   { const s = S(t - .55, POPS); $('slot').style.width = (200 * clamp(s)).toFixed(1) + 'px'; const k = t < 1.9 ? Math.floor(t * 7.5) % (SLOTIMG.length - 1) : SLOTIMG.length - 1;
     [...$('slot').children].forEach((im, j) => im.style.display = j === k ? '' : 'none'); }
@@ -196,7 +204,7 @@ window.seek = t => {
   // P4: the line draws between the two moments; the counter runs to 30
   { const p = sm((t - 16.6) / 1.4); ['ln4', 'ln4g'].forEach(id => { const e = $(id); e.style.strokeDasharray = '900 900'; e.style.strokeDashoffset = (900 * (1 - p)).toFixed(1); });
     $('n30v').textContent = Math.round(30 * sm((t - 16.8) / 1.5)); const s = S(t - 16.4, WORD), ex = S(t - 19.7, WORD); $('n30').style.opacity = sm(s * 1.25) * (1 - sm(ex * 1.3)); $('n30').style.filter = s < .98 || ex > .02 ? `blur(${((1 - s) * 14 + ex * 14).toFixed(1)}px)` : ''; $('n30').style.transform = `translateY(${((1 - s) * 40).toFixed(1)}px)`;
-    [['ph4a', 16.3, -1], ['ph4b', 16.5, 1]].forEach(([id, t0, sd]) => { const s2 = S(t - t0, SOFT); $(id).style.transform = `translateX(${(sd * (1 - s2) * 220).toFixed(1)}px) rotate(${(sd * (1 - s2) * 8 + sd * 2).toFixed(2)}deg) translateY(${(6 * Math.sin(t * 1.1 + sd)).toFixed(1)}px)`; $(id).style.opacity = clamp(s2 * 1.5); }); }
+    { const s2 = S(t - 16.5, SOFT); $('ph4b').style.transform = `translateX(${((1 - s2) * 260).toFixed(1)}px) translateY(${(5 * Math.sin(t * 1.1)).toFixed(1)}px)`; $('ph4b').style.opacity = clamp(s2 * 1.5); $('ph4a').style.transform = `translateY(${(5 * Math.sin(t * 1.1 + 1) * clamp((t - 16.4) / .5)).toFixed(1)}px)`; } }
   // P5: the wind line falls away, the voice line stays; the mics light in turn
   { let dn = '', dv = ''; const calm = sm((t - 21.2) / 1.0); for (let n = 0; n <= 44; n++) { const x = n * 15; dn += (n ? 'L' : 'M') + x + ' ' + (75 + (1 - calm) * (n % 2 ? 1 : -1) * (14 + 40 * qn(5, n, t))).toFixed(1); dv += (n ? 'L' : 'M') + x + ' ' + (75 + 34 * Math.sin(n * .45 + t * 5) * Math.sin(n * .07 + 1)).toFixed(1); }
     $('vcN').setAttribute('d', dn); $('vcN').style.opacity = 1 - calm * .85; $('vcV').setAttribute('d', dv);
@@ -207,6 +215,7 @@ window.seek = t => {
   COLS.forEach((d, i) => { const a = i / COLS.length * Math.PI * 2 + .4, R0 = 1300, R1 = 420 + 60 * (i % 3), inS = S(t - 32.2 - i * .05, SOFT), cv = S(t - 34.2 - i * .03, { k: 90, c: 16 });
     const R = lerp(lerp(R0, R1, inS), 0, cv), x = 960 + Math.cos(a + t * .2) * R, y = 600 + Math.sin(a + t * .2) * R * .55, sc = lerp(1, .1, cv) * (.8 + .2 * Math.sin(a + t * .2));
     d.style.left = (x - 150).toFixed(1) + 'px'; d.style.top = (y - 180).toFixed(1) + 'px'; d.style.transform = `rotate(${(Math.sin(a) * 10 * (1 - cv)).toFixed(2)}deg) scale(${sc.toFixed(3)})`; d.style.opacity = (clamp(inS * 2) * (1 - sm((cv - .7) / .3))).toFixed(3); d.style.display = on(32, 36) ? '' : 'none'; });
+  { const cv = S(t - 34.15, { k: 90, c: 16 }), lift = S(t - 32.6, SOFT); $('hero9').style.transform = `translateY(${(-lift * 40).toFixed(1)}px) scale(${lerp(1 - .35 * lift, .08, cv).toFixed(3)})`; $('hero9').style.opacity = (1 - sm((cv - .7) / .3)).toFixed(3); $('hero9').style.display = on(31.9, 36) ? '' : 'none'; }
   // P10: the phone connects on the tap
   { const s = S(t - 36.2, SOFT); $('ph10').style.transform = `translateY(${((1 - s) * 200 + 5 * Math.sin(t * 1.2)).toFixed(1)}px)`; $('ph10').style.opacity = clamp(s * 1.5);
     const cn = t >= 38.3, p = S(t - 38.3, POPS), st = $('r10s'); st.textContent = cn ? 'Connected' : 'Not Connected'; st.style.color = cn ? '#248A3D' : '#8E8E93'; st.style.fontWeight = cn ? '700' : '500'; st.style.display = 'inline-block'; st.style.transform = cn ? `scale(${(.7 + .3 * p).toFixed(3)})` : '';
