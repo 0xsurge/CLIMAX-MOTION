@@ -85,5 +85,14 @@ For every film camera, follow .claude/skills/camera-style/SKILL.md (measured fro
 ## The proven method
 For every launch, promo or product film, start with .claude/skills/climax-launch/SKILL.md: the formula (fixed taste and quality bar, then idea, colour theory, world, light, transitions, type, camera, pace and sound derived fresh from each brand's meaning) behind the Sterling film the user called perfect. Each film must be unique to its brand: never reuse Sterling's palette, world or structure by default; Sterling (videos/sterling-v3) is only a worked example.
 
+## Full skill load (approved by the user)
+Before every film, and again before every new cut of it (never work from memory), read in full:
+- climax-launch: SKILL.md, TRANSITIONS.md, DEVICES.md, STORYBOARD.md, CRAFT.md, SOUND.md;
+- camera-style/SKILL.md and launch-style/SKILL.md;
+- motion-reel: SKILL.md, reference/RULES.md, and run its critique loop (review.py, flow_check.py, reference/CRITIQUE.md) on the render;
+- impeccable whenever the film shows UI screens (phones, apps, web pages).
+Start the first reply of each round with one line naming the skill files loaded, so the user can see it.
+Remotion and HyperFrames skills apply only when a film is built in those engines.
+
 ## Latest approved rules
 climax-launch/CRAFT.md and climax-launch/SOUND.md hold the rules approved on the Obi Igwe reel (videos/obi-reel): read them with SKILL.md before any film. Voiceover: Kokoro female voice (install_kokoro.sh, tts_kokoro.py), narrator speaks to the viewer, never about the client. Save new rules to the skills only after the user approves them.
