@@ -22,6 +22,9 @@ html,body{background:#F5F6F3;overflow:hidden}
 .abs{position:absolute}.w{display:inline-block}.lime{color:#82E600}.mute{color:#5A6068}.wide{text-transform:uppercase;white-space:nowrap}
 .pill{display:inline-flex;align-items:center;justify-content:center;vertical-align:middle;border-radius:999px;overflow:hidden;margin:0 .14em;box-shadow:0 10px 30px rgba(17,19,24,.14)}
 .im{position:absolute;transform-origin:50% 50%}
+.ios-card{left:16px;width:384px;background:#fff;border-radius:12px;overflow:hidden}
+.ios-row{display:flex;align-items:center;gap:8px;height:48px;padding:0 14px 0 16px;border-top:1px solid #E5E5EA;font:500 16px/1 D;white-space:nowrap}.ios-row:first-child{border-top:0}
+.ios-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis}.ios-st{color:#8E8E93;font-size:15px}
 .chip{position:absolute;font:700 30px/1 D;padding:16px 26px;border-radius:999px;white-space:nowrap;background:#111318;color:#fff}
 </style>
 <div id="stage">
@@ -70,10 +73,21 @@ html,body{background:#F5F6F3;overflow:hidden}
     <div class="abs wide" id="h8a" style="left:120px;top:880px;font:700 30px/1.3 D;letter-spacing:.3em;color:#fff"><span class="w"><span class="lime">●</span> Low-latency</span> <span class="w">game</span> <span class="w">mode</span></div>
     <div class="abs" id="h8b" style="left:120px;top:930px;font:700 64px/1.1 D;letter-spacing:-.03em;color:#fff"><span class="w">Sound</span> <span class="w">in</span> <span class="w">perfect</span> <span class="w">sync.</span></div>
     <!-- 9 connected -->
-    <div class="abs" id="phone" style="left:1120px;top:140px;width:520px;height:790px;border-radius:60px;overflow:hidden;box-shadow:0 50px 120px rgba(17,19,24,.35),0 0 0 10px #111318;transform-origin:50% 50%">
-      <img src="../../assets/neo/bt.jpg" style="width:520px;margin-top:-70px;display:block">
-      <div class="abs" id="pgame" style="left:-135px;top:135px;width:790px;height:520px;overflow:hidden;transform:rotate(90deg)"><img src="../../assets/neo/game.jpg" style="height:520px;position:absolute;left:-330px;top:0"></div>
-      <div class="abs" id="row" style="left:30px;top:235px;width:470px;height:38px;border-radius:12px;background:linear-gradient(90deg,#E4FFA8,#82E600);mix-blend-mode:multiply"></div></div>
+    <!-- a real phone: titanium frame, side buttons, punch-hole camera, and the iOS Bluetooth screen built as live UI (from oraimo's own screen render) -->
+    <div class="abs" id="phone" style="left:1160px;top:85px;width:440px;height:900px;border-radius:66px;background:linear-gradient(135deg,#3a3c40,#16171a 40%,#2a2c30);box-shadow:0 50px 120px rgba(17,19,24,.38),inset 0 0 0 2px rgba(255,255,255,.12);transform-origin:50% 50%">
+      <div class="abs" style="left:-4px;top:190px;width:5px;height:56px;border-radius:3px;background:#2a2c30"></div><div class="abs" style="left:-4px;top:266px;width:5px;height:90px;border-radius:3px;background:#2a2c30"></div><div class="abs" style="left:439px;top:240px;width:5px;height:120px;border-radius:3px;background:#2a2c30"></div>
+      <div class="abs" id="pscr" style="left:12px;top:12px;width:416px;height:876px;border-radius:55px;overflow:hidden;background:#F2F2F7;font-family:D,sans-serif;color:#000">
+        <div class="abs" style="left:46px;top:20px;font:700 17px/1 D">16:34</div>
+        <svg class="abs" style="left:300px;top:20px" width="76" height="14" viewBox="0 0 76 14"><rect x="0" y="9" width="3.5" height="5" rx="1"/><rect x="5" y="6.5" width="3.5" height="7.5" rx="1"/><rect x="10" y="4" width="3.5" height="10" rx="1"/><rect x="15" y="1.5" width="3.5" height="12.5" rx="1"/><path d="M33 12.5a2 2 0 1 0 0.01 0M28.5 8.5a6.5 6.5 0 0 1 9 0M25.5 5.5a10.5 10.5 0 0 1 15 0" fill="none" stroke="#000" stroke-width="1.8" stroke-linecap="round"/><rect x="48" y="1.5" width="24" height="11.5" rx="3.5" fill="none" stroke="#000" stroke-opacity=".4" stroke-width="1.2"/><rect x="50" y="3.5" width="16" height="7.5" rx="2"/><rect x="73.5" y="5" width="1.6" height="4.5" rx=".8" fill-opacity=".4"/></svg>
+        <div class="abs" style="left:168px;top:14px;width:80px;height:26px;border-radius:13px;background:#000"></div>
+        <div class="abs" style="left:14px;top:62px;font:500 18px/1 D;color:#007AFF">&#8249; Settings</div>
+        <div class="abs" style="left:0;width:416px;text-align:center;top:62px;font:700 18px/1 D">Bluetooth</div>
+        <div class="abs ios-card" style="top:112px"><div class="ios-row" style="border:0"><span class="ios-name">Bluetooth</span><span style="margin-left:auto;width:52px;height:31px;border-radius:16px;background:#34C759;position:relative"><span style="position:absolute;right:2px;top:2px;width:27px;height:27px;border-radius:50%;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,.2)"></span></span></div></div>
+        <div class="abs" style="left:32px;width:360px;top:172px;font:500 13px/1.35 D;color:#6C6C70">This iPhone is discoverable as &#8220;Alva&#8221; while Bluetooth Settings is open.</div>
+        <div class="abs" style="left:32px;top:226px;font:500 13px/1 D;color:#6C6C70;letter-spacing:.02em">MY DEVICES</div>
+        <div class="abs ios-card" style="top:246px"><div class="ios-row" id="r0"><span class="ios-name">oraimo SpaceBuds Neo+</span><span class="ios-st" id="r0st">Not Connected</span><svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="9.6" fill="none" stroke="#007AFF" stroke-width="1.6"/><circle cx="11" cy="6.6" r="1.3" fill="#007AFF"/><rect x="10" y="9.2" width="2" height="7" rx="1" fill="#007AFF"/></svg></div><div class="ios-row"><span class="ios-name">oraimo SpaceBuds</span><span class="ios-st">Not Connected</span><svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="9.6" fill="none" stroke="#007AFF" stroke-width="1.6"/><circle cx="11" cy="6.6" r="1.3" fill="#007AFF"/><rect x="10" y="9.2" width="2" height="7" rx="1" fill="#007AFF"/></svg></div><div class="ios-row"><span class="ios-name">oraimo FreePods 3</span><span class="ios-st">Not Connected</span><svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="9.6" fill="none" stroke="#007AFF" stroke-width="1.6"/><circle cx="11" cy="6.6" r="1.3" fill="#007AFF"/><rect x="10" y="9.2" width="2" height="7" rx="1" fill="#007AFF"/></svg></div><div class="ios-row"><span class="ios-name">oraimo FreePods 4</span><span class="ios-st">Not Connected</span><svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="9.6" fill="none" stroke="#007AFF" stroke-width="1.6"/><circle cx="11" cy="6.6" r="1.3" fill="#007AFF"/><rect x="10" y="9.2" width="2" height="7" rx="1" fill="#007AFF"/></svg></div><div class="ios-row"><span class="ios-name">oraimo FreePods Neo</span><span class="ios-st">Not Connected</span><svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="9.6" fill="none" stroke="#007AFF" stroke-width="1.6"/><circle cx="11" cy="6.6" r="1.3" fill="#007AFF"/><rect x="10" y="9.2" width="2" height="7" rx="1" fill="#007AFF"/></svg></div><div class="ios-row"><span class="ios-name">oraimo FreePods Pro</span><span class="ios-st">Not Connected</span><svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="9.6" fill="none" stroke="#007AFF" stroke-width="1.6"/><circle cx="11" cy="6.6" r="1.3" fill="#007AFF"/><rect x="10" y="9.2" width="2" height="7" rx="1" fill="#007AFF"/></svg></div><div class="ios-row"><span class="ios-name">oraimo OpenPods</span><span class="ios-st">Not Connected</span><svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="9.6" fill="none" stroke="#007AFF" stroke-width="1.6"/><circle cx="11" cy="6.6" r="1.3" fill="#007AFF"/><rect x="10" y="9.2" width="2" height="7" rx="1" fill="#007AFF"/></svg></div></div>
+        <div class="abs" id="pgame" style="left:-230px;top:230px;width:876px;height:416px;overflow:hidden;transform:rotate(90deg)"><img src="../../assets/neo/game_screen.jpg" style="width:876px;height:416px;object-fit:cover;display:block"></div>
+      </div></div>
     <div class="abs" id="chk" style="left:1670px;top:372px;width:64px;height:64px;border-radius:50%;background:#82E600;box-shadow:0 0 30px rgba(130,230,0,.7)"><svg width="64" height="64" viewBox="0 0 64 64"><path id="chkP" d="M18 33 L28 43 L47 22" fill="none" stroke="#0B1A00" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
     <div class="abs" id="h9a" style="left:130px;top:340px;font:700 30px/1.3 D"><span class="w"><span class="lime">●</span> Bluetooth</span> <span class="w">5.4</span></div>
     <div class="abs" id="h9b" style="left:126px;top:400px;font:700 96px/1 D;letter-spacing:-.04em"><span class="w">Open</span> <span class="w">the</span> <span class="w">case.</span></div>
@@ -119,8 +133,8 @@ const CK = () => { const c = (i, lx = 960, ly = 540) => W(i, lx, ly); return [
   { t: 15.1, p: c(3, 960, 875), z: 9, tau: .2 }, { t: 15.5, p: c(4), z: 1.2, tau: .001 }, { t: 16.3, z: 1.0, tau: .8 }, { t: 19.0, z: 1.05, tau: 1.0 },
   { t: 21.8, p: c(5), z: 1.0, tau: .1 }, { t: 24.3, z: 1.1, tau: .04 }, { t: 24.45, z: 1.0, tau: .15 },
   { t: 27.0, p: c(6), z: .82, tau: .14 }, { t: 27.5, z: 1.0, tau: .3 }, { t: 29.4, z: 1.05, tau: .8 },
-  { t: 31.8, p: c(7), z: 1.0, tau: .11 }, { t: 34.9, p: c(7, 935, 488), z: 2.4, tau: .2 },
-  { t: 35.45, p: c(8, 935, 488), z: 2.4, tau: .001 }, { t: 35.55, p: c(8), z: 1.0, tau: .3 }, { t: 38.2, z: 1.08, tau: .04 }, { t: 38.35, z: 1.0, tau: .15 },
+  { t: 31.8, p: c(7), z: 1.0, tau: .11 }, { t: 34.9, p: c(7, 960, 470), z: 2.9, tau: .2 },
+  { t: 35.45, p: c(8, 960, 470), z: 2.9, tau: .001 }, { t: 35.55, p: c(8), z: 1.0, tau: .3 }, { t: 38.2, z: 1.08, tau: .04 }, { t: 38.35, z: 1.0, tau: .15 },
   { t: 39.75, p: c(8, 1702, 404), z: 7, tau: .14 }, { t: 40.0, p: c(9), z: 1.15, tau: .001 }, { t: 40.6, z: 1.0, tau: .6 },
   { t: 42.6, p: c(10), tau: .3 }, { t: 44.0, z: 1.12, tau: 1.2 }]; };
 let CKS = null;
@@ -165,7 +179,7 @@ const FAnc = K([[0, { x: 960, y: 573, s: .78, o: 0, b: 14 }], [15.9, { s: 1, o: 
 const F30 = K([[0, { x: 1260, y: 541, s: .3, o: 0, b: 14 }], [22.05, { s: 1, o: 1, b: 0 }, SOFT], [26.95, { x: 960, y: 531, s: 1.05, r: -6 }, FLY], [29.4, { r: 5, s: 1.0 }, GLIDE], [31.75, { x: 1640, y: 900, s: .38, r: 14, o: 0 }, FLY]]);
 const FIpx = K([[0, { x: 960, y: 260, s: .85, o: 0, r: -6 }], [39.95, { y: 605, s: 1, o: 1, r: 0 }, { k: 60, c: 13 }], [42.55, { s: 0, y: 560, o: 0 }, { k: 200, c: 28.3 }]]);
 // cursor
-const CUR = [[10.9, [1700, 1180]], [11.3, [1060, 880]], [13.6, [1500, 1200]], [36.9, [1980, 760]], [37.3, [1560, 396]], [39.0, [1700, 1150]]], CURON = [[10.9, 13.9], [36.9, 39.4]], PRESS = [12.3, 38.2];
+const CUR = [[10.9, [1700, 1180]], [11.3, [1060, 880]], [13.6, [1500, 1200]], [36.9, [1980, 760]], [37.3, [1498, 384]], [39.0, [1700, 1150]]], CURON = [[10.9, 13.9], [36.9, 39.4]], PRESS = [12.3, 38.2];
 const curPos = t => { let x = CUR[0][1][0], y = CUR[0][1][1]; for (let i = 1; i < CUR.length; i++) { const [ti, p] = CUR[i], q = CUR[i - 1][1]; if (i === 3) { if (t >= ti) { x = p[0]; y = p[1]; } continue; } const s = S(t - ti, FLY), b = Math.sin(Math.PI * clamp(s)) * .12; x += (p[0] - q[0]) * s - (p[1] - q[1]) * b; y += (p[1] - q[1]) * s + (p[0] - q[0]) * b; } return [x, y]; };
 // svg scenes
 const NS = 'http://www.w3.org/2000/svg', mk = (tag, parent, attrs) => { const e = document.createElementNS(NS, tag); Object.entries(attrs).forEach(([k, v]) => e.setAttribute(k, v)); parent.appendChild(e); return e; };
@@ -177,6 +191,7 @@ const PLACE = { 0: ['b1a', 'b1b', 's1'], 1: ['floor'], 2: ['word', 'name3'], 3: 
 function init() { const world = $('world');
   GRID.forEach((g, i) => { const d = document.createElement('div'); d.className = 'pl'; d.id = 'P' + i; d.style.left = (PCX(i) - 960) + 'px'; d.style.top = (PCY(i) - 540) + 'px'; world.appendChild(d); });
   Object.entries(PLACE).forEach(([i, ids]) => ids.forEach(id => $('P' + i).appendChild($(id))));
+  const gp = $('phone').cloneNode(true); gp.id = 'gphone'; gp.querySelectorAll('[id]').forEach(e => e.id = ''); gp.style.left = (960 - 220) + 'px'; gp.style.top = (470 - 450) + 'px'; gp.style.transform = 'rotate(-90deg)'; gp.style.display = 'none'; $('P7').appendChild(gp);
   const f2 = $('floor').cloneNode(true); f2.id = 'floor2'; $('P10').appendChild(f2);
   const ov = $('ov'); ov.appendChild($('bloom')); ov.appendChild($('rings').ownerSVGElement); ov.appendChild($('dot')); ov.appendChild($('gl3'));
   $('pnoise').style.width = '170px'; $('pcase').style.width = '120px'; const [px, py] = rel($('pcase'), world); PILL[0] = px + 60; PILL[1] = py + 42;
@@ -248,13 +263,15 @@ window.seek = t => {
   [['m1', 27.9, 28.0, 29.4], ['m2', 28.05, 29.4, 31.3]].forEach(([id, t0, a, b]) => { if (!show(id, 27.8, 31.95)) return; const s = S(t - t0, PANEL), ex = S(t - 31.55, PANEL), g = on(a, b) ? sm((t - a) / .25) * (1 - sm((t - b + .25) / .25)) : 0;
     $(id).style.opacity = clamp(s * 1.6) * (1 - sm(ex * 1.3)); $(id).style.transform = `translateY(${((1 - s) * 40 + ex * 40).toFixed(1)}px)`; $(id).style.boxShadow = `0 0 0 ${(4 * g).toFixed(1)}px #82E600, 0 0 ${(40 * g).toFixed(0)}px rgba(130,230,0,${(.8 * g).toFixed(2)})`; });
   // ===== 8 the case flies to the game earbuds; the game rises; dive into the screen; the phone turns upright =====
-  if (show('game', 31.5, 35.6)) { const s = S(t - 31.6, SOFT), out = 0; $('game').style.opacity = clamp(s * 1.6) * (1 - out); $('game').style.transform = `translateY(${((1 - s) * 160).toFixed(1)}px) scale(${(.96 + .04 * s + .03 * clamp((t - 32) / 3)).toFixed(4)})`; $('game').style.filter = s < .98 ? `blur(${((1 - s) * 14).toFixed(1)}px)` : ''; }
-  show('gshade', 31.6, 35.45); $('gshade').style.opacity = sm((t - 31.8) / .5);
-  if (show('phone', 35.45, 40.0)) { const s = S(t - 35.55, { k: 70, c: 16 }), dropO = 0, x = lerp(935, 1380, s), y = lerp(488, 535, s);
+  $('game').style.display = 'none'; if (show('gphone', 31.5, 35.45)) { const s = S(t - 31.6, SOFT); $('gphone').style.opacity = clamp(s * 1.6); $('gphone').style.transform = `translateY(${((1 - s) * 160).toFixed(1)}px) rotate(-90deg) scale(${(.96 + .04 * s + .02 * clamp((t - 32) / 3)).toFixed(4)})`; $('gphone').style.filter = s < .98 ? `blur(${((1 - s) * 14).toFixed(1)}px)` : ''; }
+  $('gshade').style.display = 'none';
+  if (show('phone', 35.45, 40.0)) { const s = S(t - 35.55, { k: 70, c: 16 }), dropO = 0, x = lerp(960, 1380, s), y = lerp(470, 535, s);
     { const u = sm((t - 35.75) / .55), p = lerp(-30, 130, u); $('pgame').style.display = u >= 1 ? 'none' : ''; $('pgame').style.webkitMaskImage = `linear-gradient(90deg, transparent ${(p - 25).toFixed(1)}%, #000 ${p.toFixed(1)}%)`; }
-    $('phone').style.left = (x - 260) + 'px'; $('phone').style.top = (y - 395) + 'px'; $('phone').style.transform = `scale(${lerp(1.3, 1, s).toFixed(4)}) rotate(${(-90 * (1 - s)).toFixed(2)}deg) translateY(${(4 * Math.sin(t * 1.2)).toFixed(1)}px)`;
+    $('phone').style.left = (x - 220) + 'px'; $('phone').style.top = (y - 450) + 'px'; $('phone').style.transform = `rotate(${(-90 * (1 - s)).toFixed(2)}deg) translateY(${(4 * Math.sin(t * 1.2)).toFixed(1)}px)`;
     $('phone').style.filter = dropO > .02 ? `blur(${(dropO * 14).toFixed(1)}px)` : ''; $('phone').style.opacity = 1 - sm((t - 40.3) / .25);
-    const f = sm((t - 38.22) / .4); $('row').style.clipPath = `inset(0 ${((1 - f) * 100).toFixed(1)}% 0 0)`; $('row').style.boxShadow = `0 10px 40px rgba(130,230,0,${(.6 * f).toFixed(2)})`; }
+    const hl = on(38.2, 38.9) ? Math.sin(Math.PI * clamp((t - 38.2) / .7)) : 0; $('r0').style.background = hl > 0 ? `rgba(209,209,214,${(.9 * hl).toFixed(2)})` : '';
+    const cn = t >= 38.4, pop = S(t - 38.4, POPS), st = $('r0st'); st.textContent = cn ? 'Connected' : 'Not Connected'; st.style.color = cn ? '#248A3D' : '#8E8E93'; st.style.fontWeight = cn ? '700' : '500';
+    st.style.display = 'inline-block'; st.style.transform = cn ? `scale(${(.7 + .3 * pop).toFixed(3)})` : ''; st.style.filter = cn && pop < .98 ? `blur(${((1 - pop) * 6).toFixed(1)}px)` : ''; }
   if (show('chk', 38.45, 40.0)) { const k = S(t - 38.5, POPS), grow = sm((t - 39.55) / .3); $('chk').style.opacity = clamp(k * 2); $('chk').style.transform = `scale(${(.5 + .5 * k + .6 * grow).toFixed(3)})`; const cp = $('chkP'); cp.style.strokeDasharray = '50 50'; cp.style.strokeDashoffset = (50 * (1 - sm((t - 38.6) / .35))).toFixed(1); }
   // ===== 10 the buds fall in with their water drops; then collapse to a dot; the dot becomes the logo =====
   const dg = S(t - 42.75, POPS), dd = S(t - 43.25, { k: 260, c: 32 }); if (show('dot', 42.7, 43.8)) { $('dot').style.transform = `scale(${(dg * (1 - dd * .8) + dd * 1.6).toFixed(3)})`; $('dot').style.opacity = 1 - sm((t - 43.35) / .35); }
