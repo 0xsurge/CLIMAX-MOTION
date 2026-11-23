@@ -38,7 +38,6 @@ const CASE = K([[0, { x: 960, y: 540, s: 0, rx: .3, ry: -4.2, rz: .35, lid: 0, w
   [8.15, { rx: .42, ry: -.12, lid: 1.95 }, { k: 60, c: 11.5 }],
   [9.9, { y: 1650, rz: .55, rx: .9 }, { k: 55, c: 10.5 }],
   [21.6, { x: 1260, y: 610, s: 1.05, rx: .38, ry: -.32, rz: 0, lid: 1.95, ww: 1, pl: 5 }, 'cut'],
-  [27.0, { y: 1600, rz: -.4 }, { k: 60, c: 13 }],
   [36.1, { x: 860, y: 1500, s: .8, rx: .22, ry: .38, rz: 0, lid: 0, pl: 8 }, 'cut'], [36.2, { y: 800 }, { k: 70, c: 15 }],
   [36.9, { lid: 1.75 }, { k: 60, c: 11.5 }]]);
 const CASE_ON = [[4.32, 11.3], [21.6, 28.4], [36.1, 40.0]];
@@ -68,7 +67,7 @@ function pose3d(t) {
   neo.case.rotation.set(c.rx + .03 * Math.sin(t * .7), c.ry + .05 * Math.sin(t * .45), c.rz); neo.case.scale.setScalar(Math.max(c.s, 1e-4) * zf);
   neo.setLid(c.lid); neo.case.updateMatrixWorld(true);
   // the buds: blend between their seat in the case and their free flight (one spring weight, never a swap)
-  const orb = t >= 15.72 && t < 22.2 ? (t - 15.72) * .42 : 0;
+  const orb = t >= 15.32 && t < 22.2 ? (t - 15.32) * .42 + Math.PI * S(t - 19.9, { k: 40, c: 11 }) : 0;   // at 19.9 the buds trade places
   [neo.budL, neo.budR].forEach((b, i) => { const side = i ? 1 : -1; b.visible = budsOn && p.s > .002;
     const a = orb + (side < 0 ? Math.PI : 0), half = p.d / 2;
     pF.copy(at(p.x + Math.cos(a) * half, p.y + 10 * Math.sin(t * 1.5 + i))); pF.z = Math.sin(a) * half / PXU;

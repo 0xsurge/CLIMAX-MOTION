@@ -64,7 +64,7 @@ html,body{background:#F5F6F3;overflow:hidden}
     <div class="abs mute" id="h6a" style="left:250px;top:236px;font:500 48px/1 D"><span class="w">Up</span> <span class="w">to</span></div>
     <div class="abs lime" id="n30" style="left:240px;top:300px;font:900 380px/.9 D;letter-spacing:-.06em"></div>
     <div class="abs" id="h6b" style="left:256px;top:660px;font:700 64px/1.1 D;letter-spacing:-.02em"><span class="w">hours</span> <span class="w">of</span> <span class="w">play.</span></div>
-    <div class="abs mute" id="h6c" style="left:258px;top:760px;width:820px;font:500 40px/1.3 D"><span class="w">5 h in the buds, 25 h more from the case (ANC off).</span></div>
+    <div class="abs mute" id="h6c" style="left:258px;top:740px;width:600px;font:500 48px/1.22 D"><span class="w">5 h in the buds, 25 h more from the case (ANC off).</span></div>
     <!-- 7 calls -->
     <div class="chip" id="m1" style="left:640px;top:900px"><span class="dot"></span>Mic 1</div><div class="chip" id="m2" style="left:1010px;top:900px"><span class="dot"></span>Mic 2</div>
     <div class="abs" id="h7" style="left:0;width:1920px;text-align:center;top:90px;font:700 72px/1 D;letter-spacing:-.03em"><span class="w">Clear</span> <span class="w">calls.</span> <span class="w mute">Every</span> <span class="w mute">time.</span></div>
@@ -130,7 +130,7 @@ const CK = () => { const c = (i, lx = 960, ly = 540) => W(i, lx, ly); return [
   { t: 3.95, p: PILL, z: 14, tau: .13 }, { t: 4.32, p: c(1), z: 1.15, tau: .001 }, { t: 4.9, z: 1.0, tau: .5 },
   { t: 6.0, p: c(2), tau: .1 }, { t: 8.15, z: 1.1, tau: .04 }, { t: 8.3, z: 1.0, tau: .15 },
   { t: 9.9, p: c(3), tau: .11 }, { t: 12.3, z: 1.08, tau: .04 }, { t: 12.45, z: 1.0, tau: .15 }, { t: 13.2, z: 1.04, tau: .6 },
-  { t: 15.1, p: c(3, 1109, 875), z: 11, tau: .2 }, { t: 15.32, p: c(4), z: 1.2, tau: .001 }, { t: 16.3, z: 1.0, tau: .8 }, { t: 19.0, z: 1.05, tau: 1.0 },
+  { t: 14.95, p: c(3, 1109, 875), z: 11, tau: .14 }, { t: 15.32, p: c(4), z: 1.2, tau: .001 }, { t: 16.3, z: 1.0, tau: .8 }, { t: 19.9, z: 1.12, tau: .25 }, { t: 20.7, z: 1.03, tau: .6 },
   { t: 21.8, p: c(5), z: 1.0, tau: .1 }, { t: 24.3, z: 1.1, tau: .04 }, { t: 24.45, z: 1.0, tau: .15 },
   { t: 27.15, p: c(6), z: .85, tau: .4 }, { t: 28.0, z: 1.0, tau: .4 }, { t: 29.4, z: 1.05, tau: .8 },
   { t: 31.8, p: c(7), z: 1.0, tau: .11 }, { t: 34.9, p: c(7, 960, 470), z: 2.9, tau: .2 },
@@ -243,7 +243,7 @@ window.seek = t => {
   // ===== 5 Sound360; ring0 carries on as the 30 h track =====
   const ringsOn = on(15.7, 27.5); $('rings').style.display = $('orbs').style.display = ringsOn ? '' : 'none';
   if (ringsOn) { const m = S(t - 21.8, { k: 90, c: 19 }), col = S(t - 26.95, FLY);
-    RINGS.forEach((r, i) => { const s = S(t - (15.95 + i * .22), SOFT), br = 1 + .03 * Math.sin(t * 1.4 + i) * (1 - m);
+    RINGS.forEach((r, i) => { const s = S(t - (15.95 + i * .22), SOFT), br = (1 + .03 * Math.sin(t * 1.4 + i) * (1 - m)) * (1 + .16 * (S(t - 19.85 - i * .06, POPS) - S(t - 20.05 - i * .06, SOFT)) * (1 - m));
       if (i === 0) { const rx = lerp(r.rx * s * br, 380, m) * (1 - col), ry = lerp(r.ry * s * br, 380, m) * (1 - col), ccx = lerp(960, 1260, m) + (960 - 1260) * col, ccy = lerp(560, 540, m);
         [r.el, r.gl].forEach(e => { e.setAttribute('cx', ccx.toFixed(1)); e.setAttribute('cy', ccy.toFixed(1)); e.setAttribute('rx', Math.max(0, rx).toFixed(1)); e.setAttribute('ry', Math.max(0, ry).toFixed(1)); });
         r.el.setAttribute('stroke-width', lerp(2, 22, m).toFixed(1)); r.el.setAttribute('stroke', hexM('#82E600', '#E3E6E0', m)); r.el.style.opacity = (.6 + .4 * m) * clamp(s * 2); r.gl.style.opacity = .45 * clamp(s * 2) * (1 - m); }
@@ -258,8 +258,8 @@ window.seek = t => {
   // ===== 7 the ring bursts into the voice bars; the case is carried to the centre =====
   const barsOn = on(26.95, 32.4); $('bars').style.display = barsOn ? '' : 'none';
   if (barsOn) { const fly = S(t - 27.0, { k: 120, c: 22 }), flat = S(t - 31.6, FLY);
-    BARS.forEach((b, i) => { const r0x = 960 + Math.cos(b.a) * 60, r0y = 540 + Math.sin(b.a) * 60, bxp = lerp(r0x, b.x, fly), byp = lerp(r0y, 540, fly) + flat * 260, th = lerp(b.a + Math.PI / 2, 0, fly);
-      const live = (18 + 110 * Math.abs(Math.sin(t * b.f + b.ph)) * (i < 8 ? (t < 29.4 ? 1 : .45) : (t >= 29.4 ? 1 : .45))), h = lerp(16, live, sm(fly)) * (1 - flat), sx = Math.sin(th) * h, sy = Math.cos(th) * h;
+    BARS.forEach((b, i) => { const r0x = 960 + Math.cos(b.a) * 60, r0y = 540 + Math.sin(b.a) * 60, bxp = lerp(r0x, b.x, fly), byp = lerp(r0y, 540, fly) + flat * 260, th = 0;
+      const live = (18 + 110 * Math.abs(Math.sin(t * b.f + b.ph)) * (i < 8 ? (t < 29.4 ? 1 : .45) : (t >= 29.4 ? 1 : .45))), h = live * sm(fly) * (1 - flat), sx = Math.sin(th) * h, sy = Math.cos(th) * h;
       b.el.setAttribute('x1', (bxp - sx).toFixed(1)); b.el.setAttribute('y1', (byp - sy).toFixed(1)); b.el.setAttribute('x2', (bxp + sx).toFixed(1)); b.el.setAttribute('y2', (byp + sy).toFixed(1)); b.el.style.opacity = clamp(fly * 3) * (1 - flat); }); }
   [['m1', 27.9, 28.0, 29.4], ['m2', 28.05, 29.4, 31.3]].forEach(([id, t0, a, b]) => { if (!show(id, 27.8, 31.95)) return; const s = S(t - t0, PANEL), ex = S(t - 31.55, PANEL), g = on(a, b) ? sm((t - a) / .25) * (1 - sm((t - b + .25) / .25)) : 0;
     $(id).style.opacity = clamp(s * 1.6) * (1 - sm(ex * 1.3)); $(id).style.transform = `translateY(${((1 - s) * 40 + ex * 40).toFixed(1)}px)`; $(id).style.boxShadow = `0 0 0 ${(4 * g).toFixed(1)}px #82E600, 0 0 ${(40 * g).toFixed(0)}px rgba(130,230,0,${(.8 * g).toFixed(2)})`; });
