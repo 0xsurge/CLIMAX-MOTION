@@ -45,7 +45,7 @@ const CASE_ON = [[4.32, 11.3], [21.6, 28.4], [36.1, 40.0]];
 const PAIR = K([[0, { x: 960, y: 400, s: 1.3, d: 260, rx: 0, ry: 0, rz: 0, w: 1 }],
   [8.85, { w: 0, y: 470, d: 520, s: 1.35 }, { k: 70, c: 14.5 }],
   [9.95, { y: 450, d: 330, s: 1.6 }, FLY], [12.3, { ry: .45 }, { k: 40, c: 11 }], [14.6, { ry: .2, s: 1.7 }, GLIDE],
-  [15.5, { x: 960, y: 520, s: .3, d: 160, ry: 0 }, 'cut'], [15.6, { s: 1.5, d: 330 }, SOFT],
+  [15.32, { x: 960, y: 520, s: .3, d: 160, ry: 0 }, 'cut'], [15.4, { s: 1.5, d: 330 }, SOFT],
   [21.8, { x: 1260, y: 610, s: 1.0, d: 200 }, FLY], [21.98, { w: 1 }, { k: 90, c: 19 }],
   [27.0, { w: 0, x: 960, y: 520, s: 2.0, d: 540, rx: .1 }, { k: 80, c: 16 }], [29.4, { ry: .35 }, GLIDE],
   [31.75, { x: 1640, y: 900, s: .5, d: 120, rz: .4 }, FLY],
@@ -54,7 +54,7 @@ const PAIR = K([[0, { x: 960, y: 400, s: 1.3, d: 260, rx: 0, ry: 0, rz: 0, w: 1 
 const BUDS_ON = [[4.32, 34.6], [36.1, 43.2]];
 const SWEEPS = [[4.6, 1.3], [6.0, 1.0], [8.4, 1.1], [17.2, 1.5], [22.1, 1.1], [27.3, 1.1], [37.1, 1.1], [40.6, 1.3]];
 // lime rim on the dark scenes, softer on paper
-const RIM = [[0, 0], [4.32, 3.2], [6.05, .5], [15.5, 3.6], [21.8, .5], [31.85, 3], [35.45, .5], [40.0, 3.6]];
+const RIM = [[0, 0], [4.32, 3.2], [6.05, .5], [15.32, 3.6], [21.8, .5], [31.85, 3], [35.45, .5], [40.0, 3.6]];
 
 const inAny = (t, L) => L.some(([a, b]) => t >= a && t < b);
 const mCase = new THREE.Matrix4(), mBud = new THREE.Matrix4(), pS = new THREE.Vector3(), qS = new THREE.Quaternion(), sS = new THREE.Vector3(), pF = new THREE.Vector3(), qF = new THREE.Quaternion(), sF = new THREE.Vector3();
