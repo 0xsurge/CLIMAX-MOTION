@@ -9,7 +9,8 @@
 #   python3 sweep_post.py in.mp4 out.mp4 [time offset of in.mp4]
 import sys, subprocess, numpy as np, cv2
 W, H, FPS = 1920, 1080, 30
-CUTS = [4.32, 15.32, 40.0]
+import os
+CUTS = [float(x) for x in os.environ.get('CUTS', '4.32,15.32,40.0').split(',')]
 RISE, SETTLE = 1.4, 1.6
 ramp = np.array([[.03, .16, .02], [.10, .40, .02], [.36, .80, .02], [.62, .95, .18], [.88, 1.0, .55], [1.0, 1.0, .93]], np.float32)
 def gmap(L):

@@ -1,0 +1,219 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>oraimo SpaceBuds Neo+: storyboard B</title>
+<!-- Storyboard B (approved): one loud day in the city made quiet by one case, built on the structure of the user's fridge
+     reference. 1920x1080, 46 s, pure function of t. One flat camera travels a canvas of twelve places (camMove whips, tilts
+     and a dive); real photography carries the day; the 3D case and buds (film5/neo3d.js) carry the product; the fridge-style
+     luma sweep (sweep_post.py, applied to the finished frames) carries the two biggest turns: buds in (6.0 s) and into the
+     game (26.0 s). White UI tags pin facts to things; one stat card at a time; lime glass drops are the recurring motif. -->
+<style>
+@font-face{font-family:D;font-weight:500;src:url(../../assets/InterDisplay-Medium.otf)}
+@font-face{font-family:D;font-weight:700;src:url(../../assets/InterDisplay-SemiBold.otf)}
+@font-face{font-family:D;font-weight:900;src:url(../../assets/InterDisplay-Bold.otf)}
+*{box-sizing:border-box;margin:0}
+html,body{background:#0A0C0B;overflow:hidden}
+#stage{position:relative;width:1920px;height:1080px;overflow:hidden;background:#0A0C0B;font-family:D,sans-serif;color:#111318}
+#view{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:hidden}
+#cam{position:absolute;left:0;top:0;width:1px;height:1px;transform-origin:0 0}
+.cell{position:absolute;width:2400px;height:1500px;overflow:hidden}
+.cell.photo::after{content:"";position:absolute;left:0;right:0;bottom:0;height:640px;background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.55));z-index:1}
+.cell>img.bg{z-index:0;position:absolute;left:0;top:0;width:2400px;height:1500px;object-fit:cover;transform-origin:50% 50%}
+.pl{position:absolute;left:240px;top:210px;width:1920px;height:1080px;z-index:2}
+.abs{position:absolute}.w{display:inline-block}.lime{color:#82E600}.mute{color:#5A6068}.wht{color:#fff}
+.disp{font:700 104px/1.02 D;letter-spacing:-.035em}.sup{font:700 56px/1.12 D;letter-spacing:-.02em}.lab{font:700 40px/1.2 D;letter-spacing:-.01em}
+.dot{display:inline-block;width:.42em;height:.42em;border-radius:50%;background:#82E600;margin-right:.32em;vertical-align:.12em}
+.tag{position:absolute;display:flex;align-items:center;gap:14px;padding:16px 24px 16px 18px;border-radius:22px;background:rgba(255,255,255,.94);box-shadow:0 20px 50px rgba(0,0,0,.25);font:700 38px/1 D;color:#111318;white-space:nowrap;transform-origin:0 50%}
+.tag .ic{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.card{position:absolute;background:#fff;border-radius:34px;box-shadow:0 40px 100px rgba(17,19,24,.22)}
+.pill{display:inline-block;vertical-align:middle;border-radius:999px;overflow:hidden;margin:0 .12em;box-shadow:0 10px 30px rgba(17,19,24,.18);position:relative;height:.9em}
+.pill img{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover}
+.world{background:radial-gradient(120% 90% at 70% 40%,#FFFFFF 0,#F1F6E8 45%,#DDEFC4 100%)}
+.ph{position:absolute;border-radius:28px;overflow:hidden;box-shadow:0 30px 80px rgba(17,19,24,.3);transform-origin:50% 50%}.ph img{width:100%;height:100%;object-fit:cover;display:block}
+</style>
+<div id="stage">
+<svg width="0" height="0" style="position:absolute"><defs>
+  <filter id="mb" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB"><feGaussianBlur id="mbg" stdDeviation="0 0"/></filter>
+  <filter id="gl" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="9"/></filter></defs></svg>
+<div id="view"><div id="cam">
+  <!-- P0 white: the living slot -->
+  <div class="cell world" id="C0"><div class="pl">
+    <div class="abs disp" id="t0" style="left:150px;top:420px;width:1100px"><span class="w">Your</span> <span class="w">day</span> <span class="w">is</span><br><span class="w lime">loud.</span> <span class="pill" id="slot" style="width:0px"><img src="../../assets/people/run.jpg"><img src="../../assets/city/call.jpg"><img src="../../assets/city/gamer.jpg"><img src="../../assets/people/bus.jpg"><img src="../../assets/city/alapere.jpg"></span></div>
+  </div></div>
+  <!-- P1 Lagos, loud -->
+  <div class="cell photo" id="C1"><img class="bg" src="../../assets/city/alapere.jpg" style="object-position:50% 55%"><div class="pl">
+    <div class="tag" id="tg1" style="left:330px;top:470px"><span class="ic" style="background:#FFE8E6"><svg width="30" height="30" viewBox="0 0 30 30"><path id="nz1" fill="none" stroke="#FF453A" stroke-width="3.2" stroke-linejoin="round"/></svg></span><span id="tg1t">82 dB</span></div>
+    <div class="tag" id="tg2" style="left:1180px;top:640px"><span class="ic" style="background:#FFE8E6"><svg width="30" height="30" viewBox="0 0 30 30"><path id="nz2" fill="none" stroke="#FF453A" stroke-width="3.2" stroke-linejoin="round"/></svg></span><span id="tg2t">76 dB</span></div>
+    <div class="tag" id="tg3" style="left:820px;top:250px"><span class="ic" style="background:#FFE8E6"><svg width="30" height="30" viewBox="0 0 30 30"><path id="nz3" fill="none" stroke="#FF453A" stroke-width="3.2" stroke-linejoin="round"/></svg></span><span id="tg3t">88 dB</span></div>
+    <div class="abs sup wht" id="t1" style="left:120px;top:860px;text-shadow:0 4px 30px rgba(0,0,0,.6)"><span class="w">Traffic.</span> <span class="w">Crowds.</span> <span class="w">All</span> <span class="w">at</span> <span class="w">once.</span></div>
+  </div></div>
+  <!-- P2 the brand world: quiet; the ANC card -->
+  <div class="cell world" id="C2"><div class="pl">
+    <div class="abs disp" id="t2" style="left:140px;top:330px"><span class="w">One</span> <span class="w">touch.</span><br><span class="w lime">Quiet.</span></div>
+    <div class="card" id="anc" style="left:150px;top:640px;width:760px;height:250px;padding:40px 44px">
+      <div class="lab" style="font-size:44px">Hybrid ANC</div><div class="mute" style="font:500 34px/1.3 D;margin-top:10px">Wherever you are.</div>
+      <div class="abs" style="left:560px;top:84px;width:150px;height:82px;border-radius:41px;background:#D9DCD6;overflow:hidden"><div class="abs" id="ancFill" style="left:0;top:0;width:150px;height:82px;background:linear-gradient(90deg,#B6FF4D,#82E600)"></div><div class="abs" id="ancKnob" style="left:6px;top:6px;width:70px;height:70px;border-radius:50%;background:#fff;box-shadow:0 4px 10px rgba(0,0,0,.2)"></div></div></div>
+  </div></div>
+  <!-- P3 a walk: Sound360 -->
+  <div class="cell photo" id="C3"><img class="bg" src="../../assets/city/crosswalk.jpg" style="object-position:50% 40%"><div class="pl">
+    <svg class="abs" id="rng" style="left:0;top:0;overflow:visible" width="1920" height="1080"></svg>
+    <div class="tag" id="tg5" style="left:120px;top:110px"><span class="ic" style="background:#EAF7D6"><svg width="30" height="30" viewBox="0 0 30 30"><circle cx="15" cy="15" r="5" fill="#82E600"/><circle cx="15" cy="15" r="11" fill="none" stroke="#82E600" stroke-width="2.6"/></svg></span>Sound360 spatial audio</div>
+    <div class="abs disp wht" id="t3" style="left:120px;top:800px;text-shadow:0 6px 40px rgba(0,0,0,.55)"><span class="w">All</span> <span class="w">around</span> <span class="w lime">you.</span></div>
+  </div></div>
+  <!-- P4 thirty hours: two moments joined by a line -->
+  <div class="cell world" id="C4"><div class="pl">
+    <div class="ph" id="ph4a" style="left:120px;top:300px;width:420px;height:520px"><img src="../../assets/people/sky.jpg"></div>
+    <div class="ph" id="ph4b" style="left:1380px;top:300px;width:420px;height:520px"><img src="../../assets/city/rain.jpg"></div>
+    <svg class="abs" style="left:0;top:0;overflow:visible" width="1920" height="1080"><path id="ln4" d="M540 560 C 800 560, 1120 560, 1380 560" fill="none" stroke="#82E600" stroke-width="8" stroke-linecap="round"/><path id="ln4g" d="M540 560 C 800 560, 1120 560, 1380 560" fill="none" stroke="#82E600" stroke-width="22" stroke-linecap="round" filter="url(#gl)" opacity=".45"/></svg>
+    <div class="abs lab mute" id="t4a" style="left:120px;top:850px"><span class="w">First</span> <span class="w">stop</span></div><div class="abs lab mute" id="t4b" style="left:1380px;top:850px"><span class="w">Last</span> <span class="w">stop</span></div>
+    <div class="abs" id="n30" style="left:0;width:1920px;text-align:center;top:90px;font:900 190px/1 D;letter-spacing:-.05em"><span id="n30v">0</span><span class="lime" style="font-size:.6em">&thinsp;h</span></div>
+  </div></div>
+  <!-- P5 a call -->
+  <div class="cell" id="C5"><img class="bg" src="../../assets/city/call.jpg" style="object-position:40% 50%"><div class="pl">
+    <div class="card" id="vc" style="left:1050px;top:300px;width:740px;height:360px;padding:36px 40px">
+      <div class="lab">Voice, not wind</div>
+      <svg class="abs" style="left:40px;top:120px" width="660" height="150"><path id="vcN" fill="none" stroke="#C8CCC4" stroke-width="5" stroke-linejoin="round"/><path id="vcV" fill="none" stroke="#82E600" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/></svg>
+      <div class="abs" style="left:40px;top:282px;display:flex;gap:14px"><span class="tag" id="mc1" style="position:static;box-shadow:none;background:#111318;color:#fff;font-size:30px;padding:12px 20px"><span class="dot"></span>Mic 1</span><span class="tag" id="mc2" style="position:static;box-shadow:none;background:#111318;color:#fff;font-size:30px;padding:12px 20px"><span class="dot"></span>Mic 2</span></div></div>
+    <div class="abs sup wht" id="t5" style="left:120px;top:110px;text-shadow:0 4px 30px rgba(0,0,0,.55)"><span class="w">Two</span> <span class="w">mics.</span> <span class="w">Every</span> <span class="w">call</span> <span class="w lime">clear.</span></div>
+  </div></div>
+  <!-- P6 a gamer -->
+  <div class="cell" id="C6" style="background:#F2F2F0"><img class="bg" src="../../assets/city/gamer.jpg" style="object-position:50% 45%"><div class="pl">
+    <div class="tag" id="tg6" style="left:1240px;top:330px"><span class="ic" style="background:#EAF7D6"><svg width="30" height="30" viewBox="0 0 30 30"><rect x="3" y="9" width="24" height="13" rx="6.5" fill="none" stroke="#2FA800" stroke-width="2.6"/><circle cx="20" cy="15.5" r="2.2" fill="#2FA800"/><path d="M9 12v7M5.5 15.5h7" stroke="#2FA800" stroke-width="2.6"/></svg></span>Game mode</div>
+  </div></div>
+  <!-- P7 the game on the phone -->
+  <div class="cell" id="C7" style="background:#050607"><div class="pl">
+    <div class="abs" id="gph" style="left:510px;top:300px;width:900px;height:440px;border-radius:64px;background:linear-gradient(135deg,#3a3c40,#16171a 40%,#2a2c30);box-shadow:0 50px 120px rgba(0,0,0,.6)">
+      <div class="abs" style="left:12px;top:12px;width:876px;height:416px;border-radius:54px;overflow:hidden"><img src="../../assets/neo/game_screen.jpg" style="width:876px;height:416px;object-fit:cover;display:block"></div></div>
+    <div class="tag" id="tg7" style="left:1250px;top:220px"><span class="ic" style="background:#EAF7D6"><svg width="30" height="30" viewBox="0 0 30 30"><path d="M4 15h6l3-8 4 16 3-8h6" fill="none" stroke="#2FA800" stroke-width="2.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span>Low latency</div>
+    <div class="abs sup wht" id="t7" style="left:0;width:1920px;text-align:center;top:820px"><span class="w">Every</span> <span class="w">sound</span> <span class="w lime">on</span> <span class="w lime">time.</span></div>
+  </div></div>
+  <!-- P8 rain -->
+  <div class="cell photo" id="C8"><img class="bg" src="../../assets/city/rain.jpg" style="object-position:60% 50%"><div class="pl">
+    <div class="tag" id="tg8" style="left:120px;top:110px"><span class="ic" style="background:#EAF7D6"><svg width="30" height="30" viewBox="0 0 30 30"><path d="M15 4c5 7 8 10.5 8 14a8 8 0 0 1-16 0c0-3.5 3-7 8-14z" fill="#82E600"/></svg></span>IPX4</div>
+    <div class="abs disp wht" id="t8" style="left:120px;top:780px;text-shadow:0 6px 40px rgba(0,0,0,.6)"><span class="w">Sweat.</span> <span class="w">Rain.</span><br><span class="w lime">Every</span> <span class="w lime">day.</span></div>
+  </div></div>
+  <!-- P9 the whole day, in one case -->
+  <div class="cell world" id="C9"><div class="pl">
+    <div id="col" class="abs" style="left:0;top:0;width:1920px;height:1080px"></div>
+    <div class="abs sup" id="t9" style="left:0;width:1920px;text-align:center;top:120px"><span class="w">Your</span> <span class="w">whole</span> <span class="w">day,</span> <span class="w lime">in</span> <span class="w lime">one</span> <span class="w lime">case.</span></div>
+  </div></div>
+  <!-- P10 connected -->
+  <div class="cell" id="C10"><img class="bg" src="../../assets/city/curly.jpg" style="object-position:50% 35%;filter:blur(18px) brightness(.8)"><div class="pl">
+    <div class="abs" id="ph10" style="left:1180px;top:110px;width:420px;height:860px;border-radius:62px;background:linear-gradient(135deg,#3a3c40,#16171a 40%,#2a2c30);box-shadow:0 50px 120px rgba(0,0,0,.45)">
+      <div class="abs" style="left:11px;top:11px;width:398px;height:838px;border-radius:52px;overflow:hidden;background:#F2F2F7;font-family:D,sans-serif">
+        <div class="abs" style="left:44px;top:20px;font:700 17px/1 D">16:34</div><div class="abs" style="left:159px;top:14px;width:80px;height:26px;border-radius:13px;background:#000"></div>
+        <div class="abs" style="left:0;width:398px;text-align:center;top:64px;font:700 19px/1 D">Bluetooth</div><div class="abs" style="left:14px;top:64px;font:500 18px/1 D;color:#007AFF">&#8249; Settings</div>
+        <div class="abs" style="left:16px;top:112px;width:366px;height:50px;border-radius:12px;background:#fff;display:flex;align-items:center;padding:0 14px;font:500 17px/1 D">Bluetooth<span style="margin-left:auto;width:52px;height:31px;border-radius:16px;background:#34C759;position:relative"><span style="position:absolute;right:2px;top:2px;width:27px;height:27px;border-radius:50%;background:#fff"></span></span></div>
+        <div class="abs" style="left:30px;top:186px;font:500 13px/1 D;color:#6C6C70">MY DEVICES</div>
+        <div class="abs" id="r10" style="left:16px;top:206px;width:366px;height:54px;border-radius:12px;background:#fff;display:flex;align-items:center;padding:0 14px;font:500 17px/1 D">oraimo SpaceBuds Neo+<span id="r10s" style="margin-left:auto;color:#8E8E93;font-size:15px">Not Connected</span></div></div></div>
+    <div class="abs disp wht" id="t10" style="left:120px;top:380px;text-shadow:0 6px 40px rgba(0,0,0,.4)"><span class="w">Open</span> <span class="w">it.</span><br><span class="w lime">Connected.</span></div>
+  </div></div>
+  <!-- P11 logo -->
+  <div class="cell" id="C11" style="background:radial-gradient(90% 80% at 50% 115%,#B6FF4D 0,#82E600 22%,#1E3A06 58%,#060807 100%)"><div class="pl">
+    <img id="logo" src="../../assets/logo_lime.png" class="abs" style="left:610px;top:350px;width:700px;transform-origin:350px 89px">
+    <div class="abs sup wht" id="t11a" style="left:0;width:1920px;text-align:center;top:600px"><span class="w">SpaceBuds</span> <span class="w">Neo+</span></div>
+    <div class="abs lab lime" id="t11b" style="left:0;width:1920px;text-align:center;top:690px;font-size:44px"><span class="w">Beyond</span> <span class="w">the</span> <span class="w">noise.</span></div>
+  </div></div>
+</div></div>
+<div id="ov" class="abs" style="left:0;top:0;width:1920px;height:1080px"><div id="gl3" class="abs" style="left:0;top:0;width:1920px;height:1080px"></div></div>
+</div>
+<script type="importmap">{ "imports": { "three": "../../../../.claude/skills/motion-reel/engine/lib/three/three.module.js", "three/addons/": "../../../../.claude/skills/motion-reel/engine/lib/three/addons/" } }</script>
+<script src="../../../moniepoint/assets/motion.js"></script>
+<script>
+const M = window.Motion, S = (t, p) => M.spring(t, p), clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x)), lerp = (a, b, u) => a + (b - a) * u;
+const sm = x => { x = clamp(x); return x * x * (3 - 2 * x); };
+const $ = id => document.getElementById(id), cam = $('cam');
+window.FILM_DUR = 46;
+const WORD = { k: 320, c: 36 }, PANEL = { k: 170, c: 26 }, POPS = { k: 420, c: 41 }, SOFT = { k: 70, c: 16.8 }, FLY = { k: 140, c: 23.7 }, GLIDE = { k: 46, c: 13.6 };
+// ---- places: twelve cells of 2400 x 1500 on one canvas; each place is the 1920 x 1080 frame in the middle of its cell ----
+const GRID = [[0, 0], [1, 0], [2, 0], [2, 1], [3, 1], [3, 2], [4, 2], [5, 2], [5, 1], [6, 1], [7, 1], [7, 0]];
+const PX = i => GRID[i][0] * 2400 + 1200, PY = i => GRID[i][1] * 1500 + 750;          // place centres in world px
+const W = (i, lx, ly) => [PX(i) + lx - 960, PY(i) + ly - 540];
+// ---- camera (camera-style camMove): whips tau .1, the pill dive, two cuts hidden inside the luma sweeps ----
+const camMove = (t, tc, tau) => t < tc ? 0.5 * Math.exp((t - tc) / tau) : 1 - 0.5 * Math.exp(-(t - tc) / tau);
+let SLOT = [0, 0];
+const CK = () => { const c = (i, lx = 960, ly = 540) => W(i, lx, ly); return [
+  { t: 0, p: c(0), z: 1.08 }, { t: 1.0, z: 1.0, tau: .6 },
+  { t: 2.25, p: SLOT, z: 9, tau: .12 }, { t: 2.55, p: c(1), z: 1.18, tau: .001 }, { t: 3.4, z: 1.04, tau: .9 },
+  { t: 6.0, p: c(2), z: 1.1, tau: .001 }, { t: 6.8, z: 1.0, tau: .7 }, { t: 9.0, z: 1.04, tau: .9 },
+  { t: 12.0, p: c(3), z: 1.0, tau: .1 }, { t: 14.0, z: 1.06, tau: 1.2 },
+  { t: 16.0, p: c(4), z: 1.0, tau: .1 }, { t: 18.3, z: 1.08, tau: .04 }, { t: 18.45, z: 1.0, tau: .15 },
+  { t: 20.0, p: c(5), tau: .11 }, { t: 22.0, z: 1.05, tau: 1.0 },
+  { t: 24.0, p: c(6), z: 1.0, tau: .1 }, { t: 25.4, z: 1.12, tau: .5 },
+  { t: 26.0, p: c(7), z: 1.15, tau: .001 }, { t: 26.6, z: 1.0, tau: .6 },
+  { t: 28.0, p: c(8), tau: .11 }, { t: 30.0, z: 1.06, tau: 1.0 },
+  { t: 32.0, p: c(9), z: .9, tau: .12 }, { t: 32.8, z: 1.0, tau: .5 },
+  { t: 36.0, p: c(10), z: 1.0, tau: .1 }, { t: 38.3, z: 1.07, tau: .04 }, { t: 38.45, z: 1.0, tau: .15 },
+  { t: 40.6, p: c(11), z: 1.0, tau: .12 }, { t: 42.8, z: 1.1, tau: 1.6 }]; };
+let CKS = null, CAM = [0, 0, 1];
+const camAxis = (t, f) => { let v = null, prev = null; for (const k of CKS) { const val = f(k); if (val === undefined) continue; if (v === null) { v = val; prev = val; continue; } v += (val - prev) * camMove(t, k.t, k.tau); prev = val; } return v; };
+const camAt = t => [camAxis(t, k => k.p ? k.p[0] : undefined) + 5 * Math.sin(t * .41), camAxis(t, k => k.p ? k.p[1] : undefined) + 4 * Math.sin(t * .33 + 1), camAxis(t, k => k.z) * (1 + .004 * Math.sin(t * .5))];
+const w2s = (wx, wy) => [960 + (wx - CAM[0]) * CAM[2], 540 + (wy - CAM[1]) * CAM[2]];
+window.NEO = { w2s, W, cam: () => CAM };
+// ---- type: word by word from blur (launch-style 2); each block has its own in and out ----
+const words = (id, t0, st, out) => { const ws = [...$(id).querySelectorAll('.w')]; return t => ws.forEach((w, i) => { const s = S(t - (t0 + i * st), WORD), ex = out ? S(t - out - i * .025, WORD) : 0;
+  w.style.opacity = sm(s * 1.25) * (1 - sm(ex * 1.3)); w.style.filter = (s < .98 || ex > .02) ? `blur(${((1 - clamp(s)) * 12 + ex * 12).toFixed(1)}px)` : ''; w.style.transform = `translateY(${((1 - s) * 34 - ex * 30).toFixed(1)}px)`; }); };
+const WS = [words('t0', .05, .12, 2.3), words('t1', 2.75, .14, 5.75), words('t2', 6.35, .16, 11.75), words('t3', 13.0, .18, 15.75), words('t4a', 16.6, .1, 19.75), words('t4b', 17.2, .1, 19.75),
+  words('t5', 20.6, .14, 23.75), words('t7', 26.8, .14, 27.75), words('t8', 28.6, .16, 31.75), words('t9', 32.5, .12, 35.75), words('t10', 36.4, .14, 40.3), words('t11a', 41.9, .15), words('t11b', 42.4, .12)];
+// tags and cards: spring in from blur with a little scale; out before the camera leaves
+const pop = (id, t0, out) => t => { const el = $(id), s = S(t - t0, PANEL), ex = out ? S(t - out, PANEL) : 0; el.style.opacity = (clamp(s * 1.6) * (1 - sm(ex * 1.3))).toFixed(3);
+  el.style.transform = `translateY(${((1 - s) * 40 - ex * 30).toFixed(1)}px) scale(${(.86 + .14 * s).toFixed(3)})`; el.style.filter = s < .98 || ex > .02 ? `blur(${((1 - clamp(s)) * 14 + ex * 12).toFixed(1)}px)` : ''; };
+const PS = [pop('tg1', 3.0, 0), pop('tg2', 3.35, 0), pop('tg3', 3.7, 0), pop('anc', 9.0, 11.8), pop('tg5', 12.5, 15.8), pop('vc', 20.4, 23.8), pop('tg6', 24.4, 25.9), pop('tg7', 26.5, 27.85), pop('tg8', 28.4, 31.8)];
+// a carrier: keys [t, {values}, spring | 'cut']; one spring per change, each from its own time
+const K = keys => t => { const st = { ...keys[0][1] }; for (let i = 1; i < keys.length; i++) { const [ti, v, sp] = keys[i], pv = {}; for (let j = i - 1; j >= 0; j--) Object.keys(v).forEach(k => { if (pv[k] === undefined && keys[j][1][k] !== undefined) pv[k] = keys[j][1][k]; });
+  const u = sp === 'cut' ? (t >= ti ? 1 : 0) : S(t - ti, sp); Object.keys(v).forEach(k => { st[k] = (st[k] === undefined ? v[k] : st[k]) + (v[k] - (pv[k] === undefined ? v[k] : pv[k])) * u; }); } return st; };
+const qn = (i, k, t, r = 12) => { const v = Math.sin(i * 12.9898 + k * 78.233 + Math.floor(t * r) * 3.1) * 43758.5453; return v - Math.floor(v); };
+const rel = (el, anc) => { let x = 0, y = 0; while (el && el !== anc) { x += el.offsetLeft; y += el.offsetTop; el = el.offsetParent; } return [x, y]; };
+const SLOTIMG = ['people/run.jpg', 'city/call.jpg', 'city/gamer.jpg', 'people/bus.jpg', 'city/alapere.jpg'];
+const NS = 'http://www.w3.org/2000/svg', mk = (tag, parent, attrs) => { const e = document.createElementNS(NS, tag); Object.entries(attrs).forEach(([k, v]) => e.setAttribute(k, v)); parent.appendChild(e); return e; };
+const RINGS = Array.from({ length: 5 }, (_, i) => mk('ellipse', $('rng'), { fill: 'none', stroke: '#B6FF4D', 'stroke-width': 4 }));
+const COL = ['city/alapere.jpg', 'people/city.jpg', 'city/crosswalk.jpg', 'people/sky.jpg', 'city/call.jpg', 'city/gamer.jpg', 'city/rain.jpg', 'people/smile.jpg', 'people/closed.jpg', 'city/idumota.jpg'];
+const COLS = COL.map((src, i) => { const d = document.createElement('div'); d.className = 'ph'; d.style.width = '300px'; d.style.height = '360px'; d.innerHTML = `<img src="../../assets/${src}">`; $('col').appendChild(d); return d; });
+const gnd = document.createElement('canvas');
+function init() { $('slot').style.width = '200px';
+  GRID.forEach((g, i) => { const c = $('C' + i); c.style.left = (g[0] * 2400) + 'px'; c.style.top = (g[1] * 1500) + 'px'; });
+  // the slot sits in the C0 cell; its world position = cell origin + offsets
+  const [cx, cy] = rel($('slot'), $('C0')); SLOT = [cx + 100, cy + 46]; CKS = CK(); }
+window.seek = t => {
+  if (!CKS) init();
+  const [cx, cy, z] = camAt(t), [px, py, pz] = camAt(t - 1 / 30); CAM = [cx, cy, z];
+  cam.style.transform = `translate(960px,540px) scale(${z.toFixed(5)}) translate(${(-cx).toFixed(2)}px,${(-cy).toFixed(2)}px)`;
+  const jump = Math.abs(cx - px) > 600 || Math.abs(z - pz) > 1.5, bx = jump ? 0 : clamp((Math.abs(cx - px) * z - 10) * .25, 0, 40), by = jump ? 0 : clamp((Math.abs(cy - py) * z - 10) * .25, 0, 40), bz = jump ? 0 : clamp((Math.abs(z - pz) / z * 30 - .4) * 3, 0, 10);
+  $('mbg').setAttribute('stdDeviation', `${(bx + bz).toFixed(1)} ${(by + bz).toFixed(1)}`); $('view').style.filter = bx + by + bz > .4 ? 'url(#mb)' : '';
+  const on = (a, b) => t >= a && t < b;
+  WS.forEach(f => f(t)); PS.forEach(f => f(t));
+  // photos breathe: each place's photo pushes in slowly from its own arrival
+  [[1, 2.5], [3, 11.7], [5, 19.7], [6, 23.7], [8, 27.7], [10, 35.7]].forEach(([i, t0]) => { const img = $('C' + i).querySelector('img.bg'); img.style.transform = `scale(${(1.0 + .05 * clamp((t - t0) / 5)).toFixed(4)})`; });
+  // P0: the living slot opens in the sentence and flips through real photos every 4 frames, then holds on Lagos for the dive
+  { const s = S(t - .55, POPS); $('slot').style.width = (200 * clamp(s)).toFixed(1) + 'px'; const k = t < 1.9 ? Math.floor(t * 7.5) % (SLOTIMG.length - 1) : SLOTIMG.length - 1;
+    [...$('slot').children].forEach((im, j) => im.style.display = j === k ? '' : 'none'); }
+  // P1: noise meters jitter red; under the sweep (5.6 s) they read Quiet in lime
+  [['nz1', 1], ['nz2', 2], ['nz3', 3]].forEach(([id, k], j) => { const q = t >= 5.55, el = $(id); let d = ''; for (let n = 0; n <= 8; n++) d += (n ? 'L' : 'M') + (3 + n * 3).toFixed(1) + ' ' + (15 + (q ? 0 : (n % 2 ? 1 : -1) * (3 + 7 * qn(k, n, t)))).toFixed(1);
+    el.setAttribute('d', d); el.setAttribute('stroke', q ? '#2FA800' : '#FF453A'); el.parentNode.parentNode.style.background = q ? '#EAF7D6' : '#FFE8E6'; $(`tg${j + 1}t`).textContent = q ? 'Quiet' : ['82 dB', '76 dB', '88 dB'][j]; });
+  // P2: the ANC toggle is pressed
+  { const f = sm((t - 9.7) / .35), kk = S(t - 9.65, { k: 160, c: 25.3 }); $('ancFill').style.clipPath = `inset(0 ${((1 - f) * 100).toFixed(1)}% 0 0)`; $('ancKnob').style.left = (6 + 68 * kk).toFixed(1) + 'px'; }
+  // P3: lime rings ripple out from the listener's head, across the street
+  RINGS.forEach((r, i) => { const ph = ((t - 12.3) * .55 + i / 5) % 1, a = t > 12.3 ? (1 - ph) * sm((t - 12.3) / .5) : 0; r.setAttribute('cx', 960); r.setAttribute('cy', 330); r.setAttribute('rx', (60 + ph * 900).toFixed(1)); r.setAttribute('ry', (24 + ph * 330).toFixed(1)); r.style.opacity = (a * .9).toFixed(3); });
+  // P4: the line draws between the two moments; the counter runs to 30
+  { const p = sm((t - 16.6) / 1.4); ['ln4', 'ln4g'].forEach(id => { const e = $(id); e.style.strokeDasharray = '900 900'; e.style.strokeDashoffset = (900 * (1 - p)).toFixed(1); });
+    $('n30v').textContent = Math.round(30 * sm((t - 16.8) / 1.5)); const s = S(t - 16.4, WORD), ex = S(t - 19.7, WORD); $('n30').style.opacity = sm(s * 1.25) * (1 - sm(ex * 1.3)); $('n30').style.filter = s < .98 || ex > .02 ? `blur(${((1 - s) * 14 + ex * 14).toFixed(1)}px)` : ''; $('n30').style.transform = `translateY(${((1 - s) * 40).toFixed(1)}px)`;
+    [['ph4a', 16.3, -1], ['ph4b', 16.5, 1]].forEach(([id, t0, sd]) => { const s2 = S(t - t0, SOFT); $(id).style.transform = `translateX(${(sd * (1 - s2) * 220).toFixed(1)}px) rotate(${(sd * (1 - s2) * 8 + sd * 2).toFixed(2)}deg) translateY(${(6 * Math.sin(t * 1.1 + sd)).toFixed(1)}px)`; $(id).style.opacity = clamp(s2 * 1.5); }); }
+  // P5: the wind line falls away, the voice line stays; the mics light in turn
+  { let dn = '', dv = ''; const calm = sm((t - 21.2) / 1.0); for (let n = 0; n <= 44; n++) { const x = n * 15; dn += (n ? 'L' : 'M') + x + ' ' + (75 + (1 - calm) * (n % 2 ? 1 : -1) * (14 + 40 * qn(5, n, t))).toFixed(1); dv += (n ? 'L' : 'M') + x + ' ' + (75 + 34 * Math.sin(n * .45 + t * 5) * Math.sin(n * .07 + 1)).toFixed(1); }
+    $('vcN').setAttribute('d', dn); $('vcN').style.opacity = 1 - calm * .85; $('vcV').setAttribute('d', dv);
+    [['mc1', 21.4, 22.6], ['mc2', 22.6, 23.7]].forEach(([id, a, b]) => { const g = on(a, b) ? sm((t - a) / .2) * (1 - sm((t - b + .2) / .2)) : 0; $(id).style.boxShadow = `0 0 0 ${(4 * g).toFixed(1)}px #82E600, 0 0 ${(30 * g).toFixed(0)}px rgba(130,230,0,${(.8 * g).toFixed(2)})`; }); }
+  // P7: the phone lands
+  { const s = S(t - 26.05, SOFT); $('gph').style.transform = `translateY(${((1 - s) * 60 + 5 * Math.sin(t * 1.3)).toFixed(1)}px) scale(${(.94 + .06 * s).toFixed(4)})`; }
+  // P9: every photo of the day flies in from around the frame and converges into the case (which closes on them)
+  COLS.forEach((d, i) => { const a = i / COLS.length * Math.PI * 2 + .4, R0 = 1300, R1 = 420 + 60 * (i % 3), inS = S(t - 32.2 - i * .05, SOFT), cv = S(t - 34.2 - i * .03, { k: 90, c: 16 });
+    const R = lerp(lerp(R0, R1, inS), 0, cv), x = 960 + Math.cos(a + t * .2) * R, y = 600 + Math.sin(a + t * .2) * R * .55, sc = lerp(1, .1, cv) * (.8 + .2 * Math.sin(a + t * .2));
+    d.style.left = (x - 150).toFixed(1) + 'px'; d.style.top = (y - 180).toFixed(1) + 'px'; d.style.transform = `rotate(${(Math.sin(a) * 10 * (1 - cv)).toFixed(2)}deg) scale(${sc.toFixed(3)})`; d.style.opacity = (clamp(inS * 2) * (1 - sm((cv - .7) / .3))).toFixed(3); d.style.display = on(32, 36) ? '' : 'none'; });
+  // P10: the phone connects on the tap
+  { const s = S(t - 36.2, SOFT); $('ph10').style.transform = `translateY(${((1 - s) * 200 + 5 * Math.sin(t * 1.2)).toFixed(1)}px)`; $('ph10').style.opacity = clamp(s * 1.5);
+    const cn = t >= 38.3, p = S(t - 38.3, POPS), st = $('r10s'); st.textContent = cn ? 'Connected' : 'Not Connected'; st.style.color = cn ? '#248A3D' : '#8E8E93'; st.style.fontWeight = cn ? '700' : '500'; st.style.display = 'inline-block'; st.style.transform = cn ? `scale(${(.7 + .3 * p).toFixed(3)})` : '';
+    $('r10').style.boxShadow = cn ? `0 0 0 ${(3 * sm((t - 38.3) / .3)).toFixed(1)}px #82E600` : ''; }
+  // P11: the logo
+  { const lg = S(t - 41.1, SOFT); $('logo').style.opacity = clamp(lg * 1.6); $('logo').style.filter = lg < .98 ? `blur(${((1 - lg) * 14).toFixed(1)}px)` : ''; $('logo').style.transform = `scale(${(.4 + .6 * lg + .02 * clamp((t - 44) / 2)).toFixed(4)})`; }
+};
+Promise.all([...document.images].map(i => i.decode().catch(() => {})).concat([document.fonts.load("900 80px D"), document.fonts.load("700 80px D"), document.fonts.load("500 80px D")])).then(() => { window.__domOK = true; });
+</script>
+<script type="module" src="neo3d.js"></script>
