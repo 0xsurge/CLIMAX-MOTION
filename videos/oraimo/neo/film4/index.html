@@ -1,0 +1,269 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>oraimo SpaceBuds Neo+: Beyond the noise.</title>
+<!-- v4. 1920x1080, 46 s, pure function of t. One flat camera travels a big canvas of eleven places (climax-launch
+     B9 route: down, right, down, right, up, right, up, right, down, down) with camMove whips, tilts, dives and 4-frame
+     punch-ins, and the Lovable ad's zoom bursts. The 3D case and buds ride with the camera as the carrier of every
+     change. Grounds belong to the places, so they change by travel, never by a wipe. Dives into the case pill, the
+     ANC toggle and the check fill the frame with light, the camera cuts under it, and the light dims from the edges
+     into a glow pool in the next place. -->
+<style>
+@font-face{font-family:D;font-weight:500;src:url(../../assets/InterDisplay-Medium.otf)}
+@font-face{font-family:D;font-weight:700;src:url(../../assets/InterDisplay-SemiBold.otf)}
+@font-face{font-family:D;font-weight:900;src:url(../../assets/InterDisplay-Bold.otf)}
+*{box-sizing:border-box;margin:0}
+html,body{background:#F5F6F3;overflow:hidden}
+#stage{position:relative;width:1920px;height:1080px;overflow:hidden;background:#F5F6F3;font-family:D,sans-serif;color:#111318}
+#view{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:hidden}
+#cam{position:absolute;left:0;top:0;width:1px;height:1px;transform-origin:0 0}
+.L{position:absolute;left:0;top:0;width:1px;height:1px}
+.pl{position:absolute;width:1920px;height:1080px}
+#ov{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0}
+.abs{position:absolute}.w{display:inline-block}.lime{color:#82E600}.mute{color:#5A6068}.wide{text-transform:uppercase;white-space:nowrap}
+.pill{display:inline-flex;align-items:center;justify-content:center;vertical-align:middle;border-radius:999px;overflow:hidden;margin:0 .14em;box-shadow:0 10px 30px rgba(17,19,24,.14)}
+.im{position:absolute;transform-origin:50% 50%}
+.chip{position:absolute;font:700 30px/1 D;padding:16px 26px;border-radius:999px;white-space:nowrap;background:#111318;color:#fff}
+</style>
+<div id="stage">
+<svg width="0" height="0" style="position:absolute"><defs>
+  <linearGradient id="cg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E4FFA8"/><stop offset=".5" stop-color="#82E600"/><stop offset="1" stop-color="#2FA800"/></linearGradient>
+  <filter id="mb" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB"><feGaussianBlur id="mbg" stdDeviation="0 0"/></filter>
+  <filter id="gl" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="10"/></filter></defs></svg>
+<div id="view"><canvas id="gnd" width="1920" height="1080" class="abs" style="left:0;top:0"></canvas>
+<div id="cam">
+  <div class="L" id="world">
+    <div class="abs" id="b1a" style="left:-260px;top:620px;width:760px;height:760px;border-radius:50%;background:radial-gradient(closest-side,rgba(130,230,0,.34),rgba(130,230,0,0))"></div>
+    <div class="abs" id="b1b" style="left:1500px;top:-300px;width:760px;height:760px;border-radius:50%;background:radial-gradient(closest-side,rgba(190,196,206,.75),rgba(190,196,206,0))"></div>
+    <div class="abs" id="floor" style="left:-200px;top:700px;width:2320px;height:720px;border-radius:50%;background:radial-gradient(closest-side,rgba(130,230,0,.42),rgba(47,168,0,.18) 45%,rgba(130,230,0,0))"></div>
+    <!-- 1 the line -->
+    <div class="abs" id="s1" style="left:0;width:1920px;text-align:center;top:420px;font:700 86px/1.25 D;letter-spacing:-.03em">
+      <span class="w">The</span> <span class="w">world</span> <span class="w">is</span> <span class="pill" id="pnoise" style="height:84px;background:#111318"><svg width="130" height="50" viewBox="0 0 130 50"><path id="pnw" fill="none" stroke="#FF453A" stroke-width="5" stroke-linejoin="round"/></svg></span> <span class="w">loud.</span><br>
+      <span class="w mute">Your</span> <span class="w mute">space</span> <span class="pill" id="pcase" style="height:84px;background:#fff"><img src="../../assets/neo/case_only.png" style="height:74px"></span> <span class="w mute">doesn't</span> <span class="w mute">have</span> <span class="w mute">to</span> <span class="w mute">be.</span></div>
+    <div class="abs" id="bloom" style="left:0;top:0;width:1920px;height:1080px"></div>
+    <!-- 3 the wordmark stage (fully in frame) -->
+    <img id="word" src="../../assets/logo_lime.png" class="abs" style="left:140px;top:250px;width:1640px;transform-origin:820px 208px">
+    <div class="abs wide" id="name3" style="left:0;width:1920px;text-align:center;top:930px;font:700 34px/1 D;letter-spacing:.34em"><span class="w">SpaceBuds</span> <span class="w">Neo+</span></div>
+    <!-- 4 noise off -->
+    <svg class="abs" id="wv" style="left:0;top:0;overflow:visible" width="1920" height="1080"><path id="wL" fill="none" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/><path id="wRg" fill="none" stroke-width="18" filter="url(#gl)"/><path id="wR" fill="none" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/></svg>
+    <div class="abs" id="tg" style="left:740px;top:820px;width:440px;height:110px;border-radius:999px;background:#D9DCD6;overflow:hidden;box-shadow:0 20px 50px rgba(17,19,24,.12)">
+      <div class="abs" id="tgFill" style="left:0;top:0;width:440px;height:110px;background:linear-gradient(90deg,#E4FFA8,#82E600 60%,#2FA800)"></div>
+      <div class="abs" style="left:36px;top:33px;font:700 44px/1 D;color:#0B1A00">ANC</div>
+      <div class="abs" style="left:254px;top:20px;width:150px;height:70px;border-radius:999px;background:#fff"></div>
+      <div class="abs" id="tgKnob" style="left:262px;top:28px;width:54px;height:54px;border-radius:50%;background:#B9BDB5"></div></div>
+    <div class="abs" id="h4a" style="left:110px;top:150px;font:700 30px/1.3 D"><span class="w"><span class="lime">●</span> Active</span> <span class="w">Noise</span> <span class="w">Cancellation</span></div>
+    <div class="abs" id="h4b" style="left:110px;top:200px;font:700 76px/1.05 D;letter-spacing:-.035em"><span class="w">Less</span> <span class="w">noise.</span><br><span class="w mute">More</span> <span class="w mute">you.</span></div>
+    <!-- 5 / 6 rings: ring0 is the carrier that becomes the 30 h track -->
+    <svg class="abs" style="left:0;top:0;overflow:visible" width="1920" height="1080"><g id="rings" fill="none" stroke="#82E600"></g><g id="orbs"></g>
+      <circle id="arcG" fill="none" stroke="#82E600" stroke-width="40" filter="url(#gl)" opacity=".35"/><circle id="arc" fill="none" stroke="url(#cg)" stroke-width="22" stroke-linecap="round"/><g id="bars" stroke="#82E600" stroke-width="10" stroke-linecap="round"></g></svg>
+    <div class="abs wide" id="h5a" style="left:0;width:1920px;text-align:center;top:140px;font:700 34px/1 D;letter-spacing:.3em;color:#fff"><span class="w lime">Sound360</span> <span class="w">spatial</span> <span class="w">audio</span></div>
+    <div class="abs" id="h5b" style="left:0;width:1920px;text-align:center;top:850px;font:700 72px/1 D;letter-spacing:-.03em;color:#fff"><span class="w">Sound</span> <span class="w">that</span> <span class="w">surrounds</span> <span class="w">you.</span></div>
+    <div class="abs mute" id="h6a" style="left:130px;top:250px;font:500 40px/1 D"><span class="w">Up</span> <span class="w">to</span></div>
+    <div class="abs lime" id="n30" style="left:120px;top:300px;font:900 380px/.9 D;letter-spacing:-.06em"></div>
+    <div class="abs" id="h6b" style="left:136px;top:660px;font:700 64px/1.1 D;letter-spacing:-.02em"><span class="w">hours</span> <span class="w">of</span> <span class="w">play.</span></div>
+    <div class="abs mute" id="h6c" style="left:138px;top:760px;font:500 28px/1.4 D"><span class="w">5 h in the buds, 25 h more from the case (ANC off).</span></div>
+    <!-- 7 calls -->
+    <div class="chip" id="m1" style="left:720px;top:920px"><span class="lime">●</span> Mic 1</div><div class="chip" id="m2" style="left:1000px;top:920px"><span class="lime">●</span> Mic 2</div>
+    <div class="abs" id="h7" style="left:0;width:1920px;text-align:center;top:90px;font:700 72px/1 D;letter-spacing:-.03em"><span class="w">Clear</span> <span class="w">calls.</span> <span class="w mute">Every</span> <span class="w mute">time.</span></div>
+    <!-- 8 game -->
+    <div class="abs" id="game" style="left:-60px;top:110px;width:2040px;height:915px;transform-origin:995px 378px"><img src="../../assets/neo/game.jpg" style="width:2040px;display:block"></div>
+    <div class="abs" id="gshade" style="left:-60px;top:560px;width:2040px;height:560px;background:linear-gradient(180deg,rgba(5,6,7,0),rgba(5,6,7,.92))"></div>
+    <div class="abs wide" id="h8a" style="left:120px;top:880px;font:700 30px/1.3 D;letter-spacing:.3em;color:#fff"><span class="w"><span class="lime">●</span> Low-latency</span> <span class="w">game</span> <span class="w">mode</span></div>
+    <div class="abs" id="h8b" style="left:120px;top:930px;font:700 64px/1.1 D;letter-spacing:-.03em;color:#fff"><span class="w">Sound</span> <span class="w">in</span> <span class="w">perfect</span> <span class="w">sync.</span></div>
+    <!-- 9 connected -->
+    <div class="abs" id="phone" style="left:1120px;top:140px;width:520px;height:790px;border-radius:60px;overflow:hidden;box-shadow:0 50px 120px rgba(17,19,24,.35),0 0 0 10px #111318;transform-origin:50% 50%">
+      <img src="../../assets/neo/bt.jpg" style="width:520px;margin-top:-70px;display:block">
+      <div class="abs" id="pgame" style="left:-135px;top:135px;width:790px;height:520px;overflow:hidden;transform:rotate(90deg)"><img src="../../assets/neo/game.jpg" style="height:520px;position:absolute;left:-330px;top:0"></div>
+      <div class="abs" id="row" style="left:30px;top:235px;width:470px;height:38px;border-radius:12px;background:linear-gradient(90deg,#E4FFA8,#82E600);mix-blend-mode:multiply"></div></div>
+    <div class="abs" id="chk" style="left:1670px;top:372px;width:64px;height:64px;border-radius:50%;background:#82E600;box-shadow:0 0 30px rgba(130,230,0,.7)"><svg width="64" height="64" viewBox="0 0 64 64"><path id="chkP" d="M18 33 L28 43 L47 22" fill="none" stroke="#0B1A00" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="abs" id="h9a" style="left:130px;top:340px;font:700 30px/1.3 D"><span class="w"><span class="lime">●</span> Bluetooth</span> <span class="w">5.4</span></div>
+    <div class="abs" id="h9b" style="left:126px;top:400px;font:700 96px/1 D;letter-spacing:-.04em"><span class="w">Open</span> <span class="w">the</span> <span class="w">case.</span></div>
+    <div class="abs" id="h9c" style="left:126px;top:496px;font:700 96px/1 D;letter-spacing:-.04em"><span class="w lime">Connected.</span></div>
+    <div class="abs mute" id="h9d" style="left:130px;top:640px;font:500 30px/1.4 D"><span class="w">Built-in hall sensor: it connects the moment the lid opens.</span></div>
+    <!-- 10 / 11 -->
+    <div class="abs wide" id="h10" style="left:0;width:1920px;text-align:center;top:90px;font:700 32px/1 D;letter-spacing:.3em;color:#fff"><span class="w">IPX4</span> <span class="w lime">·</span> <span class="w">Metallic</span> <span class="w">finish</span> <span class="w lime">·</span> <span class="w">Touch</span> <span class="w">control</span></div>
+    <div class="abs" id="dot" style="left:940px;top:520px;width:40px;height:40px;border-radius:50%;background:#B6FF4D;box-shadow:0 0 40px 10px rgba(130,230,0,.7)"></div>
+    <img id="logo11" src="../../assets/logo_lime.png" class="abs" style="left:700px;top:330px;width:520px;transform-origin:260px 66px">
+    <div class="abs wide" id="h11a" style="left:0;width:1920px;text-align:center;top:520px;font:700 40px/1 D;letter-spacing:.42em;color:#fff"><span class="w">SpaceBuds</span> <span class="w">Neo+</span></div>
+    <div class="abs wide" id="h11b" style="left:0;width:1920px;text-align:center;top:600px;font:700 28px/1 D;letter-spacing:.6em;color:#82E600"><span class="w">Beyond</span> <span class="w">the</span> <span class="w">noise.</span></div>
+    <!-- the product layer: one element per real render, each a carrier with its own keys -->
+    <div id="sweepP" class="abs" style="left:0;top:0;display:none"></div>
+    <div id="gl3" class="abs" style="left:0;top:0;width:1920px;height:1080px"></div>
+    <svg id="cur" class="abs" width="54" height="72" viewBox="0 0 54 72" style="left:0;top:0;margin:-4px 0 0 -4px;overflow:visible;filter:drop-shadow(0 0 14px rgba(130,230,0,.85)) drop-shadow(0 8px 16px rgba(0,0,0,.3));transform-origin:4px 2px"><path d="M4 2 L4 58 L19 45 L29 68 L39 64 L29 41 L49 41 Z" fill="url(#cg)" stroke="#fff" stroke-width="3" stroke-linejoin="round"/></svg>
+  </div>
+</div></div>
+<div id="ov"></div>
+<div id="cover" class="abs" style="left:0;top:0;width:1920px;height:1080px;background:linear-gradient(90deg,#E4FFA8,#82E600 60%,#2FA800);display:none;transform-origin:960px 540px"></div>
+</div>
+<script type="importmap">{ "imports": { "three": "../../../../.claude/skills/motion-reel/engine/lib/three/three.module.js", "three/addons/": "../../../../.claude/skills/motion-reel/engine/lib/three/addons/" } }</script>
+<script src="../../../moniepoint/assets/motion.js"></script>
+<script>
+const M = window.Motion, S = (t, p) => M.spring(t, p), clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x)), lerp = (a, b, u) => a + (b - a) * u;
+const sm = x => { x = clamp(x); return x * x * (3 - 2 * x); }, ease = x => { x = clamp(x); return 1 - Math.pow(1 - x, 3); };
+const $ = id => document.getElementById(id), cam = $('cam');
+window.FILM_DUR = 46;
+const WORD = { k: 320, c: 36 }, PANEL = { k: 170, c: 26 }, POPS = { k: 420, c: 41 }, SOFT = { k: 70, c: 16.8 }, FLY = { k: 140, c: 23.7 }, GLIDE = { k: 46, c: 13.6 };
+const PAPER = '#F5F6F3', DARK = '#050607';
+// ---- places: eleven 1920x1080 places on one canvas, 2400 x 1500 apart (the route of the approved plan) ----
+const GRID = [[0, 0], [0, 1], [1, 1], [1, 2], [2, 2], [2, 1], [3, 1], [3, 0], [4, 0], [4, 1], [4, 2]];
+const PCX = i => GRID[i][0] * 2400, PCY = i => GRID[i][1] * 1500;
+const PAPERP = [0, 2, 3, 5, 6, 8];                      // the rest are dark rooms
+const W = (i, lx, ly) => [PCX(i) + lx - 960, PCY(i) + ly - 540];
+// ---- camera: camMove (camera-style), every key from its own time; fast whips tau .1, dives .13-.2, slow pushes .6-1.2 ----
+const camMove = (t, tc, tau) => t < tc ? 0.5 * Math.exp((t - tc) / tau) : 1 - 0.5 * Math.exp(-(t - tc) / tau);
+const PILL = [0, 0];                                     // filled once the layout is measured
+const CK = () => { const c = (i, lx = 960, ly = 540) => W(i, lx, ly); return [
+  { t: 0, p: c(0), z: 1.1 }, { t: 1.2, z: 1.0, tau: .6 },
+  { t: 3.95, p: PILL, z: 3.2, tau: .13 }, { t: 4.32, p: c(1), z: 1.15, tau: .001 }, { t: 4.9, z: 1.0, tau: .5 },
+  { t: 6.0, p: c(2), tau: .1 }, { t: 8.15, z: 1.1, tau: .04 }, { t: 8.3, z: 1.0, tau: .15 },
+  { t: 9.9, p: c(3), tau: .11 }, { t: 12.3, z: 1.08, tau: .04 }, { t: 12.45, z: 1.0, tau: .15 }, { t: 13.2, z: 1.04, tau: .6 },
+  { t: 15.1, p: c(3, 960, 875), z: 9, tau: .2 }, { t: 15.5, p: c(4), z: 1.2, tau: .001 }, { t: 16.3, z: 1.0, tau: .8 }, { t: 19.0, z: 1.05, tau: 1.0 },
+  { t: 21.8, p: c(5), z: 1.0, tau: .1 }, { t: 24.3, z: 1.1, tau: .04 }, { t: 24.45, z: 1.0, tau: .15 },
+  { t: 27.0, p: c(6), z: .82, tau: .14 }, { t: 27.5, z: 1.0, tau: .3 }, { t: 29.4, z: 1.05, tau: .8 },
+  { t: 31.8, p: c(7), z: 1.0, tau: .11 }, { t: 34.9, p: c(7, 935, 488), z: 2.4, tau: .2 },
+  { t: 35.45, p: c(8, 935, 488), z: 2.4, tau: .001 }, { t: 35.55, p: c(8), z: 1.0, tau: .3 }, { t: 38.2, z: 1.08, tau: .04 }, { t: 38.35, z: 1.0, tau: .15 },
+  { t: 39.75, p: c(8, 1702, 404), z: 7, tau: .14 }, { t: 40.0, p: c(9), z: 1.15, tau: .001 }, { t: 40.6, z: 1.0, tau: .6 },
+  { t: 42.6, p: c(10), tau: .3 }, { t: 44.0, z: 1.12, tau: 1.2 }]; };
+let CKS = null;
+const camAxis = (t, f) => { let v = null, prev = null; for (const k of CKS) { const val = f(k); if (val === undefined) continue; if (v === null) { v = val; prev = val; continue; } v += (val - prev) * camMove(t, k.t, k.tau); prev = val; } return v; };
+const camAt = t => [camAxis(t, k => k.p ? k.p[0] : undefined) + 5 * Math.sin(t * .41), camAxis(t, k => k.p ? k.p[1] : undefined) + 4 * Math.sin(t * .33 + 1), camAxis(t, k => k.z) * (1 + .004 * Math.sin(t * .5))];
+let CAM = [0, 0, 1];
+const w2s = (wx, wy) => [960 + (wx - CAM[0]) * CAM[2], 540 + (wy - CAM[1]) * CAM[2]];
+window.NEO = { w2s, W, cam: () => CAM };
+// ---- grounds belong to the places: paper cells on a dark canvas, softened edges, so the ground changes only by travel ----
+const gnd = document.getElementById('gnd').getContext('2d'), gsm = document.createElement('canvas'); gsm.width = 640; gsm.height = 400; const gs = gsm.getContext('2d');
+function paintGround() { gs.fillStyle = DARK; gs.fillRect(0, 0, 640, 400); gs.fillStyle = PAPER;
+  PAPERP.forEach(i => { const [x0, y0] = w2s(PCX(i) - 1200, PCY(i) - 750), [x1, y1] = w2s(PCX(i) + 1200, PCY(i) + 750); if (x1 < -600 || y1 < -600 || x0 > 2520 || y0 > 1680) return; gs.fillRect((x0 + 320) / 4, (y0 + 260) / 4, (x1 - x0) / 4, (y1 - y0) / 4); });
+  gnd.filter = `blur(${Math.min(120, 70 * CAM[2]).toFixed(0)}px)`; gnd.imageSmoothingEnabled = true; gnd.fillStyle = DARK; gnd.fillRect(0, 0, 1920, 1080); gnd.drawImage(gsm, -320, -260, 2560, 1600); gnd.filter = 'none'; }
+// ---- helpers ----
+const words = (id, t0, st, out) => { const ws = [...$(id).querySelectorAll('.w')]; return t => ws.forEach((w, i) => { const s = S(t - (t0 + i * st), WORD), ex = out ? S(t - out - i * .025, WORD) : 0;
+  w.style.opacity = sm(s * 1.25) * (1 - sm(ex * 1.3)); w.style.filter = (s < .98 || ex > .02) ? `blur(${((1 - clamp(s)) * 12 + ex * 12).toFixed(1)}px)` : ''; w.style.transform = `translateY(${((1 - s) * 34 - ex * 30).toFixed(1)}px)`; }); };
+const WS = [words('s1', .2, .14, 3.9), words('name3', 7.4, .2, 9.75), words('h4a', 10.6, .12, 14.6), words('h4b', 10.9, .16, 14.6), words('h5a', 16.4, .15, 21.55), words('h5b', 17.6, .15, 21.55),
+  words('h6a', 22.5, .1, 26.7), words('h6b', 23.4, .14, 26.7), words('h6c', 24.4, .1, 26.7), words('h7', 27.6, .14, 31.55), words('h8a', 32.5, .12, 34.6), words('h8b', 33.0, .14, 34.6),
+  words('h9a', 36.3, .12, 39.6), words('h9b', 36.6, .14, 39.6), words('h9c', 38.25, .1, 39.6), words('h9d', 38.8, .1, 39.6), words('h10', 40.6, .08, 42.45), words('h11a', 44.0, .15), words('h11b', 44.5, .12)];
+const qn = (i, k, t, r = 12) => { const v = Math.sin(i * 12.9898 + k * 78.233 + Math.floor(t * r) * 3.1) * 43758.5453; return v - Math.floor(v); };
+const hexM = (a, b, u) => { const A = [1, 3, 5].map(i => parseInt(a.slice(i, i + 2), 16)), B = [1, 3, 5].map(i => parseInt(b.slice(i, i + 2), 16)); return `rgb(${A.map((x, i) => Math.round(lerp(x, B[i], u))).join(',')})`; };
+const rel = (el, anc) => { let x = 0, y = 0; while (el && el !== anc) { x += el.offsetLeft; y += el.offsetTop; el = el.offsetParent; } return [x, y]; };
+// a carrier: keys [t, {x, y, s, r, o}, spring]; one spring per change, each from its own time.
+const K = keys => t => { const st = { ...keys[0][1] }; for (let i = 1; i < keys.length; i++) { const [ti, v, sp] = keys[i], pv = {}; for (let j = i - 1; j >= 0; j--) Object.keys(v).forEach(k => { if (pv[k] === undefined && keys[j][1][k] !== undefined) pv[k] = keys[j][1][k]; });
+  const u = sp === 'cut' ? (t >= ti ? 1 : 0) : S(t - ti, sp); Object.keys(v).forEach(k => { st[k] = (st[k] === undefined ? v[k] : st[k]) + (v[k] - (pv[k] === undefined ? v[k] : pv[k])) * u; }); } return st; };
+const IMW = { pCase: [541, 570], pBuds: [586, 506], pAnc: [1300, 386], p30: [520, 483], pIpx: [1020, 870] };
+function draw(id, f, t, vis, extra = {}) { const el = $(id); if (!vis) { el.style.display = 'none'; return null; } const a = f(t), b = f(t - 1 / 30), sp = Math.hypot(a.x - b.x, a.y - b.y) + Math.abs(a.s - b.s) * 300;
+  const [w, h] = IMW[id]; el.style.display = ''; el.style.width = w + 'px'; el.style.left = (a.x - w / 2) + 'px'; el.style.top = (a.y - h / 2) + 'px';
+  const fl = Math.sin(t * 1.2 + w) * (extra.float ?? 6); el.style.transform = `translateY(${fl.toFixed(1)}px) scale(${a.s.toFixed(4)}) rotate(${(a.r || 0).toFixed(2)}deg)`;
+  el.style.opacity = clamp(a.o ?? 1); const bl = clamp((sp - 8) * .18, 0, 22) + (a.b || 0);
+  el.style.filter = `${bl > .3 ? `blur(${bl.toFixed(1)}px) ` : ''}${extra.f || 'drop-shadow(0 40px 60px rgba(17,19,24,.3))'}`; return a; }
+function sweepOn(id, t, t0, dur) { const el = $(id), sw = $('sweepP'), u = clamp((t - t0) / dur); if (u <= 0 || u >= 1 || el.style.display === 'none') return false;
+  sw.style.display = ''; sw.style.left = el.style.left; sw.style.top = el.style.top; sw.style.width = el.style.width; sw.style.height = el.offsetHeight + 'px'; sw.style.transform = el.style.transform;
+  sw.style.background = `linear-gradient(112deg, transparent ${u * 150 - 45}%, rgba(255,255,255,${(.6 * Math.sin(Math.PI * u)).toFixed(2)}) ${u * 150 - 20}%, transparent ${u * 150}%)`;
+  sw.style.webkitMaskImage = `url(${el.getAttribute('src')})`; sw.style.webkitMaskSize = '100% 100%'; sw.style.mixBlendMode = 'screen'; return true; }
+// ---- carriers ----
+// one case, one layer from the bloom to the lift-off: it turns as the light sweeps the ground, never swaps for another render
+const FCase = K([[0, { x: 960, y: 560, s: .2, r: -14, o: 0, b: 16 }], [4.55, { s: 1, r: 0, o: 1, b: 0 }, SOFT], [5.5, { r: 5 }, GLIDE], [6.05, { y: 470, s: 1.04, r: -17 }, { k: 55, c: 12.5 }], [8.0, { r: -12, s: 1.07 }, GLIDE], [9.9, { y: 1500, r: 8 }, { k: 60, c: 9 }]]);
+const FBuds = K([[0, { x: 960, y: 420, s: .45, r: -14, o: 0, b: 8 }], [9.85, { o: 1, b: 0 }, POPS], [9.9, { x: 970, y: 444, s: 1, r: 0 }, FLY], [14.7, { s: 1.04 }, GLIDE]]);
+const FAnc = K([[0, { x: 960, y: 573, s: .78, o: 0, b: 14 }], [15.9, { s: 1, o: 1, b: 0 }, SOFT], [21.8, { x: 1260, y: 541, s: .18, o: 0 }, FLY]]);
+// the open case stays one layer from the 30 h ring through the calls scene, turning slightly, then flies into the game
+const F30 = K([[0, { x: 1260, y: 541, s: .3, o: 0, b: 14 }], [22.05, { s: 1, o: 1, b: 0 }, SOFT], [26.95, { x: 960, y: 531, s: 1.05, r: -6 }, FLY], [29.4, { r: 5, s: 1.0 }, GLIDE], [31.75, { x: 1640, y: 900, s: .38, r: 14, o: 0 }, FLY]]);
+const FIpx = K([[0, { x: 960, y: 260, s: .85, o: 0, r: -6 }], [39.95, { y: 605, s: 1, o: 1, r: 0 }, { k: 60, c: 13 }], [42.55, { s: 0, y: 560, o: 0 }, { k: 200, c: 28.3 }]]);
+// cursor
+const CUR = [[10.9, [1700, 1180]], [11.3, [1060, 880]], [13.6, [1500, 1200]], [36.9, [1980, 760]], [37.3, [1560, 396]], [39.0, [1700, 1150]]], CURON = [[10.9, 13.9], [36.9, 39.4]], PRESS = [12.3, 38.2];
+const curPos = t => { let x = CUR[0][1][0], y = CUR[0][1][1]; for (let i = 1; i < CUR.length; i++) { const [ti, p] = CUR[i], q = CUR[i - 1][1]; if (i === 3) { if (t >= ti) { x = p[0]; y = p[1]; } continue; } const s = S(t - ti, FLY), b = Math.sin(Math.PI * clamp(s)) * .12; x += (p[0] - q[0]) * s - (p[1] - q[1]) * b; y += (p[1] - q[1]) * s + (p[0] - q[0]) * b; } return [x, y]; };
+// svg scenes
+const NS = 'http://www.w3.org/2000/svg', mk = (tag, parent, attrs) => { const e = document.createElementNS(NS, tag); Object.entries(attrs).forEach(([k, v]) => e.setAttribute(k, v)); parent.appendChild(e); return e; };
+const RINGS = [[380, 120], [620, 200], [880, 290]].map(([rx, ry], i) => ({ rx, ry, el: mk('ellipse', $('rings'), { 'stroke-width': 2 }), gl: i === 0 ? mk('ellipse', $('rings'), { 'stroke-width': 12, filter: 'url(#gl)' }) : null }));
+const ORBS = Array.from({ length: 9 }, (_, i) => ({ r: i % 3, ph: i * 2.1, sp: .35 + .1 * (i % 3), el: mk('circle', $('orbs'), { fill: '#D8FF8A' }) }));
+const BARS = Array.from({ length: 16 }, (_, i) => ({ x: i < 8 ? 180 + i * 40 : 1460 + (i - 8) * 40, f: 3 + (i * 1.7) % 4, ph: i * 1.3, a: i / 16 * Math.PI * 2, el: mk('line', $('bars'), {}) }));
+const PLACE = { 0: ['b1a', 'b1b', 's1'], 1: ['floor'], 2: ['word', 'name3'], 3: ['wv', 'tg', 'h4a', 'h4b', 'cur'], 4: ['h5a', 'h5b'], 5: ['h6a', 'n30', 'h6b', 'h6c'],
+  6: ['m1', 'm2', 'h7'], 7: ['game', 'gshade', 'h8a', 'h8b'], 8: ['phone', 'chk', 'h9a', 'h9b', 'h9c', 'h9d'], 9: ['h10'], 10: ['logo11', 'h11a', 'h11b'] };
+function init() { const world = $('world');
+  GRID.forEach((g, i) => { const d = document.createElement('div'); d.className = 'pl'; d.id = 'P' + i; d.style.left = (PCX(i) - 960) + 'px'; d.style.top = (PCY(i) - 540) + 'px'; world.appendChild(d); });
+  Object.entries(PLACE).forEach(([i, ids]) => ids.forEach(id => $('P' + i).appendChild($(id))));
+  const f2 = $('floor').cloneNode(true); f2.id = 'floor2'; $('P10').appendChild(f2);
+  const ov = $('ov'); ov.appendChild($('bloom')); ov.appendChild($('rings').ownerSVGElement); ov.appendChild($('dot')); ov.appendChild($('gl3'));
+  $('pnoise').style.width = '170px'; $('pcase').style.width = '120px'; const [px, py] = rel($('pcase'), world); PILL[0] = px + 60; PILL[1] = py + 42;
+  CKS = CK(); }
+window.seek = t => {
+  if (!CKS) init();
+  const [cx, cy, z] = camAt(t), [px, py, pz] = camAt(t - 1 / 30); CAM = [cx, cy, z];
+  cam.style.transform = `translate(960px,540px) scale(${z.toFixed(5)}) translate(${(-cx).toFixed(2)}px,${(-cy).toFixed(2)}px)`;
+  const jump = Math.abs(cx - px) > 600 || Math.abs(z - pz) > 1.5, bx = jump ? 0 : clamp((Math.abs(cx - px) * z - 10) * .25, 0, 40), by = jump ? 0 : clamp((Math.abs(cy - py) * z - 10) * .25, 0, 40), bz = jump ? 0 : clamp((Math.abs(z - pz) / z * 30 - .4) * 3, 0, 10);
+  $('mbg').setAttribute('stdDeviation', `${(bx + bz).toFixed(1)} ${(by + bz).toFixed(1)}`); $('view').style.filter = bx + by + bz > .4 ? 'url(#mb)' : '';
+  // the overlay (3D product, rings, bloom) rides with the camera; during a dive it zooms with the world from the dive's start
+  const DIVES = [[14.3, 15.5], [34.1, 35.45], [39.2, 40.0]], dv = DIVES.find(([a, b]) => t >= a && t < b);
+  if (dv) { const [ax, ay, az] = camAt(dv[0]), k = z / az; $('ov').style.transform = `translate(${(960 - (cx - ax) * z - 960 * k).toFixed(2)}px,${(540 - (cy - ay) * z - 540 * k).toFixed(2)}px) scale(${k.toFixed(5)})`; } else $('ov').style.transform = '';
+  paintGround(); WS.forEach(f => f(t));
+  const on = (a, b) => t >= a && t < b, show = (id, a, b) => { $(id).style.display = on(a, b) ? '' : 'none'; return on(a, b); };
+  $('b1a').style.transform = `translate(${(40 * Math.sin(t * .5)).toFixed(1)}px,${(-30 * Math.sin(t * .4)).toFixed(1)}px)`; $('b1b').style.transform = `translate(${(-40 * Math.sin(t * .45)).toFixed(1)}px,${(30 * Math.sin(t * .35)).toFixed(1)}px)`;
+  show('b1a', 0, 4.8); show('b1b', 0, 4.8);
+  // ===== 1 the line =====
+  if (show('s1', 0, 4.7)) { [['pnoise', 170, .62], ['pcase', 120, 2.05]].forEach(([id, w, t0]) => { const s = S(t - t0, POPS); $(id).style.width = (w * clamp(s)).toFixed(1) + 'px'; $(id).style.opacity = clamp(s * 3); });
+    let d = ''; for (let k = 0; k <= 12; k++) d += (k ? 'L' : 'M') + (k * 130 / 12).toFixed(1) + ' ' + (25 + (k % 2 ? 1 : -1) * (8 + 14 * qn(1, k, t))).toFixed(1); $('pnw').setAttribute('d', d);
+    }
+  // ===== 2 the bloom grows out of the case pill, then the dark sweeps in behind a lime band =====
+  if (show('bloom', 3.4, 5.6)) { const g = ease((t - 3.45) / .9), [ox, oy] = t < 4.32 ? w2s(PILL[0], PILL[1]) : [960, 540], r = 40 + 2600 * g, k = 1 - sm((t - 4.5) / 1.0);
+    $('bloom').style.background = `radial-gradient(circle at ${ox.toFixed(0)}px ${oy.toFixed(0)}px, rgba(255,255,240,${k.toFixed(3)}) 0, rgba(200,255,110,${k.toFixed(3)}) ${(r * .25).toFixed(0)}px, rgba(130,230,0,${(k * .95).toFixed(3)}) ${(r * .6).toFixed(0)}px, rgba(130,230,0,0) ${r.toFixed(0)}px)`; }
+  if (show('floor', 4.3, 6.6)) { const a = sm((t - 4.4) / .9) * (1 - sm((t - 5.95) / .5)); $('floor').style.opacity = a.toFixed(3); $('floor').style.transform = `translateY(${((1 - clamp(a)) * 200).toFixed(1)}px)`; }
+  if (show('floor2', 42.6, 46)) { const a = sm((t - 43.2) / .9); $('floor2').style.opacity = a.toFixed(3); $('floor2').style.transform = `translateY(${((1 - a) * 200).toFixed(1)}px)`; }
+  // ===== 3 the wordmark, fully in frame, grows behind the case; the case rises over it =====
+  if (show('word', 6.0, 10.9)) { const s = S(t - 6.1, SOFT), ex = 0; $('word').style.opacity = clamp(s * 1.5);
+    $('word').style.filter = (s < .98 || ex > .02) ? `blur(${((1 - s) * 16 + ex * 14).toFixed(1)}px)` : ''; $('word').style.transform = `scale(${(.55 + .45 * s + .02 * clamp((t - 7) / 3)).toFixed(4)})`; }
+  // the buds lift off the case: the case drops away, the buds fly to the noise scene
+  // ===== 4 noise off =====
+  if (show('wv', 10.0, 15.75)) { const grow = ease((t - 10.25) / .8), calmR = sm((t - 12.4) / 1.0), calmL = sm((t - 13.0) / 1.6) * .55, amp = clamp(S(t - 10.2, PANEL));
+    let dl = '', dr = ''; const nL = Math.max(1, Math.round(18 * grow)), nR = Math.max(1, Math.round(24 * grow));
+    for (let k = 0; k <= nL; k++) { const x = 720 - k / 18 * 720, a = amp * (1 - calmL) * (40 + 90 * qn(2, k, t)) * (k % 2 ? 1 : -1) + calmL * 14 * Math.sin(x * .02 + t * 3); dl += (k ? 'L' : 'M') + x.toFixed(1) + ' ' + (540 + a).toFixed(1); }
+    for (let k = 0; k <= nR; k++) { const x = 1220 + k / 24 * 700, j = amp * (40 + 90 * qn(3, k, t)) * (k % 2 ? 1 : -1), c = 16 * Math.sin(x * .018 - t * 3), loc = clamp(calmR * 1.6 - k / 24 * .6); dr += (k ? 'L' : 'M') + x.toFixed(1) + ' ' + (540 + lerp(j, c, loc)).toFixed(1); }
+    $('wL').setAttribute('d', dl); $('wL').setAttribute('stroke', hexM('#FF453A', '#82E600', calmL * .5)); $('wR').setAttribute('d', dr); $('wR').setAttribute('stroke', hexM('#FF453A', '#82E600', calmR)); $('wRg').setAttribute('d', dr); $('wRg').setAttribute('stroke', '#82E600'); $('wRg').style.opacity = .5 * calmR;
+    $('wv').style.opacity = 1 - sm((t - 14.7) / .3); }
+  if (show('tg', 10.8, 15.75)) { const s = S(t - 10.9, PANEL), flood = sm((t - 12.32) / .45), tap = S(t - 12.3, { k: 160, c: 25.3 }), dip = (S(t - 12.3, POPS) - S(t - 12.42, POPS)) * .05;
+    $('tg').style.opacity = clamp(s * 1.6); $('tg').style.transform = `translateY(${((1 - s) * 80).toFixed(1)}px) scale(${((.92 + .08 * s) * (1 - dip)).toFixed(4)})`; $('tg').style.filter = s < .98 ? `blur(${((1 - s) * 12).toFixed(1)}px)` : '';
+    $('tgFill').style.clipPath = `inset(0 ${((1 - flood) * 100).toFixed(1)}% 0 0)`; $('tgKnob').style.left = (262 + 80 * tap) + 'px'; $('tgKnob').style.background = hexM('#B9BDB5', '#82E600', flood); }
+  // the dive: the toggle fills the frame, collapses into one lime line, the line opens into the rings
+  const cv = $('cover'), LIME = [[14.5, 15.5, 17.3, 3, 3], [39.25, 40.0, 41.6, 2.2, 2.6]], lm = LIME.find(([a, c, e]) => t >= a && t < e);
+  if (lm) { const [a, c, e, z0, zr] = lm; cv.style.display = ''; cv.style.transform = ''; cv.style.filter = '';
+    if (t < c) { cv.style.opacity = sm((z - z0) / zr).toFixed(3); cv.style.webkitMaskImage = ''; }
+    else { const u = sm((t - c - .05) / .9), r2 = lerp(160, 20, u), r1 = r2 * .3; cv.style.opacity = (1 - sm((t - c - .7) / (e - c - .7))).toFixed(3);
+      cv.style.webkitMaskImage = `radial-gradient(ellipse 60% 55% at 50% 56%, #000 ${r1.toFixed(1)}%, rgba(0,0,0,.35) ${(r1 + (r2 - r1) * .55).toFixed(1)}%, transparent ${r2.toFixed(1)}%)`; } }
+  else cv.style.display = 'none';
+  // ===== 5 Sound360; ring0 carries on as the 30 h track =====
+  const ringsOn = on(15.7, 27.5); $('rings').style.display = $('orbs').style.display = ringsOn ? '' : 'none';
+  if (ringsOn) { const m = S(t - 21.8, { k: 90, c: 19 }), col = S(t - 26.95, FLY);
+    RINGS.forEach((r, i) => { const s = S(t - (15.95 + i * .22), SOFT), br = 1 + .03 * Math.sin(t * 1.4 + i) * (1 - m);
+      if (i === 0) { const rx = lerp(r.rx * s * br, 380, m) * (1 - col), ry = lerp(r.ry * s * br, 380, m) * (1 - col), ccx = lerp(960, 1260, m) + (960 - 1260) * col, ccy = lerp(560, 540, m);
+        [r.el, r.gl].forEach(e => { e.setAttribute('cx', ccx.toFixed(1)); e.setAttribute('cy', ccy.toFixed(1)); e.setAttribute('rx', Math.max(0, rx).toFixed(1)); e.setAttribute('ry', Math.max(0, ry).toFixed(1)); });
+        r.el.setAttribute('stroke-width', lerp(2, 22, m).toFixed(1)); r.el.setAttribute('stroke', hexM('#82E600', '#E3E6E0', m)); r.el.style.opacity = (.6 + .4 * m) * clamp(s * 2); r.gl.style.opacity = .45 * clamp(s * 2) * (1 - m); }
+      else { const out = 1 + .5 * m; r.el.setAttribute('cx', 960); r.el.setAttribute('cy', 560); r.el.setAttribute('rx', Math.max(0, r.rx * s * br * out).toFixed(1)); r.el.setAttribute('ry', Math.max(0, r.ry * s * br * out).toFixed(1)); r.el.style.opacity = (.6 - i * .18) * clamp(s * 2) * (1 - sm(m * 1.4)); } });
+    ORBS.forEach(o => { const r = RINGS[o.r], s = S(t - (16.3 + o.r * .22), SOFT), a = o.ph + t * o.sp, x = 960 + Math.cos(a) * r.rx * s * (1 + .4 * m), y = 560 + Math.sin(a) * r.ry * s * (1 + .4 * m), dep = .5 + .5 * Math.sin(a); o.el.setAttribute('cx', x.toFixed(1)); o.el.setAttribute('cy', y.toFixed(1)); o.el.setAttribute('r', (3 + 5 * dep).toFixed(1)); o.el.style.opacity = (.35 + .65 * dep) * clamp(s * 2) * (1 - sm(m * 1.4)); }); }
+  // ===== 6 thirty hours: the lime arc fills the track ring0 became =====
+  const arcOn = on(22.4, 27.5); $('arc').style.display = $('arcG').style.display = arcOn ? '' : 'none';
+  if (arcOn) { const p = ease((t - 22.6) / 1.7), col = S(t - 26.95, FLY), R = Math.max(0, 380 * (1 - col)), C = 2 * Math.PI * Math.max(R, .01), acx = 1260 + (960 - 1260) * col;
+    ['arc', 'arcG'].forEach(id => { const e = $(id); e.setAttribute('cx', acx.toFixed(1)); e.setAttribute('cy', 540); e.setAttribute('r', R.toFixed(1)); e.setAttribute('stroke-dasharray', `${C.toFixed(1)} ${C.toFixed(1)}`); e.setAttribute('stroke-dashoffset', (C * (1 - p)).toFixed(1)); e.setAttribute('transform', `rotate(-90 ${acx.toFixed(1)} 540)`); });
+    const n = S(t - 22.55, WORD), ex = S(t - 26.75, WORD), el = $('n30'); el.textContent = Math.round(30 * p); el.style.opacity = sm(n * 1.25) * (1 - sm(ex * 1.3)); el.style.filter = (n < .98 || ex > .02) ? `blur(${((1 - n) * 14 + ex * 14).toFixed(1)}px)` : ''; el.style.transform = `translateY(${((1 - n) * 50 - ex * 40).toFixed(1)}px)`; } else $('n30').style.opacity = 0;
+  // light passes along the products (motivated rim light, dies away)
+  // ===== 7 the ring bursts into the voice bars; the case is carried to the centre =====
+  const barsOn = on(26.95, 32.4); $('bars').style.display = barsOn ? '' : 'none';
+  if (barsOn) { const fly = S(t - 27.0, { k: 120, c: 22 }), flat = S(t - 31.6, FLY);
+    BARS.forEach((b, i) => { const r0x = 960 + Math.cos(b.a) * 60, r0y = 540 + Math.sin(b.a) * 60, bxp = lerp(r0x, b.x, fly), byp = lerp(r0y, 540, fly) + flat * 260, th = lerp(b.a + Math.PI / 2, 0, fly);
+      const live = (18 + 110 * Math.abs(Math.sin(t * b.f + b.ph)) * (i < 8 ? (t < 29.4 ? 1 : .45) : (t >= 29.4 ? 1 : .45))), h = lerp(16, live, sm(fly)) * (1 - flat), sx = Math.sin(th) * h, sy = Math.cos(th) * h;
+      b.el.setAttribute('x1', (bxp - sx).toFixed(1)); b.el.setAttribute('y1', (byp - sy).toFixed(1)); b.el.setAttribute('x2', (bxp + sx).toFixed(1)); b.el.setAttribute('y2', (byp + sy).toFixed(1)); b.el.style.opacity = clamp(fly * 3) * (1 - flat); }); }
+  [['m1', 27.9, 28.0, 29.4], ['m2', 28.05, 29.4, 31.3]].forEach(([id, t0, a, b]) => { if (!show(id, 27.8, 31.95)) return; const s = S(t - t0, PANEL), ex = S(t - 31.55, PANEL), g = on(a, b) ? sm((t - a) / .25) * (1 - sm((t - b + .25) / .25)) : 0;
+    $(id).style.opacity = clamp(s * 1.6) * (1 - sm(ex * 1.3)); $(id).style.transform = `translateY(${((1 - s) * 40 + ex * 40).toFixed(1)}px)`; $(id).style.boxShadow = `0 0 0 ${(4 * g).toFixed(1)}px #82E600, 0 0 ${(40 * g).toFixed(0)}px rgba(130,230,0,${(.8 * g).toFixed(2)})`; });
+  // ===== 8 the case flies to the game earbuds; the game rises; dive into the screen; the phone turns upright =====
+  if (show('game', 31.5, 35.6)) { const s = S(t - 31.6, SOFT), out = 0; $('game').style.opacity = clamp(s * 1.6) * (1 - out); $('game').style.transform = `translateY(${((1 - s) * 160).toFixed(1)}px) scale(${(.96 + .04 * s + .03 * clamp((t - 32) / 3)).toFixed(4)})`; $('game').style.filter = s < .98 ? `blur(${((1 - s) * 14).toFixed(1)}px)` : ''; }
+  show('gshade', 31.6, 35.45); $('gshade').style.opacity = sm((t - 31.8) / .5);
+  if (show('phone', 35.45, 40.0)) { const s = S(t - 35.55, { k: 70, c: 16 }), dropO = 0, x = lerp(935, 1380, s), y = lerp(488, 535, s);
+    { const u = sm((t - 35.75) / .55), p = lerp(-30, 130, u); $('pgame').style.display = u >= 1 ? 'none' : ''; $('pgame').style.webkitMaskImage = `linear-gradient(90deg, transparent ${(p - 25).toFixed(1)}%, #000 ${p.toFixed(1)}%)`; }
+    $('phone').style.left = (x - 260) + 'px'; $('phone').style.top = (y - 395) + 'px'; $('phone').style.transform = `scale(${lerp(1.3, 1, s).toFixed(4)}) rotate(${(-90 * (1 - s)).toFixed(2)}deg) translateY(${(4 * Math.sin(t * 1.2)).toFixed(1)}px)`;
+    $('phone').style.filter = dropO > .02 ? `blur(${(dropO * 14).toFixed(1)}px)` : ''; $('phone').style.opacity = 1 - sm((t - 40.3) / .25);
+    const f = sm((t - 38.22) / .4); $('row').style.clipPath = `inset(0 ${((1 - f) * 100).toFixed(1)}% 0 0)`; $('row').style.boxShadow = `0 10px 40px rgba(130,230,0,${(.6 * f).toFixed(2)})`; }
+  if (show('chk', 38.45, 40.0)) { const k = S(t - 38.5, POPS), grow = sm((t - 39.55) / .3); $('chk').style.opacity = clamp(k * 2); $('chk').style.transform = `scale(${(.5 + .5 * k + .6 * grow).toFixed(3)})`; const cp = $('chkP'); cp.style.strokeDasharray = '50 50'; cp.style.strokeDashoffset = (50 * (1 - sm((t - 38.6) / .35))).toFixed(1); }
+  // ===== 10 the buds fall in with their water drops; then collapse to a dot; the dot becomes the logo =====
+  const dg = S(t - 42.75, POPS), dd = S(t - 43.25, { k: 260, c: 32 }); if (show('dot', 42.7, 43.8)) { $('dot').style.transform = `scale(${(dg * (1 - dd * .8) + dd * 1.6).toFixed(3)})`; $('dot').style.opacity = 1 - sm((t - 43.35) / .35); }
+  if (show('logo11', 43.25, 46)) { const lg = S(t - 43.3, SOFT); $('logo11').style.opacity = clamp(lg * 1.6); $('logo11').style.filter = lg < .98 ? `blur(${((1 - lg) * 14).toFixed(1)}px)` : ''; $('logo11').style.transform = `scale(${(.3 + .7 * lg + .015 * clamp((t - 44) / 2)).toFixed(4)})`; }
+  // ===== the cursor =====
+  const cOn = CURON.some(([a, b]) => on(a, b)); $('cur').style.display = cOn ? '' : 'none'; { const host = $(t < 25 ? 'P3' : 'P8'); if ($('cur').parentNode !== host) host.appendChild($('cur')); }
+  if (cOn) { const [x, y] = curPos(t), [qx, qy] = curPos(t - 1 / 30), sp = Math.hypot(x - qx, y - qy), born = S(t - CURON.find(([a, b]) => on(a, b))[0], POPS), pr = PRESS.reduce((a, p) => a + (S(t - p, POPS) - S(t - p - .12, POPS)), 0);
+    $('cur').style.left = x + 'px'; $('cur').style.top = y + 'px'; $('cur').style.transform = `scale(${(born * (1.25 + .25 * clamp(sp / 40) - .2 * pr)).toFixed(3)})`; $('cur').style.filter = `${sp > 12 ? `blur(${clamp((sp - 12) * .12, 0, 6).toFixed(1)}px) ` : ''}drop-shadow(0 0 14px rgba(130,230,0,.85)) drop-shadow(0 8px 16px rgba(0,0,0,.3))`; }
+};
+Promise.all([...document.images].map(i => i.decode().catch(() => {})).concat([document.fonts.load("900 80px D"), document.fonts.load("700 80px D"), document.fonts.load("500 80px D")])).then(() => { window.__domOK = true; });
+</script>
+<script type="module" src="neo3d.js"></script>
