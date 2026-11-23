@@ -1,44 +1,48 @@
-# Luma colour sweep on the finished frames (launch-style 4a, climax-launch D5; done in 2D on the rendered video, never in
-# WebGL, so tone mapping stays intact). At each dive cut the next scene floods in through its own brightness levels:
-# its bright parts arrive first, painted by a moving oraimo ramp (blue-black, deep teal, forest, lime, acid yellow, white),
-# the dark ground follows, then the wash relaxes into true colour. The outgoing frame keeps pushing in while it is replaced.
-#   python3 sweep_post.py in.mp4 out.mp4
-import sys, subprocess, numpy as np
+# Luma gradient sweep on the finished frames (launch-style 4a, climax-launch D5), measured from the fridge moment of the
+# user's reference (videos/reference/fridge-ref/b.mp4, 9.2-10.6 s and 29.9-31.0 s):
+#  1. a glowing line of light rises from the floor to the top of the frame (about 0.6 s);
+#  2. everything below it is gradient-mapped into a bright, high-key duotone by its own brightness (dark -> deep green,
+#     mid -> lime, light -> pale acid/white), so the objects themselves take the colour, as the fridge turns pale blue;
+#  3. under that light the camera cuts to the next scene, which arrives in the same duotone;
+#  4. the new scene relaxes back into its true colours (about 0.8 s), as the fridge turns black again.
+# Done in 2D on the rendered video, so the 3D lighting stays intact.
+#   python3 sweep_post.py in.mp4 out.mp4 [time offset of in.mp4]
+import sys, subprocess, numpy as np, cv2
 W, H, FPS = 1920, 1080, 30
-CUTS = [4.32, 15.32, 40.0]          # the dive cuts in film4 (camera keys with tau .001)
-DUR = 1.25                         # length of each sweep
-ramp = np.array([[.0, .0, .0], [.04, .09, .0], [.18, .66, .0], [.51, .90, .0], [.85, 1.0, .45], [1.0, 1.0, .95]])   # black, forest, lime, acid, white
-def gmap(x):
-    x = np.clip(x, 0, 1) * (len(ramp) - 1); i = np.floor(x).astype(int).clip(0, len(ramp) - 2); f = (x - i)[..., None]
+CUTS = [4.32, 15.32, 40.0]
+RISE, SETTLE = .62, .85
+ramp = np.array([[.03, .16, .02], [.10, .40, .02], [.36, .80, .02], [.62, .95, .18], [.88, 1.0, .55], [1.0, 1.0, .93]], np.float32)
+def gmap(L):
+    x = np.clip(L, 0, 1) * (len(ramp) - 1); i = np.floor(x).astype(np.int32).clip(0, len(ramp) - 2); f = (x - i)[..., None]
     return ramp[i] * (1 - f) + ramp[i + 1] * f
-def sm(x): x = np.clip(x, 0, 1); return x * x * (3 - 2 * x)
-def push(img, k):                  # the held outgoing frame keeps diving: scale about the centre by k
-    ys = ((np.arange(H) - H / 2) / k + H / 2).astype(int).clip(0, H - 1); xs = ((np.arange(W) - W / 2) / k + W / 2).astype(int).clip(0, W - 1)
-    return img[ys][:, xs]
+def sm(x): x = min(1., max(0., x)); return x * x * (3 - 2 * x)
+off = float(sys.argv[3]) if len(sys.argv) > 3 else 0.0
+Y = (np.arange(H, dtype=np.float32) / H)[:, None, None]          # 0 top .. 1 bottom
+def duo(F, lift):
+    L = (F * [.2126, .7152, .0722]).sum(-1)
+    return gmap(L * .78 + .22 * lift)                             # lifted: even black reads as deep green light
 dec = subprocess.Popen(['ffmpeg', '-v', 'error', '-i', sys.argv[1], '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-'], stdout=subprocess.PIPE)
 enc = subprocess.Popen(['ffmpeg', '-y', '-v', 'error', '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-s', f'{W}x{H}', '-r', str(FPS), '-i', '-',
                         '-c:v', 'libx264', '-crf', '16', '-preset', 'slow', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', sys.argv[2]], stdin=subprocess.PIPE)
-yy, xx = np.mgrid[0:H, 0:W]; POS = (xx / W * .62 + (1 - yy / H) * .38)   # 0 at bottom-left, 1 at top-right
-n = 0; held = {}
+n = 0
 while True:
     buf = dec.stdout.read(W * H * 3)
     if len(buf) < W * H * 3: break
-    t = n / FPS + (float(sys.argv[3]) if len(sys.argv) > 3 else 0); out = None
+    t = n / FPS + off; out = None
     for c in CUTS:
-        if c - 1.5 / FPS <= t < c - .5 / FPS: held[c] = np.frombuffer(buf, np.uint8).reshape(H, W, 3).astype(np.float32) / 255
-        if c <= t < c + DUR and c in held:
-            p = (t - c) / DUR; B = np.frombuffer(buf, np.uint8).reshape(H, W, 3).astype(np.float32) / 255
-            A = push(held[c], 1 + .5 * p)
-            LB = (B * [.2126, .7152, .0722]).sum(-1)
-            # a spatial wavefront: a soft light edge travels diagonally across the frame; behind it the new scene, ahead of it the old one.
-            # Bright parts of the new scene lead the edge by a little, so it still floods in through its brightness.
-            front = sm(p / .7) * 1.5 - .25
-            m = np.clip((front - POS + LB * .08) / .06, 0, 1)[..., None]
-            band = np.exp(-((front - POS) / .05) ** 2)[..., None] * np.sin(np.pi * min(1, p / .7))
-            sh = .42 * np.sin(np.pi * min(1, p / .85))                     # the colour shifts up the ramp and comes back
-            wash = gmap(LB + sh * (.25 + .75 * LB))                        # darks stay dark (a teal tint); brights go lime, acid, white
-            rs = sm((p - .5) / .5)                                          # then relaxes into true colour
-            o = A * (1 - m) + (wash * (1 - rs) + B * rs) * m + band * np.array([.8, 1.0, .55]) * .55
-            out = (o.clip(0, 1) * 255).astype(np.uint8).tobytes()
+        if c - RISE <= t < c + SETTLE:
+            F = np.frombuffer(buf, np.uint8).reshape(H, W, 3).astype(np.float32) / 255
+            if t < c:   # the line of light rises; below it the old scene is in the duotone
+                u = sm((t - (c - RISE)) / RISE); edge = 1.08 - u * 1.25                     # from below the frame to above it
+                below = np.clip((Y - edge) / .14 + .5, 0, 1)                             # soft boundary under the line
+                D = duo(F, 1.0)
+                o = F * (1 - below) + D * below
+                line = np.exp(-((Y - edge) / .012) ** 2) * .9 + np.exp(-((Y - edge) / .09) ** 2) * .45
+                o = o + line * np.array([.85, 1.0, .6], np.float32) * (1 - .3 * u)
+            else:       # the new scene arrives in the duotone and relaxes into true colour, from the bottom up
+                v = (t - c) / SETTLE; D = duo(F, 1 - .3 * v)
+                rs = np.clip((sm(v) * 1.35 - (1 - Y) * .35) , 0, 1)                      # the floor settles first
+                o = D * (1 - rs) + F * rs
+            out = (np.clip(o, 0, 1) * 255).astype(np.uint8).tobytes()
     enc.stdin.write(out if out is not None else buf); n += 1
 enc.stdin.close(); enc.wait(); print(sys.argv[2], n, 'frames')
