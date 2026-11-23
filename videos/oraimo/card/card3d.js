@@ -6,7 +6,7 @@ import { buildNeo } from '../neo/three/neo-model.js';
 
 const host = document.getElementById('gl3');
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
-renderer.setPixelRatio(1); renderer.setSize(1080, 1080, false); renderer.setClearColor(0x000000, 0);
+renderer.setPixelRatio(window.devicePixelRatio || 1); renderer.setSize(1080, 1080, false); renderer.setClearColor(0x000000, 0);
 renderer.outputColorSpace = THREE.SRGBColorSpace; renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
 Object.assign(renderer.domElement.style, { position: 'absolute', left: '0', top: '0', width: '1080px', height: '1080px' });
 host.appendChild(renderer.domElement);

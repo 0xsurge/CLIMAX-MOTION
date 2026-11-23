@@ -24,7 +24,8 @@ let browser;
 const args = ['--allow-file-access-from-files'];
 try { browser = await chromium.launch({ args }); }
 catch { browser = await chromium.launch({ args, executablePath: process.env.CHROME || '/opt/pw-browsers/chromium' }); }
-const page = await browser.newPage({ viewport: { width: W, height: H }, deviceScaleFactor: 1 });
+// --scale=2 renders every frame at twice the pixels (4K from a 1080 layout): text, images and WebGL all drawn sharp, not upscaled
+const page = await browser.newPage({ viewport: { width: W, height: H }, deviceScaleFactor: +(a.scale || 1) });
 page.on('pageerror', e => { console.error('page error:', e.message); process.exitCode = 2; });
 await page.goto(pathToFileURL(film + '/index.html').href + `?w=${W}&h=${H}`);
 await page.waitForFunction('window.__ready === true', null, { timeout: 30000 });
