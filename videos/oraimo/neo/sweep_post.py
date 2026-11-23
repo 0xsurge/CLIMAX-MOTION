@@ -10,7 +10,7 @@
 import sys, subprocess, numpy as np, cv2
 W, H, FPS = 1920, 1080, 30
 CUTS = [4.32, 15.32, 40.0]
-RISE, SETTLE = .62, .85
+RISE, SETTLE = 1.4, 1.6
 ramp = np.array([[.03, .16, .02], [.10, .40, .02], [.36, .80, .02], [.62, .95, .18], [.88, 1.0, .55], [1.0, 1.0, .93]], np.float32)
 def gmap(L):
     x = np.clip(L, 0, 1) * (len(ramp) - 1); i = np.floor(x).astype(np.int32).clip(0, len(ramp) - 2); f = (x - i)[..., None]
