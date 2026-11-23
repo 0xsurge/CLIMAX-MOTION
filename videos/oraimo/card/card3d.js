@@ -29,6 +29,7 @@ function pose(t) {
   // lid: closed in the cluster and most states; open for 30 h (charging) and game mode, and for the spec sheet
   const k = stateAt(t), openStates = [1, 4]; let lid = 0; STATES.forEach((s, i) => { const o = S(t - s.t, { k: 90, c: 15 }); lid += (openStates.includes(i) ? 1 : 0) * o - (i > 0 && openStates.includes(i - 1) ? 1 : 0) * o; });
   lid = Math.max(0, lid) + 1.6 * clamp(side) * (k === 4 ? 0 : 1);
+  if (t < 2.9) lid += Math.max(0, S(t - 1.8, { k: 90, c: 15 }) - S(t - 2.42, { k: 140, c: 20 })) * .75;
   // the case: from below into the cluster -> the collapse -> the card centre -> right half of the spec sheet -> gone with the card
   let x = 540 + 40 * (1 - col), y = lerp(1200, 560, fly), s = lerp(.2, .95, clamp(fly)) * (1 - col * .85);
   if (t >= 2.6) { x = 540 + 255 * side; y = 540 - c.h * .1 * (1 - side) + 4 * Math.sin(t * 1.4); s = lerp(.14, .62, clamp(inCard)) * (1 + .16 * side) * (c.w / Math.max(1, lerp(430, 860, side) * (1 - c.sh * .95))) ; s = Math.min(s, .62 * (1 - .22 * side)) * (1 - c.sh); }
@@ -40,12 +41,16 @@ function pose(t) {
   neo.case.rotation.set(.22 + .03 * Math.sin(t * .9), -.5 + (1 - fly) * -2.4 + turn + .06 * Math.sin(t * .6) + (t >= 6.43 ? -.3 * side : 0), .05 * Math.sin(t * .7) + (1 - fly) * .4);
   if (inSheet) { lid = S(t - 18.3, { k: 70, c: 14 }) * 1.15; neo.case.rotation.set(.3, -.4 + .35 * Math.sin((t - 17.5) * .9), 0); }
   neo.setLid(Math.min(1.85, inSheet ? lid * 1.6 : lid * 1.6)); neo.case.updateMatrixWorld(true);
-  // the buds: two of them fly into the cluster beside the case, collapse with it, then sit in the case
-  const bf = S(t - 1.75, { k: 80, c: 16 }), seat = t >= 2.6 ? 1 : 0, vis2 = vis || inSheet;
+  // the buds: they fly in, orbit the one case (a tilted ring around it), then dive into its open lid and seat
+  const bf = S(t - 1.7, { k: 80, c: 16 }), dive = clamp(S(t - 2.12, { k: 150, c: 22 })), seat = t >= 2.6 ? 1 : 0, vis2 = vis || inSheet;
+  const spin = 2 * Math.PI * 1.15 * S(t - 1.68, { k: 38, c: 11 }), R = (.95 + 1.7 * (1 - clamp(bf))) * Math.max(s, .05) / .95;
   [neo.budL, neo.budR].forEach((b, i) => { const sd = i ? 1 : -1; b.visible = vis2 && (seat ? lid > .02 || s > .005 : bf > .01);
-    pF.copy(at(540 + sd * (190 + 120 * (1 - bf)) * (1 - col), lerp(-150, 420 + sd * 30, clamp(bf)) * (1 - col) + 540 * col)); qF.setFromEuler(new THREE.Euler(.2, -sd * .7 + t * .6 * sd, -sd * .3)); sF.setScalar(1.1 * (1 - col * .9) * clamp(bf * 1.5));
+    const th = (i ? Math.PI : 0) + .4 + spin, cp = neo.case.position;
+    pF.set(cp.x + R * Math.cos(th), cp.y + .12 + .42 * R * Math.sin(th), cp.z + R * Math.sin(th) * .8);
+    qF.setFromEuler(new THREE.Euler(.25 + .3 * Math.sin(th), -th + Math.PI / 2, .35 * Math.cos(th))); sF.setScalar(1.1 * Math.max(s, .05) / .95 * clamp(bf * 1.5));
     mB.multiplyMatrices(neo.case.matrixWorld, neo.seatLocal(sd)); mB.decompose(pS, qS, sS);
-    if (seat) { b.position.copy(pS); b.quaternion.copy(qS); b.scale.copy(sS); } else { b.position.copy(pF); b.quaternion.copy(qF); b.scale.copy(sF); } });
+    if (!seat) { b.position.lerpVectors(pF, pS, dive); b.quaternion.slerpQuaternions(qF, qS, dive); b.scale.lerpVectors(sF, sS, dive); }
+    else { b.position.copy(pS); b.quaternion.copy(qS); b.scale.copy(sS); } });
   // a lime rim on the dark colourway
   rim.intensity = k === 1 ? 2.4 : k === 2 ? 1.2 : .3;
   neo.update(); renderer.render(scene, camera);

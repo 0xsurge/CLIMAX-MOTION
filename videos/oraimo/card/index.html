@@ -109,7 +109,9 @@ window.seek = t => {
       $('wm').style.transform = `scale(${(1 - .1 * out).toFixed(3)})`;
       BARS.forEach((b, i) => { const c = clamp((t - 1.0 - i * .07) / .22), x = (i / 6) * 500 + c * 90; b.style.left = x.toFixed(1) + 'px'; b.style.width = ((1 - c) * 70).toFixed(1) + 'px'; b.style.opacity = c < 1 ? 1 : 0; }); } }
   // 3. two of oraimo's renders join the 3D case and buds in the cluster (the 3D layer draws the rest)
-  [['pHero', 300, -150, 40, -16, 1.7], ['pIpx', 330, 170, 70, 14, 1.8]].forEach(([id, w, ox, oy, rot, t0]) => { const s = S(t - t0, SOFT), col = S(t - 2.4, { k: 200, c: 25 }), el = $(id);
+  // (user: one case only; the buds orbit it and dive in, drawn in 3D) the flat renders stay hidden
+  $('pHero').style.display = $('pIpx').style.display = 'none';
+  if (false) [['pHero', 300, -150, 40, -16, 1.7], ['pIpx', 330, 170, 70, 14, 1.8]].forEach(([id, w, ox, oy, rot, t0]) => { const s = S(t - t0, SOFT), col = S(t - 2.4, { k: 200, c: 25 }), el = $(id);
     el.style.display = on(t0, 2.7) ? '' : 'none'; const x = 540 + ox * (1 - col) - w / 2 + (1 - s) * ox * 2.5, y = 540 + oy * (1 - col) - w / 2 + (1 - s) * 260;
     el.style.transform = `translate(${x.toFixed(1)}px,${y.toFixed(1)}px) rotate(${(rot * (1 - col) + (1 - s) * rot * 2).toFixed(1)}deg) scale(${(clamp(s) * (1 - col * .9)).toFixed(3)})`;
     el.style.filter = `drop-shadow(0 24px 30px rgba(17,19,24,.25))${s < .98 ? ` blur(${((1 - s) * 10).toFixed(1)}px)` : ''}`; });
