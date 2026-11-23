@@ -67,7 +67,7 @@ function pose3d(t) {
   neo.case.rotation.set(c.rx + .03 * Math.sin(t * .7), c.ry + .05 * Math.sin(t * .45), c.rz); neo.case.scale.setScalar(Math.max(c.s, 1e-4) * zf);
   neo.setLid(c.lid); neo.case.updateMatrixWorld(true);
   // the buds: blend between their seat in the case and their free flight (one spring weight, never a swap)
-  const orb = t >= 15.32 && t < 22.2 ? (t - 15.32) * .42 + Math.PI * S(t - 19.9, { k: 40, c: 11 }) : 0;   // at 19.9 the buds trade places
+  const orb = t >= 15.32 && t < 22.2 ? (t - 15.32) * .42 + Math.PI * S(t - 20.8, { k: 40, c: 11 }) : 0;   // at 19.9 the buds trade places
   [neo.budL, neo.budR].forEach((b, i) => { const side = i ? 1 : -1; b.visible = budsOn && p.s > .002;
     const a = orb + (side < 0 ? Math.PI : 0), half = p.d / 2;
     pF.copy(at(p.x + Math.cos(a) * half, p.y + 10 * Math.sin(t * 1.5 + i))); pF.z = Math.sin(a) * half / PXU;
