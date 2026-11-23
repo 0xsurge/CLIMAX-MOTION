@@ -39,6 +39,24 @@ html,body{background:#EEF1EC;overflow:hidden}
     <div id="spec" class="abs" style="left:0;top:0;width:100%;height:100%"></div>
     <div id="buy" class="abs" style="height:58px;width:150px;border-radius:29px;background:linear-gradient(90deg,#B6FF4D,#82E600);font:700 28px/58px D;text-align:center;color:#0B1A00">Buy</div>
   </div>
+  <!-- part two (8.1-30 s): the Gemini launch film's devices, reverse-engineered for oraimo -->
+  <div id="p2" class="abs" style="left:0;top:0;width:1080px;height:1080px;transform-origin:540px 540px">
+    <div id="gband" class="abs" style="left:-200px;top:0;width:1480px;height:1080px;background:linear-gradient(160deg,#B6FF4D 0%,#4FCB12 45%,#1E7A0A 100%)"></div>
+    <div id="intro" class="abs" style="left:0;width:1080px;top:470px;text-align:center;font:700 64px/1 D;letter-spacing:-.02em;white-space:nowrap"><span id="i1">Built for</span> <span id="i2" class="lime" style="color:#4FB000">beyond</span></div>
+    <div id="stackL" class="abs" style="left:110px;top:510px;font:700 64px/1 D;letter-spacing:-.02em;color:#fff">Made for</div>
+    <div id="stack" class="abs" style="left:420px;top:0;width:640px;height:1080px"></div>
+    <div id="sheet" class="abs" style="left:190px;top:330px;width:700px;height:560px;border-radius:44px;background:#fff;box-shadow:0 40px 100px rgba(17,19,24,.2)">
+      <div class="abs" style="left:0;width:700px;text-align:center;top:44px;font:700 38px/1 D">SpaceBuds Neo+</div>
+      <div class="abs" style="left:0;width:700px;text-align:center;top:94px;font:500 26px/1 D;color:#8A9088">Not connected</div>
+      <div id="cbtn" class="abs" style="left:110px;top:440px;width:480px;height:82px;border-radius:41px;background:#111318;color:#fff;font:700 32px/82px D;text-align:center">Connect</div>
+    </div>
+    <svg id="hand" class="abs" width="120" height="140" viewBox="0 0 60 70" style="left:0;top:0;transform-origin:22px 6px;filter:drop-shadow(0 10px 18px rgba(0,0,0,.25))"><path d="M20 6c0-3 5-3 5 0v20c0-3 5-3 5 0v4c0-3 5-3 5 0v4c0-3 5-3 5 0v14c0 9-6 16-15 16h-2c-7 0-11-4-14-9L6 44c-2-3 2-6 5-3l9 8z" fill="#fff" stroke="#111318" stroke-width="3" stroke-linejoin="round"/></svg>
+    <div id="cword" class="abs" style="left:0;top:0;width:1080px;height:1080px"></div>
+    <div id="ring" class="abs" style="left:0;top:0;width:1080px;height:1080px"></div>
+    <div id="rtext" class="abs" style="left:0;width:1080px;top:520px;text-align:center;font:700 46px/1 D;color:#fff"></div>
+    <img id="logoE" src="../assets/logo_lime.png" class="abs" style="left:290px;top:420px;width:500px;transform-origin:250px 64px">
+    <div id="tagE" class="abs" style="left:0;width:1080px;top:640px;text-align:center;font:700 44px/1.4 D;color:#111318">SpaceBuds Neo+<br><span style="color:#4FB000">Beyond the noise.</span></div>
+  </div>
   <div id="gl3" class="abs" style="left:0;top:0;width:1080px;height:1080px;pointer-events:none"></div>
   <div id="endDot" class="abs" style="left:516px;top:516px;width:48px;height:48px;border-radius:50%;background:#82E600;box-shadow:0 0 30px rgba(130,230,0,.6)"></div>
 </div>
@@ -48,7 +66,7 @@ html,body{background:#EEF1EC;overflow:hidden}
 const M = window.Motion, S = (t, p) => M.spring(t, p), clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x)), lerp = (a, b, u) => a + (b - a) * u;
 const sm = x => { x = clamp(x); return x * x * (3 - 2 * x); };
 const $ = id => document.getElementById(id);
-window.FILM_DUR = 8.6;
+window.FILM_DUR = 30;
 const SNAP = { k: 300, c: 30 }, SOFT = { k: 90, c: 17 }, CARD = { k: 160, c: 23 }, POP = { k: 420, c: 38 };
 // the five oraimo truths, one colour each (the reference's five colourways)
 const STATES = [
@@ -119,8 +137,75 @@ window.seek = t => {
       r.style.transform = `translateX(${((1 - s) * -24).toFixed(1)}px)`; r.style.filter = s < .98 ? `blur(${((1 - s) * 8).toFixed(1)}px)` : ''; });
     const bs = S(t - 6.95, POP), bo = clamp(bs * 1.5) * (1 - sm((t - 7.42) / .12)); $('buy').style.left = (c.w - 210).toFixed(1) + 'px'; $('buy').style.top = (c.h - 100).toFixed(1) + 'px'; $('buy').style.opacity = bo.toFixed(3); $('buy').style.transform = `scale(${(.6 + .4 * clamp(bs)).toFixed(3)})`; }
   // 5. the card becomes the lime dot
-  { const d = S(t - 8.12, POP); $('endDot').style.display = on(8.1, 8.6) ? '' : 'none'; $('endDot').style.transform = `scale(${(clamp(d) * 1.0).toFixed(3)})`; }
+  { const d = S(t - 8.12, POP); $('endDot').style.display = on(8.1, 8.75) ? '' : 'none'; $('endDot').style.transform = `scale(${(clamp(d) * 1.0).toFixed(3)})`; }
 };
 Promise.all([...document.images].map(i => i.decode().catch(() => {})).concat([document.fonts.load("900 80px D"), document.fonts.load("700 80px D"), document.fonts.load("500 80px D")])).then(() => { window.__domOK = true; });
+</script>
+
+<script>
+// ---------- part two: the Gemini launch film's devices (videos/reference/fridge-ref/a.mp4, 9-30 s) for oraimo ----------
+const WORDS2 = ['your commute.', 'your workouts.', 'your calls.', 'your games.', 'every day.'];
+WORDS2.forEach(w => { const d = document.createElement('div'); d.className = 'abs'; d.style.cssText = 'left:0;font:700 64px/1 D;letter-spacing:-.02em;white-space:nowrap;color:#fff'; d.textContent = w; $('stack').appendChild(d); });
+const CW = 'Connected'.split('').map((ch, i) => { const d = document.createElement('div'); d.className = 'abs'; d.style.cssText = 'font:700 96px/1 D;letter-spacing:-.02em;color:#fff'; d.textContent = ch; $('cword').appendChild(d); return d; });
+const ICONS = ['<path d="M9 22V8l14-3v14" fill="none" stroke="#2FA800" stroke-width="2.6"/><circle cx="7" cy="22" r="3.2" fill="#2FA800"/><circle cx="21" cy="19" r="3.2" fill="#2FA800"/>',
+  '<rect x="11" y="4" width="8" height="14" rx="4" fill="none" stroke="#2FA800" stroke-width="2.6"/><path d="M7 14a8 8 0 0 0 16 0M15 22v4" fill="none" stroke="#2FA800" stroke-width="2.6" stroke-linecap="round"/>',
+  '<rect x="3" y="9" width="24" height="13" rx="6.5" fill="none" stroke="#2FA800" stroke-width="2.6"/><circle cx="20" cy="15.5" r="2" fill="#2FA800"/><path d="M9 12v7M5.5 15.5h7" stroke="#2FA800" stroke-width="2.6"/>',
+  '<path d="M6 8h10l3 6h5v6H6z" fill="none" stroke="#2FA800" stroke-width="2.4" stroke-linejoin="round"/><circle cx="10" cy="22" r="2.4" fill="#2FA800"/><circle cx="20" cy="22" r="2.4" fill="#2FA800"/>',
+  '<path d="M15 4c5 7 8 10.5 8 14a8 8 0 0 1-16 0c0-3.5 3-7 8-14z" fill="none" stroke="#2FA800" stroke-width="2.6"/>',
+  '<path d="M8 5h6l2 6-3 2a12 12 0 0 0 6 6l2-3 6 2v6c0 1-1 2-2 2C14 26 4 16 4 7c0-1 1-2 2-2z" fill="none" stroke="#2FA800" stroke-width="2.4" stroke-linejoin="round"/>',
+  '<circle cx="15" cy="9" r="3" fill="#2FA800"/><path d="M15 13v7l-4 6M15 20l4 6M10 16l5-3 5 3" fill="none" stroke="#2FA800" stroke-width="2.4" stroke-linecap="round"/>',
+  '<circle cx="15" cy="15" r="11" fill="none" stroke="#2FA800" stroke-width="2.6"/><path d="M15 8v7l5 3" fill="none" stroke="#2FA800" stroke-width="2.6" stroke-linecap="round"/>',
+  '<path d="M4 15h6l3-8 4 16 3-8h6" fill="none" stroke="#2FA800" stroke-width="2.6" stroke-linejoin="round"/>',
+  '<circle cx="15" cy="15" r="4" fill="#2FA800"/><ellipse cx="15" cy="15" rx="12" ry="6" fill="none" stroke="#2FA800" stroke-width="2.4"/>',
+  '<rect x="9" y="3" width="12" height="24" rx="3" fill="none" stroke="#2FA800" stroke-width="2.6"/><circle cx="15" cy="22" r="1.6" fill="#2FA800"/>',
+  '<path d="M5 20c3-8 7-12 10-12s7 4 10 12" fill="none" stroke="#2FA800" stroke-width="2.6" stroke-linecap="round"/><circle cx="15" cy="8" r="2.4" fill="#2FA800"/>'];
+const RG = ICONS.map((ic, i) => { const d = document.createElement('div'); d.className = 'abs'; d.style.cssText = 'width:96px;height:96px;border-radius:26px;background:#fff;box-shadow:0 12px 30px rgba(17,19,24,.18);display:flex;align-items:center;justify-content:center';
+  d.innerHTML = `<svg width="54" height="54" viewBox="0 0 30 30">${ic}</svg>`; $('ring').appendChild(d); return d; });
+const RTXT = [[22.75, 'to your music'], [23.75, 'to your calls'], [24.75, 'to every part of your day']];
+(() => { const seek1 = window.seek; window.seek = t => { seek1(t); part2(t); }; })();
+function part2(t) {
+  const on = (a, b) => t >= a && t < b, p2 = $('p2'); p2.style.display = t >= 8.15 ? '' : 'none'; if (t < 8.15) return;
+  // the push into the Connect button (Gemini's tap into the send button): the whole part zooms on the button, then lets go
+  const push = S(t - 20.45, { k: 140, c: 22 }) * (1 - sm((t - 21.0) / .01)); window.PUSH2 = push;
+  p2.style.transform = t < 21.0 ? `translate(${(-(540 - 540) * push * 4).toFixed(1)}px,${(-(811 - 540) * push * 4).toFixed(1)}px) scale(${(1 + 4 * push).toFixed(3)})` : '';
+  // 1. "Built for beyond": small type on white (Gemini "Built to understand"), the lime band rises from the bottom
+  { const a = S(t - 8.45, SNAP), b = S(t - 8.9, SNAP), ex = sm((t - 11.3) / .3), el = $('intro'); el.style.display = on(8.3, 11.7) ? '' : 'none';
+    $('i1').style.opacity = clamp(a * 1.4) * (1 - ex); $('i2').style.opacity = clamp(b * 1.4) * (1 - ex); el.style.filter = a < .98 ? `blur(${((1 - a) * 10).toFixed(1)}px)` : ''; el.style.transform = `scale(${(1 + .06 * clamp((t - 8.4) / 3)).toFixed(4)})`; }
+  // the gradient band: rises from the bottom edge as a soft glow (9.6-11.2), then fills the frame for the word stack
+  { const rise = sm((t - 9.6) / 1.6), fill = sm((t - 11.2) / .5), out = sm((t - 17.4) / .5), g = $('gband'); g.style.display = on(9.5, 18) ? '' : 'none';
+    const top = lerp(1080, 880, rise) * (1 - fill); g.style.top = top.toFixed(1) + 'px'; g.style.filter = `blur(${(lerp(60, 0, fill)).toFixed(1)}px)`; g.style.opacity = (1 - out).toFixed(3);
+    g.style.webkitMaskImage = fill < 1 ? `linear-gradient(180deg, transparent 0, #000 ${(lerp(30, 0, fill) * 10).toFixed(0)}px)` : ''; }
+  // 2. the word stack: "Made for" holds; the words scroll up one line every 0.95 s; the current one bright, its neighbours faded
+  { const show = on(11.5, 17.6), k0 = 11.9; $('stackL').style.display = $('stack').style.display = show ? '' : 'none';
+    if (show) { const enter = S(t - 11.5, SNAP), ex = sm((t - 17.2) / .3); $('stackL').style.opacity = clamp(enter * 1.4) * (1 - ex); $('stackL').style.transform = `translateY(${((1 - enter) * 30).toFixed(1)}px)`;
+      let pos = 0; WORDS2.forEach((_, i) => { if (i) pos += S(t - (k0 + i * .95), { k: 150, c: 22 }); });
+      [...$('stack').children].forEach((d, i) => { const off = i - pos, y = 510 + off * 92, a = Math.max(0, 1 - Math.abs(off) * .62) * clamp(enter * 1.4) * (1 - ex);
+        d.style.top = y.toFixed(1) + 'px'; d.style.opacity = a.toFixed(3); d.style.filter = Math.abs(off) > .15 ? `blur(${Math.min(6, Math.abs(off) * 4).toFixed(1)}px)` : ''; }); } }
+  // 3. the pairing sheet rises; the hand taps Connect; the camera pushes into the button
+  { const s = S(t - 17.55, { k: 110, c: 19 }), sh = $('sheet'); sh.style.display = on(17.5, 21.0) ? '' : 'none';
+    sh.style.transform = `translateY(${((1 - s) * 700).toFixed(1)}px)`; const pressed = t >= 20.4, b = $('cbtn'); b.textContent = pressed ? 'Connected' : 'Connect';
+    b.style.background = pressed ? 'linear-gradient(90deg,#B6FF4D,#82E600)' : '#111318'; b.style.color = pressed ? '#0B1A00' : '#fff'; const dip = (S(t - 20.35, POP) - S(t - 20.5, POP)) * .06; b.style.transform = `scale(${(1 - dip).toFixed(3)})`;
+    const hm = S(t - 19.4, { k: 90, c: 17 }), hx = lerp(1150, 380, hm), hy = lerp(1100, 815, hm), hp = (S(t - 20.3, POP) - S(t - 20.48, POP)), hd = $('hand'); hd.style.display = on(19.3, 21.0) ? '' : 'none';
+    hd.style.transform = `translate(${hx.toFixed(1)}px,${hy.toFixed(1)}px) scale(${(1 - .12 * hp).toFixed(3)})`; }
+  // after the push the frame is the lime of the pressed button: the ground for "Connected"
+  $('stage').style.background = t >= 20.95 && t < 27.0 ? 'radial-gradient(120% 100% at 50% 40%, #C9FF6E 0, #6DD10A 55%, #2E8A08 100%)' : '';
+  // 4. "Connected": the letters fly together, then scatter into the ring of icons; the ring turns; the line under it swaps
+  { const show = on(21.0, 22.9); $('cword').style.display = show ? '' : 'none';
+    if (show) { if (!CW.adv) { CW.adv = CW.map(d => d.offsetWidth); CW.tot = CW.adv.reduce((p, q) => p + q, 0); } let x = 540 - CW.tot / 2; CW.forEach((d, i) => { const g = S(t - 21.1 - i * .03, { k: 130, c: 20 }), sc = sm((t - 22.3) / .45), a = i * .7;
+      const tx = x + CW.adv.slice(0, i).reduce((p, q) => p + q, 0), gx = lerp(540 + Math.cos(a * 3) * 420, tx, clamp(g)), gy = lerp(540 + Math.sin(a * 3) * 380, 560, clamp(g));
+      const rx = 540 + Math.cos(i / CW.length * 6.283) * 360, ry = 540 + Math.sin(i / CW.length * 6.283) * 360;
+      d.style.transform = `translate(${lerp(gx, rx, sc).toFixed(1)}px,${(lerp(gy, ry, sc) - 50).toFixed(1)}px) scale(${(1 - .7 * sc).toFixed(3)})`; d.style.opacity = (clamp(g * 1.5) * (1 - sc)).toFixed(3); }); } }
+  { const show = on(22.4, 27.4); $('ring').style.display = $('rtext').style.display = show ? '' : 'none';
+    if (show) { const g = S(t - 22.45, { k: 110, c: 19 }), burst = S(t - 26.5, { k: 70, c: 14 }), spin = t * .22;
+      RG.forEach((d, i) => { const a = i / RG.length * 6.283 + spin, r = lerp(60, 380, clamp(g)) + burst * 700, x = 540 + Math.cos(a) * r - 48, y = 540 + Math.sin(a) * r - 48;
+        d.style.transform = `translate(${x.toFixed(1)}px,${y.toFixed(1)}px) scale(${(clamp(g * 1.3) * (1 - .3 * burst)).toFixed(3)}) rotate(${(Math.sin(a) * 6).toFixed(1)}deg)`; d.style.opacity = (clamp(g * 2) * (1 - sm(burst * 1.2))).toFixed(3); });
+      let k = -1; RTXT.forEach(([tt], i) => { if (t >= tt) k = i; }); const rt = $('rtext');
+      if (k >= 0) { const st = S(t - RTXT[k][0], SNAP); rt.textContent = RTXT[k][1]; rt.style.opacity = (clamp(st * 1.4) * (1 - sm((t - 26.3) / .25))).toFixed(3); rt.style.filter = st < .98 ? `blur(${((1 - st) * 8).toFixed(1)}px)` : ''; rt.style.transform = `translateY(${((1 - st) * 20).toFixed(1)}px)`; }
+      else rt.style.opacity = 0; } }
+  // 5. the close: as the icons burst away the ground returns to light, the logo grows, then the line
+  { const show = t >= 26.9; $('logoE').style.display = $('tagE').style.display = show ? '' : 'none';
+    if (show) { const lg = S(t - 27.0, { k: 90, c: 17 }); $('logoE').style.opacity = clamp(lg * 1.6); $('logoE').style.transform = `scale(${(.3 + .7 * lg + .02 * clamp((t - 28) / 2)).toFixed(4)})`; $('logoE').style.filter = lg < .98 ? `blur(${((1 - lg) * 14).toFixed(1)}px)` : '';
+      const tg = S(t - 27.7, SNAP); $('tagE').style.opacity = clamp(tg * 1.4); $('tagE').style.transform = `translateY(${((1 - tg) * 24).toFixed(1)}px)`; $('tagE').style.filter = tg < .98 ? `blur(${((1 - tg) * 8).toFixed(1)}px)` : ''; } }
+}
 </script>
 <script type="module" src="card3d.js"></script>

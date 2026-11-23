@@ -2,7 +2,7 @@
 # climax-launch/SOUND.md: a pop on each fragment landing and on the dot, ticks as the wordmark types, an air pass as the
 # cluster flies in and collapses, a sub on the card landing, a soft click on every colour swap, a pop for Buy, a sub on the final dot.
 import numpy as np, wave, subprocess
-SR = 44100; DUR = 8.6; N = int((DUR + .5) * SR); TMP = '/tmp/claude-0/-home-user-CLIMAX-MOTION/ebd3c3d1-b9fc-58c3-8e73-03b9f49be28b/scratchpad/card_tmp.wav'
+SR = 44100; DUR = 30.0; N = int((DUR + .5) * SR); TMP = '/tmp/claude-0/-home-user-CLIMAX-MOTION/ebd3c3d1-b9fc-58c3-8e73-03b9f49be28b/scratchpad/card_tmp.wav'
 PACK = '../../obi-reel/sound/sfxpack/'; rng = np.random.default_rng(3); fx = np.zeros((N, 2))
 def put(t0, s, g, pan=0.):
     i = int(max(0, t0) * SR); j = min(N, i + len(s)); fx[i:j, 0] += s[:j - i] * g * (1 - max(pan, 0)); fx[i:j, 1] += s[:j - i] * g * (1 + min(pan, 0))
@@ -17,11 +17,18 @@ def load(p, af=None):
 air = load(PACK + 'sweep/sweep_18_mixkit2636.wav', 'lowpass=f=5200,highpass=f=180'); pk = int(np.argmax(np.abs(air)))
 for t0 in (.25, .4, .55, .62): put(t0, pop(900 + 120 * rng.random()), .05, rng.uniform(-.3, .3))
 put(.62, pop(780), .09)
+# part two
+put(8.45, pop(820), .07); put(8.9, pop(880), .07); put(9.6 - pk / SR, air, .07); put(11.2 - pk / SR, air, .1); put(11.5, sub(), .15)
+for k in range(5): put(11.9 + k * .95, pop(760 + 60 * k), .07)
+put(17.55 - pk / SR * .3, air, .08); put(17.9, sub(), .12); put(18.3, click(2600, .004), .06); put(20.4, click(1900, .007), .2); put(20.45 - pk / SR * .6, air, .12); put(21.0, sub(), .3)
+for k in range(9): put(21.1 + k * .03, pop(900 + 40 * k), .03)
+for tt in (22.75, 23.75, 24.75): put(tt, pop(800), .07)
+put(26.5 - pk / SR * .5, air, .12); put(27.0, sub(), .35); put(27.7, pop(760), .08)
 for k in range(6): put(1.0 + k * .08, click(3200, .003), .05, -.3 + k * .12)
 put(1.75 - pk / SR, air, .13, .2); put(2.42 - pk / SR, air, .1, -.1); put(2.55, sub(), .25)
 for t0 in (3.75, 4.31, 4.85, 5.38, 5.92): put(t0 - .02, click(1900, .007), .14); put(t0, sub(), .08)
 put(6.43 - pk / SR * .5, air, .07); put(6.97, pop(700), .1); put(7.5, sub(), .1); put(8.12, pop(820), .12); put(8.15, sub(), .22)
-subprocess.run(['ffmpeg', '-y', '-v', 'error', '-ss', '73.2', '-t', str(DUR + .5), '-i', '../../moniepoint/sound/cand/760.mp3', '-af', f'afade=t=in:d=0.3,afade=t=out:st={DUR - 1.0}:d=1.0', '-ar', '44100', '-ac', '2', TMP], check=True)
+subprocess.run(['ffmpeg', '-y', '-v', 'error', '-ss', '68.7', '-t', str(DUR + .5), '-i', '../../moniepoint/sound/cand/760.mp3', '-af', f'afade=t=in:d=0.3,afade=t=out:st={DUR - 1.0}:d=1.0', '-ar', '44100', '-ac', '2', TMP], check=True)
 w = wave.open(TMP); m = np.frombuffer(w.readframes(w.getnframes()), '<i2').reshape(-1, 2) / 32768
 n = min(len(m), N); mix = fx.copy(); mix[:n] += m[:n] * .7; mix = mix[:int(DUR * SR)]; mix /= max(1e-9, np.abs(mix).max()) / .9
 with wave.open('mix.wav', 'wb') as o: o.setnchannels(2); o.setsampwidth(2); o.setframerate(SR); o.writeframes((mix * 32767).astype('<i2').tobytes())
