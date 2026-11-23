@@ -25,7 +25,8 @@ html,body{background:#F5F6F3;overflow:hidden}
 .ios-card{left:16px;width:384px;background:#fff;border-radius:12px;overflow:hidden}
 .ios-row{display:flex;align-items:center;gap:8px;height:48px;padding:0 14px 0 16px;border-top:1px solid #E5E5EA;font:500 16px/1 D;white-space:nowrap}.ios-row:first-child{border-top:0}
 .ios-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis}.ios-st{color:#8E8E93;font-size:15px}
-.chip{position:absolute;font:700 30px/1 D;padding:16px 26px;border-radius:999px;white-space:nowrap;background:#111318;color:#fff}
+.dot{display:inline-block;width:.42em;height:.42em;border-radius:50%;background:#82E600;margin-right:.32em;vertical-align:.12em}
+.chip{position:absolute;font:700 38px/1 D;padding:18px 30px;border-radius:999px;white-space:nowrap;background:#111318;color:#fff}
 </style>
 <div id="stage">
 <svg width="0" height="0" style="position:absolute"><defs>
@@ -45,7 +46,7 @@ html,body{background:#F5F6F3;overflow:hidden}
     <div class="abs" id="bloom" style="left:0;top:0;width:1920px;height:1080px"></div>
     <!-- 3 the wordmark stage (fully in frame) -->
     <img id="word" src="../../assets/logo_lime.png" class="abs" style="left:140px;top:250px;width:1640px;transform-origin:820px 208px">
-    <div class="abs wide" id="name3" style="left:0;width:1920px;text-align:center;top:930px;font:700 34px/1 D;letter-spacing:.34em"><span class="w">SpaceBuds</span> <span class="w">Neo+</span></div>
+    <div class="abs" id="name3" style="left:0;width:1920px;text-align:center;top:920px;font:700 44px/1 D;letter-spacing:-.01em"><span class="w">SpaceBuds</span> <span class="w lime">Neo+</span></div>
     <!-- 4 noise off -->
     <svg class="abs" id="wv" style="left:0;top:0;overflow:visible" width="1920" height="1080"><path id="wL" fill="none" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/><path id="wRg" fill="none" stroke-width="18" filter="url(#gl)"/><path id="wR" fill="none" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/></svg>
     <div class="abs" id="tg" style="left:740px;top:820px;width:440px;height:110px;border-radius:999px;background:#D9DCD6;overflow:hidden;box-shadow:0 20px 50px rgba(17,19,24,.12)">
@@ -53,24 +54,24 @@ html,body{background:#F5F6F3;overflow:hidden}
       <div class="abs" style="left:36px;top:33px;font:700 44px/1 D;color:#0B1A00">ANC</div>
       <div class="abs" style="left:254px;top:20px;width:150px;height:70px;border-radius:999px;background:#fff"></div>
       <div class="abs" id="tgKnob" style="left:262px;top:28px;width:54px;height:54px;border-radius:50%;background:#B9BDB5"></div></div>
-    <div class="abs" id="h4a" style="left:110px;top:150px;font:700 30px/1.3 D"><span class="w"><span class="lime">●</span> Active</span> <span class="w">Noise</span> <span class="w">Cancellation</span></div>
+    <div class="abs" id="h4a" style="left:110px;top:140px;font:700 40px/1.2 D;letter-spacing:-.01em"><span class="w"><span class="dot"></span>Active</span> <span class="w">Noise</span> <span class="w">Cancellation</span></div>
     <div class="abs" id="h4b" style="left:110px;top:200px;font:700 76px/1.05 D;letter-spacing:-.035em"><span class="w">Less</span> <span class="w">noise.</span><br><span class="w mute">More</span> <span class="w mute">you.</span></div>
     <!-- 5 / 6 rings: ring0 is the carrier that becomes the 30 h track -->
     <svg class="abs" style="left:0;top:0;overflow:visible" width="1920" height="1080"><g id="rings" fill="none" stroke="#82E600"></g><g id="orbs"></g>
       <circle id="arcG" fill="none" stroke="#82E600" stroke-width="40" filter="url(#gl)" opacity=".35"/><circle id="arc" fill="none" stroke="url(#cg)" stroke-width="22" stroke-linecap="round"/><g id="bars" stroke="#82E600" stroke-width="10" stroke-linecap="round"></g></svg>
-    <div class="abs wide" id="h5a" style="left:0;width:1920px;text-align:center;top:140px;font:700 34px/1 D;letter-spacing:.3em;color:#fff"><span class="w lime">Sound360</span> <span class="w">spatial</span> <span class="w">audio</span></div>
+    <div class="abs" id="h5a" style="left:0;width:1920px;text-align:center;top:130px;font:700 44px/1 D;letter-spacing:-.01em;color:#fff"><span class="w lime">Sound360</span> <span class="w">spatial</span> <span class="w">audio</span></div>
     <div class="abs" id="h5b" style="left:0;width:1920px;text-align:center;top:850px;font:700 72px/1 D;letter-spacing:-.03em;color:#fff"><span class="w">Sound</span> <span class="w">that</span> <span class="w">surrounds</span> <span class="w">you.</span></div>
     <div class="abs mute" id="h6a" style="left:130px;top:250px;font:500 40px/1 D"><span class="w">Up</span> <span class="w">to</span></div>
     <div class="abs lime" id="n30" style="left:120px;top:300px;font:900 380px/.9 D;letter-spacing:-.06em"></div>
     <div class="abs" id="h6b" style="left:136px;top:660px;font:700 64px/1.1 D;letter-spacing:-.02em"><span class="w">hours</span> <span class="w">of</span> <span class="w">play.</span></div>
-    <div class="abs mute" id="h6c" style="left:138px;top:760px;font:500 28px/1.4 D"><span class="w">5 h in the buds, 25 h more from the case (ANC off).</span></div>
+    <div class="abs mute" id="h6c" style="left:138px;top:760px;font:500 36px/1.35 D"><span class="w">5 h in the buds, 25 h more from the case (ANC off).</span></div>
     <!-- 7 calls -->
-    <div class="chip" id="m1" style="left:720px;top:920px"><span class="lime">●</span> Mic 1</div><div class="chip" id="m2" style="left:1000px;top:920px"><span class="lime">●</span> Mic 2</div>
+    <div class="chip" id="m1" style="left:700px;top:910px"><span class="dot"></span>Mic 1</div><div class="chip" id="m2" style="left:1010px;top:910px"><span class="dot"></span>Mic 2</div>
     <div class="abs" id="h7" style="left:0;width:1920px;text-align:center;top:90px;font:700 72px/1 D;letter-spacing:-.03em"><span class="w">Clear</span> <span class="w">calls.</span> <span class="w mute">Every</span> <span class="w mute">time.</span></div>
     <!-- 8 game -->
     <div class="abs" id="game" style="left:-60px;top:110px;width:2040px;height:915px;transform-origin:995px 378px"><img src="../../assets/neo/game.jpg" style="width:2040px;display:block"></div>
     <div class="abs" id="gshade" style="left:-60px;top:560px;width:2040px;height:560px;background:linear-gradient(180deg,rgba(5,6,7,0),rgba(5,6,7,.92))"></div>
-    <div class="abs wide" id="h8a" style="left:120px;top:880px;font:700 30px/1.3 D;letter-spacing:.3em;color:#fff"><span class="w"><span class="lime">●</span> Low-latency</span> <span class="w">game</span> <span class="w">mode</span></div>
+    <div class="abs" id="h8a" style="left:120px;top:852px;font:700 40px/1.2 D;letter-spacing:-.01em;color:#fff"><span class="w"><span class="dot"></span>Low-latency</span> <span class="w">game</span> <span class="w">mode</span></div>
     <div class="abs" id="h8b" style="left:120px;top:930px;font:700 64px/1.1 D;letter-spacing:-.03em;color:#fff"><span class="w">Sound</span> <span class="w">in</span> <span class="w">perfect</span> <span class="w">sync.</span></div>
     <!-- 9 connected -->
     <!-- a real phone: titanium frame, side buttons, punch-hole camera, and the iOS Bluetooth screen built as live UI (from oraimo's own screen render) -->
@@ -89,20 +90,20 @@ html,body{background:#F5F6F3;overflow:hidden}
         <div class="abs" id="pgame" style="left:-230px;top:230px;width:876px;height:416px;overflow:hidden;transform:rotate(90deg)"><img src="../../assets/neo/game_screen.jpg" style="width:876px;height:416px;object-fit:cover;display:block"></div>
       </div></div>
     <div class="abs" id="chk" style="left:1670px;top:372px;width:64px;height:64px;border-radius:50%;background:#82E600;box-shadow:0 0 30px rgba(130,230,0,.7)"><svg width="64" height="64" viewBox="0 0 64 64"><path id="chkP" d="M18 33 L28 43 L47 22" fill="none" stroke="#0B1A00" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-    <div class="abs" id="h9a" style="left:130px;top:340px;font:700 30px/1.3 D"><span class="w"><span class="lime">●</span> Bluetooth</span> <span class="w">5.4</span></div>
+    <div class="abs" id="h9a" style="left:130px;top:334px;font:700 40px/1.2 D;letter-spacing:-.01em"><span class="w"><span class="dot"></span>Bluetooth</span> <span class="w">5.4</span></div>
     <div class="abs" id="h9b" style="left:126px;top:400px;font:700 96px/1 D;letter-spacing:-.04em"><span class="w">Open</span> <span class="w">the</span> <span class="w">case.</span></div>
     <div class="abs" id="h9c" style="left:126px;top:496px;font:700 96px/1 D;letter-spacing:-.04em"><span class="w lime">Connected.</span></div>
-    <div class="abs mute" id="h9d" style="left:130px;top:640px;font:500 30px/1.4 D"><span class="w">Built-in hall sensor: it connects the moment the lid opens.</span></div>
+    <div class="abs mute" id="h9d" style="left:130px;top:640px;width:900px;font:500 36px/1.35 D"><span class="w">Built-in hall sensor: it connects the moment the lid opens.</span></div>
     <!-- 10 / 11 -->
-    <div class="abs wide" id="h10" style="left:0;width:1920px;text-align:center;top:90px;font:700 32px/1 D;letter-spacing:.3em;color:#fff"><span class="w">IPX4</span> <span class="w lime">·</span> <span class="w">Metallic</span> <span class="w">finish</span> <span class="w lime">·</span> <span class="w">Touch</span> <span class="w">control</span></div>
+    <div class="abs" id="h10" style="left:0;width:1920px;text-align:center;top:90px;font:700 44px/1 D;letter-spacing:-.01em;color:#fff"><span class="w">IPX4</span> <span class="w"><span class="dot"></span>Metallic</span> <span class="w">finish</span> <span class="w"><span class="dot"></span>Touch</span> <span class="w">control</span></div>
     <div class="abs" id="dot" style="left:940px;top:520px;width:40px;height:40px;border-radius:50%;background:#B6FF4D;box-shadow:0 0 40px 10px rgba(130,230,0,.7)"></div>
     <img id="logo11" src="../../assets/logo_lime.png" class="abs" style="left:700px;top:330px;width:520px;transform-origin:260px 66px">
-    <div class="abs wide" id="h11a" style="left:0;width:1920px;text-align:center;top:520px;font:700 40px/1 D;letter-spacing:.42em;color:#fff"><span class="w">SpaceBuds</span> <span class="w">Neo+</span></div>
-    <div class="abs wide" id="h11b" style="left:0;width:1920px;text-align:center;top:600px;font:700 28px/1 D;letter-spacing:.6em;color:#82E600"><span class="w">Beyond</span> <span class="w">the</span> <span class="w">noise.</span></div>
+    <div class="abs" id="h11a" style="left:0;width:1920px;text-align:center;top:512px;font:700 52px/1 D;letter-spacing:-.01em;color:#fff"><span class="w">SpaceBuds</span> <span class="w">Neo+</span></div>
+    <div class="abs" id="h11b" style="left:0;width:1920px;text-align:center;top:590px;font:700 44px/1 D;letter-spacing:-.005em;color:#82E600"><span class="w">Beyond</span> <span class="w">the</span> <span class="w">noise.</span></div>
     <!-- the product layer: one element per real render, each a carrier with its own keys -->
     <div id="sweepP" class="abs" style="left:0;top:0;display:none"></div>
     <div id="gl3" class="abs" style="left:0;top:0;width:1920px;height:1080px"></div>
-    <svg id="cur" class="abs" width="54" height="72" viewBox="0 0 54 72" style="left:0;top:0;margin:-4px 0 0 -4px;overflow:visible;filter:drop-shadow(0 0 14px rgba(130,230,0,.85)) drop-shadow(0 8px 16px rgba(0,0,0,.3));transform-origin:4px 2px"><path d="M4 2 L4 58 L19 45 L29 68 L39 64 L29 41 L49 41 Z" fill="url(#cg)" stroke="#fff" stroke-width="3" stroke-linejoin="round"/></svg>
+    <svg id="cur" class="abs" width="64" height="64" viewBox="0 0 64 64" style="left:0;top:0;margin:-5px 0 0 -5px;overflow:visible;transform-origin:5px 5px"><path d="M5 5 L59 28 Q60.5 29 59 30 L34 35 L29 59 Q28.5 61 27 59.5 Z" fill="url(#cg)" stroke="#fff" stroke-width="3.2" stroke-linejoin="round"/></svg>
   </div>
 </div></div>
 <div id="ov"></div>
