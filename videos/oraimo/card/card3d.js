@@ -51,8 +51,12 @@ function pose(t) {
   neo.update(); renderer.render(scene, camera);
 }
 const domSeek = window.seek;
-// the pace of part two (from "Built for beyond", 8.15 s) is 1.55x: the film time runs faster there
-const PACE = 1.55, warp = t => t < 8.15 ? t : 8.15 + (t - 8.15) * PACE;
+// the pace of part two matches part one (something new about every 0.5 s): film time -> story time, piecewise,
+// so the holds shrink and every action keeps its order
+const PACE = [[8.15, 8.15], [8.45, 8.45], [8.75, 8.9], [9.15, 9.6], [9.75, 11.2], [9.95, 11.5], [10.2, 11.9], [10.7, 12.85], [11.2, 13.8], [11.7, 14.75], [12.2, 15.7],
+  [12.75, 17.2], [12.95, 17.55], [13.75, 19.4], [14.3, 20.4], [14.75, 21.0], [15.5, 22.3], [15.6, 22.45], [15.8, 22.75], [16.3, 23.75], [16.8, 24.75],
+  [17.6, 26.5], [17.9, 27.0], [18.4, 27.7], [20.0, 30.0]];
+const warp = t => { if (t < PACE[0][0]) return t; for (let i = 1; i < PACE.length; i++) { const [a, ua] = PACE[i - 1], [b, ub] = PACE[i]; if (t < b) return ua + (t - a) / (b - a) * (ub - ua); } return 30; };
 window.seek = t => { const u = warp(t); domSeek(u); pose(u); };
 const wait = () => new Promise(res => { const k = () => window.__domOK ? res() : setTimeout(k, 20); k(); });
 await wait(); window.seek(0); window.__ready = true;
