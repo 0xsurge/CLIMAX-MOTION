@@ -26,6 +26,7 @@ html,body{background:#F5F6F3;overflow:hidden}
 .ios-row{display:flex;align-items:center;gap:8px;height:48px;padding:0 14px 0 16px;border-top:1px solid #E5E5EA;font:500 16px/1 D;white-space:nowrap}.ios-row:first-child{border-top:0}
 .ios-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis}.ios-st{color:#8E8E93;font-size:15px}
 .dot{display:inline-block;width:.42em;height:.42em;border-radius:50%;background:#82E600;margin-right:.32em;vertical-align:.12em}
+.orb{position:absolute;left:0;top:0;width:190px;height:190px;border-radius:50%;overflow:hidden;box-shadow:0 0 0 3px #82E600,0 0 24px rgba(130,230,0,.45);transform-origin:95px 95px}.orb img{width:100%;height:100%;display:block}
 .chip{position:absolute;font:700 46px/1 D;padding:20px 34px;border-radius:999px;white-space:nowrap;background:#111318;color:#fff}
 </style>
 <div id="stage">
@@ -60,7 +61,7 @@ html,body{background:#F5F6F3;overflow:hidden}
     <svg class="abs" style="left:0;top:0;overflow:visible" width="1920" height="1080"><g id="rings" fill="none" stroke="#82E600"></g><g id="orbs"></g>
       <circle id="arcG" fill="none" stroke="#82E600" stroke-width="40" filter="url(#gl)" opacity=".35"/><circle id="arc" fill="none" stroke="url(#cg)" stroke-width="22" stroke-linecap="round"/><g id="bars" stroke="#82E600" stroke-width="10" stroke-linecap="round"></g></svg>
     <div class="abs" id="h5a" style="left:0;width:1920px;text-align:center;top:130px;font:700 44px/1 D;letter-spacing:-.01em;color:#fff"><span class="w lime">Sound360</span> <span class="w">spatial</span> <span class="w">audio</span></div>
-    <div class="abs" id="h5b" style="left:0;width:1920px;text-align:center;top:850px;font:700 72px/1 D;letter-spacing:-.03em;color:#fff"><span class="w">Sound</span> <span class="w">that</span> <span class="w">surrounds</span> <span class="w">you.</span></div>
+    <div class="abs" id="h5b" style="left:0;width:1920px;text-align:center;top:930px;font:700 72px/1 D;letter-spacing:-.03em;color:#fff"><span class="w">Sound</span> <span class="w">that</span> <span class="w">surrounds</span> <span class="w">you.</span></div>
     <div class="abs mute" id="h6a" style="left:250px;top:236px;font:500 48px/1 D"><span class="w">Up</span> <span class="w">to</span></div>
     <div class="abs lime" id="n30" style="left:240px;top:300px;font:900 380px/.9 D;letter-spacing:-.06em"></div>
     <div class="abs" id="h6b" style="left:256px;top:660px;font:700 64px/1.1 D;letter-spacing:-.02em"><span class="w">hours</span> <span class="w">of</span> <span class="w">play.</span></div>
@@ -101,6 +102,7 @@ html,body{background:#F5F6F3;overflow:hidden}
     <div class="abs" id="h11b" style="left:0;width:1920px;text-align:center;top:590px;font:700 44px/1 D;letter-spacing:-.005em;color:#82E600"><span class="w">Beyond</span> <span class="w">the</span> <span class="w">noise.</span></div>
     <!-- the product layer: one element per real render, each a carrier with its own keys -->
     <div id="sweepP" class="abs" style="left:0;top:0;display:none"></div>
+    <div id="orbhost" class="abs" style="left:0;top:0;width:1920px;height:1080px"></div><div id="orbfront" class="abs" style="left:0;top:0;width:1920px;height:1080px"></div>
     <div id="gl3" class="abs" style="left:0;top:0;width:1920px;height:1080px"></div>
     <svg id="cur" class="abs" width="64" height="64" viewBox="0 0 64 64" style="left:0;top:0;margin:-5px 0 0 -5px;overflow:visible;transform-origin:5px 5px"><path d="M5 5 L59 28 Q60.5 29 59 30 L34 35 L29 59 Q28.5 61 27 59.5 Z" fill="url(#cg)" stroke="#fff" stroke-width="3.2" stroke-linejoin="round"/></svg>
   </div>
@@ -184,7 +186,10 @@ const curPos = t => { let x = CUR[0][1][0], y = CUR[0][1][1]; for (let i = 1; i 
 // svg scenes
 const NS = 'http://www.w3.org/2000/svg', mk = (tag, parent, attrs) => { const e = document.createElementNS(NS, tag); Object.entries(attrs).forEach(([k, v]) => e.setAttribute(k, v)); parent.appendChild(e); return e; };
 const RINGS = [[380, 120], [620, 200], [880, 290]].map(([rx, ry], i) => ({ rx, ry, el: mk('ellipse', $('rings'), { 'stroke-width': 2 }), gl: i === 0 ? mk('ellipse', $('rings'), { 'stroke-width': 12, filter: 'url(#gl)' }) : null }));
-const ORBS = Array.from({ length: 9 }, (_, i) => ({ r: i % 3, ph: i * 2.1, sp: .35 + .1 * (i % 3), el: mk('circle', $('orbs'), { fill: '#D8FF8A' }) }));
+// the orbit carries people living with sound: real photos (Unsplash License, assets/people/CREDITS.md) in round frames
+const PEOPLE = ['closed', 'run', 'city', 'bus', 'sky', 'buswin', 'smile'];
+const ORBS = PEOPLE.map((n, i) => { const g = document.createElement('div'); g.className = 'orb'; g.innerHTML = `<img src="../../assets/people/o_${n}.jpg">`; document.getElementById('orbhost').appendChild(g);
+  return { r: [1, 2, 1, 2, 1, 2, 0][i], ph: i * (Math.PI * 2 / 7) + .3, sp: .28 + .05 * (i % 3), el: g }; });
 const BARS = Array.from({ length: 16 }, (_, i) => ({ x: i < 8 ? 180 + i * 40 : 1460 + (i - 8) * 40, f: 3 + (i * 1.7) % 4, ph: i * 1.3, a: i / 16 * Math.PI * 2, el: mk('line', $('bars'), {}) }));
 const PLACE = { 0: ['b1a', 'b1b', 's1'], 1: ['floor'], 2: ['word', 'name3'], 3: ['wv', 'tg', 'h4a', 'h4b', 'cur'], 4: ['h5a', 'h5b'], 5: ['h6a', 'n30', 'h6b', 'h6c'],
   6: ['m1', 'm2', 'h7'], 7: ['game', 'gshade', 'h8a', 'h8b'], 8: ['phone', 'chk', 'h9a', 'h9b', 'h9c'], 9: ['h10'], 10: ['logo11', 'h11a', 'h11b'] };
@@ -193,7 +198,7 @@ function init() { const world = $('world');
   Object.entries(PLACE).forEach(([i, ids]) => ids.forEach(id => $('P' + i).appendChild($(id))));
   const gp = $('phone').cloneNode(true); gp.id = 'gphone'; gp.querySelectorAll('[id]').forEach(e => e.id = ''); gp.style.left = (960 - 220) + 'px'; gp.style.top = (470 - 450) + 'px'; gp.style.transform = 'rotate(-90deg)'; gp.style.display = 'none'; $('P7').appendChild(gp);
   const f2 = $('floor').cloneNode(true); f2.id = 'floor2'; $('P10').appendChild(f2);
-  const ov = $('ov'); ov.appendChild($('bloom')); ov.appendChild($('rings').ownerSVGElement); ov.appendChild($('dot')); ov.appendChild($('gl3'));
+  const ov = $('ov'); ov.appendChild($('bloom')); ov.appendChild($('rings').ownerSVGElement); ov.appendChild($('orbhost')); ov.appendChild($('dot')); ov.appendChild($('gl3')); ov.appendChild($('orbfront'));
   $('pnoise').style.width = '170px'; $('pcase').style.width = '120px'; const [px, py] = rel($('pcase'), world); PILL[0] = px + 60; PILL[1] = py + 42;
   CKS = CK(); }
 window.seek = t => {
@@ -241,14 +246,17 @@ window.seek = t => {
       cv.style.webkitMaskImage = `radial-gradient(ellipse 60% 55% at 50% 56%, #000 ${r1.toFixed(1)}%, rgba(0,0,0,.35) ${(r1 + (r2 - r1) * .55).toFixed(1)}%, transparent ${r2.toFixed(1)}%)`; } }
   else cv.style.display = 'none';
   // ===== 5 Sound360; ring0 carries on as the 30 h track =====
-  const ringsOn = on(15.7, 27.5); $('rings').style.display = $('orbs').style.display = ringsOn ? '' : 'none';
+  const ringsOn = on(15.7, 27.5); $('rings').style.display = $('orbs').style.display = $('orbhost').style.display = $('orbfront').style.display = ringsOn ? '' : 'none';
   if (ringsOn) { const m = S(t - 21.8, { k: 90, c: 19 }), col = S(t - 26.95, FLY);
     RINGS.forEach((r, i) => { const s = S(t - (15.95 + i * .22), SOFT), br = (1 + .03 * Math.sin(t * 1.4 + i) * (1 - m)) * (1 + .16 * (S(t - 19.85 - i * .06, POPS) - S(t - 20.05 - i * .06, SOFT)) * (1 - m));
       if (i === 0) { const rx = lerp(r.rx * s * br, 380, m) * (1 - col), ry = lerp(r.ry * s * br, 380, m) * (1 - col), ccx = lerp(960, 1260, m) + (960 - 1260) * col, ccy = lerp(560, 540, m);
         [r.el, r.gl].forEach(e => { e.setAttribute('cx', ccx.toFixed(1)); e.setAttribute('cy', ccy.toFixed(1)); e.setAttribute('rx', Math.max(0, rx).toFixed(1)); e.setAttribute('ry', Math.max(0, ry).toFixed(1)); });
         r.el.setAttribute('stroke-width', lerp(2, 22, m).toFixed(1)); r.el.setAttribute('stroke', hexM('#82E600', '#E3E6E0', m)); r.el.style.opacity = (.6 + .4 * m) * clamp(s * 2); r.gl.style.opacity = .45 * clamp(s * 2) * (1 - m); }
       else { const out = 1 + .5 * m; r.el.setAttribute('cx', 960); r.el.setAttribute('cy', 560); r.el.setAttribute('rx', Math.max(0, r.rx * s * br * out).toFixed(1)); r.el.setAttribute('ry', Math.max(0, r.ry * s * br * out).toFixed(1)); r.el.style.opacity = (.6 - i * .18) * clamp(s * 2) * (1 - sm(m * 1.4)); } });
-    ORBS.forEach(o => { const r = RINGS[o.r], s = S(t - (16.3 + o.r * .22), SOFT), a = o.ph + t * o.sp, x = 960 + Math.cos(a) * r.rx * s * (1 + .4 * m), y = 560 + Math.sin(a) * r.ry * s * (1 + .4 * m), dep = .5 + .5 * Math.sin(a); o.el.setAttribute('cx', x.toFixed(1)); o.el.setAttribute('cy', y.toFixed(1)); o.el.setAttribute('r', (3 + 5 * dep).toFixed(1)); o.el.style.opacity = (.35 + .65 * dep) * clamp(s * 2) * (1 - sm(m * 1.4)); }); }
+    ORBS.forEach(o => { const r = RINGS[o.r], s = S(t - (16.3 + o.r * .22), SOFT), a = o.ph + t * o.sp + Math.PI * S(t - 19.9, { k: 40, c: 11 }) * .5, x = 960 + Math.cos(a) * Math.max(r.rx, 620) * 1.12 * s * (1 + .4 * m), y = 500 + Math.sin(a) * Math.max(r.ry, 200) * .95 * s * (1 + .4 * m), dep = .5 + .5 * Math.sin(a);
+      const sc = (.5 + .55 * dep) * clamp(s * 1.4); o.el.style.transform = `translate(${(x - 95).toFixed(1)}px,${(y - 95).toFixed(1)}px) scale(${sc.toFixed(3)})`; o.el.style.opacity = ((.55 + .45 * dep) * clamp(s * 2) * (1 - sm(m * 1.4))).toFixed(3);
+      { const host = $(dep > .55 ? 'orbfront' : 'orbhost'); if (o.el.parentNode !== host) host.appendChild(o.el); }
+      o.el.style.filter = dep < .35 ? `blur(${((.35 - dep) * 8).toFixed(1)}px)` : ''; }); }
   // ===== 6 thirty hours: the lime arc fills the track ring0 became =====
   const arcOn = on(22.4, 27.5); $('arc').style.display = $('arcG').style.display = arcOn ? '' : 'none';
   if (arcOn) { const p = ease((t - 22.6) / 1.7), col = S(t - 26.95, FLY), R = Math.max(0, 380 * (1 - col)), C = 2 * Math.PI * Math.max(R, .01), acx = 1260 + (960 - 1260) * col;
