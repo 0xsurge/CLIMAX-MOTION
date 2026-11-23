@@ -7,7 +7,7 @@ import sys, subprocess, numpy as np
 W, H, FPS = 1920, 1080, 30
 CUTS = [4.32, 15.32, 40.0]          # the dive cuts in film4 (camera keys with tau .001)
 DUR = 1.25                         # length of each sweep
-ramp = np.array([[.0, .0, .0], [.03, .2, .22], [.18, .66, .0], [.51, .90, .0], [.89, 1.0, .35], [1.0, 1.0, .92]])
+ramp = np.array([[.0, .0, .0], [.04, .09, .0], [.18, .66, .0], [.51, .90, .0], [.85, 1.0, .45], [1.0, 1.0, .95]])   # black, forest, lime, acid, white
 def gmap(x):
     x = np.clip(x, 0, 1) * (len(ramp) - 1); i = np.floor(x).astype(int).clip(0, len(ramp) - 2); f = (x - i)[..., None]
     return ramp[i] * (1 - f) + ramp[i + 1] * f
@@ -18,6 +18,7 @@ def push(img, k):                  # the held outgoing frame keeps diving: scale
 dec = subprocess.Popen(['ffmpeg', '-v', 'error', '-i', sys.argv[1], '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-'], stdout=subprocess.PIPE)
 enc = subprocess.Popen(['ffmpeg', '-y', '-v', 'error', '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-s', f'{W}x{H}', '-r', str(FPS), '-i', '-',
                         '-c:v', 'libx264', '-crf', '16', '-preset', 'slow', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', sys.argv[2]], stdin=subprocess.PIPE)
+yy, xx = np.mgrid[0:H, 0:W]; POS = (xx / W * .62 + (1 - yy / H) * .38)   # 0 at bottom-left, 1 at top-right
 n = 0; held = {}
 while True:
     buf = dec.stdout.read(W * H * 3)
@@ -29,12 +30,15 @@ while True:
             p = (t - c) / DUR; B = np.frombuffer(buf, np.uint8).reshape(H, W, 3).astype(np.float32) / 255
             A = push(held[c], 1 + .5 * p)
             LB = (B * [.2126, .7152, .0722]).sum(-1)
-            th = sm(p / .75) * 1.4 - .2
-            m = np.clip((th - (1 - LB) * .75) / .2, 0, 1)[..., None]     # bright parts of the new scene arrive first
+            # a spatial wavefront: a soft light edge travels diagonally across the frame; behind it the new scene, ahead of it the old one.
+            # Bright parts of the new scene lead the edge by a little, so it still floods in through its brightness.
+            front = sm(p / .7) * 1.5 - .25
+            m = np.clip((front - POS + LB * .08) / .06, 0, 1)[..., None]
+            band = np.exp(-((front - POS) / .05) ** 2)[..., None] * np.sin(np.pi * min(1, p / .7))
             sh = .42 * np.sin(np.pi * min(1, p / .85))                     # the colour shifts up the ramp and comes back
             wash = gmap(LB + sh * (.25 + .75 * LB))                        # darks stay dark (a teal tint); brights go lime, acid, white
             rs = sm((p - .5) / .5)                                          # then relaxes into true colour
-            o = A * (1 - m) + (wash * (1 - rs) + B * rs) * m
+            o = A * (1 - m) + (wash * (1 - rs) + B * rs) * m + band * np.array([.8, 1.0, .55]) * .55
             out = (o.clip(0, 1) * 255).astype(np.uint8).tobytes()
     enc.stdin.write(out if out is not None else buf); n += 1
 enc.stdin.close(); enc.wait(); print(sys.argv[2], n, 'frames')
