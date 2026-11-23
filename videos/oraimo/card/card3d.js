@@ -51,6 +51,8 @@ function pose(t) {
   neo.update(); renderer.render(scene, camera);
 }
 const domSeek = window.seek;
-window.seek = t => { domSeek(t); pose(t); };
+// the pace of part two (from "Built for beyond", 8.15 s) is 1.55x: the film time runs faster there
+const PACE = 1.55, warp = t => t < 8.15 ? t : 8.15 + (t - 8.15) * PACE;
+window.seek = t => { const u = warp(t); domSeek(u); pose(u); };
 const wait = () => new Promise(res => { const k = () => window.__domOK ? res() : setTimeout(k, 20); k(); });
 await wait(); window.seek(0); window.__ready = true;
